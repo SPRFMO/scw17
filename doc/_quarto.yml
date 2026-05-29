@@ -1,0 +1,26 @@
+project:
+  type: website
+  output-dir: ../docs
+  resources:
+    - annex/logo.png
+  render:
+    - index.qmd
+    - SCW17_agenda.qmd
+
+website:
+  title: "SPRFMO SCW17"
+  site-url: "https://sprfmo.github.io/scw17/"
+  navbar:
+    title: false
+    left:
+      - href: index.qmd
+        text: Home
+      - href: SCW17_agenda.qmd
+        text: SCW17 Agenda
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 2
+    number-sections: true

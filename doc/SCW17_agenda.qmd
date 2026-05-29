@@ -1,0 +1,68 @@
+---
+title: "SCW17 Preliminary Agenda"
+pagetitle: "SPRFMO SCW17 Preliminary Agenda"
+format:
+  html:
+    output-file: "SCW17_agenda.html"
+    self-contained: false
+    toc: true
+    toc-title: "Contents"
+    toc-depth: 2
+    number-sections: false
+execute:
+  warning: false
+  message: false
+  echo: false
+---
+
+{{< include _includes/sprfmo-banner.html >}}
+
+```{=html}
+<div class="paper-title">SCW17 Preliminary Agenda</div>
+```
+
+**Meeting:** Scientific Committee Workshop 17 (SCW17)  
+**Focus:** Jack mackerel management strategy evaluation preparation  
+**Status:** Working draft for organiser review  
+**Source archive:** [SCW16 benchmark preparation site](https://sprfmo.github.io/JM_SCW_prep/)
+
+# Purpose
+
+SCW17 is expected to carry the 2026 jack mackerel benchmark outcomes into management-strategy-evaluation work. The agenda should distinguish decisions needed for operating-model conditioning from items that can remain as diagnostics, robustness scenarios, or later SC14 documentation.
+
+# Immediate Decisions to Frame
+
+- Operating-model conditioning set and any benchmark-derived sensitivities to retain.
+- Recruitment-process assumptions and stock-recruitment parameter treatment.
+- Treatment of single-stock and two-stock hypotheses in advice development.
+- Performance metrics, time horizons, and risk-tolerance language.
+- Candidate management-procedure families and tuning targets.
+- Robustness scenarios and exceptional-circumstances meta-rules.
+- Cross-platform validation responsibilities and timetable.
+
+# Draft Programme
+
+| Day | Session | Draft focus | Expected output |
+|---|---|---|---|
+| Day 1 | Opening and benchmark handoff | Review benchmark outcomes, accepted inputs, unresolved diagnostics, and MSE dependencies. | Agreed list of benchmark outputs that move into OM conditioning. |
+| Day 2 | Operating models | Review conditioned OMs, recruitment assumptions, stock hypotheses, and reference/robustness sets. | OM set and sensitivity classification. |
+| Day 3 | Candidate management procedures | Review candidate MPs, data streams, tuning targets, constraints, and implementation status. | Shortlist of MPs for evaluation. |
+| Day 4 | Performance metrics and trade-offs | Review conservation, yield, stability, and exceptional-circumstances metrics. | Agreed performance metrics and presentation format. |
+| Day 5 | Recommendations and report drafting | Resolve remaining decisions, assign drafting tasks, and agree SC14 documentation path. | Draft recommendations and action table. |
+
+# Working Document Register
+
+| Document | Working title | Status |
+|---|---|---|
+| SCW17-Doc00 | Preliminary agenda | Draft |
+| SCW17-Doc01 | Benchmark outcomes for MSE conditioning | To start |
+| SCW17-Doc02 | Operating-model conditioning and diagnostics | To start |
+| SCW17-Doc03 | Candidate management procedures and performance metrics | To start |
+| SCW17-Doc04 | Robustness scenarios and exceptional circumstances | To start |
+| SCW17-Doc05 | Cross-platform validation summary | To start |
+
+# Setup Notes
+
+- Keep final public artifacts in `docs/` and source documents in `doc/`.
+- Keep bulky model outputs, temporary render folders, and transferred meeting packages outside this repository unless they are intentionally published.
+- Link back to the SCW16 preparation archive rather than copying benchmark outputs into this repository.

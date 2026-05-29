@@ -1,0 +1,35 @@
+.DS_Store
+.RData
+.Rhistory
+.Rproj.user/
+*.Rproj
+*.Rout
+*~
+*.bak
+*.swp
+~$*
+
+# Quarto and LaTeX working files
+doc/.quarto/
+doc/*_files/
+docs/*_files/
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.tex
+*.toc
+
+# Large meeting-transfer or generated analysis artifacts should stay out by default.
+outputs/
+assessment/
+mcmc_runs/
+*.rda
+*.rds
+*.RData
+*.zip
+*.pptx
+*.odp
+*.xlsx
+*.xls

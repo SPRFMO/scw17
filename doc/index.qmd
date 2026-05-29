@@ -1,0 +1,36 @@
+---
+title: "SPRFMO SCW17"
+format:
+  html:
+    number-sections: false
+---
+
+{{< include _includes/sprfmo-banner.html >}}
+
+```{=html}
+<div class="paper-title">SCW17 Preparation Materials</div>
+```
+
+# Overview
+
+This site is the working index for SPRFMO Scientific Committee Workshop 17 (SCW17) jack mackerel preparation materials. It is intentionally lean: source documents live in `doc/`, rendered website files live in `docs/`, and large model outputs or meeting-transfer folders should remain outside the repository unless they are deliberate public artifacts.
+
+SCW17 follows the 2026 benchmark work compiled in the SCW16 preparation repository and is expected to focus on management-strategy-evaluation inputs, operating-model conditioning, candidate management procedures, performance metrics, robustness scenarios, and documentation for SC14.
+
+# Current Documents
+
+- [SCW17 preliminary agenda](SCW17_agenda.html) ([QMD](SCW17_agenda.qmd))
+
+# Source Links
+
+- [SCW16 and benchmark preparation archive](https://sprfmo.github.io/JM_SCW_prep/)
+- [SCW16 prep repository](https://github.com/SPRFMO/JM_SCW_prep)
+- [Jack mackerel assessment repository](https://github.com/SPRFMO/jjm)
+
+# Working Checklist
+
+- Confirm official SCW17 dates, venue, and meeting mode.
+- Assign document numbers and lead authors.
+- Add agreed agenda sessions and expected decisions.
+- Add links to circulated working papers as they become available.
+- Render and publish the site before circulating links to participants.
