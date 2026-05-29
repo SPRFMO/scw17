@@ -20,6 +20,7 @@ SCW17 follows the 2026 benchmark work compiled in the SCW16 preparation reposito
 # Current Documents
 
 - [SCW17 preliminary agenda](SCW17_agenda.html) ([QMD](SCW17_agenda.qmd))
+- [SCW17/Paper-02: Consideration of reference points used for SPRFMO Jack mackerel management](SCW17-Paper-02-ReferencePoints.html) ([QMD](SCW17-Paper-02-ReferencePoints.qmd))
 
 # Source Links
 

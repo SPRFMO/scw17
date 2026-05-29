@@ -6,6 +6,7 @@ project:
   render:
     - index.qmd
     - SCW17_agenda.qmd
+    - SCW17-Paper-02-ReferencePoints.qmd
 
 website:
   title: "SPRFMO SCW17"
@@ -17,6 +18,8 @@ website:
         text: Home
       - href: SCW17_agenda.qmd
         text: SCW17 Agenda
+      - href: SCW17-Paper-02-ReferencePoints.qmd
+        text: SCW17/Paper-02
 
 format:
   html:

@@ -56,6 +56,7 @@ SCW17 is expected to carry the 2026 jack mackerel benchmark outcomes into manage
 |---|---|---|
 | SCW17-Doc00 | Preliminary agenda | Draft |
 | SCW17-Doc01 | Benchmark outcomes for MSE conditioning | To start |
+| SCW17-Paper-02 | Reference points used for SPRFMO jack mackerel management | Draft |
 | SCW17-Doc02 | Operating-model conditioning and diagnostics | To start |
 | SCW17-Doc03 | Candidate management procedures and performance metrics | To start |
 | SCW17-Doc04 | Robustness scenarios and exceptional circumstances | To start |
