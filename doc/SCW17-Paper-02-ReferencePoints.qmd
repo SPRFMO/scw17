@@ -187,7 +187,7 @@ interpolate_f <- function(profile, target_f) {
   )
 }
 
-params <- list(model_name = "h1_0.14", stock = 1)
+params <- list(model_name = "h1_0.14ls", stock = 1)
 model <- read_model(params$model_name)
 stock_output <- model$output[[params$stock]]
 yield_profile <- read_yield_profile(params$model_name)
@@ -196,16 +196,16 @@ reported_fmsy <- read_std_value(params$model_name, "Fmsy")
 fmsy <- if (is.finite(reported_fmsy)) reported_fmsy else profile_fmsy
 
 productivity_models <- tibble(
-  model = c(params$model_name, "h1_0.14ll", "h1_0.14hl", "h1_0.14hs"),
+  model = c(params$model_name, "h1_0.14ll", "h1_0.14hs", "h1_0.14hl"),
   scenario = c(
     "Low steepness, short SR",
     "Low steepness, long SR",
-    "High steepness, long SR",
-    "High steepness, short SR"
+    "High steepness, short SR",
+    "High steepness, long SR"
   ),
   steepness = c(0.65, 0.65, 0.85, 0.85),
-  sr_fit = c("Short", "Long", "Long", "Short"),
-  sr_years = c("2000-2022", "1970-2022", "1970-2022", "2000-2022")
+  sr_fit = c("Short", "Long", "Short", "Long"),
+  sr_years = c("2001-2015", "1970-2022", "2001-2015", "1970-2022")
 )
 
 summarize_productivity_model <- function(model_name) {
@@ -302,8 +302,8 @@ productivity_ssb_series <- bind_rows(
 productivity_scenario_colors <- c(
   "Low steepness, short SR" = "#2c7fb8",
   "Low steepness, long SR" = "#74a9cf",
-  "High steepness, long SR" = "#d95f0e",
-  "High steepness, short SR" = "#fdb863"
+  "High steepness, short SR" = "#fdb863",
+  "High steepness, long SR" = "#d95f0e"
 )
 
 read_productivity_majuro <- function(model_name) {
@@ -508,7 +508,7 @@ fishery_f_ratio <- {
 
 Based on the outcomes of the SCW16 benchmark workshop, the framework for developing and conditioning operating models depends partly on assumptions used for the stock-recruitment relationship (SRR). Here we explore those assumptions using four productivity cases and evaluate the potential for using proxy reference points, including spawning-biomass per-recruit (SPR) quantities that are commonly used worldwide.
 
-The current model `0.14` represents the short stock-recruit time series and low-productivity case. Three additional runs were added to separate the effects of stock-recruit fitting period and steepness: low steepness with the long time series, high steepness with the long time series, and high steepness with the short time series. Across these runs, $F_{MSY}$ spans `r round(min(productivity_reference$Fmsy, na.rm = TRUE), 3)` to `r round(max(productivity_reference$Fmsy, na.rm = TRUE), 3)`, while $F_{35\%}$ spans only `r round(min(productivity_reference$F35_est, na.rm = TRUE), 3)` to `r round(max(productivity_reference$F35_est, na.rm = TRUE), 3)`.
+The productivity grid now uses four explicit `0.14` runs: low steepness with the short SRR fitting period, low steepness with the long SRR fitting period, high steepness with the short SRR fitting period, and high steepness with the long SRR fitting period. Across these runs, $F_{MSY}$ spans `r round(min(productivity_reference$Fmsy, na.rm = TRUE), 3)` to `r round(max(productivity_reference$Fmsy, na.rm = TRUE), 3)`, while $F_{35\%}$ spans only `r round(min(productivity_reference$F35_est, na.rm = TRUE), 3)` to `r round(max(productivity_reference$F35_est, na.rm = TRUE), 3)`.
 
 The contrast is useful for management strategy evaluation (MSE). MSY-based reference points are sensitive to SRR assumptions and therefore to operating-model productivity choices. SPR-based reference points are not free of biological or selectivity assumptions, but they are free of SRR assumptions. Dynamic Bzero and Majuro-style stock-status plots provide an additional way to communicate current stock status without dividing biomass by an estimated $B_{MSY}$ that changes across productivity cases.
 
@@ -526,11 +526,12 @@ Technical details of the JJM, likelihood components, biological inputs, and asse
 
 ## Productivity Cases
 
-The base run is `h1_0.14`, which uses the short SRR fitting period and low steepness. In this paper, "low productivity" refers to steepness $h = 0.65$ and "high productivity" refers to steepness $h = 0.85$. The short SRR fitting period uses 2000-2022 and the long SRR fitting period uses 1970-2022. The three additional runs are:
+The low-steepness short-SRR run is now represented explicitly as `h1_0.14ls`. In this paper, "low productivity" refers to steepness $h = 0.65$ and "high productivity" refers to steepness $h = 0.85$. The updated short SRR fitting period uses 2001-2015 and the long SRR fitting period uses 1970-2022. The four runs are:
 
-1. `h1_0.14ll`: low steepness and long SRR fitting period;
-2. `h1_0.14hl`: high steepness and long SRR fitting period;
-3. `h1_0.14hs`: high steepness and short SRR fitting period.
+1. `h1_0.14ls`: low steepness and short SRR fitting period;
+2. `h1_0.14ll`: low steepness and long SRR fitting period;
+3. `h1_0.14hs`: high steepness and short SRR fitting period;
+4. `h1_0.14hl`: high steepness and long SRR fitting period.
 
 For each run, the yield profile was read from the `.yld` output and the reported standard-deviation terms were read from the `.std` output. The reported $F_{MSY}$, $B_{MSY}$, current ratios, profile maximum, and $F_{35\%}$ were then compiled for comparison.
 
@@ -560,18 +561,18 @@ The Majuro plot in this paper uses $SSB/SSB_{F=0}$ from `SSB_NoFishR` and annual
 
 ## Productivity Estimates
 
-The F profile from `h1_0.14` provides the starting point for comparing MSY-based and SPR-based reference points. In @fig-f-profile, $F_{35\%}$ is marked against the same profile as $F_{MSY}$. The two values are close only under some productivity assumptions. Across all four runs, $F_{35\%}$ is much more stable than $F_{MSY}$ because it does not use the SRR.
+The F profile from `h1_0.14ls` provides the starting point for comparing MSY-based and SPR-based reference points. In @fig-f-profile, $F_{35\%}$ is marked against the same profile as $F_{MSY}$. The two values are close only under some productivity assumptions. Across all four runs, $F_{35\%}$ is much more stable than $F_{MSY}$ because it does not use the SRR.
 
 ```{r}
 #| label: tbl-spr-reference
-#| tbl-cap: "SPR reference point from model 0.14. SBF35 is interpolated from the yield profile at SPR = 0.35."
+#| tbl-cap: "SPR reference point from h1_0.14ls. SBF35 is interpolated from the yield profile at SPR = 0.35."
 
 kable(spr_reference, digits = 4)
 ```
 
 ```{r}
 #| label: fig-f-profile
-#| fig-cap: "F profile from the 0.14 yield-profile output. Vertical lines mark F35% and Fmsy on the profile."
+#| fig-cap: "F profile from the h1_0.14ls yield-profile output. Vertical lines mark F35% and Fmsy on the profile."
 
 ggplot(f_profile, aes(f, value)) +
   geom_line(linewidth = 0.8, color = "#2c7fb8") +
@@ -702,7 +703,7 @@ productivity_ssb_series |>
   )
 ```
 
-The dynamic-Bzero comparison for `h1_0.14` is shown in @fig-ssb-fished-dynamic-bzero. This is a counterfactual SSB comparison: the no-fishing trajectory is not a fixed scalar but an annual dynamic series.
+The dynamic-Bzero comparison for `h1_0.14ls` is shown in @fig-ssb-fished-dynamic-bzero. This is a counterfactual SSB comparison: the no-fishing trajectory is not a fixed scalar but an annual dynamic series.
 
 ```{r}
 #| label: fig-ssb-fished-dynamic-bzero
