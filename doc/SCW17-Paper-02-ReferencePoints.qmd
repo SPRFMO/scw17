@@ -403,8 +403,7 @@ ssb_comparison <- bind_rows(
       value = ratio,
       source = "SSB / dynamic Bzero",
       panel = "Depletion ratio"
-    ),
-  reported_ssb_depletion
+    )
 )
 
 ssb_summary <- biomass_wide |>
@@ -573,6 +572,8 @@ kable(spr_reference, digits = 4)
 ```{r}
 #| label: fig-f-profile
 #| fig-cap: "F profile from the h1_0.14ls yield-profile output. Vertical lines mark F35% and Fmsy on the profile."
+#| fig-width: 9
+#| fig-height: 6.5
 
 ggplot(f_profile, aes(f, value)) +
   geom_line(linewidth = 0.8, color = "#2c7fb8") +
@@ -581,7 +582,7 @@ ggplot(f_profile, aes(f, value)) +
     aes(xintercept = f, color = reference, linetype = reference),
     linewidth = 0.8
   ) +
-  facet_wrap(~quantity, scales = "free_y", ncol = 1) +
+  facet_wrap(~quantity, scales = "free_y", ncol = 2, nrow = 2) +
   scale_color_manual(values = c("F35%" = "#d95f0e", "Fmsy" = "#1b9e77")) +
   scale_linetype_manual(values = c("F35%" = "dashed", "Fmsy" = "dotdash")) +
   labs(x = "F", y = NULL, color = NULL, linetype = NULL) +
@@ -648,7 +649,7 @@ F35% is comparatively stable across these runs, ranging from `r round(min(produc
 
 ```{r}
 #| label: fig-productivity-yield-profiles
-#| fig-cap: "Yield profiles across productivity assumptions. Points mark the profile maximum and dashed vertical lines mark the reported Fmsy values."
+#| fig-cap: "Yield profiles across productivity assumptions. Colors identify productivity cases and line types identify the stock-recruit fitting period. Points mark the profile maximum and dashed vertical lines mark the reported Fmsy values."
 
 ggplot(productivity_yield_profiles, aes(f, yield, color = scenario, linetype = sr_fit)) +
   geom_line(linewidth = 0.8) +
@@ -658,16 +659,27 @@ ggplot(productivity_yield_profiles, aes(f, yield, color = scenario, linetype = s
     inherit.aes = FALSE,
     linetype = "dashed",
     linewidth = 0.55,
-    alpha = 0.75
+    alpha = 0.75,
+    show.legend = FALSE
   ) +
   geom_point(
     data = productivity_reference,
-    aes(profile_Fmsy, MSY, color = scenario, shape = sr_fit),
+    aes(profile_Fmsy, MSY, color = scenario),
     inherit.aes = FALSE,
-    size = 2.4
+    shape = 16,
+    size = 2.4,
+    show.legend = FALSE
   ) +
-  labs(x = "F", y = "Equilibrium yield (kt)", color = NULL, linetype = "SR fit", shape = "SR fit") +
-  theme_report()
+  labs(x = "F", y = "Equilibrium yield (kt)", color = "Productivity case", linetype = "SR fit") +
+  guides(
+    color = guide_legend(nrow = 2, byrow = TRUE),
+    linetype = guide_legend(nrow = 1)
+  ) +
+  theme_report() +
+  theme(
+    legend.position = "bottom",
+    legend.box = "vertical"
+  )
 ```
 
 ## Dynamic Bzero Estimates
@@ -719,13 +731,13 @@ biomass_series |>
 
 ```{r}
 #| label: fig-ssb-dynamic-bzero-ratio
-#| fig-cap: "Spawning biomass depletion ratio estimated as fished spawning biomass divided by dynamic Bzero spawning biomass, compared with the reported SSB_NoFishR estimate."
+#| fig-cap: "Spawning biomass depletion ratio estimated as fished spawning biomass divided by dynamic Bzero spawning biomass."
 
 ssb_comparison |>
   filter(panel == "Depletion ratio") |>
-  ggplot(aes(year, value, color = source, linetype = source)) +
-  geom_line(linewidth = 0.85) +
-  labs(x = NULL, y = "SSB / dynamic Bzero", color = NULL, linetype = NULL) +
+  ggplot(aes(year, value)) +
+  geom_line(linewidth = 0.85, color = "#2c7fb8") +
+  labs(x = NULL, y = "SSB / dynamic Bzero") +
   theme_report()
 ```
 
