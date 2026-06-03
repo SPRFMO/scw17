@@ -60,7 +60,7 @@
     "href": "index.html",
     "title": "SPRFMO SCW17",
     "section": "",
-    "text": "SPRFMO\n      South Pacific Regional Fisheries Management Organisation\n      \n      Jack Mackerel Working Group\n    \n  \n\nSCW17 Preparation Materials\n\nOverview\nThis site is the working index for SPRFMO Scientific Committee Workshop 17 (SCW17) jack mackerel preparation materials. It is intentionally lean: source documents live in doc/, rendered website files live in docs/, and large model outputs or meeting-transfer folders should remain outside the repository unless they are deliberate public artifacts.\nSCW17 follows the 2026 benchmark work compiled in the SCW16 preparation repository and is expected to focus on management-strategy-evaluation inputs, operating-model conditioning, candidate management procedures, performance metrics, robustness scenarios, and documentation for SC14.\n\n\nCurrent Documents\n\nSCW17 preliminary agenda (QMD)\nSCW17/Paper-02: Consideration of reference points used for SPRFMO Jack mackerel management (QMD)\n\n\n\nSource Links\n\nSCW16 and benchmark preparation archive\nSCW16 prep repository\nJack mackerel assessment repository\n\n\n\nWorking Checklist\n\nConfirm official SCW17 dates, venue, and meeting mode.\nAssign document numbers and lead authors.\nAdd agreed agenda sessions and expected decisions.\nAdd links to circulated working papers as they become available.\nRender and publish the site before circulating links to participants."
+    "text": "SPRFMO\n      South Pacific Regional Fisheries Management Organisation\n      \n      Jack Mackerel Working Group\n    \n  \n\nSCW17 Preparation Materials\n\nOverview\nThis site is the working index for SPRFMO Scientific Committee Workshop 17 (SCW17) jack mackerel preparation materials. It is intentionally lean: source documents live in doc/, rendered website files live in docs/, and large model outputs or meeting-transfer folders should remain outside the repository unless they are deliberate public artifacts.\nSCW17 follows the 2026 benchmark work compiled in the SCW16 preparation repository and is expected to focus on management-strategy-evaluation inputs, operating-model conditioning, candidate management procedures, performance metrics, robustness scenarios, and documentation for SC14.\n\n\nCurrent Documents\n\nSCW17 preliminary agenda (QMD)\nSCW17/Paper-01: Model developments (QMD)\nSCW17/Paper-02: Consideration of reference points used for SPRFMO Jack mackerel management (QMD)\n\n\n\nSource Links\n\nSCW16 and benchmark preparation archive\nSCW16 prep repository\nJack mackerel assessment repository\n\n\n\nWorking Checklist\n\nConfirm official SCW17 dates, venue, and meeting mode.\nAssign document numbers and lead authors.\nAdd agreed agenda sessions and expected decisions.\nAdd links to circulated working papers as they become available.\nRender and publish the site before circulating links to participants."
   },
   {
     "objectID": "SCW17_agenda.html",
@@ -68,5 +68,68 @@
     "title": "SCW17 Preliminary Agenda",
     "section": "",
     "text": "SPRFMO\n      South Pacific Regional Fisheries Management Organisation\n      \n      Jack Mackerel Working Group\n    \n  \n\nSCW17 Preliminary Agenda\nMeeting: Scientific Committee Workshop 17 (SCW17)\nFocus: Jack mackerel management strategy evaluation preparation\nStatus: Working draft for organiser review\nSource archive: SCW16 benchmark preparation site\n\nPurpose\nSCW17 is expected to carry the 2026 jack mackerel benchmark outcomes into management-strategy-evaluation work. The agenda should distinguish decisions needed for operating-model conditioning from items that can remain as diagnostics, robustness scenarios, or later SC14 documentation.\n\n\nImmediate Decisions to Frame\n\nOperating-model conditioning set and any benchmark-derived sensitivities to retain.\nRecruitment-process assumptions and stock-recruitment parameter treatment.\nTreatment of single-stock and two-stock hypotheses in advice development.\nPerformance metrics, time horizons, and risk-tolerance language.\nCandidate management-procedure families and tuning targets.\nRobustness scenarios and exceptional-circumstances meta-rules.\nCross-platform validation responsibilities and timetable.\n\n\n\nDraft Programme\n\n\n\n\n\n\n\n\n\nDay\nSession\nDraft focus\nExpected output\n\n\n\n\nDay 1\nOpening and benchmark handoff\nReview benchmark outcomes, accepted inputs, unresolved diagnostics, and MSE dependencies.\nAgreed list of benchmark outputs that move into OM conditioning.\n\n\nDay 2\nOperating models\nReview conditioned OMs, recruitment assumptions, stock hypotheses, and reference/robustness sets.\nOM set and sensitivity classification.\n\n\nDay 3\nCandidate management procedures\nReview candidate MPs, data streams, tuning targets, constraints, and implementation status.\nShortlist of MPs for evaluation.\n\n\nDay 4\nPerformance metrics and trade-offs\nReview conservation, yield, stability, and exceptional-circumstances metrics.\nAgreed performance metrics and presentation format.\n\n\nDay 5\nRecommendations and report drafting\nResolve remaining decisions, assign drafting tasks, and agree SC14 documentation path.\nDraft recommendations and action table.\n\n\n\n\n\nWorking Document Register\n\n\n\n\n\n\n\n\nDocument\nWorking title\nStatus\n\n\n\n\nSCW17-Doc00\nPreliminary agenda\nDraft\n\n\nSCW17-Doc01\nBenchmark outcomes for MSE conditioning\nTo start\n\n\nSCW17-Paper-02\nReference points used for SPRFMO jack mackerel management\nDraft\n\n\nSCW17-Doc02\nOperating-model conditioning and diagnostics\nTo start\n\n\nSCW17-Doc03\nCandidate management procedures and performance metrics\nTo start\n\n\nSCW17-Doc04\nRobustness scenarios and exceptional circumstances\nTo start\n\n\nSCW17-Doc05\nCross-platform validation summary\nTo start\n\n\n\n\n\nSetup Notes\n\nKeep final public artifacts in docs/ and source documents in doc/.\nKeep bulky model outputs, temporary render folders, and transferred meeting packages outside this repository unless they are intentionally published.\nLink back to the SCW16 preparation archive rather than copying benchmark outputs into this repository."
+  },
+  {
+    "objectID": "SCW17-Paper-01-ModelDevelopments.html",
+    "href": "SCW17-Paper-01-ModelDevelopments.html",
+    "title": "Model developments",
+    "section": "",
+    "text": "South Pacific Regional Fisheries Management Organisation\n      \n      Jack Mackerel Working Group\nThis working paper mirrors the SCW16 assessment-summary structure but narrows the model set to the configurations relevant to the SCW17 model-development bridge. The two completed reference points are the SCW16 baseline run (0.00) and the SCW16 proposed final run (0.14). Models 0.15 and 0.16 are included as control-file developments for the MSE transition.\nThe final model-development discussions from SCW16 were presented in Jack Mackerel Assessment SCW16. This document serves as a bridge between that benchmark assessment discussion and the SCW17 MSE workshop, focusing only on the benchmark anchor runs and the subsequent model-development controls needed for the MSE transition."
+  },
+  {
+    "objectID": "SCW17-Paper-01-ModelDevelopments.html#single-stock-hypothesis",
+    "href": "SCW17-Paper-01-ModelDevelopments.html#single-stock-hypothesis",
+    "title": "Model developments",
+    "section": "5.1 Single-Stock Hypothesis",
+    "text": "5.1 Single-Stock Hypothesis\n\nBiomassRecruitmentFishing Mortality\n\n\n\n\n\n\n\n\n\n\nFigure 1: Biomass estimates for the single-stock 0.00 to 0.14 bridge.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: Recruitment estimates for the single-stock 0.00 to 0.14 bridge.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: Fishing mortality estimates for the single-stock 0.00 to 0.14 bridge."
+  },
+  {
+    "objectID": "SCW17-Paper-01-ModelDevelopments.html#two-stock-hypothesis",
+    "href": "SCW17-Paper-01-ModelDevelopments.html#two-stock-hypothesis",
+    "title": "Model developments",
+    "section": "5.2 Two-Stock Hypothesis",
+    "text": "5.2 Two-Stock Hypothesis\n\nBiomassRecruitmentFishing Mortality\n\n\n\n\n\n\n\n\n\n\nFigure 4: Biomass estimates for the two-stock 0.00 to 0.14 bridge.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 5: Recruitment estimates for the two-stock 0.00 to 0.14 bridge.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 6: Fishing mortality estimates for the two-stock 0.00 to 0.14 bridge."
+  },
+  {
+    "objectID": "SCW17-Paper-01-ModelDevelopments.html#single-stock-hypothesis-1",
+    "href": "SCW17-Paper-01-ModelDevelopments.html#single-stock-hypothesis-1",
+    "title": "Model developments",
+    "section": "6.1 Single-Stock Hypothesis",
+    "text": "6.1 Single-Stock Hypothesis\nThe single-stock 0.15 and 0.16 controls have the same biological and data specifications, so any single-stock difference between those labels would indicate a run-management or file-version difference rather than a model-structure difference.\n\n\n\n\n\n\n\n\nFigure 7: Single-stock biomass for completed model-development outputs.\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 8: Single-stock fishing mortality for completed model-development outputs."
+  },
+  {
+    "objectID": "SCW17-Paper-01-ModelDevelopments.html#two-stock-hypothesis-1",
+    "href": "SCW17-Paper-01-ModelDevelopments.html#two-stock-hypothesis-1",
+    "title": "Model developments",
+    "section": "6.2 Two-Stock Hypothesis",
+    "text": "6.2 Two-Stock Hypothesis\nThe two-stock development contrast is expected to be between 0.15 and 0.16. Model 0.15 retains the separate stock-2 productivity regimes, while 0.16 combines the stock-2 productivity years into one regime. This contrast is intended to isolate the effect of productivity-regime specification after the nominal Peruvian CPUE data treatment is introduced.\n\n\n\n\n\n\n\n\nFigure 9: Two-stock biomass for completed model-development outputs.\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 10: Two-stock fishing mortality for completed model-development outputs."
+  },
+  {
+    "objectID": "SCW17-Paper-01-ModelDevelopments.html#fishing-mortality-cap",
+    "href": "SCW17-Paper-01-ModelDevelopments.html#fishing-mortality-cap",
+    "title": "Model developments",
+    "section": "7.1 Fishing-mortality cap",
+    "text": "7.1 Fishing-mortality cap\nThe current JJM template includes a smooth penalty on high average fishing mortality. For each stock and model year, total fishing mortality is first summed across fisheries for that stock. The intermediate value Fbar_tmp is the mean total F over ages 2-5. With Fcap = 3, eps = 0.05, and lambda_F = 10, the penalty contribution is:\n\n\\mathrm{excess} =\n{1 \\over 2}\\left[(Fbar\\_tmp - Fcap) +\n\\sqrt{(Fbar\\_tmp - Fcap)^2 + eps^2}\\right]\n\n\n\\mathrm{fpen} \\mathrel{+}= \\lambda_F \\times \\mathrm{excess}^2\n\nThis behaves like a differentiable approximation to 10 * max(0, Fbar_tmp - 3)^2. It is nearly zero below the cap, mild near Fbar_tmp = 3, and increasingly strong when a stock-year Fbar exceeds the cap. The form avoids a hard discontinuity in the objective function and is intended to discourage the unrealistically high terminal fishing-mortality spikes seen in some model-development trials without imposing a non-differentiable bound."
+  },
+  {
+    "objectID": "SCW17-Paper-01-ModelDevelopments.html#output-status",
+    "href": "SCW17-Paper-01-ModelDevelopments.html#output-status",
+    "title": "Model developments",
+    "section": "7.2 Output status",
+    "text": "7.2 Output status\nAt render time, completed deterministic outputs were available for the core bridge models 0.00, 0.14, 0.15, 0.16. The 0.16 productivity-exercise runs are summarized separately below."
+  },
+  {
+    "objectID": "SCW17-Paper-01-ModelDevelopments.html#single-stock-hypothesis-2",
+    "href": "SCW17-Paper-01-ModelDevelopments.html#single-stock-hypothesis-2",
+    "title": "Model developments",
+    "section": "8.1 Single-Stock Hypothesis",
+    "text": "8.1 Single-Stock Hypothesis\n\n\n\n\n\n\n\n\nFigure 11: Single-stock biomass for the 0.16 productivity exercise.\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 12: Single-stock fishing mortality for the 0.16 productivity exercise."
+  },
+  {
+    "objectID": "SCW17-Paper-01-ModelDevelopments.html#two-stock-hypothesis-2",
+    "href": "SCW17-Paper-01-ModelDevelopments.html#two-stock-hypothesis-2",
+    "title": "Model developments",
+    "section": "8.2 Two-Stock Hypothesis",
+    "text": "8.2 Two-Stock Hypothesis\n\n\n\n\n\n\n\n\nFigure 13: Two-stock biomass for the 0.16 productivity exercise.\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 14: Two-stock fishing mortality for the 0.16 productivity exercise."
   }
 ]
