@@ -13,6 +13,8 @@
 doc/.quarto/
 doc/*_files/
 docs/*_files/
+!docs/SCW17-Paper-01-ModelDevelopments_files/
+!docs/SCW17-Paper-01-ModelDevelopments_files/**
 *.aux
 *.fdb_latexmk
 *.fls
