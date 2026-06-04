@@ -37,7 +37,7 @@ library(ggplot2)
 library(knitr)
 library(tidyr)
 
-date_stamp <- format(Sys.Date(), "%d %B %Y")
+date_stamp <- format(Sys.time(), "Rendered %d %B %Y, %H:%M %Z")
 doc_dir <- dirname(knitr::current_input(dir = TRUE))
 assessment_candidates <- c(
   Sys.getenv("JJM_ASSESSMENT_DIR", unset = ""),
