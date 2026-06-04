@@ -314,7 +314,16 @@ productivity_scenario_colors <- c(
 )
 
 h2_productivity_models <- productivity_models |>
-  mutate(model = sub("^h1_", "h2_", model))
+  mutate(model = sub("^h1_", "h2_", model)) |>
+  select(-sr_years) |>
+  left_join(
+    tibble(
+      model = c("h2_0.16ll", "h2_0.16ls", "h2_0.16hl", "h2_0.16hs"),
+      stock1_sr_years = c("1970-2022", "2001-2015", "1970-2022", "2001-2015"),
+      stock2_sr_years = c("1970-2022", "2010-2024", "1970-2022", "2001-2015")
+    ),
+    by = "model"
+  )
 
 h2_stock_labels <- tibble(
   stock = c(1, 2),
@@ -351,6 +360,7 @@ h2_productivity_reference <- bind_rows(
   left_join(h2_productivity_models, by = "model") |>
   left_join(h2_stock_labels, by = "stock") |>
   mutate(
+    sr_years = if_else(stock == 1, stock1_sr_years, stock2_sr_years),
     Fmsy_lower = pmax(Fmsy - 1.96 * Fmsy_se, 0),
     Fmsy_upper = Fmsy + 1.96 * Fmsy_se,
     scenario = factor(scenario, levels = levels(productivity_reference$scenario)),
@@ -773,7 +783,7 @@ fishery_f_ratio <- {
 
 Based on the outcomes of the SCW16 benchmark workshop, the framework for developing and conditioning operating models depends partly on assumptions used for the stock-recruitment relationship (SRR). Here we explore those assumptions using four productivity cases and evaluate the potential for using proxy reference points, including spawning-biomass per-recruit (SPR) quantities that are commonly used worldwide.
 
-The productivity grid now uses four explicit `h1_0.16` runs with `ll`, `ls`, `hl`, and `hs` productivity variants. The matching `h2_0.16` two-stock runs are summarized separately. Across the primary `h1_0.16` runs, $F_{MSY}$ spans `r round(min(productivity_reference$Fmsy, na.rm = TRUE), 3)` to `r round(max(productivity_reference$Fmsy, na.rm = TRUE), 3)`, while $F_{35\%}$ spans only `r round(min(productivity_reference$F35_est, na.rm = TRUE), 3)` to `r round(max(productivity_reference$F35_est, na.rm = TRUE), 3)`.
+The productivity grid now uses four explicit `h1_0.16` runs with `ll`, `ls`, `hl`, and `hs` productivity variants. The matching `h2_0.16` two-stock runs are summarized separately using the latest reruns, including the revised `h2_0.16ll` and `h2_0.16ls` configurations. Across the primary `h1_0.16` runs, $F_{MSY}$ spans `r round(min(productivity_reference$Fmsy, na.rm = TRUE), 3)` to `r round(max(productivity_reference$Fmsy, na.rm = TRUE), 3)`, while $F_{35\%}$ spans only `r round(min(productivity_reference$F35_est, na.rm = TRUE), 3)` to `r round(max(productivity_reference$F35_est, na.rm = TRUE), 3)`.
 
 The contrast is useful for management strategy evaluation (MSE). MSY-based reference points are sensitive to SRR assumptions and therefore to operating-model productivity choices. SPR-based reference points are not free of biological or selectivity assumptions, but they are free of SRR assumptions. Dynamic Bzero and Majuro-style stock-status plots provide an additional way to communicate current stock status without dividing biomass by an estimated $B_{MSY}$ that changes across productivity cases.
 
@@ -800,7 +810,7 @@ The primary one-stock productivity grid uses the `h1_0.16.ctl` control-file fami
 
 For each run, the yield profile was read from the `.yld` output and the reported standard-deviation terms were read from the `.std` output. The reported $F_{MSY}$, $B_{MSY}$, current ratios, profile maximum, and $F_{35\%}$ were then compiled for comparison.
 
-The same productivity suffixes are also summarized for the matching two-stock `h2_0.16` runs: `h2_0.16ll`, `h2_0.16ls`, `h2_0.16hl`, and `h2_0.16hs`. For these h2 runs, stock-specific MSY terms are read by occurrence in the `.std` file, and stock-specific $F_{35\%}$ values are read from the corresponding `_1_R.rep` and `_2_R.rep` files.
+The same productivity suffixes are also summarized for the matching two-stock `h2_0.16` runs: `h2_0.16ll`, `h2_0.16ls`, `h2_0.16hl`, and `h2_0.16hs`. The current `h2_0.16ls` run uses a 2001-2015 short SRR period for Stock 1 and a 2010-2024 short SRR period for Stock 2; the other h2 productivity cases use the stock-recruit periods shown in the stock-specific tables below. For these h2 runs, stock-specific MSY terms are read by occurrence in the `.std` file, and stock-specific $F_{35\%}$ values are read from the corresponding `_1_R.rep` and `_2_R.rep` files.
 
 ## Dynamic Bzero
 
@@ -952,7 +962,7 @@ ggplot(productivity_yield_profiles, aes(f, yield, color = scenario, linetype = s
 
 ## Two-stock hypotheses
 
-The `h2_0.16` run set applies the same productivity suffixes to the two-stock model. Because h2 reports stock-specific reference-point quantities, Stock 1 and Stock 2 (Peruvian zone) are shown separately below rather than mixed in the same table and figure.
+The `h2_0.16` run set applies the same productivity suffixes to the two-stock model, but the current control files are stock-specific in the short-period case. The `h2_0.16ls` run uses 2001-2015 for Stock 1 and 2010-2024 for Stock 2, while `h2_0.16ll` uses the long 1970-2022 SRR period for both stocks and the updated FarNorth selectivity-change penalty. Because h2 reports stock-specific reference-point quantities, Stock 1 and Stock 2 (Peruvian zone) are shown separately below rather than mixed in the same table and figure.
 
 ### Stock 1
 
