@@ -98,7 +98,7 @@ read_yield_profile <- function(model_name) {
     mutate(across(everything(), as.numeric))
 }
 
-read_std_terms <- function(model_name, terms) {
+read_std_terms <- function(model_name, terms, occurrence = 1) {
   std_file <- assessment_file("results", paste0(model_name, ".std"))
   out <- tibble(
     term = terms,
@@ -111,18 +111,25 @@ read_std_terms <- function(model_name, terms) {
   }
 
   std_output <- read.table(std_file, header = TRUE)
-  matched <- match(terms, std_output$name)
+  matched <- vapply(terms, \(term) {
+    matches <- which(std_output$name == term)
+    if (length(matches) < occurrence) {
+      NA_integer_
+    } else {
+      matches[[occurrence]]
+    }
+  }, integer(1))
   out$value <- as.numeric(std_output$value[matched])
   out$std_dev <- as.numeric(std_output$std.dev[matched])
   out
 }
 
-read_std_value <- function(model_name, term) {
-  read_std_terms(model_name, term)$value[[1]]
+read_std_value <- function(model_name, term, occurrence = 1) {
+  read_std_terms(model_name, term, occurrence = occurrence)$value[[1]]
 }
 
-read_r_report_value <- function(model_name, term) {
-  r_report_file <- assessment_file("results", paste0(model_name, "_1_R.rep"))
+read_r_report_value <- function(model_name, term, stock = 1) {
+  r_report_file <- assessment_file("results", paste0(model_name, "_", stock, "_R.rep"))
   if (!file.exists(r_report_file)) {
     return(NA_real_)
   }
@@ -187,7 +194,7 @@ interpolate_f <- function(profile, target_f) {
   )
 }
 
-params <- list(model_name = "h1_0.14ls", stock = 1)
+params <- list(model_name = "h1_0.16ls", stock = 1)
 model <- read_model(params$model_name)
 stock_output <- model$output[[params$stock]]
 yield_profile <- read_yield_profile(params$model_name)
@@ -196,16 +203,16 @@ reported_fmsy <- read_std_value(params$model_name, "Fmsy")
 fmsy <- if (is.finite(reported_fmsy)) reported_fmsy else profile_fmsy
 
 productivity_models <- tibble(
-  model = c(params$model_name, "h1_0.14ll", "h1_0.14hs", "h1_0.14hl"),
+  model = c("h1_0.16ll", params$model_name, "h1_0.16hl", "h1_0.16hs"),
   scenario = c(
-    "Low steepness, short SR",
     "Low steepness, long SR",
-    "High steepness, short SR",
-    "High steepness, long SR"
+    "Low steepness, short SR",
+    "High steepness, long SR",
+    "High steepness, short SR"
   ),
   steepness = c(0.65, 0.65, 0.85, 0.85),
-  sr_fit = c("Short", "Long", "Short", "Long"),
-  sr_years = c("2001-2015", "1970-2022", "2001-2015", "1970-2022")
+  sr_fit = c("Long", "Short", "Long", "Short"),
+  sr_years = c("1970-2022", "2001-2015", "1970-2022", "2001-2015")
 )
 
 summarize_productivity_model <- function(model_name) {
@@ -305,6 +312,265 @@ productivity_scenario_colors <- c(
   "High steepness, short SR" = "#fdb863",
   "High steepness, long SR" = "#d95f0e"
 )
+
+h2_productivity_models <- productivity_models |>
+  mutate(model = sub("^h1_", "h2_", model))
+
+h2_stock_labels <- tibble(
+  stock = c(1, 2),
+  stock_component = c("Stock 1", "Stock 2 (Peruvian zone)")
+)
+
+summarize_h2_productivity_model <- function(model_name, stock) {
+  std_terms <- read_std_terms(
+    model_name,
+    c("Fmsy", "Fcur_Fmsy", "Bmsy", "Bcur_Bmsy"),
+    occurrence = stock
+  )
+
+  tibble(
+    model = model_name,
+    stock = stock,
+    Fmsy = std_terms$value[std_terms$term == "Fmsy"],
+    Fmsy_se = std_terms$std_dev[std_terms$term == "Fmsy"],
+    F35_est = read_r_report_value(model_name, "F35_est", stock = stock),
+    Fcur_Fmsy = std_terms$value[std_terms$term == "Fcur_Fmsy"],
+    Bmsy = std_terms$value[std_terms$term == "Bmsy"],
+    Bmsy_se = std_terms$std_dev[std_terms$term == "Bmsy"],
+    Bcur_Bmsy = std_terms$value[std_terms$term == "Bcur_Bmsy"]
+  )
+}
+
+h2_productivity_reference <- bind_rows(
+  lapply(h2_productivity_models$model, \(model_name) {
+    bind_rows(lapply(h2_stock_labels$stock, \(stock) {
+      summarize_h2_productivity_model(model_name, stock)
+    }))
+  })
+) |>
+  left_join(h2_productivity_models, by = "model") |>
+  left_join(h2_stock_labels, by = "stock") |>
+  mutate(
+    Fmsy_lower = pmax(Fmsy - 1.96 * Fmsy_se, 0),
+    Fmsy_upper = Fmsy + 1.96 * Fmsy_se,
+    scenario = factor(scenario, levels = levels(productivity_reference$scenario)),
+    stock_component = factor(stock_component, levels = h2_stock_labels$stock_component),
+    sr_fit = factor(sr_fit, levels = c("Short", "Long")),
+    steepness_label = factor(
+      paste0("h = ", steepness),
+      levels = c("h = 0.65", "h = 0.85")
+    )
+  )
+
+h2_productivity_f_reference_points <- h2_productivity_reference |>
+  select(model, stock, stock_component, scenario, steepness_label, sr_fit, Fmsy, F35_est) |>
+  pivot_longer(
+    cols = c(Fmsy, F35_est),
+    names_to = "reference",
+    values_to = "f"
+  ) |>
+  mutate(
+    reference = recode(reference, Fmsy = "Fmsy", F35_est = "F35%"),
+    reference = factor(reference, levels = c("Fmsy", "F35%"))
+  )
+
+format_h2_reference_table <- function(stock_id) {
+  h2_productivity_reference |>
+    filter(stock == stock_id) |>
+    transmute(
+      model,
+      scenario = as.character(scenario),
+      steepness = sprintf("%.2f", steepness),
+      sr_years,
+      Fmsy = sprintf("%.5f", Fmsy),
+      Fmsy_se = sprintf("%.5f", Fmsy_se),
+      F35_est = sprintf("%.5f", F35_est),
+      Fcur_Fmsy = sprintf("%.4f", Fcur_Fmsy),
+      Bmsy = sprintf("%.2f", Bmsy),
+      Bmsy_se = sprintf("%.2f", Bmsy_se),
+      Bcur_Bmsy = sprintf("%.4f", Bcur_Bmsy)
+    )
+}
+
+plot_h2_reference_points <- function(stock_id) {
+  point_data <- filter(h2_productivity_f_reference_points, stock == stock_id)
+  interval_data <- filter(h2_productivity_reference, stock == stock_id)
+
+  ggplot(point_data, aes(f, scenario, color = steepness_label, shape = reference)) +
+    geom_segment(
+      data = interval_data,
+      aes(x = Fmsy_lower, xend = Fmsy_upper, y = scenario, yend = scenario, color = steepness_label),
+      inherit.aes = FALSE,
+      linewidth = 0.8,
+      alpha = 0.6
+    ) +
+    geom_point(size = 2.8) +
+    scale_color_manual(values = c("h = 0.65" = "#2c7fb8", "h = 0.85" = "#d95f0e")) +
+    scale_shape_manual(values = c("Fmsy" = 16, "F35%" = 17)) +
+    labs(x = "F", y = NULL, color = "Steepness", shape = "Reference point") +
+    theme_report()
+}
+
+h2_model_cache <- new.env(parent = emptyenv())
+
+get_h2_model <- function(model_name) {
+  if (!exists(model_name, envir = h2_model_cache, inherits = FALSE)) {
+    assign(model_name, read_model(model_name), envir = h2_model_cache)
+  }
+
+  get(model_name, envir = h2_model_cache, inherits = FALSE)
+}
+
+read_h2_stock_output <- function(model_name, stock_id) {
+  get_h2_model(model_name)$output[[stock_id]]
+}
+
+read_h2_biomass_series <- function(model_name, stock_id) {
+  stock_obj <- read_h2_stock_output(model_name, stock_id)
+  biomass <- as_tibble(stock_obj$df1)
+  names(biomass) <- c("quantity", "year", "estimate", "sd", "lower", "upper")
+
+  biomass |>
+    mutate(across(-quantity, as.numeric)) |>
+    filter(quantity %in% c("SSB", "SSB_Nofishing")) |>
+    mutate(
+      model = model_name,
+      stock = stock_id,
+      biomass_type = case_when(
+        quantity == "SSB" ~ "With fishing",
+        quantity == "SSB_Nofishing" ~ "Dynamic Bzero"
+      ),
+      .before = 1
+    ) |>
+    select(model, stock, biomass_type, year, estimate, sd, lower, upper)
+}
+
+h2_biomass_series <- bind_rows(
+  lapply(h2_productivity_models$model, \(model_name) {
+    bind_rows(lapply(h2_stock_labels$stock, \(stock_id) {
+      read_h2_biomass_series(model_name, stock_id)
+    }))
+  })
+) |>
+  left_join(
+    h2_productivity_models |>
+      select(model, productivity_case = scenario),
+    by = "model"
+  ) |>
+  left_join(h2_stock_labels, by = "stock") |>
+  mutate(
+    productivity_case = factor(productivity_case, levels = levels(productivity_reference$scenario)),
+    stock_component = factor(stock_component, levels = h2_stock_labels$stock_component),
+    biomass_type = factor(biomass_type, levels = c("With fishing", "Dynamic Bzero"))
+  )
+
+plot_h2_dynamic_bzero <- function(stock_id) {
+  h2_biomass_series |>
+    filter(stock == stock_id) |>
+    ggplot(aes(year, estimate, color = biomass_type, fill = biomass_type)) +
+    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.10, linewidth = 0) +
+    geom_line(linewidth = 0.75) +
+    facet_wrap(~ productivity_case, ncol = 2) +
+    scale_color_manual(values = c("With fishing" = "#2c7fb8", "Dynamic Bzero" = "#d95f0e")) +
+    scale_fill_manual(values = c("With fishing" = "#2c7fb8", "Dynamic Bzero" = "#d95f0e")) +
+    labs(x = NULL, y = "Spawning biomass (kt)", color = NULL, fill = NULL) +
+    guides(fill = "none", color = guide_legend(nrow = 1)) +
+    theme_report() +
+    theme(
+      legend.position = "bottom",
+      legend.box = "vertical"
+    )
+}
+
+read_h2_majuro <- function(model_name, stock_id) {
+  stock_obj <- read_h2_stock_output(model_name, stock_id)
+  f_names <- grep("^F_fsh_[0-9]+$", names(stock_obj), value = TRUE)
+
+  annual_f <- bind_rows(
+    lapply(f_names, \(name) {
+      values <- as_tibble(stock_obj[[name]], .name_repair = "minimal")
+      names(values) <- c("year", "mean_f", "max_selectivity_scaled_f")
+      values
+    })
+  ) |>
+    mutate(across(everything(), as.numeric)) |>
+    group_by(year) |>
+    summarize(f = sum(mean_f), .groups = "drop")
+
+  depletion <- as_estimate_df(stock_obj$SSB_NoFishR, "SSB_NoFishR") |>
+    select(year, depletion = estimate, depletion_lower = lower, depletion_upper = upper)
+
+  depletion |>
+    left_join(annual_f, by = "year") |>
+    mutate(
+      model = model_name,
+      stock = stock_id,
+      f_fmsy = f / h2_productivity_reference$Fmsy[
+        match(
+          paste(model_name, stock_id),
+          paste(h2_productivity_reference$model, h2_productivity_reference$stock)
+        )
+      ],
+      .before = 1
+    )
+}
+
+h2_majuro_series <- bind_rows(
+  lapply(h2_productivity_models$model, \(model_name) {
+    bind_rows(lapply(h2_stock_labels$stock, \(stock_id) {
+      read_h2_majuro(model_name, stock_id)
+    }))
+  })
+) |>
+  left_join(
+    h2_productivity_models |>
+      select(model, productivity_case = scenario),
+    by = "model"
+  ) |>
+  left_join(h2_stock_labels, by = "stock") |>
+  mutate(
+    productivity_case = factor(productivity_case, levels = levels(productivity_reference$scenario)),
+    stock_component = factor(stock_component, levels = h2_stock_labels$stock_component)
+  )
+
+h2_majuro_terminal <- h2_majuro_series |>
+  group_by(model, stock, productivity_case) |>
+  filter(year == max(year)) |>
+  ungroup()
+
+plot_h2_majuro <- function(stock_id) {
+  plot_data <- h2_majuro_series |>
+    filter(stock == stock_id, year >= 2000)
+  terminal_data <- filter(h2_majuro_terminal, stock == stock_id)
+  x_upper <- max(0.6, ceiling(max(plot_data$depletion, na.rm = TRUE) * 10) / 10)
+  y_upper <- max(1.2, ceiling(max(plot_data$f_fmsy, na.rm = TRUE) * 10) / 10)
+
+  plot_data |>
+    ggplot(aes(depletion, f_fmsy, color = productivity_case, group = model)) +
+    annotate("rect", xmin = -Inf, xmax = 0.2, ymin = 1, ymax = Inf, fill = "#d73027", alpha = 0.08) +
+    annotate("rect", xmin = 0.2, xmax = Inf, ymin = 1, ymax = Inf, fill = "#fc8d59", alpha = 0.08) +
+    annotate("rect", xmin = -Inf, xmax = 0.2, ymin = -Inf, ymax = 1, fill = "#fee08b", alpha = 0.12) +
+    geom_vline(xintercept = 0.2, linewidth = 0.65, linetype = "dashed", color = "gray35") +
+    geom_hline(yintercept = 1, linewidth = 0.65, linetype = "dashed", color = "gray35") +
+    geom_path(linewidth = 0.75, alpha = 0.85) +
+    geom_point(aes(alpha = year == max(year)), size = 1.4, show.legend = FALSE) +
+    geom_point(
+      data = terminal_data,
+      aes(depletion, f_fmsy, color = productivity_case),
+      inherit.aes = FALSE,
+      size = 3
+    ) +
+    scale_color_manual(values = productivity_scenario_colors) +
+    scale_alpha_manual(values = c(`FALSE` = 0.45, `TRUE` = 1)) +
+    coord_cartesian(xlim = c(0, x_upper), ylim = c(0, y_upper), expand = FALSE) +
+    labs(x = expression(SSB / SSB[F == 0]), y = expression(F / F[MSY]), color = NULL) +
+    guides(color = guide_legend(nrow = 2)) +
+    theme_report() +
+    theme(
+      legend.position = "bottom",
+      legend.box = "vertical"
+    )
+}
 
 read_productivity_majuro <- function(model_name) {
   model_obj <- if (identical(model_name, params$model_name)) model else read_model(model_name)
@@ -507,7 +773,7 @@ fishery_f_ratio <- {
 
 Based on the outcomes of the SCW16 benchmark workshop, the framework for developing and conditioning operating models depends partly on assumptions used for the stock-recruitment relationship (SRR). Here we explore those assumptions using four productivity cases and evaluate the potential for using proxy reference points, including spawning-biomass per-recruit (SPR) quantities that are commonly used worldwide.
 
-The productivity grid now uses four explicit `0.14` runs: low steepness with the short SRR fitting period, low steepness with the long SRR fitting period, high steepness with the short SRR fitting period, and high steepness with the long SRR fitting period. Across these runs, $F_{MSY}$ spans `r round(min(productivity_reference$Fmsy, na.rm = TRUE), 3)` to `r round(max(productivity_reference$Fmsy, na.rm = TRUE), 3)`, while $F_{35\%}$ spans only `r round(min(productivity_reference$F35_est, na.rm = TRUE), 3)` to `r round(max(productivity_reference$F35_est, na.rm = TRUE), 3)`.
+The productivity grid now uses four explicit `h1_0.16` runs with `ll`, `ls`, `hl`, and `hs` productivity variants. The matching `h2_0.16` two-stock runs are summarized separately. Across the primary `h1_0.16` runs, $F_{MSY}$ spans `r round(min(productivity_reference$Fmsy, na.rm = TRUE), 3)` to `r round(max(productivity_reference$Fmsy, na.rm = TRUE), 3)`, while $F_{35\%}$ spans only `r round(min(productivity_reference$F35_est, na.rm = TRUE), 3)` to `r round(max(productivity_reference$F35_est, na.rm = TRUE), 3)`.
 
 The contrast is useful for management strategy evaluation (MSE). MSY-based reference points are sensitive to SRR assumptions and therefore to operating-model productivity choices. SPR-based reference points are not free of biological or selectivity assumptions, but they are free of SRR assumptions. Dynamic Bzero and Majuro-style stock-status plots provide an additional way to communicate current stock status without dividing biomass by an estimated $B_{MSY}$ that changes across productivity cases.
 
@@ -525,14 +791,16 @@ Technical details of the JJM, likelihood components, biological inputs, and asse
 
 ## Productivity Cases
 
-The low-steepness short-SRR run is now represented explicitly as `h1_0.14ls`. In this paper, "low productivity" refers to steepness $h = 0.65$ and "high productivity" refers to steepness $h = 0.85$. The updated short SRR fitting period uses 2001-2015 and the long SRR fitting period uses 1970-2022. The four runs are:
+The primary one-stock productivity grid uses the `h1_0.16.ctl` control-file family and its explicit productivity variants. In this paper, "low productivity" refers to steepness $h = 0.65$ and "high productivity" refers to steepness $h = 0.85$. The updated short SRR fitting period uses 2001-2015 and the long SRR fitting period uses 1970-2022. The four `h1_0.16` runs are:
 
-1. `h1_0.14ls`: low steepness and short SRR fitting period;
-2. `h1_0.14ll`: low steepness and long SRR fitting period;
-3. `h1_0.14hs`: high steepness and short SRR fitting period;
-4. `h1_0.14hl`: high steepness and long SRR fitting period.
+1. `h1_0.16ll`: low steepness and long SRR fitting period;
+2. `h1_0.16ls`: low steepness and short SRR fitting period;
+3. `h1_0.16hl`: high steepness and long SRR fitting period;
+4. `h1_0.16hs`: high steepness and short SRR fitting period.
 
 For each run, the yield profile was read from the `.yld` output and the reported standard-deviation terms were read from the `.std` output. The reported $F_{MSY}$, $B_{MSY}$, current ratios, profile maximum, and $F_{35\%}$ were then compiled for comparison.
+
+The same productivity suffixes are also summarized for the matching two-stock `h2_0.16` runs: `h2_0.16ll`, `h2_0.16ls`, `h2_0.16hl`, and `h2_0.16hs`. For these h2 runs, stock-specific MSY terms are read by occurrence in the `.std` file, and stock-specific $F_{35\%}$ values are read from the corresponding `_1_R.rep` and `_2_R.rep` files.
 
 ## Dynamic Bzero
 
@@ -560,18 +828,18 @@ The Majuro plot in this paper uses $SSB/SSB_{F=0}$ from `SSB_NoFishR` and annual
 
 ## Productivity Estimates
 
-The F profile from `h1_0.14ls` provides the starting point for comparing MSY-based and SPR-based reference points. In @fig-f-profile, $F_{35\%}$ is marked against the same profile as $F_{MSY}$. The two values are close only under some productivity assumptions. Across all four runs, $F_{35\%}$ is much more stable than $F_{MSY}$ because it does not use the SRR.
+The F profile from `h1_0.16ls` provides the starting point for comparing MSY-based and SPR-based reference points. In @fig-f-profile, $F_{35\%}$ is marked against the same profile as $F_{MSY}$. The two values are close only under some productivity assumptions. Across all four runs, $F_{35\%}$ is much more stable than $F_{MSY}$ because it does not use the SRR.
 
 ```{r}
 #| label: tbl-spr-reference
-#| tbl-cap: "SPR reference point from h1_0.14ls. SBF35 is interpolated from the yield profile at SPR = 0.35."
+#| tbl-cap: "SPR reference point from h1_0.16ls. SBF35 is interpolated from the yield profile at SPR = 0.35."
 
 kable(spr_reference, digits = 4)
 ```
 
 ```{r}
 #| label: fig-f-profile
-#| fig-cap: "F profile from the h1_0.14ls yield-profile output. Vertical lines mark F35% and Fmsy on the profile."
+#| fig-cap: "F profile from the h1_0.16ls yield-profile output. Vertical lines mark F35% and Fmsy on the profile."
 #| fig-width: 9
 #| fig-height: 6.5
 
@@ -620,7 +888,7 @@ productivity_reference |>
     MSY,
     SPR_at_profile_Fmsy
   ) |>
-  kable(digits = 4)
+  kable(digits = 5)
 ```
 
 ```{r}
@@ -682,6 +950,72 @@ ggplot(productivity_yield_profiles, aes(f, yield, color = scenario, linetype = s
   )
 ```
 
+## Two-stock hypotheses
+
+The `h2_0.16` run set applies the same productivity suffixes to the two-stock model. Because h2 reports stock-specific reference-point quantities, Stock 1 and Stock 2 (Peruvian zone) are shown separately below rather than mixed in the same table and figure.
+
+### Stock 1
+
+```{r}
+#| label: tbl-h2-stock1-reference
+#| tbl-cap: "Stock 1 reference-point quantities from h2_0.16 productivity runs. MSY terms are read by stock occurrence in the .std file, and F35% is read from the matching stock-specific R report."
+
+format_h2_reference_table(1) |>
+  kable()
+```
+
+```{r}
+#| label: fig-h2-stock1-fmsy-range
+#| fig-cap: "Stock 1 Fmsy and F35% estimates for h2_0.16 productivity runs. Horizontal bars show approximate 95% intervals for Fmsy using the reported standard errors."
+
+plot_h2_reference_points(1)
+```
+
+```{r}
+#| label: fig-h2-stock1-dynamic-bzero
+#| fig-cap: "Stock 1 spawning biomass with fishing and dynamic Bzero across h2_0.16 productivity runs."
+
+plot_h2_dynamic_bzero(1)
+```
+
+```{r}
+#| label: fig-h2-stock1-majuro
+#| fig-cap: "Stock 1 Majuro stock-status plot for h2_0.16 productivity runs, showing the 2000-2025 trajectory. Larger points mark terminal-year status."
+
+plot_h2_majuro(1)
+```
+
+### Stock 2 (Peruvian zone)
+
+```{r}
+#| label: tbl-h2-stock2-reference
+#| tbl-cap: "Stock 2 (Peruvian zone) reference-point quantities from h2_0.16 productivity runs. MSY terms are read by stock occurrence in the .std file, and F35% is read from the matching stock-specific R report."
+
+format_h2_reference_table(2) |>
+  kable()
+```
+
+```{r}
+#| label: fig-h2-stock2-fmsy-range
+#| fig-cap: "Stock 2 (Peruvian zone) Fmsy and F35% estimates for h2_0.16 productivity runs. Horizontal bars show approximate 95% intervals for Fmsy using the reported standard errors."
+
+plot_h2_reference_points(2)
+```
+
+```{r}
+#| label: fig-h2-stock2-dynamic-bzero
+#| fig-cap: "Stock 2 (Peruvian zone) spawning biomass with fishing and dynamic Bzero across h2_0.16 productivity runs."
+
+plot_h2_dynamic_bzero(2)
+```
+
+```{r}
+#| label: fig-h2-stock2-majuro
+#| fig-cap: "Stock 2 (Peruvian zone) Majuro stock-status plot for h2_0.16 productivity runs, showing the 2000-2025 trajectory. Larger points mark terminal-year status."
+
+plot_h2_majuro(2)
+```
+
 ## Dynamic Bzero Estimates
 
 The post-2000 view in @fig-ssb-bmsy-productivity shows that recent fished SSB trajectories are broadly similar across productivity cases, but the $B_{MSY}$ reference levels diverge strongly. The low-steepness, long-SR run has the highest $B_{MSY}$ (`r round(max(bmsy_reference$Bmsy, na.rm = TRUE), 0)` kt), while the high-steepness, short-SR run has the lowest $B_{MSY}$ (`r round(min(bmsy_reference$Bmsy, na.rm = TRUE), 0)` kt). Consequently, status relative to $B_{MSY}$ is strongly influenced by the productivity assumption.
@@ -715,7 +1049,7 @@ productivity_ssb_series |>
   )
 ```
 
-The dynamic-Bzero comparison for `h1_0.14ls` is shown in @fig-ssb-fished-dynamic-bzero. This is a counterfactual SSB comparison: the no-fishing trajectory is not a fixed scalar but an annual dynamic series.
+The dynamic-Bzero comparison for `h1_0.16ls` is shown in @fig-ssb-fished-dynamic-bzero. This is a counterfactual SSB comparison: the no-fishing trajectory is not a fixed scalar but an annual dynamic series.
 
 ```{r}
 #| label: fig-ssb-fished-dynamic-bzero
@@ -764,7 +1098,7 @@ The Majuro plot in @fig-majuro-productivity shows the 2000-2025 trajectory for e
 
 ```{r}
 #| label: fig-majuro-productivity
-#| fig-cap: "Majuro plot for model 0.14 productivity assumptions, showing the 2000-2025 trajectory. Larger points mark terminal-year status. The vertical line marks SSB/SSB_F=0 = 0.2 for orientation and the horizontal line marks F/Fmsy = 1."
+#| fig-cap: "Majuro plot for model 0.16 productivity assumptions, showing the 2000-2025 trajectory. Larger points mark terminal-year status. The vertical line marks SSB/SSB_F=0 = 0.2 for orientation and the horizontal line marks F/Fmsy = 1."
 
 majuro_series |>
   filter(year >= 2000) |>
