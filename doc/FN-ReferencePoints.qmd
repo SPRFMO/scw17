@@ -1,0 +1,821 @@
+---
+title: "FN Peru-only model reference-point diagnostics"
+date: today
+format:
+  html:
+    output-file: "FN-ReferencePoints.html"
+    self-contained: true
+    lightbox: true
+    html-math-method: katex
+    toc: true
+    toc-title: "Contents"
+    toc-depth: 2
+    toc-location: left
+    number-sections: true
+    number-depth: 2
+    theme: cosmo
+    fig-width: 9
+    fig-height: 5
+    df-print: paged
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(jjmR)
+library(dplyr)
+library(ggplot2)
+library(knitr)
+library(tidyr)
+
+date_stamp <- format(Sys.time(), "Rendered %d %B %Y, %H:%M %Z")
+stock_id <- 1
+
+doc_dir <- dirname(knitr::current_input(dir = TRUE))
+assessment_candidates <- c(
+  Sys.getenv("JJM_ASSESSMENT_DIR", unset = ""),
+  file.path(doc_dir, "..", "assessment"),
+  file.path(doc_dir, "..", "..", "jjm", "assessment")
+)
+assessment_candidates <- assessment_candidates[nzchar(assessment_candidates)]
+assessment_dir <- assessment_candidates[file.exists(file.path(assessment_candidates, "config"))][1]
+if (is.na(assessment_dir)) {
+  stop("Could not find the JJM assessment directory. Set JJM_ASSESSMENT_DIR to its path.")
+}
+assessment_dir <- normalizePath(assessment_dir, winslash = "/", mustWork = TRUE)
+assessment_file <- function(...) file.path(assessment_dir, ...)
+source(assessment_file("R", "diagnostic_composition_plots.R"))
+
+model_info <- tibble(
+  model = c("FN", "FN_msy_sel5"),
+  label = c("FN base", "FN -msy_sel 5"),
+  msy_sel_argument = c("default", "-msy_sel 5")
+) |>
+  mutate(label = factor(label, levels = label))
+
+model_colors <- c("FN base" = "#2c7fb8", "FN -msy_sel 5" = "#d95f0e")
+
+read_model_bundle <- function(model_name) {
+  readJJM(
+    model_name,
+    path = assessment_file("config"),
+    input = assessment_file("input"),
+    output = assessment_file("results"),
+    version = "2015MS"
+  )
+}
+
+read_yield_profile <- function(model_name) {
+  read.table(
+    assessment_file("results", paste0(model_name, ".yld")),
+    skip = 5,
+    fill = TRUE,
+    col.names = c("f", "spawning_biomass", "yield", "recruitment", "spr", "total_biomass")
+  ) |>
+    as_tibble() |>
+    mutate(across(everything(), as.numeric)) |>
+    filter(!is.na(f), !is.na(spawning_biomass), !is.na(yield), !is.na(spr))
+}
+
+read_std_terms <- function(model_name, terms, occurrence = 1) {
+  std_file <- assessment_file("results", paste0(model_name, ".std"))
+  out <- tibble(term = terms, value = NA_real_, std_dev = NA_real_)
+  if (!file.exists(std_file)) {
+    return(out)
+  }
+
+  std_output <- read.table(std_file, header = TRUE)
+  matched <- vapply(terms, function(term) {
+    matches <- which(std_output$name == term)
+    if (length(matches) < occurrence) {
+      NA_integer_
+    } else {
+      matches[[occurrence]]
+    }
+  }, integer(1))
+
+  out$value <- as.numeric(std_output$value[matched])
+  out$std_dev <- as.numeric(std_output$std.dev[matched])
+  out
+}
+
+read_std_series <- function(model_name, term, years) {
+  std_file <- assessment_file("results", paste0(model_name, ".std"))
+  if (!file.exists(std_file)) {
+    return(tibble(year = years, value = NA_real_, std_dev = NA_real_))
+  }
+
+  std_output <- read.table(std_file, header = TRUE)
+  matches <- which(std_output$name == term)
+  matches <- matches[seq_len(min(length(matches), length(years)))]
+
+  tibble(
+    year = years[seq_along(matches)],
+    value = as.numeric(std_output$value[matches]),
+    std_dev = as.numeric(std_output$std.dev[matches])
+  )
+}
+
+read_r_report_value <- function(model_name, term, stock = 1) {
+  r_report_file <- assessment_file("results", paste0(model_name, "_", stock, "_R.rep"))
+  if (!file.exists(r_report_file)) {
+    return(NA_real_)
+  }
+
+  r_report <- readLines(r_report_file, warn = FALSE)
+  term_line <- which(r_report == paste0("$", term))[1]
+  if (is.na(term_line) || term_line == length(r_report)) {
+    return(NA_real_)
+  }
+
+  as.numeric(strsplit(trimws(r_report[term_line + 1]), "\\s+")[[1]][1])
+}
+
+read_par_summary <- function(model_name) {
+  par_file <- assessment_file("results", paste0(model_name, ".par"))
+  vals <- as.numeric(scan(par_file, what = "", n = 16, quiet = TRUE)[c(6, 11, 16)])
+  tibble(n_parameters = as.integer(vals[1]), nll = vals[2], max_gradient = vals[3])
+}
+
+interpolate_spr <- function(profile, target_spr = 0.35) {
+  profile <- arrange(profile, f)
+  crossing <- which(
+    (head(profile$spr, -1) - target_spr) *
+      (tail(profile$spr, -1) - target_spr) <= 0
+  )[1]
+
+  if (is.na(crossing)) {
+    return(tibble(
+      profile_f_at_spr35 = NA_real_,
+      sbf35 = NA_real_,
+      yield_at_spr35 = NA_real_,
+      recruitment_at_spr35 = NA_real_,
+      total_biomass_at_spr35 = NA_real_
+    ))
+  }
+
+  lower <- profile[crossing, ]
+  upper <- profile[crossing + 1, ]
+  weight <- (target_spr - lower$spr) / (upper$spr - lower$spr)
+
+  tibble(
+    profile_f_at_spr35 = lower$f + weight * (upper$f - lower$f),
+    sbf35 = lower$spawning_biomass + weight * (upper$spawning_biomass - lower$spawning_biomass),
+    yield_at_spr35 = lower$yield + weight * (upper$yield - lower$yield),
+    recruitment_at_spr35 = lower$recruitment + weight * (upper$recruitment - lower$recruitment),
+    total_biomass_at_spr35 = lower$total_biomass + weight * (upper$total_biomass - lower$total_biomass)
+  )
+}
+
+interpolate_f <- function(profile, target_f) {
+  if (!is.finite(target_f)) {
+    return(tibble(
+      spawning_biomass_at_f = NA_real_,
+      yield_at_f = NA_real_,
+      recruitment_at_f = NA_real_,
+      spr_at_f = NA_real_,
+      total_biomass_at_f = NA_real_
+    ))
+  }
+
+  profile <- arrange(profile, f)
+  tibble(
+    spawning_biomass_at_f = approx(profile$f, profile$spawning_biomass, xout = target_f)$y,
+    yield_at_f = approx(profile$f, profile$yield, xout = target_f)$y,
+    recruitment_at_f = approx(profile$f, profile$recruitment, xout = target_f)$y,
+    spr_at_f = approx(profile$f, profile$spr, xout = target_f)$y,
+    total_biomass_at_f = approx(profile$f, profile$total_biomass, xout = target_f)$y
+  )
+}
+
+as_estimate_df <- function(x, quantity = NULL) {
+  out <- as_tibble(x)
+  names(out) <- c("year", "estimate", "sd", "lower", "upper")
+  out <- mutate(out, across(everything(), as.numeric))
+  if (!is.null(quantity)) {
+    out <- mutate(out, quantity = quantity, .before = 1)
+  }
+  out
+}
+
+theme_report <- function() {
+  theme_minimal(base_size = 12) +
+    theme(
+      legend.position = "top",
+      panel.grid.minor = element_blank(),
+      plot.title.position = "plot"
+    )
+}
+
+model_bundles <- setNames(lapply(model_info$model, read_model_bundle), model_info$model)
+
+summarize_model <- function(model_name, label, msy_sel_argument) {
+  model <- model_bundles[[model_name]][[1]]
+  stock_output <- model$output[[stock_id]]
+  profile <- read_yield_profile(model_name)
+  profile_positive <- profile |>
+    filter(spawning_biomass >= 0, yield >= 0, recruitment >= 0)
+  profile_msy_row <- profile_positive |>
+    slice_max(yield, n = 1, with_ties = FALSE)
+  std_terms <- read_std_terms(model_name, c("Fmsy", "Fcur_Fmsy", "Bmsy", "Bcur_Bmsy"))
+  reported_fmsy <- std_terms$value[std_terms$term == "Fmsy"]
+  fmsy <- if (is.finite(reported_fmsy)) reported_fmsy else profile_msy_row$f
+  f35_est <- read_r_report_value(model_name, "F35_est", stock = stock_id)
+  if (!is.finite(f35_est)) {
+    f35_est <- as.numeric(stock_output$F35_est)
+  }
+
+  spr35 <- interpolate_spr(profile_positive, target_spr = 0.35)
+  fmsy_profile_values <- interpolate_f(profile_positive, fmsy)
+
+  tibble(
+    model = model_name,
+    label = label,
+    msy_sel_argument = msy_sel_argument,
+    stock = stock_id,
+    F35_est = f35_est,
+    F_at_SPR35_profile = spr35$profile_f_at_spr35,
+    Fmsy = fmsy,
+    Fmsy_se = std_terms$std_dev[std_terms$term == "Fmsy"],
+    profile_Fmsy = profile_msy_row$f,
+    MSY = profile_msy_row$yield,
+    SPR_at_Fmsy = fmsy_profile_values$spr_at_f,
+    SBF35 = spr35$sbf35,
+    yield_at_SPR35 = spr35$yield_at_spr35,
+    yield_at_Fmsy = fmsy_profile_values$yield_at_f,
+    Bmsy = std_terms$value[std_terms$term == "Bmsy"],
+    Bmsy_se = std_terms$std_dev[std_terms$term == "Bmsy"],
+    Fcur_Fmsy = std_terms$value[std_terms$term == "Fcur_Fmsy"],
+    Bcur_Bmsy = std_terms$value[std_terms$term == "Bcur_Bmsy"]
+  )
+}
+
+reference_summary <- bind_rows(
+  Map(summarize_model, model_info$model, model_info$label, model_info$msy_sel_argument)
+) |>
+  mutate(label = factor(label, levels = levels(model_info$label)))
+
+run_summary <- bind_rows(lapply(seq_len(nrow(model_info)), function(i) {
+  model_name <- model_info$model[[i]]
+  model_obj <- model_bundles[[model_name]][[1]]
+  stock_output <- model_obj$output[[stock_id]]
+
+  tibble(
+    model = model_name,
+    label = model_info$label[[i]],
+    msy_sel_argument = model_info$msy_sel_argument[[i]],
+    data_file = model_obj$control$dataFile,
+    stocks = model_obj$control$nStocks,
+    fisheries = model_obj$data$Fnum,
+    fishery_names = paste(model_obj$data$Fnames, collapse = ", "),
+    indices = model_obj$data$Inum,
+    index_names = paste(model_obj$data$Inames, collapse = ", "),
+    fishery_age_comp_years = sum(model_obj$data$FnumyearsA),
+    fishery_length_comp_years = sum(model_obj$data$FnumyearsL),
+    end_year = max(as.integer(stock_output$Yr))
+  ) |>
+    bind_cols(read_par_summary(model_name))
+})) |>
+  mutate(label = factor(label, levels = levels(model_info$label)))
+
+yield_profiles <- bind_rows(lapply(seq_len(nrow(model_info)), function(i) {
+  read_yield_profile(model_info$model[[i]]) |>
+    filter(spawning_biomass >= 0, yield >= 0, recruitment >= 0) |>
+    mutate(
+      model = model_info$model[[i]],
+      label = model_info$label[[i]],
+      .before = 1
+    )
+})) |>
+  mutate(label = factor(label, levels = levels(model_info$label)))
+
+profile_plot_max_f <- max(reference_summary$F35_est, reference_summary$Fmsy, reference_summary$profile_Fmsy, na.rm = TRUE) * 1.8
+f_profile <- yield_profiles |>
+  filter(f <= profile_plot_max_f) |>
+  select(model, label, f, `Spawning biomass` = spawning_biomass, Yield = yield, Recruitment = recruitment, SPR = spr) |>
+  pivot_longer(c(`Spawning biomass`, Yield, Recruitment, SPR), names_to = "quantity", values_to = "value") |>
+  mutate(quantity = factor(quantity, levels = c("Yield", "Spawning biomass", "Recruitment", "SPR")))
+
+f_reference_lines <- reference_summary |>
+  select(model, label, F35_est, Fmsy) |>
+  pivot_longer(c(F35_est, Fmsy), names_to = "reference", values_to = "f") |>
+  mutate(
+    reference = recode(reference, F35_est = "F35%", Fmsy = "Fmsy"),
+    reference = factor(reference, levels = c("F35%", "Fmsy"))
+  )
+
+fbar_series <- bind_rows(lapply(seq_len(nrow(model_info)), function(i) {
+  model_name <- model_info$model[[i]]
+  years <- as.integer(model_bundles[[model_name]][[1]]$output[[stock_id]]$Yr)
+  read_std_series(model_name, "Fbar", years) |>
+    mutate(
+      model = model_name,
+      label = model_info$label[[i]],
+      lower = pmax(value - 1.96 * std_dev, 0),
+      upper = value + 1.96 * std_dev,
+      .before = 1
+    )
+})) |>
+  mutate(label = factor(label, levels = levels(model_info$label)))
+
+fishery_f <- bind_rows(lapply(seq_len(nrow(model_info)), function(i) {
+  model_name <- model_info$model[[i]]
+  stock_output <- model_bundles[[model_name]][[1]]$output[[stock_id]]
+  out <- as_tibble(stock_output$F_fsh_1, .name_repair = "minimal")
+  names(out) <- c("year", "mean_f", "max_selectivity_scaled_f")
+  out |>
+    mutate(across(everything(), as.numeric)) |>
+    pivot_longer(-year, names_to = "quantity", values_to = "value") |>
+    mutate(
+      model = model_name,
+      label = model_info$label[[i]],
+      quantity = recode(
+        quantity,
+        mean_f = "Mean F",
+        max_selectivity_scaled_f = "Max-selectivity-scaled F"
+      ),
+      .before = 1
+    )
+})) |>
+  mutate(label = factor(label, levels = levels(model_info$label)))
+
+selectivity_at_age <- bind_rows(lapply(seq_len(nrow(model_info)), function(i) {
+  model_name <- model_info$model[[i]]
+  label <- model_info$label[[i]]
+  stock_output <- model_bundles[[model_name]][[1]]$output[[stock_id]]
+
+  terminal_selectivity <- suppressWarnings(get_selectivities(model_bundles[[model_name]])) |>
+    filter(fleet_type == "fsh", fleet_name == "FarNorth", stock == "Stock_1") |>
+    mutate(year = as.integer(year)) |>
+    group_by(year) |>
+    arrange(age, .by_group = TRUE) |>
+    mutate(actual_age = row_number()) |>
+    ungroup() |>
+    filter(year == max(year)) |>
+    transmute(
+      model = model_name,
+      label = label,
+      age = actual_age,
+      selectivity,
+      source = "Terminal FarNorth"
+    )
+
+  msy_selectivity <- tibble(
+    model = model_name,
+    label = label,
+    age = seq_along(as.numeric(stock_output$sel_msy)),
+    selectivity = as.numeric(stock_output$sel_msy),
+    source = "sel_msy"
+  )
+
+  bind_rows(terminal_selectivity, msy_selectivity)
+})) |>
+  mutate(
+    label = factor(label, levels = levels(model_info$label)),
+    source = factor(source, levels = c("Terminal FarNorth", "sel_msy"))
+  )
+
+biomass_series <- bind_rows(lapply(seq_len(nrow(model_info)), function(i) {
+  model_name <- model_info$model[[i]]
+  stock_output <- model_bundles[[model_name]][[1]]$output[[stock_id]]
+  df1 <- as_tibble(stock_output$df1)
+  names(df1) <- c("quantity", "year", "estimate", "sd", "lower", "upper")
+  df1 |>
+    mutate(across(-quantity, as.numeric)) |>
+    filter(quantity %in% c("SSB", "SSB_Nofishing")) |>
+    mutate(
+      model = model_name,
+      label = model_info$label[[i]],
+      biomass_type = recode(
+        quantity,
+        SSB = "With fishing",
+        SSB_Nofishing = "Dynamic Bzero"
+      ),
+      .before = 1
+    )
+})) |>
+  mutate(label = factor(label, levels = levels(model_info$label)))
+
+depletion_series <- bind_rows(lapply(seq_len(nrow(model_info)), function(i) {
+  model_name <- model_info$model[[i]]
+  stock_output <- model_bundles[[model_name]][[1]]$output[[stock_id]]
+  as_estimate_df(stock_output$SSB_NoFishR, "SSB_NoFishR") |>
+    mutate(
+      model = model_name,
+      label = model_info$label[[i]],
+      .before = 1
+  )
+})) |>
+  mutate(label = factor(label, levels = levels(model_info$label)))
+
+base_model_name <- "FN"
+base_model_label <- "FN base"
+base_bundle <- model_bundles[[base_model_name]]
+base_model <- base_bundle[[1]]
+
+extract_fn_index_fits <- function(mod_bundle, stock = 1) {
+  mod <- mod_bundle[[1]]
+  index_names <- trimws(as.character(mod$data$Inames))
+  out <- mod$output[[stock]]
+  survey_names <- grep("^Obs_Survey_[0-9]+$", names(out), value = TRUE)
+
+  bind_rows(lapply(survey_names, function(survey_name) {
+    index_id <- as.integer(sub("^Obs_Survey_([0-9]+)$", "\\1", survey_name))
+    x <- as.matrix(out[[survey_name]])
+    if (is.null(x) || ncol(x) < 3) {
+      return(tibble())
+    }
+
+    tibble(
+      index_id = index_id,
+      index = if (index_id <= length(index_names)) index_names[[index_id]] else paste0("Index_", index_id),
+      year = as.integer(x[, 1]),
+      observed = as.numeric(x[, 2]),
+      predicted = as.numeric(x[, 3]),
+      sd = if (ncol(x) >= 4) as.numeric(x[, 4]) else NA_real_,
+      std_residual = if (ncol(x) >= 5) as.numeric(x[, 5]) else NA_real_,
+      log_std_residual = if (ncol(x) >= 6) as.numeric(x[, 6]) else NA_real_
+    )
+  })) |>
+    mutate(index = gsub("_", " ", index))
+}
+
+fn_index_fits <- extract_fn_index_fits(base_bundle, stock = stock_id)
+
+fn_catch_biomass <- tibble(
+  year = as.integer(base_model$output[[stock_id]]$Yr),
+  observed = as.numeric(base_model$output[[stock_id]]$Obs_catch_1),
+  predicted = as.numeric(base_model$output[[stock_id]]$Pred_catch_1)
+) |>
+  pivot_longer(c(observed, predicted), names_to = "series", values_to = "catch_biomass") |>
+  mutate(
+    series = recode(series, observed = "Observed", predicted = "Predicted"),
+    series = factor(series, levels = c("Observed", "Predicted"))
+  )
+
+fn_length_fits <- diagnostic_comp_data(base_bundle, stock = stock_id, comp_type = "length") |>
+  filter(source_type == "fsh") |>
+  mutate(
+    period = case_when(
+      year < 2002 ~ "1972-2001",
+      year <= 2015 ~ "2002-2015",
+      TRUE ~ "2016-2025"
+    ),
+    period = factor(period, levels = c("1972-2001", "2002-2015", "2016-2025"))
+  )
+
+fn_length_observed <- fn_length_fits |>
+  group_by(source_name, year, bin) |>
+  summarise(
+    observed = first(observed),
+    sample_size = first(sample_size),
+    period = first(period),
+    .groups = "drop"
+  )
+
+fn_selectivity_time <- suppressWarnings(get_selectivities(base_bundle)) |>
+  filter(fleet_type == "fsh", fleet_name == "FarNorth", stock == "Stock_1") |>
+  mutate(year = as.integer(year)) |>
+  group_by(year) |>
+  arrange(age, .by_group = TRUE) |>
+  mutate(actual_age = row_number()) |>
+  ungroup()
+
+plot_fn_index_fits <- function() {
+  ggplot(fn_index_fits, aes(year, predicted)) +
+    geom_linerange(
+      aes(ymin = pmax(observed - 1.96 * sd, 0), ymax = observed + 1.96 * sd),
+      color = "grey45",
+      alpha = 0.45,
+      linewidth = 0.45,
+      na.rm = TRUE
+    ) +
+    geom_point(aes(y = observed), color = "black", size = 1.6, alpha = 0.85, na.rm = TRUE) +
+    geom_line(color = model_colors[[base_model_label]], linewidth = 0.9, na.rm = TRUE) +
+    facet_wrap(vars(index), scales = "free_y", ncol = 1) +
+    scale_x_continuous(breaks = scales::breaks_width(3)) +
+    labs(x = "Year", y = "Index value") +
+    theme_report()
+}
+
+plot_fn_catch_biomass <- function() {
+  ggplot(fn_catch_biomass, aes(year, catch_biomass, color = series)) +
+    geom_line(linewidth = 0.85, na.rm = TRUE) +
+    geom_point(
+      data = filter(fn_catch_biomass, series == "Observed"),
+      size = 1.4,
+      alpha = 0.85,
+      na.rm = TRUE
+    ) +
+    scale_color_manual(values = c("Observed" = "black", "Predicted" = model_colors[[base_model_label]])) +
+    scale_x_continuous(breaks = scales::breaks_width(5)) +
+    labs(x = "Year", y = "Catch biomass", color = NULL) +
+    theme_report()
+}
+
+plot_fn_length_aggregate <- function() {
+  aggregate_fit <- fn_length_fits |>
+    filter(is.finite(observed), is.finite(fitted)) |>
+    mutate(weight = if_else(is.finite(sample_size) & sample_size > 0, sample_size, 1)) |>
+    group_by(period, bin) |>
+    summarise(
+      fitted = sum(fitted * weight, na.rm = TRUE) / sum(weight, na.rm = TRUE),
+      observed = sum(observed * weight, na.rm = TRUE) / sum(weight, na.rm = TRUE),
+      .groups = "drop"
+    )
+
+  ggplot(aggregate_fit, aes(bin, fitted)) +
+    geom_col(
+      aes(y = observed),
+      fill = "#c6dcea",
+      color = "#3c88ad",
+      linewidth = 0.25,
+      width = 0.85,
+      alpha = 0.9
+    ) +
+    geom_line(color = model_colors[[base_model_label]], linewidth = 0.95) +
+    geom_point(color = model_colors[[base_model_label]], size = 1.3) +
+    facet_wrap(vars(period), ncol = 1) +
+    scale_x_continuous(breaks = scales::breaks_width(5)) +
+    labs(x = "Length", y = "Proportion") +
+    theme_report()
+}
+
+plot_fn_length_years <- function(year_min = NULL, ncol = 4) {
+  dat <- fn_length_fits
+  obs <- fn_length_observed
+  if (!is.null(year_min)) {
+    dat <- filter(dat, year >= year_min)
+    obs <- filter(obs, year >= year_min)
+  }
+
+  ggplot(dat, aes(bin, fitted)) +
+    geom_point(
+      data = obs,
+      aes(bin, observed),
+      inherit.aes = FALSE,
+      color = "black",
+      size = 0.7,
+      alpha = 0.72,
+      na.rm = TRUE
+    ) +
+    geom_line(color = model_colors[[base_model_label]], linewidth = 0.55, alpha = 0.95, na.rm = TRUE) +
+    facet_wrap(vars(year), ncol = ncol) +
+    scale_x_continuous(breaks = scales::breaks_width(10)) +
+    scale_y_continuous(limits = c(0, NA)) +
+    labs(x = "Length", y = "Proportion") +
+    theme_report()
+}
+
+plot_fn_selectivity_time <- function() {
+  year_breaks <- sort(unique(fn_selectivity_time$year))
+  year_breaks <- year_breaks[year_breaks %% 5 == 0]
+
+  ggplot(
+    fn_selectivity_time,
+    aes(
+      x = actual_age,
+      y = forcats::fct_rev(factor(year)),
+      height = selectivity,
+      group = year
+    )
+  ) +
+    ggridges::geom_density_ridges(
+      stat = "identity",
+      fill = model_colors[[base_model_label]],
+      color = model_colors[[base_model_label]],
+      alpha = 0.45,
+      scale = 3.5,
+      linewidth = 0.3
+    ) +
+    scale_x_continuous(breaks = 1:12, limits = c(1, 12)) +
+    scale_y_discrete(breaks = as.character(year_breaks)) +
+    labs(x = "Age", y = "Year") +
+    theme_report() +
+    theme(legend.position = "none")
+}
+```
+
+::: {.content-visible .no-para-number unless-format="pdf"}
+::: {.no-para-number style="text-align: center; margin-top: 0.75rem; margin-bottom: 1rem;"}
+`r date_stamp`
+:::
+:::
+
+# Purpose
+
+This document is a focused diagnostic for the `FN` Peru-only test model. Both runs use the same single-stock configuration with FarNorth catch, FarNorth length composition data from `0.15.dat`, and the two Peruvian CPUE indices (`Peru_Artis` and `Peru_Ind`). The comparison isolates the command-line MSY selectivity option: the base run uses the default `jjm` behavior and the alternative run uses `-msy_sel 5`.
+
+```{r}
+#| label: tbl-run-summary
+#| tbl-cap: "FN run configurations read from the active assessment outputs."
+
+kable(run_summary, digits = 5)
+```
+
+# Base Run Fits
+
+The diagnostics in this section use only the base `FN` run. The `FN_msy_sel5` run is omitted here because it was included only to evaluate the effect of the MSY selectivity option on reference-point calculations.
+
+## Catch Biomass
+
+The catch biomass panel compares the observed FarNorth catch biomass from the active data file with the fitted catch biomass from the base `FN` run.
+
+```{r}
+#| label: fig-fn-base-catch-biomass
+#| fig-cap: "Observed and predicted FarNorth catch biomass by year for the base FN run."
+#| fig-width: 8
+#| fig-height: 5
+
+plot_fn_catch_biomass()
+```
+
+## Index Fits
+
+Points and vertical intervals show the observed Peruvian CPUE values and nominal 95% intervals from the active data file. The line shows the fitted values from the base `FN` run.
+
+```{r}
+#| label: fig-fn-base-index-fits
+#| fig-cap: "Base FN fit to the Peruvian artisanal and industrial CPUE indices."
+#| fig-width: 8
+#| fig-height: 6
+
+plot_fn_index_fits()
+```
+
+## Catch-At-Length Fits
+
+The FarNorth catch-at-length panels show observed length proportions as bars or black points and fitted proportions as the blue line from the base `FN` run.
+
+::: {.panel-tabset}
+
+### Aggregate By Period
+
+```{r}
+#| label: fig-fn-base-length-aggregate
+#| fig-cap: "Sample-size-weighted aggregate FarNorth catch-at-length fits for the base FN run."
+#| fig-width: 8
+#| fig-height: 7
+
+plot_fn_length_aggregate()
+```
+
+### Recent Years
+
+```{r}
+#| label: fig-fn-base-length-recent
+#| fig-cap: "Recent annual FarNorth catch-at-length fits for the base FN run."
+#| fig-width: 10
+#| fig-height: 9
+
+plot_fn_length_years(year_min = 2002, ncol = 4)
+```
+
+### All Years
+
+```{r}
+#| label: fig-fn-base-length-all-years
+#| fig-cap: "All annual FarNorth catch-at-length fits for the base FN run."
+#| fig-width: 10
+#| fig-height: 17
+
+plot_fn_length_years(ncol = 4)
+```
+
+:::
+
+## Selectivity Time Series
+
+The ridge plot shows the fitted FarNorth fishery selectivity-at-age trajectory from the base `FN` run. Ages are plotted as actual model ages 1-12.
+
+```{r}
+#| label: fig-fn-base-selectivity-ridges
+#| fig-cap: "Base FN FarNorth fishery selectivity-at-age time series. Ages are shown from 1 to 12."
+#| fig-width: 8
+#| fig-height: 9
+
+plot_fn_selectivity_time()
+```
+
+# Reference Points
+
+The runs have the same estimated fit but different MSY selectivity settings. As a result, the reference-point outputs differ even where the model likelihood and fitted population trajectory are unchanged.
+
+```{r}
+#| label: tbl-fn-reference-points
+#| tbl-cap: "Reference-point summary for the FN base and -msy_sel 5 runs."
+
+reference_summary |>
+  kable(digits = 5)
+```
+
+```{r}
+#| label: fig-fn-f-profile
+#| fig-cap: "FN yield-profile quantities. Vertical lines mark F35% and Fmsy for each run."
+#| fig-width: 9
+#| fig-height: 6.5
+
+ggplot(f_profile, aes(f, value, color = label)) +
+  geom_line(linewidth = 0.85) +
+  geom_vline(
+    data = f_reference_lines,
+    aes(xintercept = f, color = label, linetype = reference),
+    linewidth = 0.85
+  ) +
+  facet_wrap(vars(quantity), scales = "free_y", ncol = 2) +
+  scale_color_manual(values = model_colors) +
+  scale_linetype_manual(values = c("F35%" = "dashed", "Fmsy" = "dotdash")) +
+  labs(x = "F", y = NULL, color = "Run", linetype = "Reference point") +
+  theme_report()
+```
+
+# Fishing Mortality
+
+Annual $F_{bar}$ is the mean total fishing mortality over ages 2-5, matching the convention used in Paper 02. Only the base `FN` run is shown in this section. The interval uses the reported standard error for `Fbar` from the `.std` output.
+
+```{r}
+#| label: fig-fn-fbar
+#| fig-cap: "Base FN annual Fbar over ages 2-5. Ribbons show approximate 95% intervals from the reported standard errors."
+
+ggplot(filter(fbar_series, model == base_model_name), aes(year, value)) +
+  geom_ribbon(
+    aes(ymin = lower, ymax = upper),
+    fill = model_colors[[base_model_label]],
+    alpha = 0.12,
+    linewidth = 0
+  ) +
+  geom_line(color = model_colors[[base_model_label]], linewidth = 0.85) +
+  scale_x_continuous(breaks = scales::breaks_width(5)) +
+  labs(x = "Year", y = "Mean total F ages 2-5") +
+  theme_report()
+```
+
+```{r}
+#| label: fig-fn-fishery-f
+#| fig-cap: "Base FN FarNorth fishery annual fishing mortality from the model output."
+
+ggplot(filter(fishery_f, model == base_model_name), aes(year, value)) +
+  geom_line(color = model_colors[[base_model_label]], linewidth = 0.85) +
+  facet_wrap(vars(quantity), scales = "free_y", ncol = 1) +
+  scale_x_continuous(breaks = scales::breaks_width(5)) +
+  labs(x = "Year", y = "Fishing mortality") +
+  theme_report()
+```
+
+# Selectivity
+
+The terminal FarNorth selectivity comes from the fitted model output. The `sel_msy` vector is the selectivity vector used in the MSY calculations and is where the `-msy_sel 5` option changes the reference-point calculation.
+
+```{r}
+#| label: fig-fn-selectivity
+#| fig-cap: "FN selectivity-at-age for the terminal FarNorth fishery and the MSY selectivity vector. Ages are shown as actual model ages 1-12."
+
+ggplot(selectivity_at_age, aes(age, selectivity, color = label, linetype = source, shape = source)) +
+  geom_line(linewidth = 0.85) +
+  geom_point(size = 2) +
+  scale_x_continuous(breaks = 1:12, limits = c(1, 12)) +
+  scale_color_manual(values = model_colors) +
+  scale_linetype_manual(values = c("Terminal FarNorth" = "solid", "sel_msy" = "dashed")) +
+  labs(x = "Age", y = "Selectivity", color = "Run", linetype = "Source", shape = "Source") +
+  theme_report()
+```
+
+# Biomass And Depletion
+
+The biomass panel shows fished spawning biomass and the no-fishing spawning biomass trajectory reported by the model. The depletion panel uses `SSB_NoFishR` directly from the output. These panels are included to confirm whether the MSY selectivity argument affected only the reference-point calculations or also changed the fitted model trajectory.
+
+```{r}
+#| label: fig-fn-biomass-dynamic-bzero
+#| fig-cap: "FN spawning biomass with fishing and dynamic Bzero."
+
+ggplot(biomass_series, aes(year, estimate, color = label, fill = label)) +
+  geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.10, linewidth = 0) +
+  geom_line(linewidth = 0.85) +
+  facet_wrap(vars(biomass_type), scales = "free_y", ncol = 1) +
+  scale_color_manual(values = model_colors) +
+  scale_fill_manual(values = model_colors) +
+  scale_x_continuous(breaks = scales::breaks_width(5)) +
+  labs(x = "Year", y = "Spawning biomass", color = "Run", fill = "Run") +
+  theme_report()
+```
+
+```{r}
+#| label: fig-fn-depletion
+#| fig-cap: "FN SSB depletion relative to dynamic Bzero from the reported SSB_NoFishR output."
+
+ggplot(depletion_series, aes(year, estimate, color = label, fill = label)) +
+  geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.10, linewidth = 0) +
+  geom_line(linewidth = 0.85) +
+  geom_hline(yintercept = 0.2, linetype = "dashed", color = "gray35", linewidth = 0.65) +
+  scale_color_manual(values = model_colors) +
+  scale_fill_manual(values = model_colors) +
+  scale_x_continuous(breaks = scales::breaks_width(5)) +
+  coord_cartesian(ylim = c(0, NA)) +
+  labs(x = "Year", y = expression(SSB / SSB[F == 0]), color = "Run", fill = "Run") +
+  theme_report()
+```
