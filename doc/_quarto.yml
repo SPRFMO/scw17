@@ -8,7 +8,7 @@ project:
     - SCW17_agenda.qmd
     - SCW17-Paper-01-ModelDevelopments.qmd
     - SCW17-Paper-02-ReferencePoints.qmd
-    - FN-ReferencePoints.qmd
+    - FarNorthSelectivityDiagnostics.qmd
 
 website:
   title: "SPRFMO SCW17"
@@ -24,8 +24,8 @@ website:
         text: SCW17/Paper-01
       - href: SCW17-Paper-02-ReferencePoints.qmd
         text: SCW17/Paper-02
-      - href: FN-ReferencePoints.qmd
-        text: FN Peru-only test
+      - href: FarNorthSelectivityDiagnostics.qmd
+        text: FarNorth selectivity diagnostics
 
 format:
   html:

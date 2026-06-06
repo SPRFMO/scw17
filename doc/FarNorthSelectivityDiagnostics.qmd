@@ -1,9 +1,9 @@
 ---
-title: "FN Peru-only model diagnostics"
+title: "FarNorth selectivity diagnostics"
 date: today
 format:
   html:
-    output-file: "FN-ReferencePoints.html"
+    output-file: "FarNorthSelectivityDiagnostics.html"
     self-contained: true
     lightbox: true
     html-math-method: katex
@@ -855,6 +855,8 @@ plot_fn_selectivity_time <- function() {
 # Purpose
 
 This document is a focused diagnostic for the `FN` Peru-only test model. Both runs use the same single-stock configuration with FarNorth catch, FarNorth length composition data from `0.15.dat`, and the two Peruvian CPUE indices (`Peru_Artis` and `Peru_Ind`). The base run uses the default `jjm` behavior, while the `FN_selblocks` run estimates the fitted model with FarNorth selectivity allowed to change in 1980, 1999, 2010, and 2020. The fitted-model comparison below focuses on the rerun `FN` and `FN_selblocks` outputs.
+
+This diagnostic follows up on [items 11 and 12 in the SCW16 benchmark meeting report](https://sprfmo.github.io/JM_SCW_prep/JMWG-Benchmark-Meeting-report-2026.html#decisions-and-agreements), which identified the need to test variable Peru fishery selectivity for catch length-frequency data and to link Peru survey length frequencies to survey selectivity estimation.
 
 ```{r}
 #| label: tbl-run-summary
