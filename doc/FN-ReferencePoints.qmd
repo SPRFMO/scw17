@@ -1,5 +1,5 @@
 ---
-title: "FN Peru-only model reference-point diagnostics"
+title: "FN Peru-only model diagnostics"
 date: today
 format:
   html:
@@ -52,17 +52,15 @@ assessment_file <- function(...) file.path(assessment_dir, ...)
 source(assessment_file("R", "diagnostic_composition_plots.R"))
 
 model_info <- tibble(
-  model = c("FN", "FN_msy_sel5", "FN_selblocks", "FN_selblockshl"),
-  label = c("FN base", "FN -msy_sel 5", "FN selectivity blocks", "FN selectivity blocks HL"),
-  msy_sel_argument = c("default", "-msy_sel 5", "default", "default")
+  model = c("FN", "FN_selblocks"),
+  label = c("FN base", "FN selectivity blocks"),
+  msy_sel_argument = c("default", "default")
 ) |>
   mutate(label = factor(label, levels = label))
 
 model_colors <- c(
   "FN base" = "#2c7fb8",
-  "FN -msy_sel 5" = "#d95f0e",
-  "FN selectivity blocks" = "#1b9e77",
-  "FN selectivity blocks HL" = "#7570b3"
+  "FN selectivity blocks" = "#1b9e77"
 )
 
 read_model_bundle <- function(model_name) {
@@ -470,12 +468,16 @@ base_model_name <- "FN"
 base_model_label <- "FN base"
 base_bundle <- model_bundles[[base_model_name]]
 base_model <- base_bundle[[1]]
-fit_comparison_models <- c("FN", "FN_selblocks", "FN_selblockshl")
+fit_comparison_models <- c("FN", "FN_selblocks")
 fit_comparison_labels <- as.character(
   model_info$label[match(fit_comparison_models, model_info$model)]
 )
 selectivity_comparison_models <- fit_comparison_models
 selectivity_comparison_labels <- fit_comparison_labels
+fishing_mortality_models <- c("FN", "FN_selblocks")
+fishing_mortality_labels <- as.character(
+  model_info$label[match(fishing_mortality_models, model_info$model)]
+)
 
 extract_fn_index_fits <- function(mod_bundle, stock = 1) {
   mod <- mod_bundle[[1]]
@@ -852,7 +854,7 @@ plot_fn_selectivity_time <- function() {
 
 # Purpose
 
-This document is a focused diagnostic for the `FN` Peru-only test model. All runs use the same single-stock configuration with FarNorth catch, FarNorth length composition data from `0.15.dat`, and the two Peruvian CPUE indices (`Peru_Artis` and `Peru_Ind`). The base run uses the default `jjm` behavior, the `FN_msy_sel5` run isolates the command-line MSY selectivity option (`-msy_sel 5`), and the `FN_selblocks` run estimates the fitted model with FarNorth selectivity allowed to change in 1980, 1999, 2010, and 2020. The `FN_selblockshl` run applies the same selectivity-block structure with the HL stock-recruitment specification. The fitted-model comparison below focuses on the rerun `FN`, `FN_selblocks`, and `FN_selblockshl` outputs.
+This document is a focused diagnostic for the `FN` Peru-only test model. Both runs use the same single-stock configuration with FarNorth catch, FarNorth length composition data from `0.15.dat`, and the two Peruvian CPUE indices (`Peru_Artis` and `Peru_Ind`). The base run uses the default `jjm` behavior, while the `FN_selblocks` run estimates the fitted model with FarNorth selectivity allowed to change in 1980, 1999, 2010, and 2020. The fitted-model comparison below focuses on the rerun `FN` and `FN_selblocks` outputs.
 
 ```{r}
 #| label: tbl-run-summary
@@ -863,7 +865,7 @@ kable(run_summary, digits = 5)
 
 ```{r}
 #| label: tbl-fn-fit-comparison
-#| tbl-cap: "Transposed fitted-model comparison for FN, FN_selblocks, and FN_selblockshl. NLL components are read from the reported likelihood-component block; SDNR values are computed from the reported standardized residuals for each Peruvian CPUE index."
+#| tbl-cap: "Transposed fitted-model comparison for FN and FN_selblocks. NLL components are read from the reported likelihood-component block; SDNR values are computed from the reported standardized residuals for each Peruvian CPUE index."
 
 fn_fit_table |>
   kable(digits = 5)
@@ -871,15 +873,15 @@ fn_fit_table |>
 
 # Fitted Model Comparisons
 
-The diagnostics in this section compare the model predictions from the rerun `FN`, `FN_selblocks`, and `FN_selblockshl` fits. The `FN_msy_sel5` run is omitted here because it was included only to evaluate the effect of the MSY selectivity option on reference-point calculations.
+The diagnostics in this section compare the model predictions from the rerun `FN` and `FN_selblocks` fits.
 
 ## Catch Biomass
 
-The catch biomass panel compares the observed FarNorth catch biomass from the active data file with the fitted catch biomass from the `FN`, `FN_selblocks`, and `FN_selblockshl` runs.
+The catch biomass panel compares the observed FarNorth catch biomass from the active data file with the fitted catch biomass from the `FN` and `FN_selblocks` runs.
 
 ```{r}
 #| label: fig-fn-base-catch-biomass
-#| fig-cap: "Observed and predicted FarNorth catch biomass by year for the FN, FN_selblocks, and FN_selblockshl runs."
+#| fig-cap: "Observed and predicted FarNorth catch biomass by year for the FN and FN_selblocks runs."
 #| fig-width: 8
 #| fig-height: 5
 
@@ -888,11 +890,11 @@ plot_fn_catch_biomass()
 
 ## Index Fits
 
-Points and vertical intervals show the observed Peruvian CPUE values and nominal 95% intervals from the active data file. Lines show the fitted values from the `FN`, `FN_selblocks`, and `FN_selblockshl` runs.
+Points and vertical intervals show the observed Peruvian CPUE values and nominal 95% intervals from the active data file. Lines show the fitted values from the `FN` and `FN_selblocks` runs.
 
 ```{r}
 #| label: fig-fn-base-index-fits
-#| fig-cap: "FN, FN_selblocks, and FN_selblockshl fits to the Peruvian artisanal and industrial CPUE indices."
+#| fig-cap: "FN and FN_selblocks fits to the Peruvian artisanal and industrial CPUE indices."
 #| fig-width: 8
 #| fig-height: 6
 
@@ -901,7 +903,7 @@ plot_fn_index_fits()
 
 ## Catch-At-Length Fits
 
-The FarNorth catch-at-length panels show observed length proportions as bars or black points and fitted proportions from the `FN`, `FN_selblocks`, and `FN_selblockshl` runs.
+The FarNorth catch-at-length panels show observed length proportions as bars or black points and fitted proportions from the `FN` and `FN_selblocks` runs.
 
 ::: {.panel-tabset}
 
@@ -909,7 +911,7 @@ The FarNorth catch-at-length panels show observed length proportions as bars or 
 
 ```{r}
 #| label: fig-fn-base-length-aggregate
-#| fig-cap: "Sample-size-weighted aggregate FarNorth catch-at-length fits for the FN, FN_selblocks, and FN_selblockshl runs."
+#| fig-cap: "Sample-size-weighted aggregate FarNorth catch-at-length fits for the FN and FN_selblocks runs."
 #| fig-width: 8
 #| fig-height: 7
 
@@ -920,7 +922,7 @@ plot_fn_length_aggregate()
 
 ```{r}
 #| label: fig-fn-base-length-recent
-#| fig-cap: "Recent annual FarNorth catch-at-length fits for the FN, FN_selblocks, and FN_selblockshl runs."
+#| fig-cap: "Recent annual FarNorth catch-at-length fits for the FN and FN_selblocks runs."
 #| fig-width: 10
 #| fig-height: 9
 
@@ -931,7 +933,7 @@ plot_fn_length_years(year_min = 2002, ncol = 4)
 
 ```{r}
 #| label: fig-fn-base-length-all-years
-#| fig-cap: "All annual FarNorth catch-at-length fits for the FN, FN_selblocks, and FN_selblockshl runs."
+#| fig-cap: "All annual FarNorth catch-at-length fits for the FN and FN_selblocks runs."
 #| fig-width: 10
 #| fig-height: 17
 
@@ -942,138 +944,17 @@ plot_fn_length_years(ncol = 4)
 
 ## Selectivity Time Series
 
-The ridge plots compare the fitted FarNorth fishery selectivity-at-age trajectories from the base `FN`, `FN_selblocks`, and `FN_selblockshl` runs. The selectivity-block runs use change years in 1980, 1999, 2010, and 2020. Ages are plotted as actual model ages 1-12.
+The ridge plots compare the fitted FarNorth fishery selectivity-at-age trajectories from the base `FN` and `FN_selblocks` runs. The selectivity-block run uses change years in 1980, 1999, 2010, and 2020. Ages are plotted as actual model ages 1-12.
 
 ```{r}
 #| label: fig-fn-base-selectivity-ridges
-#| fig-cap: "FN FarNorth fishery selectivity-at-age time series for the base and selectivity-block runs, including the HL variant. Ages are shown from 1 to 12."
+#| fig-cap: "FN FarNorth fishery selectivity-at-age time series for the base and selectivity-block runs. Ages are shown from 1 to 12."
 #| fig-width: 14
 #| fig-height: 9
 
 plot_fn_selectivity_time()
 ```
 
-# Reference Points
+# Conclusion
 
-The `FN_msy_sel5` run isolates the MSY selectivity option, while the `FN_selblocks` and `FN_selblockshl` runs change the fitted model by estimating FarNorth selectivity only at the specified block years. The reference-point outputs are shown together so the fitted-model change, the HL stock-recruitment variant, and the MSY selectivity-option change can be compared directly.
-
-```{r}
-#| label: tbl-fn-reference-points
-#| tbl-cap: "Reference-point summary for the FN base, -msy_sel 5, selectivity-block, and selectivity-block HL runs."
-
-reference_summary |>
-  kable(digits = 5)
-```
-
-```{r}
-#| label: fig-fn-f-profile
-#| fig-cap: "FN yield-profile quantities. Vertical lines mark F35% and Fmsy for each run."
-#| fig-width: 9
-#| fig-height: 6.5
-
-ggplot(f_profile, aes(f, value, color = label)) +
-  geom_line(linewidth = 0.85) +
-  geom_vline(
-    data = f_reference_lines,
-    aes(xintercept = f, color = label, linetype = reference, linewidth = reference),
-    show.legend = c(color = FALSE, linetype = TRUE, linewidth = TRUE)
-  ) +
-  facet_wrap(vars(quantity), scales = "free_y", ncol = 2) +
-  scale_color_manual(values = model_colors) +
-  scale_linetype_manual(values = c("F35%" = "solid", "Fmsy" = "dotdash")) +
-  scale_linewidth_manual(values = c("F35%" = 1, "Fmsy" = 0.65)) +
-  guides(
-    linetype = guide_legend(order = 1),
-    linewidth = guide_legend(order = 1),
-    color = guide_legend(order = 2, nrow = 2)
-  ) +
-  labs(x = "F", y = NULL, color = "Run", linetype = "Reference point", linewidth = "Reference point") +
-  theme_report() +
-  theme(legend.box = "vertical")
-```
-
-# Fishing Mortality
-
-Annual $F_{bar}$ is the mean total fishing mortality over ages 2-5, matching the convention used in Paper 02. Only the base `FN` run is shown in this section. The interval uses the reported standard error for `Fbar` from the `.std` output.
-
-```{r}
-#| label: fig-fn-fbar
-#| fig-cap: "Base FN annual Fbar over ages 2-5. Ribbons show approximate 95% intervals from the reported standard errors."
-
-ggplot(filter(fbar_series, model == base_model_name), aes(year, value)) +
-  geom_ribbon(
-    aes(ymin = lower, ymax = upper),
-    fill = model_colors[[base_model_label]],
-    alpha = 0.12,
-    linewidth = 0
-  ) +
-  geom_line(color = model_colors[[base_model_label]], linewidth = 0.85) +
-  scale_x_continuous(breaks = scales::breaks_width(5)) +
-  labs(x = "Year", y = "Mean total F ages 2-5") +
-  theme_report()
-```
-
-```{r}
-#| label: fig-fn-fishery-f
-#| fig-cap: "Base FN FarNorth fishery annual fishing mortality from the model output."
-
-ggplot(filter(fishery_f, model == base_model_name), aes(year, value)) +
-  geom_line(color = model_colors[[base_model_label]], linewidth = 0.85) +
-  facet_wrap(vars(quantity), scales = "free_y", ncol = 1) +
-  scale_x_continuous(breaks = scales::breaks_width(5)) +
-  labs(x = "Year", y = "Fishing mortality") +
-  theme_report()
-```
-
-# Selectivity
-
-The terminal FarNorth selectivity comes from the fitted model output. The `sel_msy` vector is the selectivity vector used in the MSY calculations and is where the `-msy_sel 5` option changes the reference-point calculation.
-
-```{r}
-#| label: fig-fn-selectivity
-#| fig-cap: "FN selectivity-at-age for the terminal FarNorth fishery and the MSY selectivity vector. Ages are shown as actual model ages 1-12."
-
-ggplot(selectivity_at_age, aes(age, selectivity, color = label, linetype = source, shape = source)) +
-  geom_line(linewidth = 0.85) +
-  geom_point(size = 2) +
-  scale_x_continuous(breaks = 1:12, limits = c(1, 12)) +
-  scale_color_manual(values = model_colors) +
-  scale_linetype_manual(values = c("Terminal FarNorth" = "solid", "sel_msy" = "dashed")) +
-  labs(x = "Age", y = "Selectivity", color = "Run", linetype = "Source", shape = "Source") +
-  theme_report()
-```
-
-# Biomass And Depletion
-
-The biomass panel shows fished spawning biomass and the no-fishing spawning biomass trajectory reported by the model. The depletion panel uses `SSB_NoFishR` directly from the output. These panels are included to confirm whether the MSY selectivity argument affected only the reference-point calculations or also changed the fitted model trajectory.
-
-```{r}
-#| label: fig-fn-biomass-dynamic-bzero
-#| fig-cap: "FN spawning biomass with fishing and dynamic Bzero."
-
-ggplot(biomass_series, aes(year, estimate, color = label, fill = label)) +
-  geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.10, linewidth = 0) +
-  geom_line(linewidth = 0.85) +
-  facet_wrap(vars(biomass_type), scales = "free_y", ncol = 1) +
-  scale_color_manual(values = model_colors) +
-  scale_fill_manual(values = model_colors) +
-  scale_x_continuous(breaks = scales::breaks_width(5)) +
-  labs(x = "Year", y = "Spawning biomass", color = "Run", fill = "Run") +
-  theme_report()
-```
-
-```{r}
-#| label: fig-fn-depletion
-#| fig-cap: "FN SSB depletion relative to dynamic Bzero from the reported SSB_NoFishR output."
-
-ggplot(depletion_series, aes(year, estimate, color = label, fill = label)) +
-  geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.10, linewidth = 0) +
-  geom_line(linewidth = 0.85) +
-  geom_hline(yintercept = 0.2, linetype = "dashed", color = "gray35", linewidth = 0.65) +
-  scale_color_manual(values = model_colors) +
-  scale_fill_manual(values = model_colors) +
-  scale_x_continuous(breaks = scales::breaks_width(5)) +
-  coord_cartesian(ylim = c(0, NA)) +
-  labs(x = "Year", y = expression(SSB / SSB[F == 0]), color = "Run", fill = "Run") +
-  theme_report()
-```
+The most flexible selectivity model provides only limited improvement in fitting the length-frequency data relative to the base `FN` configuration. Based on these diagnostics, we propose using a more static selectivity set that is allowed to change during apparent availability-at-size shifts over time, rather than relying on highly flexible selectivity blocks to absorb the length-frequency patterns.
