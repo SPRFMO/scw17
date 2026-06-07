@@ -24,7 +24,8 @@ SCW17 follows the 2026 benchmark work compiled in the SCW16 preparation reposito
 - [SCW17 preliminary agenda](SCW17_agenda.html) ([QMD](SCW17_agenda.qmd))
 - [SCW17/Paper-01: Model developments](SCW17-Paper-01-ModelDevelopments.html) ([QMD](SCW17-Paper-01-ModelDevelopments.html))
 - [SCW17/Paper-02: Consideration of reference points used for SPRFMO Jack mackerel management](SCW17-Paper-02-ReferencePoints.html) ([QMD](SCW17-Paper-02-ReferencePoints.qmd))
-- [FarNorth selectivity diagnostics](FarNorthSelectivityDiagnostics.html) ([QMD](FarNorthSelectivityDiagnostics.qmd))
+- [SCW17/Paper-02a Far North model selectivity](SCW17-Paper-02a-Far-North-Model-Selectivity.html) ([QMD](SCW17-Paper-02a-Far-North-Model-Selectivity.qmd))
+- [SCW17/Paper-04 MSE flow](SCW17-Paper-04-MSE-Flow.html) ([QMD](SCW17-Paper-04-MSE-Flow.qmd))
 
 # Source Links
 
