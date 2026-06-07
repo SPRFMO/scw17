@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">Overall flow from JJM assessment conditioning to MSE performance metrics</title>
+  <desc id="desc">Flow diagram showing JJM assessment inputs conditioned through jmMSE and FLjjm, converted by jjmR and FLjjm into FLR and mse operating model objects, combined with management procedures, simulated, scored, and reported.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+    <marker id="arrow-soft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .title-text { font: 700 24px Arial, sans-serif; fill: #111827; }
+      .subtitle { font: 400 15px Arial, sans-serif; fill: #475569; }
+      .node-title { font: 700 17px Arial, sans-serif; fill: #111827; }
+      .node-strong { font: 700 14px Arial, sans-serif; fill: #334155; }
+      .node-text { font: 400 13px Arial, sans-serif; fill: #334155; }
+      .label { font: 700 12px Arial, sans-serif; fill: #475569; }
+      .input { fill: #e0f2fe; stroke: #0284c7; }
+      .adapter { fill: #ecfdf5; stroke: #059669; }
+      .om { fill: #fef3c7; stroke: #d97706; }
+      .mp { fill: #fce7f3; stroke: #db2777; }
+      .metric { fill: #fff7ed; stroke: #ea580c; }
+      .output { fill: #f1f5f9; stroke: #64748b; }
+      .support { fill: #ffffff; stroke: #94a3b8; }
+      .arrow { fill: none; stroke: #475569; stroke-width: 2.2; marker-end: url(#arrow); }
+      .arrow-soft { fill: none; stroke: #64748b; stroke-width: 1.8; stroke-dasharray: 7 5; marker-end: url(#arrow-soft); }
+      .stage { font: 700 12px Arial, sans-serif; fill: #ffffff; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="560" fill="#ffffff"/>
+  <text x="35" y="40" class="title-text">Overall workflow</text>
+  <text x="35" y="66" class="subtitle">Operating models define the worlds to test; management procedures define the rules to test; performance metrics score the outcomes.</text>
+
+  <g transform="translate(35 110)">
+    <rect class="input" x="0" y="0" width="195" height="170" rx="8" stroke-width="2"/>
+    <rect x="0" y="0" width="195" height="28" rx="8" fill="#0284c7"/>
+    <text class="stage" x="98" y="19" text-anchor="middle">1. CONDITION</text>
+    <text class="node-title" x="98" y="56" text-anchor="middle">Assessment models</text>
+    <text class="node-strong" x="98" y="82" text-anchor="middle">jmMSE + FLjjm + JJM</text>
+    <text class="node-text" x="98" y="110" text-anchor="middle">.ctl/.dat + boot data</text>
+    <text class="node-text" x="98" y="132" text-anchor="middle">conditioned JJM outputs</text>
+  </g>
+
+  <g transform="translate(265 110)">
+    <rect class="adapter" x="0" y="0" width="195" height="170" rx="8" stroke-width="2"/>
+    <rect x="0" y="0" width="195" height="28" rx="8" fill="#059669"/>
+    <text class="stage" x="98" y="19" text-anchor="middle">2. CONVERT</text>
+    <text class="node-title" x="98" y="56" text-anchor="middle">Read JJM output</text>
+    <text class="node-strong" x="98" y="82" text-anchor="middle">jjmR + FLjjm readers</text>
+    <text class="node-text" x="98" y="110" text-anchor="middle">.rep/.std/.par to</text>
+    <text class="node-text" x="98" y="132" text-anchor="middle">FLR/mse objects</text>
+  </g>
+
+  <g transform="translate(495 110)">
+    <rect class="om" x="0" y="0" width="195" height="170" rx="8" stroke-width="2"/>
+    <rect x="0" y="0" width="195" height="28" rx="8" fill="#d97706"/>
+    <text class="stage" x="98" y="19" text-anchor="middle">3. ASSEMBLE OM</text>
+    <text class="node-title" x="98" y="56" text-anchor="middle">Operating model</text>
+    <text class="node-strong" x="98" y="82" text-anchor="middle">FLjjm + FLR/mse</text>
+    <text class="node-text" x="98" y="110" text-anchor="middle">om + oem + iem</text>
+    <text class="node-text" x="98" y="132" text-anchor="middle">srdevs + ref values</text>
+  </g>
+
+  <g transform="translate(725 110)">
+    <rect class="metric" x="0" y="0" width="195" height="170" rx="8" stroke-width="2"/>
+    <rect x="0" y="0" width="195" height="28" rx="8" fill="#ea580c"/>
+    <text class="stage" x="98" y="19" text-anchor="middle">5. SIMULATE</text>
+    <text class="node-title" x="98" y="56" text-anchor="middle">Project and score</text>
+    <text class="node-strong" x="98" y="82" text-anchor="middle">mse / FLasher</text>
+    <text class="node-text" x="98" y="110" text-anchor="middle">mp(), mps(), tunebisect()</text>
+    <text class="node-text" x="98" y="132" text-anchor="middle">performance()</text>
+  </g>
+
+  <g transform="translate(955 110)">
+    <rect class="output" x="0" y="0" width="195" height="170" rx="8" stroke-width="2"/>
+    <rect x="0" y="0" width="195" height="28" rx="8" fill="#64748b"/>
+    <text class="stage" x="98" y="19" text-anchor="middle">6. REPORT</text>
+    <text class="node-title" x="98" y="56" text-anchor="middle">Workshop outputs</text>
+    <text class="node-text" x="98" y="88" text-anchor="middle">performance.dat.gz</text>
+    <text class="node-text" x="98" y="112" text-anchor="middle">trade-off plots</text>
+    <text class="node-text" x="98" y="136" text-anchor="middle">reports / Slick</text>
+  </g>
+
+  <g transform="translate(725 345)">
+    <rect class="mp" x="0" y="0" width="195" height="150" rx="8" stroke-width="2"/>
+    <rect x="0" y="0" width="195" height="28" rx="8" fill="#db2777"/>
+    <text class="stage" x="98" y="19" text-anchor="middle">4. SPECIFY MP</text>
+    <text class="node-title" x="98" y="55" text-anchor="middle">Management procedure</text>
+    <text class="node-strong" x="98" y="80" text-anchor="middle">jmMSE model_*.R</text>
+    <text class="node-text" x="98" y="107" text-anchor="middle">estimator + HCR</text>
+    <text class="node-text" x="98" y="128" text-anchor="middle">implementation system</text>
+  </g>
+
+  <g transform="translate(495 355)">
+    <rect class="support" x="0" y="0" width="195" height="125" rx="8" stroke-width="1.6"/>
+    <text class="node-title" x="98" y="35" text-anchor="middle">Metric definitions</text>
+    <text class="node-strong" x="98" y="60" text-anchor="middle">FLjjm statistics</text>
+    <text class="node-text" x="98" y="88" text-anchor="middle">SB, F, C, green</text>
+    <text class="node-text" x="98" y="108" text-anchor="middle">PSBlim, etc.</text>
+  </g>
+
+  <path class="arrow" d="M 230 195 H 265"/>
+  <path class="arrow" d="M 460 195 H 495"/>
+  <path class="arrow" d="M 690 195 H 725"/>
+  <path class="arrow" d="M 920 195 H 955"/>
+  <path class="arrow-soft" d="M 822 345 V 286"/>
+  <path class="arrow-soft" d="M 690 418 C 720 418 710 235 725 235"/>
+
+  <text class="label" x="246" y="184" text-anchor="middle">conditioned</text>
+  <text class="label" x="477" y="184" text-anchor="middle">objects</text>
+  <text class="label" x="708" y="184" text-anchor="middle">worlds</text>
+  <text class="label" x="938" y="184" text-anchor="middle">results</text>
+  <text class="label" x="846" y="325" text-anchor="middle">rules</text>
+  <text class="label" x="680" y="332" text-anchor="middle">score using</text>
+</svg>

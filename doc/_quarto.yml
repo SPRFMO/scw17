@@ -8,6 +8,7 @@ project:
     - SCW17_agenda.qmd
     - SCW17-Paper-01-ModelDevelopments.qmd
     - SCW17-Paper-02-ReferencePoints.qmd
+    - SCW17-Paper-04-MSE-Flow.qmd
     - FarNorthSelectivityDiagnostics.qmd
 
 website:
@@ -24,6 +25,8 @@ website:
         text: SCW17/Paper-01
       - href: SCW17-Paper-02-ReferencePoints.qmd
         text: SCW17/Paper-02
+      - href: SCW17-Paper-04-MSE-Flow.qmd
+        text: SCW17/Paper-04 MSE flow
       - href: FarNorthSelectivityDiagnostics.qmd
         text: FarNorth selectivity diagnostics
 
