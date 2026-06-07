@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://sprfmo.github.io/scw17/SCW17-Paper-04-MSE-Flow.html</loc>
+    <lastmod>2026-06-07T19:15:50.356Z</lastmod>
+  </url>
+  <url>
     <loc>https://sprfmo.github.io/scw17/SCW17-Paper-02-ReferencePoints.html</loc>
-    <lastmod>2026-06-04T23:55:38.517Z</lastmod>
+    <lastmod>2026-06-05T05:18:30.006Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sprfmo.github.io/scw17/Wageningen-MSE-workshop-schedule.html</loc>
+    <lastmod>2026-06-04T15:27:20.775Z</lastmod>
   </url>
   <url>
     <loc>https://sprfmo.github.io/scw17/index.html</loc>
-    <lastmod>2026-06-03T04:30:00.479Z</lastmod>
+    <lastmod>2026-06-07T19:28:18.488Z</lastmod>
   </url>
   <url>
     <loc>https://sprfmo.github.io/scw17/SCW17_agenda.html</loc>
     <lastmod>2026-05-29T18:32:48.793Z</lastmod>
   </url>
   <url>
-    <loc>https://sprfmo.github.io/scw17/SCW17-Paper-01-ModelDevelopments.html</loc>
-    <lastmod>2026-06-03T05:24:10.093Z</lastmod>
+    <loc>https://sprfmo.github.io/scw17/SCW17_prep_mtg.html</loc>
+    <lastmod>2026-06-04T22:21:15.349Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sprfmo.github.io/scw17/SCW17-Paper-01a-Far-North-Model-Selectivity.html</loc>
+    <lastmod>2026-06-07T19:15:56.771Z</lastmod>
   </url>
 </urlset>

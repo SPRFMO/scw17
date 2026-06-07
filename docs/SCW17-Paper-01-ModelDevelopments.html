@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-06-03">
+<meta name="dcterms.date" content="2026-06-04">
 
 <title>Model developments</title>
 <style>
@@ -181,7 +181,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 3, 2026</p>
+      <p class="date">June 4, 2026</p>
     </div>
   </div>
   
@@ -2794,16 +2794,64 @@ Figure&nbsp;53: Single-stock fishing mortality for the 0.16 productivity exercis
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model_timeseries</span>(<span class="fu">paste0</span>(<span class="st">"h2_"</span>, srr_plot_versions), <span class="st">"biomass"</span>, <span class="st">"Biomass"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>h2_srr_curve_versions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0.16ls"</span>, <span class="st">"0.16ll"</span>, <span class="st">"0.16hs"</span>, <span class="st">"0.16hl"</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>h2_srr_curve_models <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"h2_"</span>, h2_srr_curve_versions)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>srr_curve_data <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(h2_srr_curve_models, <span class="cf">function</span>(model_id) {</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  mod <span class="ot">&lt;-</span> <span class="fu">read_model</span>(model_id)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(mod)) {</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">tibble</span>())</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  label <span class="ot">&lt;-</span> <span class="fu">unname</span>(model_labels[model_id])</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.na</span>(label)) {</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    label <span class="ot">&lt;-</span> model_id</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dfr</span>(<span class="fu">c</span>(<span class="st">"Stock_1"</span>, <span class="st">"Stock_2"</span>), <span class="cf">function</span>(stock_nm) {</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>    curve <span class="ot">&lt;-</span> mod<span class="sc">$</span>output[[stock_nm]]<span class="sc">$</span>stock_Rec_Curve_1</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(curve)) {</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">tibble</span>())</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_id =</span> model_id,</span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">model_label =</span> label,</span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">stock =</span> <span class="fu">str_replace</span>(stock_nm, <span class="st">"_"</span>, <span class="st">" "</span>),</span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">spawning_biomass =</span> <span class="fu">as.numeric</span>(curve[, <span class="dv">1</span>]),</span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">recruitment =</span> <span class="fu">as.numeric</span>(curve[, <span class="dv">2</span>])</span>
+<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">|&gt;</span></span>
+<span id="cb39-30"><a href="#cb39-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb39-31"><a href="#cb39-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">model_label =</span> <span class="fu">factor</span>(</span>
+<span id="cb39-32"><a href="#cb39-32" aria-hidden="true" tabindex="-1"></a>      model_label,</span>
+<span id="cb39-33"><a href="#cb39-33" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="fu">unname</span>(model_labels[h2_srr_curve_models])</span>
+<span id="cb39-34"><a href="#cb39-34" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb39-35"><a href="#cb39-35" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb39-36"><a href="#cb39-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-37"><a href="#cb39-37" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb39-38"><a href="#cb39-38" aria-hidden="true" tabindex="-1"></a>  srr_curve_data,</span>
+<span id="cb39-39"><a href="#cb39-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(spawning_biomass, recruitment, <span class="at">color =</span> model_label)</span>
+<span id="cb39-40"><a href="#cb39-40" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb39-41"><a href="#cb39-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb39-42"><a href="#cb39-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(stock), <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb39-43"><a href="#cb39-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb39-44"><a href="#cb39-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Spawning biomass"</span>,</span>
+<span id="cb39-45"><a href="#cb39-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Recruitment"</span>,</span>
+<span id="cb39-46"><a href="#cb39-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Model"</span></span>
+<span id="cb39-47"><a href="#cb39-47" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb39-48"><a href="#cb39-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_jjm</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb39-49"><a href="#cb39-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-srr-h2-biomass" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-srr-h2-stock-recruitment-curves" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-srr-h2-biomass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="SCW17-Paper-01-ModelDevelopments_files/figure-html/fig-srr-h2-biomass-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-54" title="Figure&nbsp;54: Two-stock biomass for the 0.16 productivity exercise."><img src="SCW17-Paper-01-ModelDevelopments_files/figure-html/fig-srr-h2-biomass-1.png" class="img-fluid figure-img" width="864"></a>
+<div aria-describedby="fig-srr-h2-stock-recruitment-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="SCW17-Paper-01-ModelDevelopments_files/figure-html/fig-srr-h2-stock-recruitment-curves-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-54" title="Figure&nbsp;54: Stock-recruitment curves for the two-stock 0.16 productivity scenarios."><img src="SCW17-Paper-01-ModelDevelopments_files/figure-html/fig-srr-h2-stock-recruitment-curves-1.png" class="img-fluid figure-img" width="864"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-srr-h2-biomass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;54: Two-stock biomass for the 0.16 productivity exercise.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-srr-h2-stock-recruitment-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;54: Stock-recruitment curves for the two-stock 0.16 productivity scenarios.
 </figcaption>
 </figure>
 </div>
@@ -2812,16 +2860,34 @@ Figure&nbsp;54: Two-stock biomass for the 0.16 productivity exercise.
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model_timeseries</span>(<span class="fu">paste0</span>(<span class="st">"h2_"</span>, srr_plot_versions), <span class="st">"ftot"</span>, <span class="st">"Total Fishing Mortality"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model_timeseries</span>(<span class="fu">paste0</span>(<span class="st">"h2_"</span>, srr_plot_versions), <span class="st">"biomass"</span>, <span class="st">"Biomass"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-srr-h2-biomass" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-srr-h2-biomass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="SCW17-Paper-01-ModelDevelopments_files/figure-html/fig-srr-h2-biomass-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-55" title="Figure&nbsp;55: Two-stock biomass for the 0.16 productivity exercise."><img src="SCW17-Paper-01-ModelDevelopments_files/figure-html/fig-srr-h2-biomass-1.png" class="img-fluid figure-img" width="864"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-srr-h2-biomass-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;55: Two-stock biomass for the 0.16 productivity exercise.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model_timeseries</span>(<span class="fu">paste0</span>(<span class="st">"h2_"</span>, srr_plot_versions), <span class="st">"ftot"</span>, <span class="st">"Total Fishing Mortality"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-srr-h2-fmort" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-srr-h2-fmort-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="SCW17-Paper-01-ModelDevelopments_files/figure-html/fig-srr-h2-fmort-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-55" title="Figure&nbsp;55: Two-stock fishing mortality for the 0.16 productivity exercise."><img src="SCW17-Paper-01-ModelDevelopments_files/figure-html/fig-srr-h2-fmort-1.png" class="img-fluid figure-img" width="864"></a>
+<a href="SCW17-Paper-01-ModelDevelopments_files/figure-html/fig-srr-h2-fmort-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-56" title="Figure&nbsp;56: Two-stock fishing mortality for the 0.16 productivity exercise."><img src="SCW17-Paper-01-ModelDevelopments_files/figure-html/fig-srr-h2-fmort-1.png" class="img-fluid figure-img" width="864"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-srr-h2-fmort-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;55: Two-stock fishing mortality for the 0.16 productivity exercise.
+Figure&nbsp;56: Two-stock fishing mortality for the 0.16 productivity exercise.
 </figcaption>
 </figure>
 </div>

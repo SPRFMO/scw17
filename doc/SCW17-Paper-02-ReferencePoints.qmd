@@ -62,6 +62,16 @@ read_model <- function(model_name) {
   )[[1]]
 }
 
+read_model_bundle <- function(model_name) {
+  readJJM(
+    model_name,
+    path = assessment_file("config"),
+    input = assessment_file("input"),
+    output = assessment_file("results"),
+    version = "2015MS"
+  )
+}
+
 theme_report <- function() {
   theme_minimal(base_size = 12) +
     theme(
@@ -96,6 +106,13 @@ read_yield_profile <- function(model_name) {
     as_tibble() |>
     filter(!is.na(f), !is.na(spr)) |>
     mutate(across(everything(), as.numeric))
+}
+
+read_stock_yield_profile <- function(model_name, stock = 1) {
+  read_yield_profile(model_name) |>
+    mutate(stock = cumsum(f == 0), .before = 1) |>
+    filter(stock == .env$stock) |>
+    select(-stock)
 }
 
 read_std_terms <- function(model_name, terms, occurrence = 1) {
@@ -141,6 +158,46 @@ read_r_report_value <- function(model_name, term, stock = 1) {
   }
 
   as.numeric(strsplit(trimws(r_report[term_line + 1]), "\\s+")[[1]][1])
+}
+
+read_r_report_block <- function(model_name, term, stock = 1) {
+  r_report_file <- assessment_file("results", paste0(model_name, "_", stock, "_R.rep"))
+  if (!file.exists(r_report_file)) {
+    return(character())
+  }
+
+  r_report <- readLines(r_report_file, warn = FALSE)
+  term_line <- which(r_report == paste0("$", term))[1]
+  if (is.na(term_line)) {
+    return(character())
+  }
+
+  block_starts <- grep("^\\$", r_report)
+  next_term <- block_starts[block_starts > term_line][1]
+  if (is.na(next_term)) {
+    next_term <- length(r_report) + 1L
+  }
+  if (term_line + 1L >= next_term) {
+    return(character())
+  }
+
+  block <- trimws(r_report[(term_line + 1L):(next_term - 1L)])
+  block[nzchar(block)]
+}
+
+read_r_report_matrix <- function(model_name, term, stock = 1) {
+  block <- read_r_report_block(model_name, term, stock = stock)
+  if (!length(block)) {
+    return(matrix(numeric(), nrow = 0, ncol = 0))
+  }
+
+  parsed <- lapply(block, \(row) as.numeric(strsplit(row, "\\s+")[[1]]))
+  n_cols <- unique(lengths(parsed))
+  if (length(n_cols) != 1L) {
+    stop("R report block has inconsistent row lengths: ", term)
+  }
+
+  do.call(rbind, parsed)
 }
 
 interpolate_spr <- function(profile, target_spr = 0.35) {
@@ -384,6 +441,108 @@ h2_productivity_f_reference_points <- h2_productivity_reference |>
     reference = factor(reference, levels = c("Fmsy", "F35%"))
   )
 
+h2_stock2_yield_profiles <- bind_rows(
+  lapply(h2_productivity_models$model, \(model_name) {
+    read_stock_yield_profile(model_name, stock = 2) |>
+      mutate(model = model_name, .before = 1)
+  })
+) |>
+  left_join(
+    h2_productivity_reference |>
+      filter(stock == 2) |>
+      select(model, scenario, steepness_label, sr_fit),
+    by = "model"
+  )
+
+h2_stock2_profile_reference <- h2_stock2_yield_profiles |>
+  group_by(model) |>
+  slice_max(yield, n = 1, with_ties = FALSE) |>
+  ungroup() |>
+  transmute(model, profile_Fmsy = f, MSY = yield) |>
+  left_join(
+    h2_productivity_reference |>
+      filter(stock == 2) |>
+      select(model, scenario, steepness_label, sr_fit, Fmsy),
+    by = "model"
+  )
+
+h2_bundle_cache <- new.env(parent = emptyenv())
+
+get_h2_bundle <- function(model_name) {
+  if (!exists(model_name, envir = h2_bundle_cache, inherits = FALSE)) {
+    assign(model_name, read_model_bundle(model_name), envir = h2_bundle_cache)
+  }
+
+  get(model_name, envir = h2_bundle_cache, inherits = FALSE)
+}
+
+read_h2_stock2_far_north_selectivity <- function(model_name) {
+  suppressWarnings(get_selectivities(get_h2_bundle(model_name))) |>
+    filter(fleet_type == "fsh", fleet_name == "FarNorth", stock == "Stock_2") |>
+    mutate(model = model_name, .before = 1)
+}
+
+h2_stock2_far_north_selectivity <- bind_rows(
+  lapply(h2_productivity_models$model, read_h2_stock2_far_north_selectivity)
+) |>
+  left_join(
+    h2_productivity_reference |>
+      filter(stock == 2) |>
+      select(model, scenario, steepness_label, sr_fit),
+    by = "model"
+  ) |>
+  mutate(
+    scenario = factor(scenario, levels = levels(productivity_reference$scenario)),
+    year = as.integer(year)
+  ) |>
+  group_by(model, year) |>
+  arrange(age, .by_group = TRUE) |>
+  mutate(actual_age = row_number()) |>
+  ungroup()
+
+read_h2_stock2_sel_msy <- function(model_name) {
+  sel_msy <- read_r_report_matrix(model_name, "sel_msy", stock = 2)
+  if (!nrow(sel_msy)) {
+    return(tibble())
+  }
+
+  out <- as_tibble(sel_msy)
+  names(out) <- paste0("age_", seq_len(ncol(out)))
+
+  out |>
+    mutate(sel_msy_row = row_number(), .before = 1) |>
+    pivot_longer(
+      cols = starts_with("age_"),
+      names_to = "age_column",
+      values_to = "selectivity"
+    ) |>
+    group_by(sel_msy_row) |>
+    mutate(age = row_number()) |>
+    ungroup() |>
+    transmute(
+      model = model_name,
+      sel_msy_row = factor(
+        paste0("sel_msy row ", sel_msy_row),
+        levels = paste0("sel_msy row ", seq_len(max(sel_msy_row)))
+      ),
+      age,
+      selectivity
+    )
+}
+
+h2_stock2_sel_msy <- bind_rows(
+  lapply(h2_productivity_models$model, read_h2_stock2_sel_msy)
+) |>
+  left_join(
+    h2_productivity_reference |>
+      filter(stock == 2) |>
+      select(model, scenario, steepness_label, sr_fit),
+    by = "model"
+  ) |>
+  mutate(
+    scenario = factor(scenario, levels = levels(productivity_reference$scenario))
+  )
+
 format_h2_reference_table <- function(stock_id) {
   h2_productivity_reference |>
     filter(stock == stock_id) |>
@@ -419,6 +578,60 @@ plot_h2_reference_points <- function(stock_id) {
     scale_shape_manual(values = c("Fmsy" = 16, "F35%" = 17)) +
     labs(x = "F", y = NULL, color = "Steepness", shape = "Reference point") +
     theme_report()
+}
+
+plot_h2_stock2_far_north_selectivity <- function() {
+  year_levels <- sort(unique(h2_stock2_far_north_selectivity$year))
+  year_breaks <- year_levels[year_levels %% 5 == 0]
+  plot_data <- h2_stock2_far_north_selectivity |>
+    mutate(year_label = factor(year, levels = year_levels))
+
+  ggplot(
+    plot_data,
+    aes(
+      x = actual_age,
+      y = year_label,
+      height = selectivity,
+      group = interaction(model, year),
+      fill = scenario,
+      color = scenario
+    )
+  ) +
+    ggridges::geom_density_ridges(
+      stat = "identity",
+      alpha = 0.45,
+      scale = 3.4,
+      linewidth = 0.3
+    ) +
+    facet_wrap(vars(scenario), nrow = 1) +
+    scale_fill_manual(values = productivity_scenario_colors, drop = FALSE, guide = "none") +
+    scale_color_manual(values = productivity_scenario_colors, drop = FALSE, guide = "none") +
+    scale_x_continuous(breaks = 1:12, limits = c(1, 12)) +
+    scale_y_discrete(limits = rev(as.character(year_levels)), breaks = as.character(year_breaks)) +
+    labs(x = "Age", y = "Year") +
+    theme_report()
+}
+
+plot_h2_stock2_sel_msy <- function() {
+  sel_msy_colors <- c(
+    "sel_msy row 1" = "#1b9e77",
+    "sel_msy row 2" = "#d95f02",
+    "sel_msy row 3" = "#7570b3",
+    "sel_msy row 4" = "#666666"
+  )
+
+  ggplot(
+    h2_stock2_sel_msy,
+    aes(age, selectivity, color = sel_msy_row, group = sel_msy_row)
+  ) +
+    geom_line(linewidth = 0.75) +
+    geom_point(size = 1.3) +
+    facet_wrap(vars(scenario), nrow = 1) +
+    scale_color_manual(values = sel_msy_colors, drop = FALSE) +
+    scale_x_continuous(breaks = 1:12, limits = c(1, 12)) +
+    labs(x = "Age", y = "Selectivity at age", color = "R-report vector") +
+    theme_report() +
+    theme(legend.position = "bottom")
 }
 
 h2_model_cache <- new.env(parent = emptyenv())
@@ -962,7 +1175,7 @@ ggplot(productivity_yield_profiles, aes(f, yield, color = scenario, linetype = s
 
 ## Two-stock hypotheses
 
-The `h2_0.16` run set applies the same productivity suffixes to the two-stock model, but the current control files are stock-specific in the short-period case. The `h2_0.16ls` run uses 2001-2015 for Stock 1 and 2010-2024 for Stock 2, while `h2_0.16ll` uses the long 1970-2022 SRR period for both stocks and the updated FarNorth selectivity-change penalty. Because h2 reports stock-specific reference-point quantities, Stock 1 and Stock 2 (Peruvian zone) are shown separately below rather than mixed in the same table and figure.
+The `h2_0.16` run set applies the same productivity suffixes to the two-stock model, but the current control files are stock-specific in the short-period case. The `h2_0.16ls` run uses 2001-2015 for Stock 1 and 2010-2024 for Stock 2, while `h2_0.16ll` uses the long 1970-2022 SRR period for both stocks and the updated FarNorth selectivity-change penalty. The h2 reference-point quantities shown here use reruns without a command-line `-msy_sel` override, so the model default MSY selectivity averaging window is used. These reruns also use the revised h2 recruitment-variability setting, with the Stock 2 `sigma_R` entry increased from 0.6 to 0.9. Because h2 reports stock-specific reference-point quantities, Stock 1 and Stock 2 (Peruvian zone) are shown separately below rather than mixed in the same table and figure.
 
 ### Stock 1
 
@@ -1010,6 +1223,61 @@ format_h2_reference_table(2) |>
 #| fig-cap: "Stock 2 (Peruvian zone) Fmsy and F35% estimates for h2_0.16 productivity runs. Horizontal bars show approximate 95% intervals for Fmsy using the reported standard errors."
 
 plot_h2_reference_points(2)
+```
+
+```{r}
+#| label: fig-h2-stock2-yield-profiles
+#| fig-cap: "Stock 2 (Peruvian zone) yield profiles across h2_0.16 productivity assumptions. Colors identify productivity cases and line types identify the stock-recruit fitting period. Points mark the profile maximum and dashed vertical lines mark the reported Fmsy values."
+
+ggplot(h2_stock2_yield_profiles, aes(f, yield, color = scenario, linetype = sr_fit)) +
+  geom_line(linewidth = 0.8) +
+  geom_vline(
+    data = h2_stock2_profile_reference,
+    aes(xintercept = Fmsy, color = scenario),
+    inherit.aes = FALSE,
+    linetype = "dashed",
+    linewidth = 0.55,
+    alpha = 0.75,
+    show.legend = FALSE
+  ) +
+  geom_point(
+    data = h2_stock2_profile_reference,
+    aes(profile_Fmsy, MSY, color = scenario),
+    inherit.aes = FALSE,
+    shape = 16,
+    size = 2.4,
+    show.legend = FALSE
+  ) +
+  labs(x = "F", y = "Equilibrium yield (kt)", color = "Productivity case", linetype = "SR fit") +
+  guides(
+    color = guide_legend(nrow = 2, byrow = TRUE),
+    linetype = guide_legend(nrow = 1)
+  ) +
+  theme_report() +
+  theme(
+    legend.position = "bottom",
+    legend.box = "vertical"
+  )
+```
+
+The next two figures focus on Stock 2 selectivity. The annual FarNorth selectivity plot uses the same ridge-plot format as the H2 productivity debugging document. Ages are shown as 1-12 because the 12 model selectivity-at-age columns correspond to actual ages 1 through 12. The following plot shows the `sel_msy` selectivity-at-age vectors printed in the stock-specific R reports and used in the Fmsy calculations; those vectors are not separately named in the R report, so they are labelled by their reported row.
+
+```{r}
+#| label: fig-h2-stock2-farnorth-selectivity
+#| fig-cap: "Stock 2 (Peruvian zone) FarNorth fishery selectivity-at-age time series across h2_0.16 productivity runs. Ages are indexed 1-12 to match the model selectivity-at-age columns."
+#| fig-width: 13
+#| fig-height: 8
+
+plot_h2_stock2_far_north_selectivity()
+```
+
+```{r}
+#| label: fig-h2-stock2-sel-msy
+#| fig-cap: "Stock 2 (Peruvian zone) selectivity-at-age vectors used for Fmsy estimates across h2_0.16 productivity runs. Rows correspond to the `sel_msy` vectors reported in each stock-specific R report."
+#| fig-width: 12
+#| fig-height: 5.5
+
+plot_h2_stock2_sel_msy()
 ```
 
 ```{r}

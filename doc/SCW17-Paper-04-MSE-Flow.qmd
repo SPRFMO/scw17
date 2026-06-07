@@ -20,6 +20,10 @@ execute:
 
 {{< include _includes/sprfmo-banner.html >}}
 
+```{=html}
+<div class="paper-title">Jack mackerel MSE workflow</div>
+```
+
 # Purpose
 
 This note is a working map of the software layers used in the jack mackerel management strategy evaluation (MSE) workflow. It is intended to explain how operating models (OMs) are created from JJM assessment configurations, how management procedures (MPs) are specified in `jmMSE`, and how candidate MPs are tested against performance metrics.

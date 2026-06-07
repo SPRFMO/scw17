@@ -1,0 +1,179 @@
+---
+title: ""
+pagetitle: "Wageningen MSE Workshop — Schedule"
+format:
+  html:
+    output-file: "Wageningen-MSE-workshop-schedule.html"
+    self-contained: true
+    embed-resources: true
+    lightbox: true
+    html-math-method: katex
+    toc: true
+    toc-title: "Contents"
+    toc-depth: 2
+    toc-location: left
+    number-sections: false
+execute:
+  warning: false
+  message: false
+  echo: false
+  results: false
+---
+
+```{r}
+date_stamp <- format(Sys.Date(), "%d %B %Y")
+```
+
+{{< include _includes/sprfmo-banner.html >}}
+
+```{=html}
+<div style="font-style: italic; margin-top: 0.5rem;">Wageningen MSE Workshop</div>
+```
+
+```{=html}
+<div class="paper-title">Wageningen MSE Workshop — Detailed Schedule<br>15–19 June 2026</div>
+```
+
+::: {.no-para-number style="text-align: center; margin-top: 0.75rem; margin-bottom: 1rem;"}
+`r date_stamp`
+:::
+
+::: {.callout-note}
+## Meeting at a glance
+
+- **Dates:** 15–19 June 2026 (4.5 days)
+- **Venue:** Wageningen Campus Omnia, Hoge Steeg 2, 6708 PH Wageningen
+- **Chair:** J. Ianelli (JMWG Chair)
+- **Daily timings:**
+    - **Mon 15 Jun:** 09:00 – 18:00
+    - **Tue 16 Jun:** 08:00 – 17:00 *(early start to recover Day-1 slippage if any)*
+    - **Wed 17 Jun:** 09:00 – 18:00
+    - **Thu 18 Jun:** 09:00 – 18:00
+    - **Fri 19 Jun:** 09:00 – 12:00 *(half day, close at noon)*
+- **Format:** Plenary throughout, with focused subgroup breakouts where flagged.
+- **Working language:** English; technical documents at <https://sprfmo.github.io/scw17/>.
+:::
+
+# Design principles
+
+The schedule is built around six guiding principles:
+
+1. **No technical reopening of items frozen at TG-05.** Stock-hypothesis treatment, MP specifications, performance metrics, robustness matrix, and cross-platform validation owners are inputs to the workshop, not topics for re-litigation.
+2. **Front-load high-cognition technical work.** OM walk-through and MP setup happen Monday afternoon through Tuesday, while attention is fresh.
+3. **Reserve mid-week for results.** Wednesday produces the first integrated MP-evaluation results so Thursday can be spent on trade-offs and shortlisting, not on re-running models.
+4. **Use Thursday as the decision day.** The CMP shortlist for SC14 is decided Thursday afternoon, so Friday morning is drafting and assignment, not deliberation.
+5. **Breakouts only when they save plenary time.** Each breakout has a named lead, a named output, and a hard return-to-plenary time.
+6. **End each day with a 30-minute wrap that names what's needed by 09:00 the next morning.** Avoids dead time at the start of each day.
+
+# Schedule
+
+## Monday 15 June — Opening and benchmark handoff (09:00 – 18:00)
+
+| Time | Topic | Lead | Output |
+|---|---|---|---|
+| 09:00 – 09:30 | Opening, welcome, agenda adoption, declaration of materials in shared folder. | Chair, WMR host | Agenda confirmed; folder contents agreed. |
+| 09:30 – 10:30 | **Benchmark outcomes for MSE conditioning** — SCW17-Doc01 walkthrough. What was decided in Lima; what is settled; what is still diagnostic. | Chair | Shared understanding of the input set. |
+| 10:30 – 10:45 | Coffee. | — | — |
+| 10:45 – 12:00 | **Reference points** — SCW17-Paper-02 walkthrough, including productivity cases and dynamic Bzero. | Chair | Reference-point set confirmed for MSE evaluation. |
+| 12:00 – 13:00 | Lunch. | — | — |
+| 13:00 – 14:30 | **OM conditioning overview** — SCW17-Doc02. How the benchmark inputs were carried into the OM grid. | WMR (Iago, Karolina) | OM grid structure understood by all members. |
+| 14:30 – 15:30 | OM diagnostics walkthrough — fits, retros, composition, indices. | WMR | Diagnostic acceptance check. |
+| 15:30 – 15:45 | Coffee. | — | — |
+| 15:45 – 17:00 | **Stock-hypothesis treatment in the OM grid.** Confirmation of TG-05 decision; how h1 / h2 / weighting enters projection. | Chair + WMR | Treatment locked. |
+| 17:00 – 18:00 | Day-1 wrap; what's needed for 09:00 Tuesday. Confirmation that recruitment scenarios and S–R priors are ready to discuss. | Chair | List of overnight tasks per member. |
+
+## Tuesday 16 June — Operating models deep dive (08:00 – 17:00)
+
+::: {.callout-warning}
+**Early start (08:00).** Tuesday opens an hour earlier than the other technical days. The first hour is reserved for recovery of any slippage from Monday and for cross-platform setup. If Monday closed cleanly, members can use the 08:00–09:00 block for code-level review of OM scripts.
+:::
+
+| Time | Topic | Lead | Output |
+|---|---|---|---|
+| 08:00 – 09:00 | **Member parallel-run setup** — FLR vs. RTMB/OpenMSE: confirm identical OM, identical seeds, identical projection horizon. | WMR + Chile + Peru | Cross-platform run table populated. |
+| 09:00 – 10:30 | **Reference-set OMs** — full walkthrough, axis by axis. | WMR | Reference set signed off. |
+| 10:30 – 10:45 | Coffee. | — | — |
+| 10:45 – 12:00 | **Robustness-set OMs** — SCW17-Doc04 walkthrough. ENSO / offshore-drop / catchability / index-bias scenarios. | WMR | Robustness set signed off. |
+| 12:00 – 13:00 | Lunch. | — | — |
+| 13:00 – 14:30 | **Recruitment scenarios and S–R assumptions** — steepness priors, σ_R, regime treatment, far-north handling. | WMR + Chair | Recruitment specifications locked. |
+| 14:30 – 15:30 | **ENSO / offshore-drop scenario specification** — magnitude, duration, recovery dynamics; tie back to the 2026 acoustic and CPUE signals. | WMR + Chile | Scenario parameters locked. |
+| 15:30 – 15:45 | Coffee. | — | — |
+| 15:45 – 17:00 | **OM sign-off (plenary).** All OM-related decisions confirmed and recorded. Documented residual gaps if any. | Chair | OM block closed. No OM changes after this point. |
+
+## Wednesday 17 June — Candidate management procedures (09:00 – 18:00)
+
+| Time | Topic | Lead | Output |
+|---|---|---|---|
+| 09:00 – 10:30 | **MP register walkthrough** — SCW17-Doc03. Every MP, its data streams, lag, frequency, HCR form, Buffer/K60 settings. | WMR + Chile + Peru | All members confirm understanding of every MP. |
+| 10:30 – 10:45 | Coffee. | — | — |
+| 10:45 – 12:00 | **Model-based MPs deep dive** — multi-index, surplus-production, structural assumptions, tuning. | WMR (Iago) | Model-based MP set documented. |
+| 12:00 – 13:00 | Lunch. | — | — |
+| 13:00 – 14:30 | **Model-free / OpenMSE MPs** — DLMtool/MSEtool methods applicable to JM, data requirements. | Chile + Peru | Model-free MP set documented. |
+| 14:30 – 15:30 | **MP tuning** — Buffer/K60 setting, tuning to comparable long-term yield, calibration runs. | WMR | Tuning parameters locked. |
+| 15:30 – 15:45 | Coffee. | — | — |
+| 15:45 – 17:00 | **Initial CMP results — reference OM.** First integrated trade-off plots. | WMR | Reference-OM results table. |
+| 17:00 – 18:00 | Day-3 wrap; preparation for trade-off and shortlist work on Thursday. Identify any MP needing overnight re-run. | Chair | Thursday-morning run list. |
+
+## Thursday 18 June — Trade-offs, robustness, shortlist decision (09:00 – 18:00)
+
+::: {.callout-important}
+**Decision day.** The CMP shortlist for SC14 is agreed Thursday afternoon. If a decision cannot be reached in the time allotted, the chair will move to a documented fallback (carry the top-three reference-OM CMPs and flag the remaining choice as SC14 paper work) rather than extend the day.
+:::
+
+| Time | Topic | Lead | Output |
+|---|---|---|---|
+| 09:00 – 10:30 | **Performance-metric review** — confirm metrics, horizons, risk tolerance against actual results. No new metrics. | Chair | Metrics confirmed for shortlist comparison. |
+| 10:30 – 10:45 | Coffee. | — | — |
+| 10:45 – 12:00 | **Trade-off plots** — Slick / worm-plot / Kobe-style review across CMPs on the reference OM. | WMR | Trade-off presentation agreed. |
+| 12:00 – 13:00 | Lunch. | — | — |
+| 13:00 – 14:30 | **Robustness results** — ENSO, offshore-drop, and remaining scenarios. Pass/fail against documented criteria. | WMR | Robustness pass/fail table. |
+| 14:30 – 15:30 | **Cross-platform validation results** — FLR vs. RTMB/OpenMSE on the reference OM and at least one robustness scenario. | WMR + Chile + Peru | Validation summary; agreement status. |
+| 15:30 – 15:45 | Coffee. | — | — |
+| 15:45 – 17:00 | **Shortlist deliberation** — which CMPs advance to SC14 and on what grounds. Recorded vote/consensus on each. | Chair (plenary) | **CMP shortlist for SC14 — DECIDED.** |
+| 17:00 – 18:00 | Day-4 wrap; drafting assignments for Friday morning; confirmation of who writes which section of the SC14 paper. | Chair | Friday-morning task table. |
+
+## Friday 19 June — Recommendations and close (09:00 – 12:00)
+
+| Time | Topic | Lead | Output |
+|---|---|---|---|
+| 09:00 – 10:00 | **Final shortlist confirmation and rationale text.** Written justification for each CMP advancing and each dropped. | Chair + WMR | Rationale paragraphs drafted. |
+| 10:00 – 10:45 | **Exceptional-circumstances meta-rules** — trigger conditions, evidence types, response actions. Adoption. | Chair + Chile + Peru | Meta-rules note adopted. |
+| 10:45 – 11:00 | Coffee. | — | — |
+| 11:00 – 11:45 | **SC14 paper structure and drafting assignments** — SCW17-SC14-01 (results), SC14-02 (cross-platform), SC14-03 (process review). Owners and timeline. | Chair | Drafting table with owner + deadline per section. |
+| 11:45 – 12:00 | Close. Acknowledgements, thanks to WMR host, agreed circulation of draft minutes within 7 days. | Chair | Workshop closed at 12:00. |
+
+# At-a-glance overview
+
+| Day | Hours | Theme | Key output |
+|---|---|---|---|
+| Mon 15 Jun | 09:00 – 18:00 | Opening, benchmark handoff, OM conditioning overview, stock-hypothesis treatment | Shared understanding of inputs; stock-hypothesis treatment locked. |
+| Tue 16 Jun | 08:00 – 17:00 | OM deep dive, recruitment scenarios, ENSO specification, OM sign-off | OM block closed. |
+| Wed 17 Jun | 09:00 – 18:00 | MP register, tuning, first integrated results on reference OM | Reference-OM CMP results in hand. |
+| Thu 18 Jun | 09:00 – 18:00 | Performance metrics, trade-offs, robustness, cross-platform validation, **shortlist decision** | **CMP shortlist for SC14 agreed.** |
+| Fri 19 Jun | 09:00 – 12:00 | Shortlist rationale, exceptional-circumstances meta-rules, SC14 drafting assignments | Drafting plan and assignments. |
+
+# Standing items each day
+
+- **08:55 / 08:25 Tue:** Quiet check-in time; chair confirms quorum and any overnight communications.
+- **Coffee breaks** are 15 minutes and start on the clock; presenters do not run into the break.
+- **Lunch** is 12:00–13:00 (Mon, Wed, Thu) and 12:00–13:00 (Tue, with the 08:00 start that's still a 4-hour morning block — chair will signal a 5-min stretch at 10:00 on top of the formal coffee break if needed).
+- **End-of-day 30-min wrap** is non-negotiable, even on the technically heaviest days. The chair will not allow a session to swallow the wrap.
+- **Side-room** is reserved each afternoon for small breakouts. Any breakout must register a lead, a return-time, and a one-line output before leaving plenary.
+
+# Risk register and fallbacks
+
+| Risk | Fallback |
+|---|---|
+| OM conditioning not closed by Tuesday 17:00. | Move OM sign-off to Wednesday 08:30; compress MP register walkthrough to 60 minutes. |
+| MP register changes during the workshop. | Not permitted under TG-05 freeze. Late-arriving MPs run as comparison only, do not enter shortlist. |
+| Cross-platform validation incomplete. | Treat as SC14-02 paper deliverable rather than blocking shortlist decision. |
+| Shortlist deliberation deadlocked at 17:00 Thursday. | Chair invokes the documented fallback (top-three reference-OM CMPs by composite trade-off score). |
+| Friday slippage. | Hard close at 12:00. Outstanding drafting items become Task Team action with a 7-day deadline. |
+| Remote participation drops out. | Workshop continues in-person; remote items are flagged for catch-up on the post-workshop Task Team call. |
+
+# Post-workshop close-out (for the chair)
+
+- **Within 48 hours:** circulate draft list of agreed decisions to all participants.
+- **Within 7 days:** circulate draft minutes; collect corrections within a further 7 days.
+- **Within 14 days:** confirm the SC14 paper drafting timeline and check first drafts are on track.
+- **TT-06 (Thu 9 July):** post-Wageningen review; CMP shortlist review for SC14 drafting.

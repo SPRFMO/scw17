@@ -1,9 +1,9 @@
 ---
-title: "SCW17/Paper-02a Far North model selectivity"
+title: "SCW17/Paper-01a Far North model selectivity"
 date: today
 format:
   html:
-    output-file: "SCW17-Paper-02a-Far-North-Model-Selectivity.html"
+    output-file: "SCW17-Paper-01a-Far-North-Model-Selectivity.html"
     self-contained: true
     lightbox: true
     html-math-method: katex

@@ -1,0 +1,215 @@
+---
+title: "SCW17 Pre-Wageningen Preparation Meeting"
+pagetitle: "SPRFMO SCW17 Pre-Wageningen Preparation Meeting"
+date: today
+format:
+  html:
+    output-file: "SCW17_prep_mtg.html"
+    self-contained: true
+    embed-resources: true
+    lightbox: true
+    html-math-method: katex
+    theme: cosmo
+    toc: true
+    toc-title: "Contents"
+    toc-depth: 2
+    toc-location: left
+    number-sections: false
+execute:
+  warning: false
+  message: false
+  echo: false
+  results: false
+---
+
+```{r}
+date_stamp <- format(Sys.Date(), "%d %B %Y")
+```
+
+{{< include _includes/sprfmo-banner.html >}}
+
+```{=html}
+<div style="font-style: italic; margin-top: 0.5rem;">Scientific Committee Workshop 17 preparation</div>
+```
+
+```{=html}
+<div class="paper-title">SCW17 Pre-Wageningen Preparation Meeting</div>
+```
+
+**Meeting:** TG-05, pre-Wageningen final preparation  
+**Focus:** Jack mackerel management strategy evaluation preparation  
+**Date:** Thursday, 11 June 2026, 15:00–16:30 CEST  
+**Status:** Chair briefing pack and reminder sequence  
+**Workshop:** Wageningen MSE workshop, 15–19 June 2026  
+**Materials:** [SPRFMO SCW17 preparation site](https://sprfmo.github.io/scw17/)  
+**Updated:** `r date_stamp`
+
+::: {.callout-note}
+## Meeting at a glance
+
+- **Date:** Thursday, 11 June 2026, 15:00–16:30 CEST (90 min)
+- **Mode:** Zoom / Teams (online)
+- **Chair:** J. Ianelli (JMWG Chair)
+- **Purpose:** Close all open items before the Wageningen MSE workshop (15–19 June). No new MPs, no new metrics, no new OM axes after this call.
+:::
+
+# Agenda (90 minutes, strict time-boxes)
+
+| Time | Item | Owner | Output |
+|---|---|---|---|
+| 15:00–15:05 | Opening, agenda adoption, declaration of pre-circulated materials received. | Chair | Recorded attendance, confirmation of read-aheads. |
+| 15:05–15:20 | **Conclude the stock-hypothesis treatment.** Close from TG-04. Either confirm the agreed treatment (single-stock h1, two-stock h2, or weighted combination) or invoke the documented fallback. | Chair / WMR / Chile / Peru | Decision recorded; SCW17-Doc01 updated. |
+| 15:20–15:35 | **Finalise performance metrics, time horizons, and risk tolerance** for Wageningen (SCW17-MSE-02). Conservation metrics (P(B<BLIM), P(B<BMSY)), yield/AAV, TAC-stability; 5/10/20-yr horizons; SPRFMO risk band. | Chair | Final metric list signed off; SCW17-Doc03 updated. |
+| 15:35–15:55 | **Freeze MP specifications (SCW17-MSE-01).** Data streams used by each MP, lag/frequency, tuning targets, HCR form, Buffer/K60 settings. No new MPs may be added after this item. | WMR / Chile / Peru | MP register frozen; SCW17-Doc03 finalised. |
+| 15:55–16:15 | **Agree complete robustness scenario matrix (SCW17-MSE-03).** Reference set vs. robustness set; ENSO / offshore-drop / catchability / index-bias scenarios; pass/fail criteria for advancement to SC14. | WMR | Robustness matrix signed off; SCW17-Doc04 updated. |
+| 16:15–16:25 | **Cross-platform validation protocol.** FLR vs. RTMB/OpenMSE: which metrics are compared, on which OM, by whom (WMR / Chile / Peru), and by when. Assign owners. | Chair / WMR | Owner-and-deadline table; SCW17-Doc05 initiated. |
+| 16:25–16:30 | **Wageningen logistics.** Trade-off presentation format (Slick / worm plots / Kobe-style); decision-making protocol; daily report-out cadence. | Chair | Format agreed; circulate Wageningen-week agenda within 48 h. |
+
+## Decisions to be recorded
+
+1. Stock-hypothesis treatment for advice.
+2. Final performance-metrics list with time horizons and risk tolerance.
+3. Frozen MP specifications (data, tuning, HCR, Buffer/K60).
+4. Complete robustness-scenario matrix with pass/fail criteria.
+5. Cross-platform validation owners and timeline.
+6. Wageningen trade-off presentation format and decision-making protocol.
+
+## Pre-circulated reading (deadline: COB Friday 6 June)
+
+- **SCW17-Doc01** — Benchmark outcomes for MSE conditioning *(Chair — draft)*
+- **SCW17-Paper-02** — Reference Points *(Chair — published 29 May)*
+- **SCW17-Doc02** — OM conditioning and diagnostics *(WMR — full draft)*
+- **SCW17-Doc03** — Candidate MPs and performance metrics *(WMR + Chile + Peru — full draft)*
+- **SCW17-Doc04** — Robustness scenarios and exceptional circumstances *(WMR — full draft)*
+- Slick / trade-off prototype if available *(WMR)*
+- Updated OM status note *(WMR)*
+
+::: {.callout-warning}
+If any of the above is not in the shared folder by **14:00 CEST Monday 8 June**, the chair will downgrade that agenda item from "conclude" to "best-available-state" and flag it as a risk to the Wageningen schedule.
+:::
+
+# Email reminder sequence
+
+Three staged reminders. Each is short. Copy/paste blocks below.
+
+## Reminder #1 — Friday 5 June (T-6 days)
+
+::: {.callout-tip}
+## Subject: SPRFMO SCW17 TG-05 (11 June, 15:00 CEST) — read-aheads due Mon 8 Jun 14:00 CEST
+:::
+
+Dear all,
+
+A reminder that **SPRFMO SCW17 TG-05 — Pre-Wageningen Preparation Meeting** is Thursday 11 June, 15:00–16:30 CEST (Zoom/Teams). This is the last Task Team call before the Wageningen MSE workshop (15–19 June). The purpose is to **close** open items, not to reopen them.
+
+The six items on the table:
+
+1. Conclude the stock-hypothesis treatment.
+2. Finalise performance metrics, time horizons, and risk tolerance.
+3. Freeze MP specifications (data, tuning, HCR, Buffer/K60). No new MPs after TG-05.
+4. Agree the complete robustness scenario matrix.
+5. Agree cross-platform validation protocol and assign responsibilities.
+6. Agree Wageningen communication and decision-making format.
+
+Per the working-papers plan, the following are due **Saturday 6 June** and should appear in the shared folder no later than **14:00 CEST Monday 8 June** so members can read before the call:
+
+- Full draft **SCW17-MSE-01** (Candidate MPs) — WMR + Chile + Peru
+- Full draft **SCW17-MSE-02** (Performance metrics and trade-off framework) — Chair
+- Full draft **SCW17-MSE-03** (Robustness testing design) — WMR
+- Updated OM status note — WMR
+- Slick / trade-off prototype if available — WMR
+
+All current SPRFMO SCW17 jack mackerel materials are at <https://sprfmo.github.io/scw17/>.
+
+If you cannot meet the deadline for the paper you lead, please flag it to me by reply today so we can plan around it.
+
+Best,
+Jim
+
+## Reminder #2 — Tuesday 9 June (T-2 days)
+
+::: {.callout-tip}
+## Subject: SPRFMO SCW17 TG-05 Thursday 15:00 CEST — agenda + what each member should bring
+:::
+
+Dear all,
+
+SPRFMO SCW17 TG-05 is in two days. Detailed agenda below; please review and bring concrete positions on the items in your area of responsibility.
+
+**Agenda (90 minutes, strict time-boxes):**
+
+- 15:00–15:05 — Opening
+- 15:05–15:20 — Conclude stock-hypothesis treatment
+- 15:20–15:35 — Finalise performance metrics, time horizons, risk tolerance
+- 15:35–15:55 — Freeze MP specifications (no new MPs after this item)
+- 15:55–16:15 — Agree complete robustness scenario matrix
+- 16:15–16:25 — Cross-platform validation responsibilities and timeline
+- 16:25–16:30 — Wageningen logistics and close
+
+**What each member should bring:**
+
+- **WMR (Iago, Karolina):** confirmation that SCW17-MSE-01, SCW17-MSE-03, and the updated OM status note are in the shared folder; the proposed MP register (one row per MP with data streams, tuning target, HCR, Buffer/K60); the proposed reference-set vs. robustness-set scenarios; the Slick / trade-off prototype if available.
+- **Chile (Jose, Aquiles, Ignacio, Sebastian):** position on the stock-hypothesis treatment and, if applicable, on whether model-free / OpenMSE MPs from the Chilean contribution should enter the frozen MP register; commitment on Chile's share of the FLR vs. RTMB/OpenMSE cross-platform validation.
+- **Peru (Ana, Criscely, Gersson, Erich, Daniel):** position on the stock-hypothesis treatment; commitment on Peru's share of cross-platform validation; any final Peru-specific input to robustness scenarios (e.g., Peru-acoustic uncertainty bands, far-north recruitment regime).
+- **EU / PFA (Niels):** confirmation on performance-metric thresholds and risk tolerance from a Commission-decision perspective; any objections to the Chilean effort-creep treatment carried into the OM that must be tabled before Wageningen rather than at Wageningen.
+- **Chair (Jim):** SCW17-MSE-02 final draft (metrics, horizons, risk tolerance); proposed Wageningen presentation format and decision-making protocol; the consolidated "exceptional circumstances" meta-rules note (one page).
+
+::: {.callout-important}
+## Ground rules for the call
+
+- Items 2–4 are **CONCLUDE** items. If we cannot conclude, we adopt the documented fallback rather than spilling into Wageningen.
+- No new MPs, no new metrics, no new OM axes will be added after this call. Items raised after TG-05 go to SC14 documentation, not Wageningen.
+:::
+
+All SPRFMO SCW17 materials are at <https://sprfmo.github.io/scw17/>. Joining link in the calendar invite.
+
+Best,
+Jim
+
+## Reminder #3 — Thursday 11 June, 08:00 CEST (morning of)
+
+::: {.callout-tip}
+## Subject: SPRFMO SCW17 TG-05 today 15:00 CEST — joining link + last-minute items
+:::
+
+Quick reminder: SPRFMO SCW17 TG-05 today, 15:00 CEST, 90 minutes. Joining link is in the calendar invite (and pasted below for anyone whose invite is missing).
+
+Please be ready at the start of the call with the **one decision** in your area. The chair will move firmly through the time-boxes — if a topic is not concluded inside its slot, we adopt the documented fallback for that item and move on.
+
+Outstanding items as of this morning:
+
+- *(list any papers still missing from the shared folder, with the responsible lead and the fallback the chair will apply)*
+
+Joining link: *(paste link)*
+
+See you at 15:00.
+
+Jim
+
+# Per-recipient focus points
+
+Use these as one-liner additions to direct reminders if you want to nudge specific members.
+
+| Recipient | Single most important thing to bring |
+|---|---|
+| Iago (WMR) | Frozen MP register table; robustness scenario matrix; Slick prototype. |
+| Karolina (WMR) | Updated OM status note; confirmation of SCW17-MSE-01/SCW17-MSE-03 drafts in shared folder. |
+| Niels (PFA/EU) | EU position on performance-metric thresholds and risk tolerance; any reservations on the Chilean creep treatment carried into the OM. |
+| Jose Zenteno (IFOP) | Confirmed Chilean position on stock-hypothesis treatment and on the design-based vs. spatio-temporal acoustic index for robustness. |
+| Aquiles (INPESCA) | INPESCA's contribution to the robustness set (acoustic-modelling sensitivity). |
+| Ignacio Paya (IFOP) | Confirmed implementation of the effort-creep treatment for cross-check at Wageningen. |
+| Ana Alegre (IMARPE) | Peru's position on stock-hypothesis treatment; commitment on cross-platform validation. |
+| Criscely (IMARPE) | Peru length-frequency status and any update to far-north composition input. |
+| Gersson (IMARPE) | Final Peru CPUE input for cross-check at Wageningen. |
+| Qi Lee (UW, invited) | Independent read on the frozen MP set and on the cross-platform validation protocol. |
+
+# Fallbacks if read-aheads slip
+
+If one or more of SCW17-MSE-01 / SCW17-MSE-02 / SCW17-MSE-03 is not in the shared folder by 14:00 CEST Monday 8 June, the chair will:
+
+- **SCW17-MSE-01 missing or partial:** carry the MP set frozen at TG-04 into Wageningen and add new MPs only as side-by-side comparison runs, not as candidates for SC14 recommendation.
+- **SCW17-MSE-02 missing or partial:** adopt the metric list and risk tolerance from the March working-papers plan verbatim; revisit only the time horizons during the call.
+- **SCW17-MSE-03 missing or partial:** carry the reference set from TG-04 with the ENSO offshore-drop scenario as the only robustness axis, and flag the missing scenarios as Wageningen-week work.
+- **Cross-platform validation:** if WMR/Chile/Peru cannot agree owners during the call, the chair appoints owners by name and confirms in the meeting minutes.
+
+These fallbacks are deliberately conservative — the point is to protect Wageningen's schedule, not to penalise the leads.
