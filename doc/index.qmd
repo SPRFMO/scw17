@@ -35,14 +35,6 @@ SCW17 follows the 2026 benchmark work compiled in the SCW16 preparation reposito
 - [SCW16 prep repository](https://github.com/SPRFMO/JM_SCW_prep)
 - [Jack mackerel assessment repository](https://github.com/SPRFMO/jjm)
 
-# Working Checklist
-
-- Confirm official SCW17 dates, venue, and meeting mode.
-- Assign document numbers and lead authors.
-- Add agreed agenda sessions and expected decisions.
-- Add links to circulated working papers as they become available.
-- Render and publish the site before circulating links to participants.
-
 # Training and Orientation
 
 The [MSE training resources](SCW17-MSE-training.html) page links to the IOTC MSE introduction and Shiny app, plus the FAO Training Adventure course option. These are intended as optional orientation material before participants move into the jack mackerel-specific SCW17 documents.
