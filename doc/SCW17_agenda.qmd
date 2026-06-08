@@ -3,7 +3,6 @@ title: "SCW17 Preliminary Agenda"
 pagetitle: "SPRFMO SCW17 Preliminary Agenda"
 format:
   html:
-    output-file: "SCW17_agenda.html"
     self-contained: false
     toc: true
     toc-title: "Contents"
