@@ -73,33 +73,6 @@ The schedule is built around some ideal principles:
 4. **Breakouts only when they save plenary time.** Each breakout has a named lead, a named output, and a hard return-to-plenary time.
 5. **End each day with a 30-minute wrap that names what's needed by 09:00 the next morning.** Avoids dead time at the start of each day.
 
-
-
-# Draft Programme
-
-| Day | Session | Draft focus | Expected output |
-|---|---|---|---|
-| Day 1 | Opening and benchmark handoff | Review benchmark outcomes, accepted inputs, unresolved diagnostics, and MSE dependencies. | Agreed list of benchmark outputs that move into OM conditioning. |
-| Day 2 | Operating models | Review conditioned OMs, recruitment assumptions, stock hypotheses, and reference/robustness sets. | OM set and sensitivity classification. |
-| Day 3 | Candidate management procedures | Review candidate MPs, data streams, tuning targets, constraints, and implementation status. | Shortlist of MPs for evaluation. |
-| Day 4 | Performance metrics and trade-offs | Review conservation, yield, stability, and exceptional-circumstances metrics. | Agreed performance metrics and presentation format. |
-| Day 5 | Recommendations and report drafting | Resolve remaining decisions, assign drafting tasks, and agree SC14 documentation path. | Draft recommendations and action table. |
-
-# Working Document Register
-
-| Document | Working title | Status |
-|---|---|---|
-| SCW17-Doc00 | Preliminary agenda | Draft |
-| SCW17-Doc01 | Benchmark outcomes and model developments for MSE conditioning | posted |
-| SCW17-Doc01a|   - close look at far N stock           | posted |
-| SCW17-Paper-02 | Reference points used for SPRFMO jack mackerel management | posted |
-| SCW17-Paper-03 |  Management procedures inventory for jack mackerel MSE | posted |
-| SCW17-Paper-04 | MSE flow | Draft |
-| SCW17-Paper-XX | Candidate management procedures and performance metrics | To start |
-| SCW17-Paper-XX | Robustness scenarios and exceptional circumstances | To start |
-| SCW17-Paper-XX | Cross-platform validation summary | To start |
-
-
 # Schedule
 
 ## Monday 15 June — Opening and benchmark handoff (09:00 – 18:00)
