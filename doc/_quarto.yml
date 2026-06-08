@@ -11,6 +11,7 @@ project:
     - SCW17_prep_mtg.qmd
     - SCW17-Paper-01-ModelDevelopments.qmd
     - SCW17-Paper-02-ReferencePoints.qmd
+    - SCW17-Paper-03-Management-Procedures-Inventory.qmd
     - SCW17-Paper-01a-Far-North-Model-Selectivity.qmd
     - SCW17-Paper-04-MSE-Flow.qmd
 
@@ -36,6 +37,8 @@ website:
         text: SCW17/Paper-01a Far North model selectivity
       - href: SCW17-Paper-02-ReferencePoints.qmd
         text: SCW17/Paper-02
+      - href: SCW17-Paper-03-Management-Procedures-Inventory.qmd
+        text: SCW17/Paper-03 MP inventory
       - href: SCW17-Paper-04-MSE-Flow.qmd
         text: SCW17/Paper-04 MSE flow
 
@@ -45,3 +48,4 @@ format:
     toc: true
     toc-depth: 2
     number-sections: true
+    lightbox: true
