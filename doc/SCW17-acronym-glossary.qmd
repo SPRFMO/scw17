@@ -1,0 +1,159 @@
+---
+title: "SCW17 Acronym Glossary"
+date: today
+format:
+  html:
+    output-file: "SCW17-acronym-glossary.html"
+    toc: true
+    toc-title: "Contents"
+    toc-depth: 2
+    toc-location: left
+    number-sections: false
+    theme: cosmo
+    lightbox: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+{{< include _includes/sprfmo-banner.html >}}
+
+```{=html}
+<div class="paper-title">SCW17 Acronym Glossary</div>
+```
+
+```{=html}
+<style>
+main table th:first-child,
+main table td:first-child {
+  width: 1in;
+  min-width: 1in;
+  max-width: 1in;
+  white-space: nowrap;
+}
+</style>
+```
+
+# Scope
+
+This glossary is a working aid for SCW17 jack mackerel materials and related SPRFMO repositories. It was compiled from local text and report sources in:
+
+- `/Users/jim/_mymods/sprfmo/scw17`
+- `/Users/jim/_mymods/sprfmo/jjm`
+- `/Users/jim/_mymods/sprfmo/JM_SCW_prep`
+
+It is intended to make draft papers, schedules, MSE notes, and benchmark material easier to read. It is not a controlled vocabulary. Definitions and formal names should be checked against adopted SPRFMO reports before final submission.
+
+# Organisations, Meetings, and Documents
+
+| Acronym | Meaning | Use in this repo family |
+|---|---|---|
+| ANJ | Area of National Jurisdiction | Used in Peru jack mackerel annual-report and CPUE contexts to distinguish national waters from the SPRFMO Area. |
+| CJM | Chilean jack mackerel | Species/fishery shorthand used in CPUE, acoustic, and benchmark papers. |
+| DHC | Direct human consumption | Fishery category used in Peru data and selectivity discussions. |
+| EU | European Union | Member/fleet context, often paired with PFA in offshore fleet documents. |
+| FAO | Food and Agriculture Organization of the United Nations | Source of optional MSE training resources linked from SCW17 materials. |
+| IFOP | Instituto de Fomento Pesquero | Chilean fisheries research institute appearing in CPUE and acoustic source material. |
+| IMARPE | Instituto del Mar del Peru | Peruvian marine research institute appearing in annual-report and CPUE source material. |
+| INPESCA | Instituto de Investigacion Pesquera | Chilean fisheries research institute appearing in CPUE standardisation source material. |
+| JM | Jack mackerel | Short form for the SPRFMO jack mackerel assessment and MSE work. |
+| JMSG | Jack Mackerel Sub-group | Scientific Committee sub-group context in assessment and annex material. |
+| JMWG | Jack Mackerel Working Group | Intersessional working group used in benchmark, MSE, and SCW17 preparation documents. |
+| PDF | Portable Document Format | Rendered document format for public papers and supporting material. |
+| PER | Peru | Country/member shorthand used in cross-platform and source-data contexts. |
+| PFA | Pelagic Freezer-trawler Association | Offshore fleet/source context in EU/PFA CPUE material. |
+| PRODUCE | Ministerio de la Produccion | Peruvian ministry appearing in Peru annual-report and TAC context. |
+| QMD | Quarto Markdown | Source format for SCW17, SCW16, and related working papers. |
+| SC | Scientific Committee | SPRFMO Scientific Committee. |
+| SC13 | 13th Scientific Committee meeting | Last year's Scientific Committee meeting in 2025; source context for the accepted assessment and SC13 technical annex. |
+| SC14 | 14th Scientific Committee meeting | This year's Scientific Committee meeting in 2026; current target for SCW17 documentation and MSE working-paper contributions. |
+| SCW | Scientific Committee Workshop | Numbered workshop series used for technical preparation ahead of Scientific Committee decisions. |
+| SCW14 | 14th Scientific Committee Workshop | Earlier workshop context, especially for effort-creep and CPUE discussion. |
+| SCW16 | 16th Scientific Committee Workshop | 2026 benchmark preparation workshop and source repository context. |
+| SCW17 | 17th Scientific Committee Workshop | Current repository and Wageningen MSE workshop preparation context. |
+| SPRFMO | South Pacific Regional Fisheries Management Organisation | Regional fisheries management organisation responsible for jack mackerel management. |
+| TG | Task Group | Technical planning group used in SCW17 and JMWG schedules. |
+| ToR | Terms of Reference | Scope and objectives for benchmark and working-group processes. |
+| TT | Task Team | Technical task-team context in benchmark and MSE planning documents. |
+| WCPFC | Western and Central Pacific Fisheries Commission | Regional fisheries management organisation referenced for comparative or contextual material. |
+| WMR | Wageningen Marine Research | MSE contractor and workshop host context. |
+| WP | Working paper | Draft or submitted technical document. |
+
+# Models, Software, and Repositories
+
+| Acronym | Meaning | Use in this repo family |
+|---|---|---|
+| ADMB | AD Model Builder | Compiled modelling framework used by JJM. |
+| BHSTM | Bayesian hierarchical spatio-temporal model | CPUE standardisation approach in Chilean source documents. |
+| FLCore | Fisheries Library core package | FLR package providing core classes used by the MSE workflow. |
+| FLasher | FLR projection package | Projection package used within the FLR/mse stack. |
+| FLFishery | FLR fishery package | Fishery-object package used in FLR/mse simulations. |
+| FLIndex | FLR abundance-index class | Object class for survey and CPUE indices used by FLR workflows. |
+| FLiem | FLR implementation-error model class | Implementation-error object used in the MSE workflow. |
+| FLjjm | JJM-to-FLR adapter package | Converts JJM outputs into FLR/mse objects and helps run JJM from R. |
+| FLmses | FLR/mse MSE objects or runs | Project shorthand in jmMSE management-procedure inventory material. |
+| FLoem | FLR observation-error model class | Observation-error object used in the MSE workflow. |
+| FLombf | FLR operating-model object class | Operating-model object used to hold conditioned biology, fisheries, and reference points. |
+| FLR | Fisheries Library in R | R package ecosystem used for fisheries modelling and MSE workflows. |
+| FLStock | FLR stock object class | Object class for stock dynamics in FLR workflows. |
+| GAM | Generalized additive model | Statistical model class used in CPUE standardisation. |
+| GLM | Generalized linear model | Statistical model class used in CPUE standardisation. |
+| GLMM | Generalized linear mixed model | Statistical model class used in CPUE standardisation. |
+| IEM | Implementation error model | MSE model component controlling how catch advice is implemented. |
+| INLA | Integrated nested Laplace approximation | Bayesian computation method appearing in spatio-temporal CPUE work. |
+| ISYS | Implementation system | MP component that turns advice into implemented catches or fishery allocations. |
+| JJM | Joint Jack Mackerel Model | SPRFMO jack mackerel assessment model and source of operating-model conditioning. |
+| jjmR | JJM R interface | R input/output layer for reading and writing JJM files. |
+| jmMSE | Jack mackerel MSE repository | Companion repository defining OM sets, candidate MPs, simulations, tuning, diagnostics, and reports. |
+| LOO | Leave-one-out | Diagnostic or model-comparison context where used in benchmark material. |
+| MP | Management procedure | Candidate procedure that converts observations or estimates into management advice. |
+| MSE | Management strategy evaluation | Simulation framework for testing candidate MPs against conditioned operating models. |
+| OEM | Observation error model | MSE model component controlling simulated observations and indices. |
+| OM | Operating model | Conditioned representation of stock and fishery dynamics used in MSE simulations. |
+| OpenMSE | OpenMSE toolchain | R-based MSE implementation pathway used for cross-platform comparison with FLR/jmMSE work. |
+| RTMB | R Template Model Builder | R modelling framework considered in alternative implementation and cross-platform validation work. |
+| sdmTMB | Spatio-temporal modelling package using TMB | CPUE standardisation tool appearing in benchmark and CPUE documents. |
+| SPDE | Stochastic partial differential equation | Spatial-model component appearing in Bayesian spatio-temporal CPUE work. |
+| SPiCT | Stochastic production model in continuous time | Estimator or assessment module option in candidate MP examples. |
+| TMB | Template Model Builder | C++/R modelling framework used by RTMB and sdmTMB-related workflows. |
+| VAST | Vector Autoregressive Spatio-Temporal model | Spatio-temporal index-standardisation package referenced in CPUE and benchmark contexts. |
+
+# Assessment, Reference Points, and Diagnostics
+
+| Acronym | Meaning | Use in this repo family |
+|---|---|---|
+| AAV | Average annual variability | Performance metric for catch or TAC stability across MSE projections. |
+| B0 | Unfished biomass, often unfished spawning biomass | Reference biomass used in depletion, SPR, and MSE calculations. |
+| Blim | Limit biomass reference point | Risk threshold used in reference-point and performance-metric discussions. |
+| BMSY | Biomass at maximum sustainable yield | Reference point used for status, Kobe/Majuro-style summaries, and candidate performance metrics. |
+| CV | Coefficient of variation | Measure of uncertainty used for indices, diagnostics, and model summaries. |
+| DEPM | Daily egg production method | Survey method used in jack mackerel abundance-index context. |
+| F | Fishing mortality | Fishing-pressure quantity used in assessment and reference-point calculations. |
+| F/FMSY | Fishing mortality relative to FMSY | Status metric used in Kobe/Majuro-style summaries. |
+| F35% | Fishing mortality at 35% spawning potential ratio | Candidate SPR-based reference point in SCW17 reference-point work. |
+| FL | Fork length | Length measure used in biological and fishery data. |
+| FMSY | Fishing mortality at maximum sustainable yield | Reference fishing mortality used in assessment and management summaries. |
+| MSY | Maximum sustainable yield | Equilibrium yield reference point calculated from assessment or operating-model quantities. |
+| NASC | Nautical area scattering coefficient | Acoustic-survey backscatter quantity used in acoustic abundance work. |
+| NLL | Negative log-likelihood | Model-fitting diagnostic quantity. |
+| P(B<Blim) | Probability biomass is below Blim | Risk metric used in performance tables and trade-off summaries. |
+| R0 | Unfished or equilibrium recruitment | Recruitment reference quantity used in assessment and simulation contexts. |
+| S-R | Stock-recruitment | Relationship linking spawning biomass and recruitment. |
+| SDNR | Standard deviation of normalized residuals | Diagnostic for index or composition fits. |
+| SE | Standard error | Standard uncertainty measure reported with estimates. |
+| SPR | Spawning potential ratio | Reference-point and depletion concept used in F35% and related discussions. |
+| SSB | Spawning stock biomass | Biomass measure used in assessment, reference points, and MSE outcomes. |
+| SSB_F=0 | Spawning stock biomass without fishing | Counterfactual unfished spawning biomass used in depletion or reference calculations. |
+| TAC | Total allowable catch | Catch limit or advice quantity produced by management procedures. |
+
+# Management Procedure and MSE Workflow Terms
+
+| Acronym | Meaning | Use in this repo family |
+|---|---|---|
+| CMP | Candidate management procedure | Shortlisted or tested MP for SCW17 and SC14 advice development. |
+| EST | Estimator | MP component that estimates stock status or index state before the HCR is applied. |
+| HCR | Harvest control rule | MP component that turns estimated status into TAC or catch advice. |
+| K60 | Kobe-green 60% tuning shorthand | Tuning target used in candidate-MP comparison material. |
+| PERF | Performance metrics | Diagram and workflow shorthand for MSE scoring outputs. |
+| TUNE | Tuning and comparison | Diagram and workflow shorthand for selecting or comparing MPs against targets. |

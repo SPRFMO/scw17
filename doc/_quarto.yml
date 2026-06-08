@@ -8,6 +8,7 @@ project:
     - SCW17_agenda.qmd
     - SCW17-schedule.qmd
     - SCW17-MSE-training.qmd
+    - SCW17-acronym-glossary.qmd
     - SCW17-Paper-01-ModelDevelopments.qmd
     - SCW17-Paper-02-ReferencePoints.qmd
     - SCW17-Paper-03-Management-Procedures-Inventory.qmd
@@ -28,6 +29,8 @@ website:
         text: Workshop Schedule
       - href: SCW17-MSE-training.qmd
         text: MSE Training
+      - href: SCW17-acronym-glossary.qmd
+        text: Glossary
       - href: SCW17-Paper-01-ModelDevelopments.html
         text: SCW17/Paper-01
       - href: SCW17-Paper-01a-Far-North-Model-Selectivity.qmd

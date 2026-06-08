@@ -7,7 +7,7 @@ format:
 
 {{< include _includes/sprfmo-banner.html >}}
 
-Visitor Information posted: [SPRFMO Jack Mackerel MSE Workshop Visitor Information (QMD)](https://sprfmo.github.io/JM_SCW_prep/SPRFMO-MSE-Workshop-Visitor-Information.html)
+Visitor Information posted: [SPRFMO Jack Mackerel MSE Workshop Visitor Information](https://sprfmo.github.io/JM_SCW_prep/SPRFMO-MSE-Workshop-Visitor-Information.html)
 
 ```{=html}
 <div class="paper-title">SCW17 Preparation Materials</div>
@@ -19,13 +19,13 @@ This site is the working index for SPRFMO Scientific Committee Workshop 17 (SCW1
 
 # Current Documents
 
-- [SCW17/paper-00 Agenda and schedule](https://sprfmo.github.io/scw17/Wageningen-MSE-workshop-schedule.html) ([QMD](SCW17-schedule.qmd))
-- [SCW17 preliminary agenda](SCW17_agenda.html) ([QMD](SCW17_agenda.qmd))
-- [SCW17/Paper-01: Model developments](SCW17-Paper-01-ModelDevelopments.html) ([QMD](SCW17-Paper-01-ModelDevelopments.html))
-   - [SCW17/Paper-01a Far North model selectivity](SCW17-Paper-01a-Far-North-Model-Selectivity.html) ([QMD](SCW17-Paper-01a-Far-North-Model-Selectivity.qmd))
-- [SCW17/Paper-02: Consideration of reference points used for SPRFMO Jack mackerel management](SCW17-Paper-02-ReferencePoints.html) ([QMD](SCW17-Paper-02-ReferencePoints.qmd))
-- [SCW17/Paper-03: Management procedures inventory for jack mackerel MSE](SCW17-Paper-03-Management-Procedures-Inventory.html) ([QMD](SCW17-Paper-03-Management-Procedures-Inventory.qmd))
-- [SCW17/Paper-04 MSE flow](SCW17-Paper-04-MSE-Flow.html) ([QMD](SCW17-Paper-04-MSE-Flow.qmd))
+- [SCW17/paper-00 Agenda and schedule](https://sprfmo.github.io/scw17/Wageningen-MSE-workshop-schedule.html)
+- [SCW17 preliminary agenda](SCW17_agenda.html)
+- [SCW17/Paper-01: Model developments](SCW17-Paper-01-ModelDevelopments.html)
+   - [SCW17/Paper-01a Far North model selectivity](SCW17-Paper-01a-Far-North-Model-Selectivity.html)
+- [SCW17/Paper-02: Consideration of reference points used for SPRFMO Jack mackerel management](SCW17-Paper-02-ReferencePoints.html)
+- [SCW17/Paper-03: Management procedures inventory for jack mackerel MSE](SCW17-Paper-03-Management-Procedures-Inventory.html)
+- [SCW17/Paper-04 MSE flow](SCW17-Paper-04-MSE-Flow.html)
 - Anticipated working documents or contributions to the MSE report to SC14:
    - SCW17-Paper-XX: Operating-model conditioning and diagnostics
    - SCW17-Paper-XX: Candidate management procedures and performance metrics
@@ -34,6 +34,7 @@ This site is the working index for SPRFMO Scientific Committee Workshop 17 (SCW1
 
 # Source Links
 
+- [SCW17 acronym glossary](SCW17-acronym-glossary.html)
 - [SCW16 and benchmark preparation archive](https://sprfmo.github.io/JM_SCW_prep/)
 - [SCW16 prep repository](https://github.com/SPRFMO/JM_SCW_prep)
 - [Jack mackerel assessment repository](https://github.com/SPRFMO/jjm)
