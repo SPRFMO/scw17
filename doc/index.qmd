@@ -20,7 +20,6 @@ This site is the working index for SPRFMO Scientific Committee Workshop 17 (SCW1
 # Current Documents
 
 - [SCW17/paper-00 Agenda and schedule](https://sprfmo.github.io/scw17/Wageningen-MSE-workshop-schedule.html)
-- [SCW17 preliminary agenda](SCW17_agenda.html)
 - [SCW17/Paper-01: Model developments](SCW17-Paper-01-ModelDevelopments.html)
    - [SCW17/Paper-01a Far North model selectivity](SCW17-Paper-01a-Far-North-Model-Selectivity.html)
 - [SCW17/Paper-02: Consideration of reference points used for SPRFMO Jack mackerel management](SCW17-Paper-02-ReferencePoints.html)
