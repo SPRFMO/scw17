@@ -35,6 +35,7 @@ This site is the working index for SPRFMO Scientific Committee Workshop 17 (SCW1
 # Source Links
 
 - [SCW17 acronym glossary](SCW17-acronym-glossary.html)
+- [SCW15 report](https://sprfmo.github.io/SCW15_report/)
 - [SCW16 and benchmark preparation archive](https://sprfmo.github.io/JM_SCW_prep/)
 - [SCW16 prep repository](https://github.com/SPRFMO/JM_SCW_prep)
 - [Jack mackerel assessment repository](https://github.com/SPRFMO/jjm)
