@@ -1,0 +1,65 @@
+---
+title: "MSE Training Resources"
+pagetitle: "SCW17 MSE Training Resources"
+format:
+  html:
+    output-file: "SCW17-MSE-training.html"
+    self-contained: false
+    toc: true
+    toc-title: "Contents"
+    toc-depth: 2
+    number-sections: false
+execute:
+  warning: false
+  message: false
+  echo: false
+---
+
+{{< include _includes/sprfmo-banner.html >}}
+
+```{=html}
+<div class="paper-title">SCW17 MSE Training Resources</div>
+```
+
+**Status:** Optional orientation material for participant testing  
+**Use:** Pre-work or short in-room orientation before detailed SCW17 jack mackerel MSE discussions
+
+# Purpose
+
+This page collects external management strategy evaluation (MSE) learning tools that can help participants review common terminology, interpret MSE result displays, and practice comparing candidate management procedures before the Wageningen workshop.
+
+These resources are for orientation only. They do not replace the SCW17 jack mackerel operating models, candidate management procedures, robustness scenarios, performance metrics, or results documented in the SCW17 and jmMSE source materials.
+
+# Recommended Path
+
+| Step | Resource | Suggested use | Link |
+|---|---|---|---|
+| 1 | IOTC MSE introduction | Review the MSE process, uncertainties, operating models, management procedures, tuning, and trajectories. | <https://edu.iotc.org/> |
+| 2 | IOTC MSE Shiny app | Explore the Indian Ocean swordfish example, compare management procedures, and inspect trajectory behavior across simulated futures. | <https://pl202.shinyapps.io/IOTC_MSE/> |
+| 3 | FAO Training Adventure | Practice assessing candidate management procedures from MSE results in a scenario-based learning format. | <https://elearning.fao.org/course/view.php?id=1304> |
+| 4 | FAO MSE course | Use as a fuller self-study module on MSE components, operating models, and trade-off interpretation. | <https://elearning.fao.org/course/view.php?id=1303> |
+
+# Facilitator Notes
+
+- **Pre-work option:** Ask participants to open the IOTC Shiny app before the workshop and identify one trade-off that would matter for jack mackerel candidate management procedures.
+- **In-room option:** Use the app at the start of the candidate-management-procedure session to demonstrate how tuning, summary metrics, and individual trajectories can lead to different interpretations.
+- **Debrief option:** Map the generic terminology back to the SCW17 workflow:
+  - Operating models correspond to the SCW17 jack mackerel OM set conditioned from benchmark outputs.
+  - Management procedures correspond to the candidate management procedures being evaluated for SC14.
+  - Performance indicators correspond to the agreed SCW17 conservation, yield, stability, and robustness metrics.
+  - Robustness trials correspond to the agreed SCW17 robustness scenarios and exceptional-circumstances tests.
+
+# Test Checklist
+
+- Open the IOTC MSE Shiny app and confirm the **Introduction to MSE**, **Comparing MPs**, and **Trajectories** sections load.
+- In **Comparing MPs**, change at least one tuning or display option and confirm the result display updates.
+- In **Trajectories**, inspect at least two simulated futures and note how the apparent ranking of MPs changes.
+- Open the FAO Training Adventure page and confirm whether full course access requires an FAO e-learning account in your browser.
+
+# Link Back to SCW17 Materials
+
+After orientation, participants should return to the SCW17 materials for the jack mackerel-specific workflow:
+
+- [Wageningen MSE workshop schedule](Wageningen-MSE-workshop-schedule.html)
+- [SCW17/Paper-04 MSE flow](SCW17-Paper-04-MSE-Flow.html)
+- [SCW17/Paper-02 reference points](SCW17-Paper-02-ReferencePoints.html)

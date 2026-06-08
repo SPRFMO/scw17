@@ -7,6 +7,7 @@ project:
     - index.qmd
     - SCW17_agenda.qmd
     - SCW17-schedule.qmd
+    - SCW17-MSE-training.qmd
     - SCW17_prep_mtg.qmd
     - SCW17-Paper-01-ModelDevelopments.qmd
     - SCW17-Paper-02-ReferencePoints.qmd
@@ -25,6 +26,8 @@ website:
         text: SCW17 Agenda
       - href: SCW17-schedule.qmd
         text: Workshop Schedule
+      - href: SCW17-MSE-training.qmd
+        text: MSE Training
       - href: SCW17_prep_mtg.qmd
         text: Prep Meeting
       - href: SCW17-Paper-01-ModelDevelopments.html

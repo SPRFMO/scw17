@@ -52,7 +52,14 @@ date_stamp <- format(Sys.Date(), "%d %B %Y")
     - **Fri 19 Jun:** 09:00 – 12:00 *(half day, close at noon)*
 - **Format:** Plenary throughout, with focused subgroup breakouts where flagged.
 - **Working language:** English; technical documents at <https://sprfmo.github.io/scw17/>.
+- **Optional orientation:** [MSE training resources](SCW17-MSE-training.html), including the IOTC MSE Shiny app and FAO Training Adventure option.
 :::
+
+# Participant preparation
+
+Participants who want a short MSE refresher before the technical sessions can use the [MSE training resources](SCW17-MSE-training.html) page. The suggested path starts with the IOTC MSE introduction and Shiny app, then uses the FAO Training Adventure as a scenario-based exercise for comparing candidate management procedures.
+
+This orientation material is not a source of SCW17 jack mackerel results or decisions. It is intended to provide common terminology and a low-stakes example before the workshop turns to the SCW17 operating models, candidate management procedures, and performance metrics.
 
 # Design principles
 
