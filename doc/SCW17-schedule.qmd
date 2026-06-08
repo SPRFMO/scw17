@@ -63,14 +63,13 @@ This orientation material is not a source of SCW17 jack mackerel results or deci
 
 # Design principles
 
-The schedule is built around six guiding principles:
+The schedule is built around five guiding principles:
 
-1. **No technical reopening of items frozen at TG-05.** Stock-hypothesis treatment, MP specifications, performance metrics, robustness matrix, and cross-platform validation owners are inputs to the workshop, not topics for re-litigation.
-2. **Front-load high-cognition technical work.** OM walk-through and MP setup happen Monday afternoon through Tuesday, while attention is fresh.
-3. **Reserve mid-week for results.** Wednesday produces the first integrated MP-evaluation results so Thursday can be spent on trade-offs and shortlisting, not on re-running models.
-4. **Use Thursday as the decision day.** The CMP shortlist for SC14 is decided Thursday afternoon, so Friday morning is drafting and assignment, not deliberation.
-5. **Breakouts only when they save plenary time.** Each breakout has a named lead, a named output, and a hard return-to-plenary time.
-6. **End each day with a 30-minute wrap that names what's needed by 09:00 the next morning.** Avoids dead time at the start of each day.
+1. **Front-load high-cognition technical work.** OM walk-through and MP setup happen Monday afternoon through Tuesday, while attention is fresh.
+2. **Reserve mid-week for results.** Wednesday produces the first integrated MP-evaluation results so Thursday can be spent on trade-offs and shortlisting, not on re-running models.
+3. **Use Thursday as the decision day.** The CMP shortlist for SC14 is decided Thursday afternoon, so Friday morning is drafting and assignment, not deliberation.
+4. **Breakouts only when they save plenary time.** Each breakout has a named lead, a named output, and a hard return-to-plenary time.
+5. **End each day with a 30-minute wrap that names what's needed by 09:00 the next morning.** Avoids dead time at the start of each day.
 
 # Schedule
 
