@@ -15,14 +15,11 @@ Visitor Information posted: [SPRFMO Jack Mackerel MSE Workshop Visitor Informati
 
 # Overview
 
-This site is the working index for SPRFMO Scientific Committee Workshop 17 (SCW17) jack mackerel preparation materials. It is intentionally lean: source documents live in `doc/`, rendered website files live in `docs/`, and large model outputs or meeting-transfer folders should remain outside the repository unless they are deliberate public artifacts.
-
-SCW17 follows the 2026 benchmark work compiled in the SCW16 preparation repository and is expected to focus on management-strategy-evaluation inputs, operating-model conditioning, candidate management procedures, performance metrics, robustness scenarios, and documentation for SC14.
+This site is the working index for SPRFMO Scientific Committee Workshop 17 (SCW17) jack mackerel preparation materials. SCW17 follows the 2026 benchmark work compiled in the SCW16 preparation repository and is expected to focus on management-strategy-evaluation inputs, operating-model conditioning, candidate management procedures, performance metrics, robustness scenarios, and documentation for SC14. The [Wageningen MSE workshop schedule](https://sprfmo.github.io/scw17/Wageningen-MSE-workshop-schedule.html) is available online.
 
 # Current Documents
 
 - [SCW17 preliminary agenda](SCW17_agenda.html) ([QMD](SCW17_agenda.qmd))
-- [Wageningen MSE workshop schedule](Wageningen-MSE-workshop-schedule.html) ([QMD](SCW17-schedule.qmd))
 - [SCW17 Pre-Wageningen preparation meeting](SCW17_prep_mtg.html) ([QMD](SCW17_prep_mtg.qmd))
 - [SCW17/Paper-01: Model developments](SCW17-Paper-01-ModelDevelopments.html) ([QMD](SCW17-Paper-01-ModelDevelopments.html))
    - [SCW17/Paper-01a Far North model selectivity](SCW17-Paper-01a-Far-North-Model-Selectivity.html) ([QMD](SCW17-Paper-01a-Far-North-Model-Selectivity.qmd))
