@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-06-04">
+<meta name="dcterms.date" content="2026-06-08">
 
 <title>Model developments</title>
 <style>
@@ -181,7 +181,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 4, 2026</p>
+      <p class="date">June 8, 2026</p>
     </div>
   </div>
   
@@ -1016,9 +1016,9 @@ Table&nbsp;5: Negative log-likelihood and maximum gradient for available model f
 <td style="text-align: left;">h2</td>
 <td style="text-align: left;">0.16</td>
 <td style="text-align: left;">h2_0.16</td>
-<td style="text-align: right;">1903</td>
-<td style="text-align: right;">1244.170</td>
-<td style="text-align: right;">0.0002943</td>
+<td style="text-align: right;">1626</td>
+<td style="text-align: right;">1167.148</td>
+<td style="text-align: right;">0.0002789</td>
 </tr>
 </tbody>
 </table>
@@ -1183,10 +1183,10 @@ Table&nbsp;6: Terminal-year metrics for available model results.
 <td style="text-align: left;">0.16</td>
 <td style="text-align: left;">Stock_2</td>
 <td style="text-align: left;">2025</td>
-<td style="text-align: right;">1314</td>
-<td style="text-align: right;">2068</td>
-<td style="text-align: right;">1614</td>
-<td style="text-align: right;">0.234</td>
+<td style="text-align: right;">4251</td>
+<td style="text-align: right;">6027</td>
+<td style="text-align: right;">3029</td>
+<td style="text-align: right;">0.138</td>
 </tr>
 </tbody>
 </table>
@@ -1343,10 +1343,10 @@ Table&nbsp;7: Terminal-year percent difference relative to 0.14 for available mo
 <td style="text-align: left;">0.16</td>
 <td style="text-align: left;">Stock_2</td>
 <td style="text-align: left;">2025</td>
-<td style="text-align: right;">333.5</td>
-<td style="text-align: right;">196.5</td>
-<td style="text-align: right;">61.8</td>
-<td style="text-align: right;">-88.0</td>
+<td style="text-align: right;">1303.0</td>
+<td style="text-align: right;">764.0</td>
+<td style="text-align: right;">203.7</td>
+<td style="text-align: right;">-92.9</td>
 </tr>
 </tbody>
 </table>
@@ -1519,11 +1519,37 @@ Figure&nbsp;6: Fishing mortality estimates for the two-stock core model comparis
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>h1_diag <span class="ot">&lt;-</span> <span class="fu">diagnostics</span>(h1_diag_model, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>h2_diag <span class="ot">&lt;-</span> <span class="fu">diagnostics</span>(h2_diag_model, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">file.path</span>(<span class="st">"R"</span>, <span class="st">"diagnostic_composition_plots.R"</span>))</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>h1_selectivities <span class="ot">&lt;-</span> <span class="fu">get_selectivities</span>(h1_diag_model)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>h2_selectivities <span class="ot">&lt;-</span> <span class="fu">get_selectivities</span>(h2_diag_model)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>adnuts_summary <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">file.path</span>(doc_dir, <span class="st">"data"</span>, <span class="st">"adnuts_mcmc_summary.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>adnuts_slow <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">file.path</span>(doc_dir, <span class="st">"data"</span>, <span class="st">"adnuts_mcmc_slow_parameters.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>use_actual_model_ages <span class="ot">&lt;-</span> <span class="cf">function</span>(selectivities) {</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">nrow</span>(selectivities) <span class="sc">||</span> <span class="sc">!</span><span class="st">"age"</span> <span class="sc">%in%</span> <span class="fu">names</span>(selectivities)) {</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(selectivities)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  selectivities <span class="sc">|&gt;</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="fu">across</span>(<span class="fu">any_of</span>(<span class="fu">c</span>(</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>      <span class="st">"model"</span>, <span class="st">"stock"</span>, <span class="st">"sel"</span>, <span class="st">"fleet_type"</span>, <span class="st">"fleet_number"</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>      <span class="st">"index"</span>, <span class="st">"year"</span>, <span class="st">"fleet_name"</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    )))) <span class="sc">|&gt;</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(.data<span class="sc">$</span>age, <span class="at">.by_group =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>()</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>selectivity_age_axis <span class="ot">&lt;-</span> <span class="cf">function</span>(plot) {</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  plot <span class="sc">+</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">name =</span> <span class="st">"Age"</span>,</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>,</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">12</span>),</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">minor_breaks =</span> <span class="cn">NULL</span>,</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">check.overlap =</span> <span class="cn">TRUE</span>, <span class="at">n.dodge =</span> <span class="dv">2</span>)</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>h1_selectivities <span class="ot">&lt;-</span> <span class="fu">use_actual_model_ages</span>(<span class="fu">get_selectivities</span>(h1_diag_model))</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>h2_selectivities <span class="ot">&lt;-</span> <span class="fu">use_actual_model_ages</span>(<span class="fu">get_selectivities</span>(h2_diag_model))</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>adnuts_summary <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">file.path</span>(doc_dir, <span class="st">"data"</span>, <span class="st">"adnuts_mcmc_summary.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>adnuts_slow <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">file.path</span>(doc_dir, <span class="st">"data"</span>, <span class="st">"adnuts_mcmc_slow_parameters.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <section id="adnuts-mcmc-summary" class="level2" data-number="7.1">
@@ -1562,7 +1588,7 @@ Table&nbsp;8: ADnuts MCMC summary for the base 0.16 diagnostic models.
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1.017</td>
 <td style="text-align: right;">261</td>
-<td style="text-align: right;">4564</td>
+<td style="text-align: right;">4564.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Two-stock</td>
@@ -1571,11 +1597,11 @@ Table&nbsp;8: ADnuts MCMC summary for the base 0.16 diagnostic models.
 <td style="text-align: right;">2000</td>
 <td style="text-align: right;">1000</td>
 <td style="text-align: right;">1000</td>
+<td style="text-align: right;">4</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.028</td>
-<td style="text-align: right;">176</td>
-<td style="text-align: right;">2686</td>
+<td style="text-align: right;">1.051</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">3028.5</td>
 </tr>
 </tbody>
 </table>
@@ -1637,38 +1663,38 @@ Table&nbsp;9: Slowest-mixing ADnuts MCMC parameters for the base 0.16 diagnostic
 <tr class="odd">
 <td style="text-align: left;">h2_0.16</td>
 <td style="text-align: left;">log_selcoffs_fsh[4][109]</td>
-<td style="text-align: right;">176</td>
-<td style="text-align: right;">1.021</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">1.051</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">h2_0.16</td>
+<td style="text-align: left;">log_selcoffs_fsh[4][118]</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">1.043</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">h2_0.16</td>
+<td style="text-align: left;">fmort[198]</td>
+<td style="text-align: right;">113</td>
+<td style="text-align: right;">1.041</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">h2_0.16</td>
+<td style="text-align: left;">log_selcoffs_fsh[4][100]</td>
+<td style="text-align: right;">113</td>
+<td style="text-align: right;">1.044</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">h2_0.16</td>
+<td style="text-align: left;">log_selcoffs_fsh[4][110]</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">1.041</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">h2_0.16</td>
 <td style="text-align: left;">log_selcoffs_fsh[4][127]</td>
-<td style="text-align: right;">187</td>
-<td style="text-align: right;">1.013</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">h2_0.16</td>
-<td style="text-align: left;">log_selcoffs_fsh[4][118]</td>
-<td style="text-align: right;">189</td>
-<td style="text-align: right;">1.016</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">h2_0.16</td>
-<td style="text-align: left;">log_selcoffs_fsh[4][136]</td>
-<td style="text-align: right;">195</td>
-<td style="text-align: right;">1.011</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">h2_0.16</td>
-<td style="text-align: left;">log_selcoffs_fsh[4][117]</td>
-<td style="text-align: right;">203</td>
-<td style="text-align: right;">1.028</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">h2_0.16</td>
-<td style="text-align: left;">log_selcoffs_fsh[4][145]</td>
-<td style="text-align: right;">205</td>
-<td style="text-align: right;">1.011</td>
+<td style="text-align: right;">117</td>
+<td style="text-align: right;">1.037</td>
 </tr>
 </tbody>
 </table>
@@ -1725,7 +1751,9 @@ Figure&nbsp;8: Index catchability time series for h1_0.16.
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_selectivities</span>(h1_selectivities, <span class="at">fleet =</span> <span class="st">"fsh"</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>, <span class="at">scale =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">selectivity_age_axis</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_selectivities</span>(h1_selectivities, <span class="at">fleet =</span> <span class="st">"fsh"</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>, <span class="at">scale =</span> <span class="dv">5</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-diagnostics-016-h1-fishery-selectivity" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1743,7 +1771,9 @@ Figure&nbsp;9: Fishery selectivity diagnostics for h1_0.16.
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_selectivities</span>(h1_selectivities, <span class="at">fleet =</span> <span class="st">"ind"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">scale =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">selectivity_age_axis</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_selectivities</span>(h1_selectivities, <span class="at">fleet =</span> <span class="st">"ind"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">scale =</span> <span class="dv">5</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-diagnostics-016-h1-index-selectivity" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2109,7 +2139,9 @@ Figure&nbsp;30: Index catchability time series for h2_0.16.
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_selectivities</span>(h2_selectivities, <span class="at">fleet =</span> <span class="st">"fsh"</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>, <span class="at">scale =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">selectivity_age_axis</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_selectivities</span>(h2_selectivities, <span class="at">fleet =</span> <span class="st">"fsh"</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>, <span class="at">scale =</span> <span class="dv">5</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-diagnostics-016-h2-fishery-selectivity" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2127,7 +2159,9 @@ Figure&nbsp;31: Fishery selectivity diagnostics for h2_0.16.
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_selectivities</span>(h2_selectivities, <span class="at">fleet =</span> <span class="st">"ind"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">scale =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">selectivity_age_axis</span>(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_selectivities</span>(h2_selectivities, <span class="at">fleet =</span> <span class="st">"ind"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">scale =</span> <span class="dv">5</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-diagnostics-016-h2-index-selectivity" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2545,7 +2579,7 @@ Table&nbsp;10: Control-file and output availability for the later productivity e
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">1 1</td>
 <td style="text-align: left;">1 2</td>
-<td style="text-align: left;">15 15</td>
+<td style="text-align: left;">15 47</td>
 <td style="text-align: right;">6</td>
 <td style="text-align: left;">TRUE</td>
 </tr>
@@ -2571,7 +2605,7 @@ Table&nbsp;10: Control-file and output availability for the later productivity e
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">1 1</td>
 <td style="text-align: left;">1 2</td>
-<td style="text-align: left;">15 15</td>
+<td style="text-align: left;">15 47</td>
 <td style="text-align: right;">6</td>
 <td style="text-align: left;">TRUE</td>
 </tr>
@@ -2597,7 +2631,7 @@ Table&nbsp;10: Control-file and output availability for the later productivity e
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">1 1</td>
 <td style="text-align: left;">1 2</td>
-<td style="text-align: left;">53 53</td>
+<td style="text-align: left;">53 47</td>
 <td style="text-align: right;">6</td>
 <td style="text-align: left;">TRUE</td>
 </tr>
@@ -2623,7 +2657,7 @@ Table&nbsp;10: Control-file and output availability for the later productivity e
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">1 1</td>
 <td style="text-align: left;">1 2</td>
-<td style="text-align: left;">53 53</td>
+<td style="text-align: left;">53 47</td>
 <td style="text-align: right;">6</td>
 <td style="text-align: left;">TRUE</td>
 </tr>
@@ -2677,9 +2711,9 @@ Table&nbsp;11: Fit summaries for the later productivity exercise.
 <td style="text-align: left;">h2</td>
 <td style="text-align: left;">0.16 HS</td>
 <td style="text-align: left;">h2_0.16hs</td>
-<td style="text-align: right;">1903</td>
-<td style="text-align: right;">1199.957</td>
-<td style="text-align: right;">0.0001572</td>
+<td style="text-align: right;">1966</td>
+<td style="text-align: right;">1246.131</td>
+<td style="text-align: right;">0.0002888</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">h1</td>
@@ -2693,9 +2727,9 @@ Table&nbsp;11: Fit summaries for the later productivity exercise.
 <td style="text-align: left;">h2</td>
 <td style="text-align: left;">0.16 LS</td>
 <td style="text-align: left;">h2_0.16ls</td>
-<td style="text-align: right;">1903</td>
-<td style="text-align: right;">1209.155</td>
-<td style="text-align: right;">0.0002738</td>
+<td style="text-align: right;">1966</td>
+<td style="text-align: right;">1270.751</td>
+<td style="text-align: right;">0.0003486</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">h1</td>
@@ -2709,9 +2743,9 @@ Table&nbsp;11: Fit summaries for the later productivity exercise.
 <td style="text-align: left;">h2</td>
 <td style="text-align: left;">0.16 LL</td>
 <td style="text-align: left;">h2_0.16ll</td>
-<td style="text-align: right;">1903</td>
-<td style="text-align: right;">1253.893</td>
-<td style="text-align: right;">0.0003161</td>
+<td style="text-align: right;">1966</td>
+<td style="text-align: right;">1280.385</td>
+<td style="text-align: right;">0.0002747</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">h1</td>
@@ -2725,9 +2759,9 @@ Table&nbsp;11: Fit summaries for the later productivity exercise.
 <td style="text-align: left;">h2</td>
 <td style="text-align: left;">0.16 HL</td>
 <td style="text-align: left;">h2_0.16hl</td>
-<td style="text-align: right;">1903</td>
-<td style="text-align: right;">1246.281</td>
-<td style="text-align: right;">0.0002444</td>
+<td style="text-align: right;">1966</td>
+<td style="text-align: right;">1260.763</td>
+<td style="text-align: right;">0.0003012</td>
 </tr>
 </tbody>
 </table>
