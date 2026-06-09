@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2026-06-08">
 
-<title>SCW17 MSE Training Resources – SPRFMO SCW17</title>
+<title>SCW17/paper-05 Chile HCR proposals – SPRFMO SCW17</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -43,6 +44,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,7 +78,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -95,7 +99,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">SCW17 agenda / schedule</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./SCW17-MSE-training.html" aria-current="page"> 
+    <a class="nav-link" href="./SCW17-MSE-training.html"> 
 <span class="menu-text">MSE Training</span></a>
   </li>  
   <li class="nav-item">
@@ -123,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">SCW17/Paper-04 MSE flow</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./SCW17-Paper-05-Chile-HCR-Proposals.html"> 
+    <a class="nav-link active" href="./SCW17-Paper-05-Chile-HCR-Proposals.html" aria-current="page"> 
 <span class="menu-text">SCW17/paper-05 Chile HCR proposals</span></a>
   </li>  
 </ul>
@@ -136,26 +140,37 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Contents</h2>
    
   <ul class="collapse">
-  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose">Purpose</a></li>
-  <li><a href="#recommended-path" id="toc-recommended-path" class="nav-link" data-scroll-target="#recommended-path">Recommended Path</a></li>
-  <li><a href="#facilitator-notes" id="toc-facilitator-notes" class="nav-link" data-scroll-target="#facilitator-notes">Facilitator Notes</a></li>
-  <li><a href="#test-checklist" id="toc-test-checklist" class="nav-link" data-scroll-target="#test-checklist">Test Checklist</a></li>
-  <li><a href="#link-back-to-scw17-materials" id="toc-link-back-to-scw17-materials" class="nav-link" data-scroll-target="#link-back-to-scw17-materials">Link Back to SCW17 Materials</a></li>
+  <li><a href="#document-status-and-traceability" id="toc-document-status-and-traceability" class="nav-link active" data-scroll-target="#document-status-and-traceability"><span class="header-section-number">1</span> Document Status and Traceability</a></li>
+  <li><a href="#harvest-control-rules-proposed-by-the-chilean-delegation" id="toc-harvest-control-rules-proposed-by-the-chilean-delegation" class="nav-link" data-scroll-target="#harvest-control-rules-proposed-by-the-chilean-delegation"><span class="header-section-number">2</span> Harvest Control Rules Proposed by the Chilean Delegation</a></li>
+  <li><a href="#model-based-harvest-control-rules" id="toc-model-based-harvest-control-rules" class="nav-link" data-scroll-target="#model-based-harvest-control-rules"><span class="header-section-number">3</span> Model-Based Harvest Control Rules</a>
+  <ul class="collapse">
+  <li><a href="#hcr2-ramp-type-rule" id="toc-hcr2-ramp-type-rule" class="nav-link" data-scroll-target="#hcr2-ramp-type-rule"><span class="header-section-number">3.1</span> HCR2: Ramp-Type Rule</a></li>
+  <li><a href="#hcr4-double-potential-rule" id="toc-hcr4-double-potential-rule" class="nav-link" data-scroll-target="#hcr4-double-potential-rule"><span class="header-section-number">3.2</span> HCR4: Double-Potential Rule</a></li>
+  </ul></li>
+  <li><a href="#empirical-harvest-control-rules" id="toc-empirical-harvest-control-rules" class="nav-link" data-scroll-target="#empirical-harvest-control-rules"><span class="header-section-number">4</span> Empirical Harvest Control Rules</a>
+  <ul class="collapse">
+  <li><a href="#hcr2-ramp-type-rule-1" id="toc-hcr2-ramp-type-rule-1" class="nav-link" data-scroll-target="#hcr2-ramp-type-rule-1"><span class="header-section-number">4.1</span> HCR2: Ramp-Type Rule</a></li>
+  <li><a href="#hcr4-double-potential-rule-1" id="toc-hcr4-double-potential-rule-1" class="nav-link" data-scroll-target="#hcr4-double-potential-rule-1"><span class="header-section-number">4.2</span> HCR4: Double-Potential Rule</a></li>
+  </ul></li>
   </ul>
 </nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">MSE Training Resources</h1>
+<h1 class="title">SCW17/paper-05 Chile HCR proposals</h1>
+<p class="subtitle lead">Harvest control rules proposed by the Chilean delegation</p>
 </div>
 
 
@@ -163,6 +178,12 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 8, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -275,86 +296,117 @@ ul.task-list li input[type="checkbox"] {
     </div>
   </div>
 </div>
-<div class="paper-title">SCW17 MSE Training Resources</div>
-<p><strong>Status:</strong> Optional orientation material for participant testing<br>
-<strong>Use:</strong> Pre-work or short in-room orientation before detailed SCW17 jack mackerel MSE discussions</p>
-<section id="purpose" class="level1">
-<h1>Purpose</h1>
-<p>This page collects external management strategy evaluation (MSE) learning tools that can help participants review common terminology, interpret MSE result displays, and practice comparing candidate management procedures before the Wageningen workshop.</p>
-<p>These resources are for orientation only. They do not replace the SCW17 jack mackerel operating models, candidate management procedures, robustness scenarios, performance metrics, or results documented in the SCW17 and jmMSE source materials.</p>
-</section>
-<section id="recommended-path" class="level1">
-<h1>Recommended Path</h1>
+<div class="paper-title">SCW17/paper-05 Chile HCR proposals</div>
+<section id="document-status-and-traceability" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Document Status and Traceability</h1>
+<p>This page is an SCW17 Quarto conversion of the Word document supplied by the Chilean delegation. The content below preserves the supplied text and embedded figures, with only formatting changes needed to publish it in the SCW17 website structure.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Step</th>
-<th>Resource</th>
-<th>Suggested use</th>
-<th>Link</th>
+<th>Item</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
-<td>IOTC MSE introduction</td>
-<td>Review the MSE process, uncertainties, operating models, management procedures, tuning, and trajectories.</td>
-<td><a href="https://edu.iotc.org/" class="uri">https://edu.iotc.org/</a></td>
+<td>SCW17 identifier</td>
+<td><code>SCW17/paper-05</code></td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td>IOTC MSE Shiny app</td>
-<td>Explore the Indian Ocean swordfish example, compare management procedures, and inspect trajectory behavior across simulated futures.</td>
-<td><a href="https://pl202.shinyapps.io/IOTC_MSE/" class="uri">https://pl202.shinyapps.io/IOTC_MSE/</a></td>
+<td>SCW17 source file</td>
+<td><code>doc/SCW17-Paper-05-Chile-HCR-Proposals.qmd</code></td>
 </tr>
 <tr class="odd">
-<td>3</td>
-<td>FAO Training Adventure</td>
-<td>Practice assessing candidate management procedures from MSE results in a scenario-based learning format.</td>
-<td><a href="https://elearning.fao.org/course/view.php?id=1304" class="uri">https://elearning.fao.org/course/view.php?id=1304</a></td>
+<td>Original Word document</td>
+<td><a href="assets/HCR_Chile_08-06-26.docx">HCR_Chile_08-06-26.docx</a></td>
 </tr>
 <tr class="even">
-<td>4</td>
-<td>FAO MSE course</td>
-<td>Use as a fuller self-study module on MSE components, operating models, and trade-off interpretation.</td>
-<td><a href="https://elearning.fao.org/course/view.php?id=1303" class="uri">https://elearning.fao.org/course/view.php?id=1303</a></td>
+<td>Supplied Word filename</td>
+<td><code>HCR_Chile (08-06-26).docx</code></td>
+</tr>
+<tr class="odd">
+<td>Conversion note</td>
+<td>Embedded figures were extracted from the Word document and retained as PNG images.</td>
+</tr>
+<tr class="even">
+<td>SCW17 role</td>
+<td>Chilean delegation contribution describing proposed harvest control rules for review and testing.</td>
 </tr>
 </tbody>
 </table>
+<p>No benchmark results, operating-model assumptions, management-procedure definitions, performance metric definitions, or reference points were changed by this conversion.</p>
 </section>
-<section id="facilitator-notes" class="level1">
-<h1>Facilitator Notes</h1>
-<ul>
-<li><strong>Pre-work option:</strong> Ask participants to open the IOTC Shiny app before the workshop and identify one trade-off that would matter for jack mackerel candidate management procedures.</li>
-<li><strong>In-room option:</strong> Use the app at the start of the candidate-management-procedure session to demonstrate how tuning, summary metrics, and individual trajectories can lead to different interpretations.</li>
-<li><strong>Debrief option:</strong> Map the generic terminology back to the SCW17 workflow:
-<ul>
-<li>Operating models correspond to the SCW17 jack mackerel OM set conditioned from benchmark outputs.</li>
-<li>Management procedures correspond to the candidate management procedures being evaluated for SC14.</li>
-<li>Performance indicators correspond to the agreed SCW17 conservation, yield, stability, and robustness metrics.</li>
-<li>Robustness trials correspond to the agreed SCW17 robustness scenarios and exceptional-circumstances tests.</li>
-</ul></li>
-</ul>
+<section id="harvest-control-rules-proposed-by-the-chilean-delegation" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Harvest Control Rules Proposed by the Chilean Delegation</h1>
+<p>Based on the results of the FIPA 2024-27 project, “Design and Implementation of Management Strategies Using the OpenMSE Platform in the Jack Mackerel Fishery”, the Chilean delegation is interested in testing the following Harvest Control Rules (HCRs), which were developed jointly with stakeholders from the jack mackerel fishery, particularly the Jack Mackerel Management Committee.</p>
 </section>
-<section id="test-checklist" class="level1">
-<h1>Test Checklist</h1>
-<ul>
-<li>Open the IOTC MSE Shiny app and confirm the <strong>Introduction to MSE</strong>, <strong>Comparing MPs</strong>, and <strong>Trajectories</strong> sections load.</li>
-<li>In <strong>Comparing MPs</strong>, change at least one tuning or display option and confirm the result display updates.</li>
-<li>In <strong>Trajectories</strong>, inspect at least two simulated futures and note how the apparent ranking of MPs changes.</li>
-<li>Open the FAO Training Adventure page and confirm whether full course access requires an FAO e-learning account in your browser.</li>
-</ul>
+<section id="model-based-harvest-control-rules" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Model-Based Harvest Control Rules</h1>
+<p>Two HCRs were considered, both expressed as functions of relative biomass and relative catch, as described below:</p>
+<section id="hcr2-ramp-type-rule" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="hcr2-ramp-type-rule"><span class="header-section-number">3.1</span> HCR2: Ramp-Type Rule</h2>
+<p>HCR2 is a ramp-type rule (Figure 1) with a catch stability constraint of +20%/-15% (increase/decrease), a minimum catch of 270,000 tonnes, and a target catch level (TACref) of 1,500,000 tonnes.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/SCW17-Paper-05-Chile-HCR-Proposals/image1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure 1: Graphical representation of the ramp-type Harvest Control Rule (HCR). The green line indicates the target biomass, while the red line represents the biomass limit threshold (Blim)."><img src="figures/SCW17-Paper-05-Chile-HCR-Proposals/image1.png" class="img-fluid figure-img" style="width:60.0%" alt="Graphical representation of the ramp-type harvest control rule. The green line indicates the target biomass and the red line indicates the biomass limit threshold."></a></p>
+<figcaption>Figure 1: Graphical representation of the ramp-type Harvest Control Rule (HCR). The green line indicates the target biomass, while the red line represents the biomass limit threshold (Blim).</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/SCW17-Paper-05-Chile-HCR-Proposals/image2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Table 1: R code used for implementing the ramp-type Harvest Control Rule (HCR). The function Catch() returns two estimates of the Biological Acceptable Catch (CBA also TAC): one based on FMSY and the other based on the current fishing mortality (Fcurrent). The function Stabilize() adjusts the BAC according to the catch stability band. Cref corresponds to the MSY value."><img src="figures/SCW17-Paper-05-Chile-HCR-Proposals/image2.png" class="img-fluid figure-img" style="width:100.0%" alt="Screenshot of R code used for implementing the ramp-type harvest control rule."></a></p>
+<figcaption>Table 1: R code used for implementing the ramp-type Harvest Control Rule (HCR). The function Catch() returns two estimates of the Biological Acceptable Catch (CBA also TAC): one based on FMSY and the other based on the current fishing mortality (Fcurrent). The function Stabilize() adjusts the BAC according to the catch stability band. Cref corresponds to the MSY value.</figcaption>
+</figure>
+</div>
 </section>
-<section id="link-back-to-scw17-materials" class="level1">
-<h1>Link Back to SCW17 Materials</h1>
-<p>After orientation, participants should return to the SCW17 materials for the jack mackerel-specific workflow:</p>
-<ul>
-<li><a href="Wageningen-MSE-workshop-schedule.html">Wageningen MSE workshop schedule</a></li>
-<li><a href="SCW17-Paper-04-MSE-Flow.html">SCW17/Paper-04 MSE flow</a></li>
-<li><a href="SCW17-Paper-02-ReferencePoints.html">SCW17/Paper-02 reference points</a></li>
-</ul>
+<section id="hcr4-double-potential-rule" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="hcr4-double-potential-rule"><span class="header-section-number">3.2</span> HCR4: Double-Potential Rule</h2>
+<p>HCR4 is a double-potential rule (Figure 2) with a catch stability constraint of +20%/-15% (increase/decrease), a minimum catch of 270,000 tonnes, and a target catch level (TACref) of 1,500,000 tonnes.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/SCW17-Paper-05-Chile-HCR-Proposals/image3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure 2: Graphical representation of the double-potential Harvest Control Rule (HCR). The green line indicates the target biomass, while the red line represents the biomass limit threshold (Blim)."><img src="figures/SCW17-Paper-05-Chile-HCR-Proposals/image3.png" class="img-fluid figure-img" style="width:60.0%" alt="Graphical representation of the double-potential harvest control rule. The green line indicates the target biomass and the red line indicates the biomass limit threshold."></a></p>
+<figcaption>Figure 2: Graphical representation of the double-potential Harvest Control Rule (HCR). The green line indicates the target biomass, while the red line represents the biomass limit threshold (Blim).</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/SCW17-Paper-05-Chile-HCR-Proposals/image4.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Table 2: R code used for implementing the double-potential Harvest Control Rule (HCR). The function Catch() returns two estimates of the Biological Acceptable Catch (CBA also TAC): one based on FMSY and the other based on the current fishing mortality (Fcurrent). The function Stabilize() adjusts the BAC according to the catch stability band. Cref corresponds to the MSY value."><img src="figures/SCW17-Paper-05-Chile-HCR-Proposals/image4.png" class="img-fluid figure-img" style="width:100.0%" alt="Screenshot of R code used for implementing the double-potential harvest control rule."></a></p>
+<figcaption>Table 2: R code used for implementing the double-potential Harvest Control Rule (HCR). The function Catch() returns two estimates of the Biological Acceptable Catch (CBA also TAC): one based on FMSY and the other based on the current fishing mortality (Fcurrent). The function Stabilize() adjusts the BAC according to the catch stability band. Cref corresponds to the MSY value.</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="empirical-harvest-control-rules" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Empirical Harvest Control Rules</h1>
+<p>Two empirical HCRs were considered, based on the relationship between spawning biomass estimated by the Joint Jack Mackerel Model (JJM) and the acoustic abundance index obtained from the hydroacoustic survey conducted in Northern Chile (Arica and Parinacota, Tarapacá, and Antofagasta Regions) (Figure 5):</p>
+<section id="hcr2-ramp-type-rule-1" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="hcr2-ramp-type-rule-1"><span class="header-section-number">4.1</span> HCR2: Ramp-Type Rule</h2>
+<p>HCR2 is a ramp-type rule (Figure 3) with two alternative reference catch levels (Cref) of 1.5 and 2.0 million tonnes, and a minimum catch of 270,000 tonnes.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/SCW17-Paper-05-Chile-HCR-Proposals/image5.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure 3. Relationship between the Biological Acceptable Catch (CBA also TAC) and the abundance index derived from the Northern Chile acoustic survey under a ramp-type HCR, for two reference catch levels (Cref) of 1.5 and 2.0 million tonnes. The reference index (Iref) was set at 1.3 million tonnes and the limit index (Ilim) at 500 thousand tonnes."><img src="figures/SCW17-Paper-05-Chile-HCR-Proposals/image5.png" class="img-fluid figure-img" style="width:65.0%" alt="Relationship between biological acceptable catch and the Northern Chile acoustic survey abundance index under a ramp-type harvest control rule for two reference catch levels."></a></p>
+<figcaption>Figure 3. Relationship between the Biological Acceptable Catch (CBA also TAC) and the abundance index derived from the Northern Chile acoustic survey under a ramp-type HCR, for two reference catch levels (Cref) of 1.5 and 2.0 million tonnes. The reference index (Iref) was set at 1.3 million tonnes and the limit index (Ilim) at 500 thousand tonnes.</figcaption>
+</figure>
+</div>
+</section>
+<section id="hcr4-double-potential-rule-1" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="hcr4-double-potential-rule-1"><span class="header-section-number">4.2</span> HCR4: Double-Potential Rule</h2>
+<p>HCR4 is a double-potential rule (Figure 4) with two alternative reference catch levels (Cref) of 1.5 and 2.0 million tonnes, and a minimum catch of 270,000 tonnes.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/SCW17-Paper-05-Chile-HCR-Proposals/image6.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure 4. Relationship between the Biological Acceptable Catch (CBA also TAC) and the abundance index derived from the Northern Chile acoustic survey under a double-potential HCR, for two reference catch levels (Cref) of 1.5 and 2.0 million tonnes. The reference index (Iref) was set at 1.3 million tonnes and the limit index (Ilim) at 500 thousand tonnes."><img src="figures/SCW17-Paper-05-Chile-HCR-Proposals/image6.png" class="img-fluid figure-img" style="width:65.0%" alt="Relationship between biological acceptable catch and the Northern Chile acoustic survey abundance index under a double-potential harvest control rule for two reference catch levels."></a></p>
+<figcaption>Figure 4. Relationship between the Biological Acceptable Catch (CBA also TAC) and the abundance index derived from the Northern Chile acoustic survey under a double-potential HCR, for two reference catch levels (Cref) of 1.5 and 2.0 million tonnes. The reference index (Iref) was set at 1.3 million tonnes and the limit index (Ilim) at 500 thousand tonnes.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figures/SCW17-Paper-05-Chile-HCR-Proposals/image7.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure 5: Relationship between spawning biomass estimated by the stock assessment model (JJM) and biomass estimated from the Northern Chile acoustic survey (2000–2024). The figure shows the linear relationship between both variables and the corresponding goodness-of-fit."><img src="figures/SCW17-Paper-05-Chile-HCR-Proposals/image7.png" class="img-fluid figure-img" style="width:65.0%" alt="Relationship between spawning biomass estimated by JJM and biomass estimated from the Northern Chile acoustic survey from 2000 to 2024."></a></p>
+<figcaption>Figure 5: Relationship between spawning biomass estimated by the stock assessment model (JJM) and biomass estimated from the Northern Chile acoustic survey (2000–2024). The figure shows the linear relationship between both variables and the corresponding goodness-of-fit.</figcaption>
+</figure>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -759,6 +811,38 @@ ul.task-list li input[type="checkbox"] {
   });
   </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

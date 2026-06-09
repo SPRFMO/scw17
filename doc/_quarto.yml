@@ -3,6 +3,7 @@ project:
   output-dir: ../docs
   resources:
     - annex/logo.png
+    - assets/HCR_Chile_08-06-26.docx
   render:
     - index.qmd
     - SCW17-schedule.qmd
@@ -12,6 +13,7 @@ project:
     - SCW17-Paper-03-Management-Procedures-Inventory.qmd
     - SCW17-Paper-01a-Far-North-Model-Selectivity.qmd
     - SCW17-Paper-04-MSE-Flow.qmd
+    - SCW17-Paper-05-Chile-HCR-Proposals.qmd
 
 website:
   title: "SPRFMO SCW17"
@@ -37,6 +39,8 @@ website:
         text: SCW17/Paper-03 MP inventory
       - href: SCW17-Paper-04-MSE-Flow.qmd
         text: SCW17/Paper-04 MSE flow
+      - href: SCW17-Paper-05-Chile-HCR-Proposals.qmd
+        text: SCW17/paper-05 Chile HCR proposals
 
 format:
   html:
