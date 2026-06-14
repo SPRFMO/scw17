@@ -78,11 +78,13 @@ read_yield_profile <- function(model_name) {
     assessment_file("results", paste0(model_name, ".yld")),
     skip = 5,
     fill = TRUE,
-    col.names = c("f", "spawning_biomass", "yield", "recruitment", "spr", "total_biomass")
+    row.names = NULL,
+    col.names = c("stock_id", "f", "spawning_biomass", "yield", "recruitment", "spr", "total_biomass")
   ) |>
     as_tibble() |>
     mutate(across(everything(), as.numeric)) |>
-    filter(!is.na(f), !is.na(spawning_biomass), !is.na(yield), !is.na(spr))
+    filter(.data$stock_id == .env$stock_id, !is.na(f), !is.na(spawning_biomass), !is.na(yield), !is.na(spr)) |>
+    select(-stock_id)
 }
 
 read_std_terms <- function(model_name, terms, occurrence = 1) {
