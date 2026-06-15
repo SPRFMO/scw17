@@ -42,7 +42,7 @@ date_stamp <- format(Sys.Date(), "%d %B %Y")
 - **Chair:** J. Ianelli (JMWG Chair)
 - **Daily timings:**
     - **Mon 15 Jun:** 09:00 – 18:00
-    - **Tue 16 Jun:** 08:00 – 17:00 *(early start to recover Day-1 slippage if any)*
+    - **Tue 16 Jun:** 08:30 – 17:00 *(early start to recover Day-1 slippage if any)*
     - **Wed 17 Jun:** 09:00 – 18:00
     - **Thu 18 Jun:** 09:00 – 18:00
     - **Fri 19 Jun:** 09:00 – 12:00 *(half day, close at noon)*
@@ -71,7 +71,7 @@ The schedule is built around some ideal principles:
 2. **Reserve mid-week for results.** Wednesday produces the first integrated MP-evaluation results so Thursday can be spent on trade-offs and shortlisting, not on re-running models.
 3. **Use Thursday as the decision day.** The CMP shortlist for SC14 is decided Thursday afternoon, so Friday morning is drafting and assignment, not deliberation.
 4. **Breakouts only when they save plenary time.** Each breakout has a named lead, a named output, and a hard return-to-plenary time.
-5. **End each day with a 30-minute wrap that names what's needed by 09:00 the next morning.** Avoids dead time at the start of each day.
+5. **End each day with a 30-minute wrap that names what's needed by the next morning's start time.** Avoids dead time at the start of each day.
 
 # Schedule
 
@@ -88,17 +88,17 @@ The schedule is built around some ideal principles:
 | 14:30 – 15:30 | OM diagnostics walkthrough — fits, retros, composition, indices. | WMR | Diagnostic acceptance check. |
 | 15:30 – 15:45 | Coffee. | — | — |
 | 15:45 – 17:00 | **Stock-hypothesis treatment in the OM grid.** Confirmation of TG-05 decision; how h1 / h2 / weighting enters projection. | Chair + WMR | Treatment locked. |
-| 17:00 – 18:00 | Day-1 wrap; what's needed for 09:00 Tuesday. Confirmation that recruitment scenarios and S–R priors are ready to discuss. | Chair | List of overnight tasks per member. |
+| 17:00 – 18:00 | Day-1 wrap; what's needed for 08:30 Tuesday. Confirmation that recruitment scenarios and S–R priors are ready to discuss. | Chair | List of overnight tasks per member. |
 
-## Tuesday 16 June — Operating models deep dive (08:00 – 17:00)
+## Tuesday 16 June — Operating models deep dive (08:30 – 17:00)
 
 ::: {.callout-warning}
-**Early start (08:00).** Tuesday opens an hour earlier than the other technical days. The first hour is reserved for recovery of any slippage from Monday and for cross-platform setup. If Monday closed cleanly, members can use the 08:00–09:00 block for code-level review of OM scripts.
+**Early start (08:30).** Tuesday opens 30 minutes earlier than the other technical days. The first half hour is reserved for recovery of any slippage from Monday and for cross-platform setup. If Monday closed cleanly, members can use the 08:30–09:00 block for code-level review of OM scripts.
 :::
 
 | Time | Topic | Lead | Output |
 |---|---|---|---|
-| 08:00 – 09:00 | **Member parallel-run setup** — FLR vs. RTMB/OpenMSE: confirm identical OM, identical seeds, identical projection horizon. | WMR + Chile + Peru | Cross-platform run table populated. |
+| 08:30 – 09:00 | **Member parallel-run setup** — FLR vs. RTMB/OpenMSE: confirm identical OM, identical seeds, identical projection horizon. | WMR + Chile + Peru | Cross-platform run table populated. |
 | 09:00 – 10:30 | **Reference-set OMs** — full walkthrough, axis by axis. | WMR | Reference set signed off. |
 | 10:30 – 10:45 | Coffee. | — | — |
 | 10:45 – 12:00 | **Robustness-set OMs** — SCW17-Doc04 walkthrough. ENSO / offshore-drop / catchability / index-bias scenarios. | WMR | Robustness set signed off. |
@@ -155,7 +155,7 @@ The schedule is built around some ideal principles:
 | Day | Hours | Theme | Key output |
 |---|---|---|---|
 | Mon 15 Jun | 09:00 – 18:00 | Opening, benchmark handoff, OM conditioning overview, stock-hypothesis treatment | Shared understanding of inputs; stock-hypothesis treatment locked. |
-| Tue 16 Jun | 08:00 – 17:00 | OM deep dive, recruitment scenarios, ENSO specification, OM sign-off | OM block closed. |
+| Tue 16 Jun | 08:30 – 17:00 | OM deep dive, recruitment scenarios, ENSO specification, OM sign-off | OM block closed. |
 | Wed 17 Jun | 09:00 – 18:00 | MP register, tuning, first integrated results on reference OM | Reference-OM CMP results in hand. |
 | Thu 18 Jun | 09:00 – 18:00 | Performance metrics, trade-offs, robustness, cross-platform validation, **shortlist decision** | **CMP shortlist for SC14 agreed.** |
 | Fri 19 Jun | 09:00 – 12:00 | Shortlist rationale, exceptional-circumstances meta-rules, SC14 drafting assignments | Drafting plan and assignments. |
@@ -164,7 +164,7 @@ The schedule is built around some ideal principles:
 
 - **08:55 / 08:25 Tue:** Quiet check-in time; chair confirms quorum and any overnight communications.
 - **Coffee breaks** are 15 minutes and start on the clock; presenters do not run into the break.
-- **Lunch** is 12:00–13:00 (Mon, Wed, Thu) and 12:00–13:00 (Tue, with the 08:00 start that's still a 4-hour morning block — chair will signal a 5-min stretch at 10:00 on top of the formal coffee break if needed).
+- **Lunch** is 12:00–13:00 (Mon, Wed, Thu) and 12:00–13:00 (Tue, with the 08:30 start that's still a 3.5-hour morning block — chair will signal a 5-min stretch at 10:00 on top of the formal coffee break if needed).
 - **End-of-day 30-min wrap** is non-negotiable, even on the technically heaviest days. The chair will not allow a session to swallow the wrap.
 - **Side-room** is reserved each afternoon for small breakouts. Any breakout must register a lead, a return-time, and a one-line output before leaving plenary.
 
