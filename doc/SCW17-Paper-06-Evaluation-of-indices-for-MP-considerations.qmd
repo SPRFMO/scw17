@@ -277,6 +277,48 @@ pair_plot_data <- index_data |>
       select(model, index_1, index_2, correlation, n_overlap),
     by = c("model", "index_1", "index_2")
   )
+
+covariance_indices <- c("Chile_AcousN", "Chile_CPUE", "Offshore_CPUE", "Peru_Artis", "Peru_Ind")
+covariance_cvs <- c(
+  Chile_AcousN = 0.20,
+  Chile_CPUE = 0.20,
+  Offshore_CPUE = 0.20,
+  Peru_Artis = 0.30,
+  Peru_Ind = 0.30
+)
+
+covariance_correlation <- correlation_matrix[covariance_indices, covariance_indices]
+covariance_correlation[is.na(covariance_correlation)] <- 0
+diag(covariance_correlation) <- 1
+
+make_positive_definite <- function(x, epsilon = 1e-8) {
+  eigen_decomp <- eigen(x, symmetric = TRUE)
+  eigen_decomp$vectors %*%
+    diag(pmax(eigen_decomp$values, epsilon), nrow = length(eigen_decomp$values)) %*%
+    t(eigen_decomp$vectors)
+}
+
+covariance_sdlog <- sqrt(log1p(covariance_cvs[covariance_indices]^2))
+index_covariance <- diag(covariance_sdlog) %*%
+  make_positive_definite(as.matrix(covariance_correlation)) %*%
+  diag(covariance_sdlog)
+
+set.seed(20260615)
+index_covariance_draws <- matrix(
+  rnorm(100 * length(covariance_indices)),
+  nrow = 100,
+  ncol = length(covariance_indices)
+) %*% chol(index_covariance)
+
+index_covariance_draws <- sweep(
+  index_covariance_draws,
+  2,
+  -0.5 * covariance_sdlog^2,
+  "+"
+) |>
+  exp() |>
+  as_tibble(.name_repair = "minimal")
+names(index_covariance_draws) <- covariance_indices
 ```
 
 {{< include _includes/sprfmo-banner.html >}}
@@ -553,6 +595,8 @@ index_roc_summary |>
 
 @tbl-strongest-correlations extracts the largest positive and most negative Pearson correlations from the correlation table. This is a compact way to identify the index pairs with the strongest agreement and strongest disagreement after accounting for the available overlapping years.
 
+@fig-index-covariance-draws uses the estimated correlation structure among the retained index series to simulate 100 multivariate draws. The simulation uses the Pearson correlations among log observed indices for `Chile_AcousN`, `Chile_CPUE`, `Offshore_CPUE`, `Peru_Artis`, and `Peru_Ind`; the diagonal uncertainty is set to 20% CV for all indices except the two Peruvian CPUE series, which use 30% CV.
+
 ```{r}
 #| label: tbl-strongest-correlations
 #| tbl-cap: "Strongest positive and negative contrasts. Based on Pearson correlations of log-observed indices."
@@ -575,6 +619,23 @@ correlation_results |>
   mutate(correlation = round(correlation, 3)) |>
   gt() |>
   fmt_number(columns = correlation, decimals = 3)
+```
+
+```{r}
+#| label: fig-index-covariance-draws
+#| fig-cap: "Simulated multivariate index draws using the estimated correlation structure among retained indices. Diagonal uncertainty assumes 20% CV except Peru_Artis and Peru_Ind, which use 30% CV."
+#| echo: false
+#| fig-width: 10
+#| fig-height: 10
+
+ggpairs(
+  index_covariance_draws,
+  upper = list(continuous = wrap("cor", method = "pearson")),
+  lower = list(continuous = ggpairs_lower_lm),
+  diag = list(continuous = "blankDiag")
+) +
+  ggthemes::theme_few(base_size = 9) +
+  theme(strip.text = element_text(size = 18))
 ```
 
 This evaluation shows that, for the two-stock hypotheses, the nominal CPUE indices for Peru generally track stock trends. Those same indices perform relatively poorer under the single-stock hypothesis. For the single-stock case, the offshore CPUE and Chilean CPUE indices appear to perform better. These conclusions are broadly consistent between the pairwise index comparisons and the ROC/AUC evaluations.

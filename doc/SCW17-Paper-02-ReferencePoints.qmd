@@ -101,18 +101,26 @@ read_yield_profile <- function(model_name) {
     yld_file,
     skip = 5,
     fill = TRUE,
-    col.names = c("f", "spawning_biomass", "yield", "recruitment", "spr", "total_biomass")
+    row.names = NULL,
+    col.names = c(
+      "stock_id",
+      "f",
+      "spawning_biomass",
+      "yield",
+      "recruitment",
+      "spr",
+      "total_biomass"
+    )
   ) |>
     as_tibble() |>
-    filter(!is.na(f), !is.na(spr)) |>
+    filter(!is.na(stock_id), stock_id > 0, !is.na(f), !is.na(spr)) |>
     mutate(across(everything(), as.numeric))
 }
 
 read_stock_yield_profile <- function(model_name, stock = 1) {
   read_yield_profile(model_name) |>
-    mutate(stock = cumsum(f == 0), .before = 1) |>
-    filter(stock == .env$stock) |>
-    select(-stock)
+    filter(stock_id == .env$stock) |>
+    select(-stock_id)
 }
 
 read_std_terms <- function(model_name, terms, occurrence = 1) {
@@ -841,6 +849,7 @@ read_productivity_majuro <- function(model_name) {
     mutate(
       model = model_name,
       f_fmsy = f / productivity_reference$Fmsy[match(model_name, productivity_reference$model)],
+      f_f35 = f / productivity_reference$F35_est[match(model_name, productivity_reference$model)],
       .before = 1
     )
 }
@@ -871,6 +880,7 @@ terminal_status <- majuro_terminal |>
 
 majuro_x_upper <- max(0.6, ceiling(max(majuro_series$depletion[majuro_series$year >= 2000], na.rm = TRUE) * 10) / 10)
 majuro_y_upper <- max(1.2, ceiling(max(majuro_series$f_fmsy[majuro_series$year >= 2000], na.rm = TRUE) * 10) / 10)
+majuro_f35_y_upper <- max(1.2, ceiling(max(majuro_series$f_f35[majuro_series$year >= 2000], na.rm = TRUE) * 10) / 10)
 
 df1 <- as_tibble(stock_output$df1)
 names(df1) <- c("quantity", "year", "estimate", "sd", "lower", "upper")
@@ -1394,7 +1404,7 @@ Kobe, Majuro, and combined plots communicate different biomass-axis choices. Kob
 knitr::include_graphics(file.path(doc_dir, "assets", "reference-point-plot-types.png"))
 ```
 
-The Majuro plot in @fig-majuro-productivity shows the 2000-2025 trajectory for each productivity case. Low-steepness runs end above $F/F_{MSY} = 1$, whereas high-steepness runs end just below 1. The biomass axis shows the same productivity contrast: terminal $SSB/SSB_{F=0}$ is lower for the low-steepness runs (`r format_range(terminal_status$depletion[terminal_status$steepness == 0.65])`) than for the high-steepness runs (`r format_range(terminal_status$depletion[terminal_status$steepness == 0.85])`).
+The Majuro plot in @fig-majuro-productivity shows the 2000-2025 trajectory for each productivity case. Low-steepness runs end above $F/F_{MSY} = 1$, whereas high-steepness runs end just below 1. The biomass axis shows the same productivity contrast: terminal $SSB/SSB_{F=0}$ is lower for the low-steepness runs (`r format_range(terminal_status$depletion[terminal_status$steepness == 0.65])`) than for the high-steepness runs (`r format_range(terminal_status$depletion[terminal_status$steepness == 0.85])`). @fig-majuro-f35-productivity repeats the same depletion trajectory but uses $F/F_{35\%}$ on the fishing-pressure axis, treating $F_{35\%}$ as an SPR-based proxy for $F_{MSY}$.
 
 ```{r}
 #| label: fig-majuro-productivity
@@ -1420,6 +1430,38 @@ majuro_series |>
   scale_alpha_manual(values = c(`FALSE` = 0.45, `TRUE` = 1)) +
   coord_cartesian(xlim = c(0, majuro_x_upper), ylim = c(0, majuro_y_upper), expand = FALSE) +
   labs(x = expression(SSB / SSB[F == 0]), y = expression(F / F[MSY]), color = NULL) +
+  guides(color = guide_legend(nrow = 2)) +
+  theme_report() +
+  theme(
+    legend.position = "bottom",
+    legend.box = "vertical"
+  )
+```
+
+```{r}
+#| label: fig-majuro-f35-productivity
+#| fig-cap: "Majuro-style plot for model 0.16 productivity assumptions, showing the 2000-2025 trajectory with annual F scaled by F35%. Larger points mark terminal-year status. The vertical line marks SSB/SSB_F=0 = 0.2 for orientation and the horizontal line marks F/F35% = 1."
+
+majuro_series |>
+  filter(year >= 2000) |>
+  ggplot(aes(depletion, f_f35, color = scenario)) +
+  annotate("rect", xmin = -Inf, xmax = 0.2, ymin = 1, ymax = Inf, fill = "#d73027", alpha = 0.08) +
+  annotate("rect", xmin = 0.2, xmax = Inf, ymin = 1, ymax = Inf, fill = "#fc8d59", alpha = 0.08) +
+  annotate("rect", xmin = -Inf, xmax = 0.2, ymin = -Inf, ymax = 1, fill = "#fee08b", alpha = 0.12) +
+  geom_vline(xintercept = 0.2, linewidth = 0.65, linetype = "dashed", color = "gray35") +
+  geom_hline(yintercept = 1, linewidth = 0.65, linetype = "dashed", color = "gray35") +
+  geom_path(linewidth = 0.75, alpha = 0.85) +
+  geom_point(aes(alpha = year == max(year)), size = 1.4, show.legend = FALSE) +
+  geom_point(
+    data = majuro_terminal,
+    aes(depletion, f_f35, color = scenario),
+    inherit.aes = FALSE,
+    size = 3
+  ) +
+  scale_color_manual(values = productivity_scenario_colors) +
+  scale_alpha_manual(values = c(`FALSE` = 0.45, `TRUE` = 1)) +
+  coord_cartesian(xlim = c(0, majuro_x_upper), ylim = c(0, majuro_f35_y_upper), expand = FALSE) +
+  labs(x = expression(SSB / SSB[F == 0]), y = expression(F / F[35 * "%"]), color = NULL) +
   guides(color = guide_legend(nrow = 2)) +
   theme_report() +
   theme(
