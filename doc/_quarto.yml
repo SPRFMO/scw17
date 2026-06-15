@@ -14,6 +14,7 @@ project:
     - SCW17-Paper-01a-Far-North-Model-Selectivity.qmd
     - SCW17-Paper-04-MSE-Flow.qmd
     - SCW17-Paper-05-Chile-HCR-Proposals.qmd
+    - SCW17-Paper-06-Evaluation-of-indices-for-MP-considerations.qmd
 
 website:
   title: "SPRFMO SCW17"
@@ -41,6 +42,8 @@ website:
         text: SCW17/Paper-04 MSE flow
       - href: SCW17-Paper-05-Chile-HCR-Proposals.qmd
         text: SCW17/paper-05 Chile HCR proposals
+      - href: SCW17-Paper-06-Evaluation-of-indices-for-MP-considerations.qmd
+        text: SCW17/Paper-06 Evaluation of indices for MP considerations
 
 format:
   html:

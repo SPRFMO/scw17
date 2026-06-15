@@ -27,6 +27,7 @@ This site is the working index for SPRFMO Scientific Committee Workshop 17 (SCW1
 - [SCW17/Paper-04 MSE flow](SCW17-Paper-04-MSE-Flow.html)
 - [SCW17/paper-05 Chile HCR proposals](SCW17-Paper-05-Chile-HCR-Proposals.html)
    - [Original Word document](assets/HCR_Chile_08-06-26.docx)
+- [SCW17/Paper-06 Evaluation of indices for MP considerations](SCW17-Paper-06-Evaluation-of-indices-for-MP-considerations.html)
 - Anticipated working documents or contributions to the MSE report to SC14:
    - SCW17-Paper-XX: Operating-model conditioning and diagnostics
    - SCW17-Paper-XX: Candidate management procedures and performance metrics

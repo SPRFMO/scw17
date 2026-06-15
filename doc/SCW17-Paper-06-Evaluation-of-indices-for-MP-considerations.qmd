@@ -1,0 +1,582 @@
+---
+title: "SCW17/Paper-06 Evaluation of indices for MP considerations"
+date: today
+format:
+  html:
+    output-file: "SCW17-Paper-06-Evaluation-of-indices-for-MP-considerations.html"
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    code-tools: true
+    df-print: paged
+    theme: cosmo
+    fig-width: 9
+    fig-height: 5
+    lightbox: true
+execute:
+  warning: false
+  message: false
+params:
+  index_models:
+    - "h1_0.16"
+  auc_models:
+    - "h1_0.16"
+    - "h2_0.16"
+  omit_indices:
+    - "Chile_AcousCS"
+  chile_acousn_start_year: 2006
+  min_overlap: 3
+  assessment_path: "../../jjm/assessment"
+  jmMSE_path: "../../jmMSE"
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(jjmR)
+library(dplyr)
+library(GGally)
+library(ggplot2)
+library(ggcorrplot)
+library(ggthemes)
+library(gt)
+library(purrr)
+library(tidyr)
+
+index_model_names <- unlist(params$index_models)
+auc_model_names <- unlist(params$auc_models)
+all_model_names <- union(index_model_names, auc_model_names)
+omit_indices <- unlist(params$omit_indices)
+chile_acousn_start_year <- params$chile_acousn_start_year
+assessment_path <- params$assessment_path
+jmMSE_path <- params$jmMSE_path
+
+read_model <- function(model_name) {
+  readJJM(
+    model_name,
+    path = file.path(assessment_path, "config"),
+    input = file.path(assessment_path, "input"),
+    output = file.path(assessment_path, "results"),
+    version = "2015MS"
+  )[[1]]
+}
+
+available_models <- all_model_names[
+  file.exists(file.path(assessment_path, "config", paste0(all_model_names, ".ctl"))) &
+    file.exists(file.path(assessment_path, "results", paste0(all_model_names, ".rep")))
+]
+
+mods <- setNames(map(available_models, read_model), available_models)
+index_models <- intersect(index_model_names, available_models)
+auc_models <- intersect(auc_model_names, available_models)
+
+theme_report <- function() {
+  theme_minimal(base_size = 12) +
+    theme(
+      legend.position = "top",
+      panel.grid.minor = element_blank(),
+      plot.title.position = "plot"
+    )
+}
+
+ggpairs_lower_lm <- function(data, mapping, ...) {
+  ggplot(data = data, mapping = mapping) +
+    geom_point(alpha = 0.7, size = 0.8, na.rm = TRUE) +
+    geom_smooth(method = "lm", se = TRUE, color = "grey30", fill = "grey70", linewidth = 0.4, na.rm = TRUE) +
+    ggthemes::theme_few(base_size = 9)
+}
+
+model_index_df <- function(model_name) {
+  dat <- mods[[model_name]]$data
+  index_mat <- dat$Index
+  colnames(index_mat) <- dat$Inames
+
+  as_tibble(index_mat, rownames = "year") |>
+    mutate(year = as.integer(year), model = model_name, .before = 1) |>
+    pivot_longer(
+      cols = -c(model, year),
+      names_to = "index",
+      values_to = "observed"
+    ) |>
+    filter(
+      !index %in% omit_indices,
+      index != "Chile_AcousN" | year >= chile_acousn_start_year,
+      !is.na(observed),
+      observed > 0
+    ) |>
+    group_by(model, index) |>
+    mutate(
+      log_observed = log(observed),
+      relative_index = observed / exp(mean(log_observed, na.rm = TRUE)),
+      relative_index_arithmetic = observed / mean(observed, na.rm = TRUE),
+      z_log_index = as.numeric(scale(log_observed))
+    ) |>
+    ungroup()
+}
+
+index_data <- map_dfr(index_models, model_index_df)
+
+model_summary <- map_dfr(index_models, function(model_name) {
+  dat <- mods[[model_name]]$data
+  tibble(
+    model = model_name,
+    data_file = mods[[model_name]]$control$dataFile,
+    n_indices = sum(!dat$Inames %in% omit_indices),
+    indices = paste(setdiff(dat$Inames, omit_indices), collapse = ", "),
+    omitted_indices = paste(intersect(dat$Inames, omit_indices), collapse = ", "),
+    notes = paste0("Chile_AcousN years before ", chile_acousn_start_year, " dropped"),
+    first_year = min(as.integer(rownames(dat$Index)), na.rm = TRUE),
+    last_year = max(as.integer(rownames(dat$Index)), na.rm = TRUE)
+  )
+})
+
+jmMSE_roc_file <- file.path(jmMSE_path, "output", "index_auc_h1_h2_0.16.rda")
+if (!file.exists(jmMSE_roc_file)) {
+  stop(
+    "jmMSE ROC/AUC object not found: ",
+    jmMSE_roc_file,
+    "\nRun jmMSE/output_auc_peru_cpue.R first.",
+    call. = FALSE
+  )
+}
+
+load(jmMSE_roc_file)
+
+h1_index_roc <- as_tibble(h1_roc) |>
+  rename(index = survey)
+h2_index_roc <- as_tibble(h2_roc) |>
+  rename(index = survey)
+
+index_roc_summary <- bind_rows(h1_index_roc, h2_index_roc) |>
+  group_by(model, stock, index) |>
+  summarise(
+    n = first(n),
+    auc = first(auc),
+    .groups = "drop"
+  )
+
+index_summary <- index_data |>
+  group_by(model, index) |>
+  summarise(
+    n = n(),
+    first_year = min(year),
+    last_year = max(year),
+    geometric_mean = exp(mean(log_observed)),
+    min_observed = min(observed),
+    max_observed = max(observed),
+    .groups = "drop"
+  )
+
+pairwise_correlations <- function(dat, value_col, method = "pearson") {
+  indices <- sort(unique(dat$index))
+  pairs <- t(combn(indices, 2))
+
+  map_dfr(seq_len(nrow(pairs)), function(i) {
+    x_name <- pairs[i, 1]
+    y_name <- pairs[i, 2]
+
+    pair_dat <- dat |>
+      filter(index %in% c(x_name, y_name)) |>
+      select(year, index, value = all_of(value_col)) |>
+      pivot_wider(names_from = index, values_from = value) |>
+      filter(!is.na(.data[[x_name]]), !is.na(.data[[y_name]]))
+
+    tibble(
+      index_1 = x_name,
+      index_2 = y_name,
+      n_overlap = nrow(pair_dat),
+      first_overlap = if_else(nrow(pair_dat) > 0, min(pair_dat$year), NA_integer_),
+      last_overlap = if_else(nrow(pair_dat) > 0, max(pair_dat$year), NA_integer_),
+      correlation = if_else(
+        nrow(pair_dat) >= params$min_overlap,
+        cor(pair_dat[[x_name]], pair_dat[[y_name]], method = method),
+        NA_real_
+      )
+    )
+  })
+}
+
+pairwise_points <- function(dat) {
+  indices <- sort(unique(dat$index))
+  pairs <- t(combn(indices, 2))
+
+  map_dfr(seq_len(nrow(pairs)), function(i) {
+    x_name <- pairs[i, 1]
+    y_name <- pairs[i, 2]
+
+    dat |>
+      filter(index %in% c(x_name, y_name)) |>
+      select(year, index, log_observed) |>
+      pivot_wider(names_from = index, values_from = log_observed) |>
+      filter(!is.na(.data[[x_name]]), !is.na(.data[[y_name]])) |>
+      transmute(
+        index_1 = x_name,
+        index_2 = y_name,
+        pair = paste(x_name, y_name, sep = " vs "),
+        year = year,
+        x = .data[[x_name]],
+        y = .data[[y_name]]
+      )
+  })
+}
+
+correlation_results <- index_data |>
+  group_by(model) |>
+  group_modify(\(.x, .y) {
+    bind_rows(
+      pairwise_correlations(.x, "log_observed", "pearson") |>
+        mutate(scale = "log observed", method = "Pearson"),
+      pairwise_correlations(.x, "observed", "spearman") |>
+        mutate(scale = "observed", method = "Spearman")
+    )
+  }) |>
+  ungroup() |>
+  select(model, method, scale, index_1, index_2, n_overlap, first_overlap, last_overlap, correlation)
+
+correlation_table <- correlation_results |>
+  select(method, index_1, index_2, n_overlap, first_overlap, last_overlap, correlation) |>
+  pivot_wider(names_from = method, values_from = correlation) |>
+  arrange(desc(abs(Pearson)), index_1, index_2)
+
+heatmap_data <- correlation_results |>
+  filter(method == "Pearson", scale == "log observed") |>
+  mutate(
+    pair = paste(index_1, index_2, sep = " vs "),
+    label = if_else(is.na(correlation), "NA", sprintf("%.2f", correlation))
+  )
+
+overlap_summary <- heatmap_data |>
+  filter(!is.na(n_overlap)) |>
+  summarise(
+    max_overlap = max(n_overlap),
+    min_overlap = min(n_overlap),
+    max_pairs = paste(pair[n_overlap == max_overlap], collapse = "; "),
+    min_pairs = paste(pair[n_overlap == min_overlap], collapse = "; ")
+  )
+
+correlation_matrix <- index_data |>
+  select(year, index, log_observed) |>
+  pivot_wider(names_from = index, values_from = log_observed) |>
+  select(-year) |>
+  as.data.frame() |>
+  cor(use = "pairwise.complete.obs", method = "pearson")
+
+pair_matrix_data <- index_data |>
+  select(year, index, log_observed) |>
+  pivot_wider(names_from = index, values_from = log_observed) |>
+  select(-year)
+
+pair_plot_data <- index_data |>
+  group_by(model) |>
+  group_modify(\(.x, .y) pairwise_points(.x)) |>
+  ungroup() |>
+  left_join(
+    heatmap_data |>
+      select(model, index_1, index_2, correlation, n_overlap),
+    by = c("model", "index_1", "index_2")
+  )
+```
+
+{{< include _includes/sprfmo-banner.html >}}
+
+```{=html}
+<div class="paper-title">SCW17/Paper-06 Evaluation of indices for MP considerations</div>
+```
+
+## Introduction
+
+This working paper evaluates the abundance indices used in the `h1_0.16` assessment configuration for SCW17 model development. The analysis is intended to identify whether retained indices provide broadly consistent information about relative abundance or whether some series move in opposing directions during overlapping years.
+
+The index-correlation diagnostics focus on observed positive index values only. `Chile_AcousCS` is omitted, and the `Chile_AcousN` series is restricted to 2006 onward to avoid mixing the early acoustic-survey period with the modern survey period. Pairwise Pearson correlations are computed on log observed indices, while Spearman correlations are computed on the observed scale.
+
+The final section uses the ROC/AUC diagnostic generated in the `jmMSE` repository (`output/index_auc_h1_h2_0.16.rda`, produced by `output_auc_peru_cpue.R`). Each index is evaluated as an indicator of annual changes in spawning stock biomass (SSB). The binary truth is whether SSB increased from the previous year, and the index score is the log annual index ratio. The area under the ROC curve (AUC) summarizes how well each index discriminates years of increasing SSB from years of non-increasing SSB.
+
+## Summary
+
+This evaluation shows that, for the two-stock hypotheses, the nominal CPUE indices for Peru generally track stock trends. Those same indices perform relatively poorer under the single-stock hypothesis. For the single-stock case, the offshore CPUE and Chilean CPUE indices appear to perform better. These conclusions are broadly consistent between the pairwise index comparisons and the ROC/AUC evaluations.
+
+## Models
+
+The report evaluates observed abundance indices in `h1_0.16.ctl`, omitting `Chile_AcousCS` and dropping `Chile_AcousN` years before 2006. Correlations are computed pairwise using only years where both indices have positive observations. Pearson correlations use log observed indices; Spearman correlations use the observed index values.
+
+@tbl-model-summary identifies the model input and output files used for the index-correlation diagnostics. The retained index set and the filter applied to `Chile_AcousN` define the data used in all index-series and correlation figures below.
+
+@tbl-index-summary gives the effective observation coverage after applying these filters. These counts are important when interpreting pairwise correlations because each contrast is calculated only over the years where both indices are available.
+
+```{r}
+#| label: tbl-model-summary
+#| tbl-cap: "Model file included in the index-correlation evaluation."
+#| echo: false
+
+model_summary |>
+  gt()
+```
+
+```{r}
+#| label: tbl-index-summary
+#| tbl-cap: "Observed index coverage by model and index."
+#| echo: false
+
+index_summary |>
+  gt() |>
+  fmt_number(columns = c(geometric_mean, min_observed, max_observed), decimals = 3)
+```
+
+## Index Series
+
+@fig-relative-index-series shows the retained observed index series after rescaling each series to its own geometric mean. `Chile_AcousN` is shown in a separate lower panel because it is the only retained survey index and has a different scale from the CPUE-style indices; separating it makes the remaining index trajectories easier to compare. @fig-relative-index-series-arithmetic shows the same retained index series on an arithmetic y-axis after scaling each index to its own arithmetic mean; this view preserves the separate `Chile_AcousN` panel but avoids the compression introduced by the log scale.
+
+```{r}
+#| label: fig-relative-index-series
+#| fig-cap: "Observed indices for h1_0.16, rescaled to each index's geometric mean. Chile_AcousN is shown in a separate panel with its own y-axis scale."
+#| echo: false
+#| fig-height: 6
+
+index_data |>
+  mutate(
+    index_panel = if_else(
+      index == "Chile_AcousN",
+      "Chile_AcousN survey",
+      "CPUE and fishery indices"
+    ),
+    index_panel = factor(index_panel, levels = c("CPUE and fishery indices", "Chile_AcousN survey"))
+  ) |>
+  ggplot(aes(year, relative_index, color = index)) +
+  geom_hline(yintercept = 1, color = "grey75", linewidth = 0.3) +
+  geom_line(linewidth = 0.65) +
+  geom_point(size = 1.3) +
+  facet_grid(index_panel ~ model, scales = "free_y") +
+  scale_y_log10() +
+  labs(x = NULL, y = "Relative index", color = NULL) +
+  theme_report()
+```
+
+```{r}
+#| label: fig-relative-index-series-arithmetic
+#| fig-cap: "Observed indices for h1_0.16, rescaled to each index's arithmetic mean and shown on an arithmetic y-axis. Chile_AcousN is shown in a separate panel with its own y-axis scale."
+#| echo: false
+#| fig-height: 6
+
+index_data |>
+  mutate(
+    index_panel = if_else(
+      index == "Chile_AcousN",
+      "Chile_AcousN survey",
+      "CPUE and fishery indices"
+    ),
+    index_panel = factor(index_panel, levels = c("CPUE and fishery indices", "Chile_AcousN survey"))
+  ) |>
+  ggplot(aes(year, relative_index_arithmetic, color = index)) +
+  geom_hline(yintercept = 1, color = "grey75", linewidth = 0.3) +
+  geom_line(linewidth = 0.65) +
+  geom_point(size = 1.3) +
+  facet_grid(index_panel ~ model, scales = "free_y") +
+  labs(x = NULL, y = "Relative index", color = NULL) +
+  theme_report()
+```
+
+## Correlations
+
+@fig-correlation-heatmap summarizes the pairwise Pearson correlations between log observed indices. The lower triangle gives the correlation coefficient for each pair: blue cells indicate positive correlations, red cells indicate negative correlations, and values closer to zero indicate weaker linear agreement over the overlapping years.
+
+@tbl-correlations gives the numerical values behind @fig-correlation-heatmap and also includes Spearman rank correlations on the observed scale. The overlap columns should be read alongside the coefficients because correlations based on short overlapping periods are less informative than those based on longer shared histories.
+
+@fig-correlation-pairs shows the underlying paired observations for each Pearson correlation. Each panel uses only years where both indices have positive observations, with point color indicating year and the grey line giving a simple linear fit on the log-index scale.
+
+@fig-correlation-ggpairs shows the same log-index data as a scatterplot matrix. Pearson correlations are printed in the upper triangle, while the lower triangle shows the paired observations with linear fits and uncertainty ribbons.
+
+The pairwise overlap was largest for `r overlap_summary$max_pairs`, with `r overlap_summary$max_overlap` shared years. The lowest overlap was for `r overlap_summary$min_pairs`, with `r overlap_summary$min_overlap` shared years. This difference in overlap should be considered when comparing the apparent strength of correlations across index pairs.
+
+```{r}
+#| label: fig-correlation-heatmap
+#| fig-cap: "Pearson correlations between log observed indices after omitting Chile_AcousCS. Blue cells indicate positive correlations, red cells indicate negative correlations, and the lower triangle reports r for each pair."
+#| echo: false
+#| fig-height: 5.5
+
+ggcorrplot(
+  correlation_matrix,
+  type = "lower",
+  lab = TRUE,
+  lab_size = 3.5,
+  show.diag = FALSE,
+  colors = c("#b2182b", "white", "#2166ac"),
+  outline.color = "white",
+  ggtheme = theme_minimal(base_size = 12)
+) +
+  labs(fill = "r") +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "right"
+  )
+```
+
+```{r}
+#| label: tbl-correlations
+#| tbl-cap: "Pairwise index correlations. Pearson correlations use log observed indices; Spearman correlations use observed values. Pairs with fewer than the minimum overlapping years are reported as NA."
+#| echo: false
+
+correlation_results |>
+  invisible()
+
+correlation_table |>
+  mutate(
+    Pearson = round(Pearson, 3),
+    Spearman = round(Spearman, 3)
+  ) |>
+  gt() |>
+  tab_spanner(label = "Correlation", columns = c(Pearson, Spearman)) |>
+  cols_label(
+    index_1 = "index_1",
+    index_2 = "index_2",
+    n_overlap = "n_overlap",
+    first_overlap = "first_overlap",
+    last_overlap = "last_overlap"
+  ) |>
+  fmt_number(columns = c(Pearson, Spearman), decimals = 3)
+```
+
+```{r}
+#| label: fig-correlation-pairs
+#| fig-cap: "Pairwise index relationships for h1_0.16, excluding Chile_AcousCS. Axes are log observed indices and points are overlapping years used in the Pearson correlations."
+#| echo: false
+#| fig-height: 12
+
+ggplot(pair_plot_data, aes(x, y)) +
+  geom_point(aes(color = year), size = 1.7, alpha = 0.85) +
+  geom_smooth(method = "lm", se = FALSE, color = "grey30", linewidth = 0.45) +
+  facet_wrap(~pair, scales = "free", ncol = 2) +
+  scale_color_viridis_c(option = "C") +
+  labs(x = "Log index 1", y = "Log index 2", color = "Year") +
+  theme_report() +
+  theme(
+    legend.position = "right",
+    strip.text.y = element_text(angle = 0, hjust = 0)
+  )
+```
+
+```{r}
+#| label: fig-correlation-ggpairs
+#| fig-cap: "Scatterplot matrix for log observed indices. Upper panels show Pearson correlations; lower panels show paired observations with linear fits and uncertainty ribbons."
+#| echo: false
+#| fig-width: 10
+#| fig-height: 10
+
+ggpairs(
+  pair_matrix_data,
+  upper = list(continuous = wrap("cor", method = "pearson", use = "pairwise.complete.obs")),
+  lower = list(continuous = ggpairs_lower_lm),
+  diag = list(continuous = "blankDiag")
+) +
+  ggthemes::theme_few(base_size = 9) +
+  theme(strip.text = element_text(size = 18))
+```
+
+## Strongest Relationships
+
+@tbl-strongest-correlations extracts the largest positive and most negative Pearson correlations from the correlation table. This is a compact way to identify the index pairs with the strongest agreement and strongest disagreement after accounting for the available overlapping years.
+
+```{r}
+#| label: tbl-strongest-correlations
+#| tbl-cap: "Strongest positive and negative contrasts. Based on Pearson correlations of log-observed indices."
+#| echo: false
+
+correlation_results |>
+  filter(method == "Pearson", scale == "log observed", !is.na(correlation)) |>
+  group_by(model) |>
+  slice_max(correlation, n = 3, with_ties = FALSE) |>
+  bind_rows(
+    correlation_results |>
+      filter(method == "Pearson", scale == "log observed", !is.na(correlation)) |>
+      group_by(model) |>
+      slice_min(correlation, n = 3, with_ties = FALSE)
+  ) |>
+  ungroup() |>
+  distinct(model, index_1, index_2, .keep_all = TRUE) |>
+  arrange(model, desc(correlation)) |>
+  select(index_1, index_2, n_overlap, first_overlap, last_overlap, correlation) |>
+  mutate(correlation = round(correlation, 3)) |>
+  gt() |>
+  fmt_number(columns = correlation, decimals = 3)
+```
+
+## Index ROC/AUC
+
+The ROC/AUC diagnostics below are loaded from the `jmMSE` output file `output/index_auc_h1_h2_0.16.rda`. They compare annual index changes against annual changes in model-estimated SSB. For each index, the score is $\log(I_y / I_{y-1})$ and the truth is whether $SSB_y > SSB_{y-1}$. For `h1_0.16`, each index is compared with the single-stock SSB trajectory. For `h2_0.16`, each index is compared with the SSB trajectory for the stock-specific output block in which the index appears. The `Chile_AcousN` ROC diagnostic uses only observations after 2005, following the implementation in `jmMSE/output_auc_peru_cpue.R`.
+
+@fig-h1-index-roc shows the h1 single-stock ROC diagnostics. Curves above the one-to-one dashed line indicate that positive index changes tend to coincide with years when model-estimated SSB increased; AUC values closer to one indicate stronger discrimination.
+
+@fig-h2-index-roc applies the same diagnostic to the h2 stock-specific outputs. The southern-stock indices and northern-stock indices are evaluated against their corresponding stock-specific SSB changes, so these panels should not be interpreted as a single pooled-stock diagnostic.
+
+@tbl-index-roc-auc summarizes the AUC and number of annual index changes used in each ROC curve from @fig-h1-index-roc and @fig-h2-index-roc.
+
+```{r}
+#| label: fig-h1-index-roc
+#| fig-cap: "Receiver Operating Characteristic (ROC) curves for abundance indices as indicators of changes in spawning stock biomass (SSB) in h1_0.16. Chile_AcousN uses only observations after 2005."
+#| echo: false
+#| fig-width: 8
+#| fig-height: 11
+
+ggplot(h1_index_roc, aes(x = FPR, y = TPR, color = index)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "grey60") +
+  geom_step(linewidth = 0.9, direction = "hv") +
+  geom_point(size = 1.5) +
+  facet_wrap(~facet, ncol = 2) +
+  coord_equal(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
+  scale_x_continuous(breaks = seq(0, 1, by = 0.25)) +
+  scale_y_continuous(breaks = seq(0, 1, by = 0.25)) +
+  labs(
+    title = "Index ROC/AUC for h1_0.16",
+    x = "False positive rate",
+    y = "True positive rate",
+    color = "Index"
+  ) +
+  theme_bw(base_size = 12) +
+  theme(
+    legend.position = "bottom",
+    strip.text = element_text(size = 8, lineheight = 1.05, margin = margin(4, 4, 4, 4)),
+    strip.background = element_rect(fill = "grey85", color = "grey20")
+  )
+```
+
+```{r}
+#| label: fig-h2-index-roc
+#| fig-cap: "Receiver Operating Characteristic (ROC) curves for abundance indices as indicators of changes in stock-specific spawning stock biomass (SSB) in h2_0.16. Chile_AcousN uses only observations after 2005."
+#| echo: false
+#| fig-width: 8
+#| fig-height: 11
+
+ggplot(h2_index_roc, aes(x = FPR, y = TPR, color = index)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "grey60") +
+  geom_step(linewidth = 0.9, direction = "hv") +
+  geom_point(size = 1.5) +
+  facet_wrap(~facet, ncol = 2) +
+  coord_equal(xlim = c(0, 1), ylim = c(0, 1), expand = FALSE) +
+  scale_x_continuous(breaks = seq(0, 1, by = 0.25)) +
+  scale_y_continuous(breaks = seq(0, 1, by = 0.25)) +
+  labs(
+    title = "Index ROC/AUC for h2_0.16",
+    x = "False positive rate",
+    y = "True positive rate",
+    color = "Index"
+  ) +
+  theme_bw(base_size = 12) +
+  theme(
+    legend.position = "bottom",
+    strip.text = element_text(size = 8, lineheight = 1.05, margin = margin(4, 4, 4, 4)),
+    strip.background = element_rect(fill = "grey85", color = "grey20")
+  )
+```
+
+```{r}
+#| label: tbl-index-roc-auc
+#| tbl-cap: "Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annual SSB direction and the score is the annual log index ratio."
+#| echo: false
+
+index_roc_summary |>
+  mutate(auc = round(auc, 3)) |>
+  arrange(model, stock, desc(auc)) |>
+  gt() |>
+  fmt_number(columns = auc, decimals = 3)
+```
