@@ -293,10 +293,6 @@ The index-correlation diagnostics focus on observed positive index values only. 
 
 The final section uses the ROC/AUC diagnostic generated in the `jmMSE` repository (`output/index_auc_h1_h2_0.16.rda`, produced by `output_auc_peru_cpue.R`). Each index is evaluated as an indicator of annual changes in spawning stock biomass (SSB). The binary truth is whether SSB increased from the previous year, and the index score is the log annual index ratio. The area under the ROC curve (AUC) summarizes how well each index discriminates years of increasing SSB from years of non-increasing SSB.
 
-## Summary
-
-This evaluation shows that, for the two-stock hypotheses, the nominal CPUE indices for Peru generally track stock trends. Those same indices perform relatively poorer under the single-stock hypothesis. For the single-stock case, the offshore CPUE and Chilean CPUE indices appear to perform better. These conclusions are broadly consistent between the pairwise index comparisons and the ROC/AUC evaluations.
-
 ## Models
 
 The report evaluates observed abundance indices in `h1_0.16.ctl`, omitting `Chile_AcousCS` and dropping `Chile_AcousN` years before 2006. Correlations are computed pairwise using only years where both indices have positive observations. Pearson correlations use log observed indices; Spearman correlations use the observed index values.
@@ -580,3 +576,7 @@ index_roc_summary |>
   gt() |>
   fmt_number(columns = auc, decimals = 3)
 ```
+
+## Summary
+
+This evaluation shows that, for the two-stock hypotheses, the nominal CPUE indices for Peru generally track stock trends. Those same indices perform relatively poorer under the single-stock hypothesis. For the single-stock case, the offshore CPUE and Chilean CPUE indices appear to perform better. These conclusions are broadly consistent between the pairwise index comparisons and the ROC/AUC evaluations.

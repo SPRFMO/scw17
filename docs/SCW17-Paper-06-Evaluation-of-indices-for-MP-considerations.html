@@ -217,12 +217,12 @@ window.Quarto = {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">2</span> Summary</a></li>
-  <li><a href="#models" id="toc-models" class="nav-link" data-scroll-target="#models"><span class="header-section-number">3</span> Models</a></li>
-  <li><a href="#index-series" id="toc-index-series" class="nav-link" data-scroll-target="#index-series"><span class="header-section-number">4</span> Index Series</a></li>
-  <li><a href="#correlations" id="toc-correlations" class="nav-link" data-scroll-target="#correlations"><span class="header-section-number">5</span> Correlations</a></li>
-  <li><a href="#strongest-relationships" id="toc-strongest-relationships" class="nav-link" data-scroll-target="#strongest-relationships"><span class="header-section-number">6</span> Strongest Relationships</a></li>
-  <li><a href="#index-rocauc" id="toc-index-rocauc" class="nav-link" data-scroll-target="#index-rocauc"><span class="header-section-number">7</span> Index ROC/AUC</a></li>
+  <li><a href="#models" id="toc-models" class="nav-link" data-scroll-target="#models"><span class="header-section-number">2</span> Models</a></li>
+  <li><a href="#index-series" id="toc-index-series" class="nav-link" data-scroll-target="#index-series"><span class="header-section-number">3</span> Index Series</a></li>
+  <li><a href="#correlations" id="toc-correlations" class="nav-link" data-scroll-target="#correlations"><span class="header-section-number">4</span> Correlations</a></li>
+  <li><a href="#strongest-relationships" id="toc-strongest-relationships" class="nav-link" data-scroll-target="#strongest-relationships"><span class="header-section-number">5</span> Strongest Relationships</a></li>
+  <li><a href="#index-rocauc" id="toc-index-rocauc" class="nav-link" data-scroll-target="#index-rocauc"><span class="header-section-number">6</span> Index ROC/AUC</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">7</span> Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -364,12 +364,8 @@ window.Quarto = {
 <p>The index-correlation diagnostics focus on observed positive index values only. <code>Chile_AcousCS</code> is omitted, and the <code>Chile_AcousN</code> series is restricted to 2006 onward to avoid mixing the early acoustic-survey period with the modern survey period. Pairwise Pearson correlations are computed on log observed indices, while Spearman correlations are computed on the observed scale.</p>
 <p>The final section uses the ROC/AUC diagnostic generated in the <code>jmMSE</code> repository (<code>output/index_auc_h1_h2_0.16.rda</code>, produced by <code>output_auc_peru_cpue.R</code>). Each index is evaluated as an indicator of annual changes in spawning stock biomass (SSB). The binary truth is whether SSB increased from the previous year, and the index score is the log annual index ratio. The area under the ROC curve (AUC) summarizes how well each index discriminates years of increasing SSB from years of non-increasing SSB.</p>
 </section>
-<section id="summary" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="summary"><span class="header-section-number">2</span> Summary</h2>
-<p>This evaluation shows that, for the two-stock hypotheses, the nominal CPUE indices for Peru generally track stock trends. Those same indices perform relatively poorer under the single-stock hypothesis. For the single-stock case, the offshore CPUE and Chilean CPUE indices appear to perform better. These conclusions are broadly consistent between the pairwise index comparisons and the ROC/AUC evaluations.</p>
-</section>
-<section id="models" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="models"><span class="header-section-number">3</span> Models</h2>
+<section id="models" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="models"><span class="header-section-number">2</span> Models</h2>
 <p>The report evaluates observed abundance indices in <code>h1_0.16.ctl</code>, omitting <code>Chile_AcousCS</code> and dropping <code>Chile_AcousN</code> years before 2006. Correlations are computed pairwise using only years where both indices have positive observations. Pearson correlations use log observed indices; Spearman correlations use the observed index values.</p>
 <p><a href="#tbl-model-summary" class="quarto-xref">Table&nbsp;1</a> identifies the model input and output files used for the index-correlation diagnostics. The retained index set and the filter applied to <code>Chile_AcousN</code> define the data used in all index-series and correlation figures below.</p>
 <p><a href="#tbl-index-summary" class="quarto-xref">Table&nbsp;2</a> gives the effective observation coverage after applying these filters. These counts are important when interpreting pairwise correlations because each contrast is calculated only over the years where both indices are available.</p>
@@ -381,23 +377,23 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
 </figcaption>
 <div aria-describedby="tbl-model-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="ibbdoxzzkv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ibbdoxzzkv table {
+<div id="zptornqtio" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zptornqtio table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ibbdoxzzkv thead, #ibbdoxzzkv tbody, #ibbdoxzzkv tfoot, #ibbdoxzzkv tr, #ibbdoxzzkv td, #ibbdoxzzkv th {
+#zptornqtio thead, #zptornqtio tbody, #zptornqtio tfoot, #zptornqtio tr, #zptornqtio td, #zptornqtio th {
   border-style: none;
 }
 
-#ibbdoxzzkv p {
+#zptornqtio p {
   margin: 0;
   padding: 0;
 }
 
-#ibbdoxzzkv .gt_table {
+#zptornqtio .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -423,12 +419,12 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   border-left-color: #D3D3D3;
 }
 
-#ibbdoxzzkv .gt_caption {
+#zptornqtio .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ibbdoxzzkv .gt_title {
+#zptornqtio .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -440,7 +436,7 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   border-bottom-width: 0;
 }
 
-#ibbdoxzzkv .gt_subtitle {
+#zptornqtio .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -452,7 +448,7 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   border-top-width: 0;
 }
 
-#ibbdoxzzkv .gt_heading {
+#zptornqtio .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -464,13 +460,13 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   border-right-color: #D3D3D3;
 }
 
-#ibbdoxzzkv .gt_bottom_border {
+#zptornqtio .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ibbdoxzzkv .gt_col_headings {
+#zptornqtio .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -485,7 +481,7 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   border-right-color: #D3D3D3;
 }
 
-#ibbdoxzzkv .gt_col_heading {
+#zptornqtio .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -505,7 +501,7 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   overflow-x: hidden;
 }
 
-#ibbdoxzzkv .gt_column_spanner_outer {
+#zptornqtio .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -517,15 +513,15 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   padding-right: 4px;
 }
 
-#ibbdoxzzkv .gt_column_spanner_outer:first-child {
+#zptornqtio .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ibbdoxzzkv .gt_column_spanner_outer:last-child {
+#zptornqtio .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ibbdoxzzkv .gt_column_spanner {
+#zptornqtio .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -537,11 +533,11 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   width: 100%;
 }
 
-#ibbdoxzzkv .gt_spanner_row {
+#zptornqtio .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ibbdoxzzkv .gt_group_heading {
+#zptornqtio .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -567,7 +563,7 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   text-align: left;
 }
 
-#ibbdoxzzkv .gt_empty_group_heading {
+#zptornqtio .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -582,15 +578,15 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   vertical-align: middle;
 }
 
-#ibbdoxzzkv .gt_from_md > :first-child {
+#zptornqtio .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ibbdoxzzkv .gt_from_md > :last-child {
+#zptornqtio .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ibbdoxzzkv .gt_row {
+#zptornqtio .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -609,7 +605,7 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   overflow-x: hidden;
 }
 
-#ibbdoxzzkv .gt_stub {
+#zptornqtio .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -622,7 +618,7 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   padding-right: 5px;
 }
 
-#ibbdoxzzkv .gt_stub_row_group {
+#zptornqtio .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -636,15 +632,15 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   vertical-align: top;
 }
 
-#ibbdoxzzkv .gt_row_group_first td {
+#zptornqtio .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ibbdoxzzkv .gt_row_group_first th {
+#zptornqtio .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ibbdoxzzkv .gt_summary_row {
+#zptornqtio .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -654,16 +650,16 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   padding-right: 5px;
 }
 
-#ibbdoxzzkv .gt_first_summary_row {
+#zptornqtio .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ibbdoxzzkv .gt_first_summary_row.thick {
+#zptornqtio .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ibbdoxzzkv .gt_last_summary_row {
+#zptornqtio .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -673,7 +669,7 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   border-bottom-color: #D3D3D3;
 }
 
-#ibbdoxzzkv .gt_grand_summary_row {
+#zptornqtio .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -683,7 +679,7 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   padding-right: 5px;
 }
 
-#ibbdoxzzkv .gt_first_grand_summary_row {
+#zptornqtio .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -693,7 +689,7 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   border-top-color: #D3D3D3;
 }
 
-#ibbdoxzzkv .gt_last_grand_summary_row_top {
+#zptornqtio .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -703,11 +699,11 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   border-bottom-color: #D3D3D3;
 }
 
-#ibbdoxzzkv .gt_striped {
+#zptornqtio .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ibbdoxzzkv .gt_table_body {
+#zptornqtio .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -716,7 +712,7 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   border-bottom-color: #D3D3D3;
 }
 
-#ibbdoxzzkv .gt_footnotes {
+#zptornqtio .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -730,7 +726,7 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   border-right-color: #D3D3D3;
 }
 
-#ibbdoxzzkv .gt_footnote {
+#zptornqtio .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -739,7 +735,7 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   padding-right: 5px;
 }
 
-#ibbdoxzzkv .gt_sourcenotes {
+#zptornqtio .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -753,7 +749,7 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   border-right-color: #D3D3D3;
 }
 
-#ibbdoxzzkv .gt_sourcenote {
+#zptornqtio .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -761,72 +757,72 @@ Table&nbsp;1: Model file included in the index-correlation evaluation.
   padding-right: 5px;
 }
 
-#ibbdoxzzkv .gt_left {
+#zptornqtio .gt_left {
   text-align: left;
 }
 
-#ibbdoxzzkv .gt_center {
+#zptornqtio .gt_center {
   text-align: center;
 }
 
-#ibbdoxzzkv .gt_right {
+#zptornqtio .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ibbdoxzzkv .gt_font_normal {
+#zptornqtio .gt_font_normal {
   font-weight: normal;
 }
 
-#ibbdoxzzkv .gt_font_bold {
+#zptornqtio .gt_font_bold {
   font-weight: bold;
 }
 
-#ibbdoxzzkv .gt_font_italic {
+#zptornqtio .gt_font_italic {
   font-style: italic;
 }
 
-#ibbdoxzzkv .gt_super {
+#zptornqtio .gt_super {
   font-size: 65%;
 }
 
-#ibbdoxzzkv .gt_footnote_marks {
+#zptornqtio .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ibbdoxzzkv .gt_asterisk {
+#zptornqtio .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ibbdoxzzkv .gt_indent_1 {
+#zptornqtio .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ibbdoxzzkv .gt_indent_2 {
+#zptornqtio .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ibbdoxzzkv .gt_indent_3 {
+#zptornqtio .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ibbdoxzzkv .gt_indent_4 {
+#zptornqtio .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ibbdoxzzkv .gt_indent_5 {
+#zptornqtio .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ibbdoxzzkv .katex-display {
+#zptornqtio .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ibbdoxzzkv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zptornqtio div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -872,23 +868,23 @@ Table&nbsp;2: Observed index coverage by model and index.
 </figcaption>
 <div aria-describedby="tbl-index-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="bpxivwurhf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bpxivwurhf table {
+<div id="hjoreuniin" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hjoreuniin table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bpxivwurhf thead, #bpxivwurhf tbody, #bpxivwurhf tfoot, #bpxivwurhf tr, #bpxivwurhf td, #bpxivwurhf th {
+#hjoreuniin thead, #hjoreuniin tbody, #hjoreuniin tfoot, #hjoreuniin tr, #hjoreuniin td, #hjoreuniin th {
   border-style: none;
 }
 
-#bpxivwurhf p {
+#hjoreuniin p {
   margin: 0;
   padding: 0;
 }
 
-#bpxivwurhf .gt_table {
+#hjoreuniin .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -914,12 +910,12 @@ Table&nbsp;2: Observed index coverage by model and index.
   border-left-color: #D3D3D3;
 }
 
-#bpxivwurhf .gt_caption {
+#hjoreuniin .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bpxivwurhf .gt_title {
+#hjoreuniin .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -931,7 +927,7 @@ Table&nbsp;2: Observed index coverage by model and index.
   border-bottom-width: 0;
 }
 
-#bpxivwurhf .gt_subtitle {
+#hjoreuniin .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -943,7 +939,7 @@ Table&nbsp;2: Observed index coverage by model and index.
   border-top-width: 0;
 }
 
-#bpxivwurhf .gt_heading {
+#hjoreuniin .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -955,13 +951,13 @@ Table&nbsp;2: Observed index coverage by model and index.
   border-right-color: #D3D3D3;
 }
 
-#bpxivwurhf .gt_bottom_border {
+#hjoreuniin .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bpxivwurhf .gt_col_headings {
+#hjoreuniin .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -976,7 +972,7 @@ Table&nbsp;2: Observed index coverage by model and index.
   border-right-color: #D3D3D3;
 }
 
-#bpxivwurhf .gt_col_heading {
+#hjoreuniin .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -996,7 +992,7 @@ Table&nbsp;2: Observed index coverage by model and index.
   overflow-x: hidden;
 }
 
-#bpxivwurhf .gt_column_spanner_outer {
+#hjoreuniin .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1008,15 +1004,15 @@ Table&nbsp;2: Observed index coverage by model and index.
   padding-right: 4px;
 }
 
-#bpxivwurhf .gt_column_spanner_outer:first-child {
+#hjoreuniin .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bpxivwurhf .gt_column_spanner_outer:last-child {
+#hjoreuniin .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bpxivwurhf .gt_column_spanner {
+#hjoreuniin .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1028,11 +1024,11 @@ Table&nbsp;2: Observed index coverage by model and index.
   width: 100%;
 }
 
-#bpxivwurhf .gt_spanner_row {
+#hjoreuniin .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bpxivwurhf .gt_group_heading {
+#hjoreuniin .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1058,7 +1054,7 @@ Table&nbsp;2: Observed index coverage by model and index.
   text-align: left;
 }
 
-#bpxivwurhf .gt_empty_group_heading {
+#hjoreuniin .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1073,15 +1069,15 @@ Table&nbsp;2: Observed index coverage by model and index.
   vertical-align: middle;
 }
 
-#bpxivwurhf .gt_from_md > :first-child {
+#hjoreuniin .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bpxivwurhf .gt_from_md > :last-child {
+#hjoreuniin .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bpxivwurhf .gt_row {
+#hjoreuniin .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1100,7 +1096,7 @@ Table&nbsp;2: Observed index coverage by model and index.
   overflow-x: hidden;
 }
 
-#bpxivwurhf .gt_stub {
+#hjoreuniin .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1113,7 +1109,7 @@ Table&nbsp;2: Observed index coverage by model and index.
   padding-right: 5px;
 }
 
-#bpxivwurhf .gt_stub_row_group {
+#hjoreuniin .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1127,15 +1123,15 @@ Table&nbsp;2: Observed index coverage by model and index.
   vertical-align: top;
 }
 
-#bpxivwurhf .gt_row_group_first td {
+#hjoreuniin .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bpxivwurhf .gt_row_group_first th {
+#hjoreuniin .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bpxivwurhf .gt_summary_row {
+#hjoreuniin .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1145,16 +1141,16 @@ Table&nbsp;2: Observed index coverage by model and index.
   padding-right: 5px;
 }
 
-#bpxivwurhf .gt_first_summary_row {
+#hjoreuniin .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bpxivwurhf .gt_first_summary_row.thick {
+#hjoreuniin .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bpxivwurhf .gt_last_summary_row {
+#hjoreuniin .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1164,7 +1160,7 @@ Table&nbsp;2: Observed index coverage by model and index.
   border-bottom-color: #D3D3D3;
 }
 
-#bpxivwurhf .gt_grand_summary_row {
+#hjoreuniin .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1174,7 +1170,7 @@ Table&nbsp;2: Observed index coverage by model and index.
   padding-right: 5px;
 }
 
-#bpxivwurhf .gt_first_grand_summary_row {
+#hjoreuniin .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1184,7 +1180,7 @@ Table&nbsp;2: Observed index coverage by model and index.
   border-top-color: #D3D3D3;
 }
 
-#bpxivwurhf .gt_last_grand_summary_row_top {
+#hjoreuniin .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1194,11 +1190,11 @@ Table&nbsp;2: Observed index coverage by model and index.
   border-bottom-color: #D3D3D3;
 }
 
-#bpxivwurhf .gt_striped {
+#hjoreuniin .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bpxivwurhf .gt_table_body {
+#hjoreuniin .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1207,7 +1203,7 @@ Table&nbsp;2: Observed index coverage by model and index.
   border-bottom-color: #D3D3D3;
 }
 
-#bpxivwurhf .gt_footnotes {
+#hjoreuniin .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1221,7 +1217,7 @@ Table&nbsp;2: Observed index coverage by model and index.
   border-right-color: #D3D3D3;
 }
 
-#bpxivwurhf .gt_footnote {
+#hjoreuniin .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1230,7 +1226,7 @@ Table&nbsp;2: Observed index coverage by model and index.
   padding-right: 5px;
 }
 
-#bpxivwurhf .gt_sourcenotes {
+#hjoreuniin .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1244,7 +1240,7 @@ Table&nbsp;2: Observed index coverage by model and index.
   border-right-color: #D3D3D3;
 }
 
-#bpxivwurhf .gt_sourcenote {
+#hjoreuniin .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1252,72 +1248,72 @@ Table&nbsp;2: Observed index coverage by model and index.
   padding-right: 5px;
 }
 
-#bpxivwurhf .gt_left {
+#hjoreuniin .gt_left {
   text-align: left;
 }
 
-#bpxivwurhf .gt_center {
+#hjoreuniin .gt_center {
   text-align: center;
 }
 
-#bpxivwurhf .gt_right {
+#hjoreuniin .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bpxivwurhf .gt_font_normal {
+#hjoreuniin .gt_font_normal {
   font-weight: normal;
 }
 
-#bpxivwurhf .gt_font_bold {
+#hjoreuniin .gt_font_bold {
   font-weight: bold;
 }
 
-#bpxivwurhf .gt_font_italic {
+#hjoreuniin .gt_font_italic {
   font-style: italic;
 }
 
-#bpxivwurhf .gt_super {
+#hjoreuniin .gt_super {
   font-size: 65%;
 }
 
-#bpxivwurhf .gt_footnote_marks {
+#hjoreuniin .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bpxivwurhf .gt_asterisk {
+#hjoreuniin .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bpxivwurhf .gt_indent_1 {
+#hjoreuniin .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bpxivwurhf .gt_indent_2 {
+#hjoreuniin .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bpxivwurhf .gt_indent_3 {
+#hjoreuniin .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bpxivwurhf .gt_indent_4 {
+#hjoreuniin .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bpxivwurhf .gt_indent_5 {
+#hjoreuniin .gt_indent_5 {
   text-indent: 25px;
 }
 
-#bpxivwurhf .katex-display {
+#hjoreuniin .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#bpxivwurhf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#hjoreuniin div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1396,8 +1392,8 @@ Table&nbsp;2: Observed index coverage by model and index.
 </div>
 </div>
 </section>
-<section id="index-series" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="index-series"><span class="header-section-number">4</span> Index Series</h2>
+<section id="index-series" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="index-series"><span class="header-section-number">3</span> Index Series</h2>
 <p><a href="#fig-relative-index-series" class="quarto-xref">Figure&nbsp;1</a> shows the retained observed index series after rescaling each series to its own geometric mean. <code>Chile_AcousN</code> is shown in a separate lower panel because it is the only retained survey index and has a different scale from the CPUE-style indices; separating it makes the remaining index trajectories easier to compare. <a href="#fig-relative-index-series-arithmetic" class="quarto-xref">Figure&nbsp;2</a> shows the same retained index series on an arithmetic y-axis after scaling each index to its own arithmetic mean; this view preserves the separate <code>Chile_AcousN</code> panel but avoids the compression introduced by the log scale.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1428,8 +1424,8 @@ Figure&nbsp;2: Observed indices for h1_0.16, rescaled to each index’s arithmet
 </div>
 </div>
 </section>
-<section id="correlations" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="correlations"><span class="header-section-number">5</span> Correlations</h2>
+<section id="correlations" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="correlations"><span class="header-section-number">4</span> Correlations</h2>
 <p><a href="#fig-correlation-heatmap" class="quarto-xref">Figure&nbsp;3</a> summarizes the pairwise Pearson correlations between log observed indices. The lower triangle gives the correlation coefficient for each pair: blue cells indicate positive correlations, red cells indicate negative correlations, and values closer to zero indicate weaker linear agreement over the overlapping years.</p>
 <p><a href="#tbl-correlations" class="quarto-xref">Table&nbsp;3</a> gives the numerical values behind <a href="#fig-correlation-heatmap" class="quarto-xref">Figure&nbsp;3</a> and also includes Spearman rank correlations on the observed scale. The overlap columns should be read alongside the coefficients because correlations based on short overlapping periods are less informative than those based on longer shared histories.</p>
 <p><a href="#fig-correlation-pairs" class="quarto-xref">Figure&nbsp;4</a> shows the underlying paired observations for each Pearson correlation. Each panel uses only years where both indices have positive observations, with point color indicating year and the grey line giving a simple linear fit on the log-index scale.</p>
@@ -1457,23 +1453,23 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
 </figcaption>
 <div aria-describedby="tbl-correlations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="gbdnamnrqk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gbdnamnrqk table {
+<div id="mwmzpesnlo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mwmzpesnlo table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gbdnamnrqk thead, #gbdnamnrqk tbody, #gbdnamnrqk tfoot, #gbdnamnrqk tr, #gbdnamnrqk td, #gbdnamnrqk th {
+#mwmzpesnlo thead, #mwmzpesnlo tbody, #mwmzpesnlo tfoot, #mwmzpesnlo tr, #mwmzpesnlo td, #mwmzpesnlo th {
   border-style: none;
 }
 
-#gbdnamnrqk p {
+#mwmzpesnlo p {
   margin: 0;
   padding: 0;
 }
 
-#gbdnamnrqk .gt_table {
+#mwmzpesnlo .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1499,12 +1495,12 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   border-left-color: #D3D3D3;
 }
 
-#gbdnamnrqk .gt_caption {
+#mwmzpesnlo .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gbdnamnrqk .gt_title {
+#mwmzpesnlo .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1516,7 +1512,7 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   border-bottom-width: 0;
 }
 
-#gbdnamnrqk .gt_subtitle {
+#mwmzpesnlo .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1528,7 +1524,7 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   border-top-width: 0;
 }
 
-#gbdnamnrqk .gt_heading {
+#mwmzpesnlo .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1540,13 +1536,13 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   border-right-color: #D3D3D3;
 }
 
-#gbdnamnrqk .gt_bottom_border {
+#mwmzpesnlo .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gbdnamnrqk .gt_col_headings {
+#mwmzpesnlo .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1561,7 +1557,7 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   border-right-color: #D3D3D3;
 }
 
-#gbdnamnrqk .gt_col_heading {
+#mwmzpesnlo .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1581,7 +1577,7 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   overflow-x: hidden;
 }
 
-#gbdnamnrqk .gt_column_spanner_outer {
+#mwmzpesnlo .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1593,15 +1589,15 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   padding-right: 4px;
 }
 
-#gbdnamnrqk .gt_column_spanner_outer:first-child {
+#mwmzpesnlo .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gbdnamnrqk .gt_column_spanner_outer:last-child {
+#mwmzpesnlo .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gbdnamnrqk .gt_column_spanner {
+#mwmzpesnlo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1613,11 +1609,11 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   width: 100%;
 }
 
-#gbdnamnrqk .gt_spanner_row {
+#mwmzpesnlo .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gbdnamnrqk .gt_group_heading {
+#mwmzpesnlo .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1643,7 +1639,7 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   text-align: left;
 }
 
-#gbdnamnrqk .gt_empty_group_heading {
+#mwmzpesnlo .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1658,15 +1654,15 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   vertical-align: middle;
 }
 
-#gbdnamnrqk .gt_from_md > :first-child {
+#mwmzpesnlo .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gbdnamnrqk .gt_from_md > :last-child {
+#mwmzpesnlo .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gbdnamnrqk .gt_row {
+#mwmzpesnlo .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1685,7 +1681,7 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   overflow-x: hidden;
 }
 
-#gbdnamnrqk .gt_stub {
+#mwmzpesnlo .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1698,7 +1694,7 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   padding-right: 5px;
 }
 
-#gbdnamnrqk .gt_stub_row_group {
+#mwmzpesnlo .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1712,15 +1708,15 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   vertical-align: top;
 }
 
-#gbdnamnrqk .gt_row_group_first td {
+#mwmzpesnlo .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gbdnamnrqk .gt_row_group_first th {
+#mwmzpesnlo .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gbdnamnrqk .gt_summary_row {
+#mwmzpesnlo .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1730,16 +1726,16 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   padding-right: 5px;
 }
 
-#gbdnamnrqk .gt_first_summary_row {
+#mwmzpesnlo .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gbdnamnrqk .gt_first_summary_row.thick {
+#mwmzpesnlo .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gbdnamnrqk .gt_last_summary_row {
+#mwmzpesnlo .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1749,7 +1745,7 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   border-bottom-color: #D3D3D3;
 }
 
-#gbdnamnrqk .gt_grand_summary_row {
+#mwmzpesnlo .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1759,7 +1755,7 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   padding-right: 5px;
 }
 
-#gbdnamnrqk .gt_first_grand_summary_row {
+#mwmzpesnlo .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1769,7 +1765,7 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   border-top-color: #D3D3D3;
 }
 
-#gbdnamnrqk .gt_last_grand_summary_row_top {
+#mwmzpesnlo .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1779,11 +1775,11 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   border-bottom-color: #D3D3D3;
 }
 
-#gbdnamnrqk .gt_striped {
+#mwmzpesnlo .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gbdnamnrqk .gt_table_body {
+#mwmzpesnlo .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1792,7 +1788,7 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   border-bottom-color: #D3D3D3;
 }
 
-#gbdnamnrqk .gt_footnotes {
+#mwmzpesnlo .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1806,7 +1802,7 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   border-right-color: #D3D3D3;
 }
 
-#gbdnamnrqk .gt_footnote {
+#mwmzpesnlo .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1815,7 +1811,7 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   padding-right: 5px;
 }
 
-#gbdnamnrqk .gt_sourcenotes {
+#mwmzpesnlo .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1829,7 +1825,7 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   border-right-color: #D3D3D3;
 }
 
-#gbdnamnrqk .gt_sourcenote {
+#mwmzpesnlo .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1837,72 +1833,72 @@ Table&nbsp;3: Pairwise index correlations. Pearson correlations use log observed
   padding-right: 5px;
 }
 
-#gbdnamnrqk .gt_left {
+#mwmzpesnlo .gt_left {
   text-align: left;
 }
 
-#gbdnamnrqk .gt_center {
+#mwmzpesnlo .gt_center {
   text-align: center;
 }
 
-#gbdnamnrqk .gt_right {
+#mwmzpesnlo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gbdnamnrqk .gt_font_normal {
+#mwmzpesnlo .gt_font_normal {
   font-weight: normal;
 }
 
-#gbdnamnrqk .gt_font_bold {
+#mwmzpesnlo .gt_font_bold {
   font-weight: bold;
 }
 
-#gbdnamnrqk .gt_font_italic {
+#mwmzpesnlo .gt_font_italic {
   font-style: italic;
 }
 
-#gbdnamnrqk .gt_super {
+#mwmzpesnlo .gt_super {
   font-size: 65%;
 }
 
-#gbdnamnrqk .gt_footnote_marks {
+#mwmzpesnlo .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gbdnamnrqk .gt_asterisk {
+#mwmzpesnlo .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gbdnamnrqk .gt_indent_1 {
+#mwmzpesnlo .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gbdnamnrqk .gt_indent_2 {
+#mwmzpesnlo .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gbdnamnrqk .gt_indent_3 {
+#mwmzpesnlo .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gbdnamnrqk .gt_indent_4 {
+#mwmzpesnlo .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gbdnamnrqk .gt_indent_5 {
+#mwmzpesnlo .gt_indent_5 {
   text-indent: 25px;
 }
 
-#gbdnamnrqk .katex-display {
+#mwmzpesnlo .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#gbdnamnrqk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#mwmzpesnlo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2062,8 +2058,8 @@ Figure&nbsp;5: Scatterplot matrix for log observed indices. Upper panels show Pe
 </div>
 </div>
 </section>
-<section id="strongest-relationships" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="strongest-relationships"><span class="header-section-number">6</span> Strongest Relationships</h2>
+<section id="strongest-relationships" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="strongest-relationships"><span class="header-section-number">5</span> Strongest Relationships</h2>
 <p><a href="#tbl-strongest-correlations" class="quarto-xref">Table&nbsp;4</a> extracts the largest positive and most negative Pearson correlations from the correlation table. This is a compact way to identify the index pairs with the strongest agreement and strongest disagreement after accounting for the available overlapping years.</p>
 <div class="cell">
 <div id="tbl-strongest-correlations" class="cell quarto-float quarto-figure quarto-figure-center anchored">
@@ -2073,23 +2069,23 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
 </figcaption>
 <div aria-describedby="tbl-strongest-correlations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="vowfrwdfyb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vowfrwdfyb table {
+<div id="uhcfwdpsgc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#uhcfwdpsgc table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vowfrwdfyb thead, #vowfrwdfyb tbody, #vowfrwdfyb tfoot, #vowfrwdfyb tr, #vowfrwdfyb td, #vowfrwdfyb th {
+#uhcfwdpsgc thead, #uhcfwdpsgc tbody, #uhcfwdpsgc tfoot, #uhcfwdpsgc tr, #uhcfwdpsgc td, #uhcfwdpsgc th {
   border-style: none;
 }
 
-#vowfrwdfyb p {
+#uhcfwdpsgc p {
   margin: 0;
   padding: 0;
 }
 
-#vowfrwdfyb .gt_table {
+#uhcfwdpsgc .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2115,12 +2111,12 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   border-left-color: #D3D3D3;
 }
 
-#vowfrwdfyb .gt_caption {
+#uhcfwdpsgc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vowfrwdfyb .gt_title {
+#uhcfwdpsgc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2132,7 +2128,7 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   border-bottom-width: 0;
 }
 
-#vowfrwdfyb .gt_subtitle {
+#uhcfwdpsgc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2144,7 +2140,7 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   border-top-width: 0;
 }
 
-#vowfrwdfyb .gt_heading {
+#uhcfwdpsgc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2156,13 +2152,13 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   border-right-color: #D3D3D3;
 }
 
-#vowfrwdfyb .gt_bottom_border {
+#uhcfwdpsgc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vowfrwdfyb .gt_col_headings {
+#uhcfwdpsgc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2177,7 +2173,7 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   border-right-color: #D3D3D3;
 }
 
-#vowfrwdfyb .gt_col_heading {
+#uhcfwdpsgc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2197,7 +2193,7 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   overflow-x: hidden;
 }
 
-#vowfrwdfyb .gt_column_spanner_outer {
+#uhcfwdpsgc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2209,15 +2205,15 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   padding-right: 4px;
 }
 
-#vowfrwdfyb .gt_column_spanner_outer:first-child {
+#uhcfwdpsgc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vowfrwdfyb .gt_column_spanner_outer:last-child {
+#uhcfwdpsgc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vowfrwdfyb .gt_column_spanner {
+#uhcfwdpsgc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2229,11 +2225,11 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   width: 100%;
 }
 
-#vowfrwdfyb .gt_spanner_row {
+#uhcfwdpsgc .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vowfrwdfyb .gt_group_heading {
+#uhcfwdpsgc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2259,7 +2255,7 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   text-align: left;
 }
 
-#vowfrwdfyb .gt_empty_group_heading {
+#uhcfwdpsgc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2274,15 +2270,15 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   vertical-align: middle;
 }
 
-#vowfrwdfyb .gt_from_md > :first-child {
+#uhcfwdpsgc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vowfrwdfyb .gt_from_md > :last-child {
+#uhcfwdpsgc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vowfrwdfyb .gt_row {
+#uhcfwdpsgc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2301,7 +2297,7 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   overflow-x: hidden;
 }
 
-#vowfrwdfyb .gt_stub {
+#uhcfwdpsgc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2314,7 +2310,7 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   padding-right: 5px;
 }
 
-#vowfrwdfyb .gt_stub_row_group {
+#uhcfwdpsgc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2328,15 +2324,15 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   vertical-align: top;
 }
 
-#vowfrwdfyb .gt_row_group_first td {
+#uhcfwdpsgc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vowfrwdfyb .gt_row_group_first th {
+#uhcfwdpsgc .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vowfrwdfyb .gt_summary_row {
+#uhcfwdpsgc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2346,16 +2342,16 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   padding-right: 5px;
 }
 
-#vowfrwdfyb .gt_first_summary_row {
+#uhcfwdpsgc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vowfrwdfyb .gt_first_summary_row.thick {
+#uhcfwdpsgc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vowfrwdfyb .gt_last_summary_row {
+#uhcfwdpsgc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2365,7 +2361,7 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   border-bottom-color: #D3D3D3;
 }
 
-#vowfrwdfyb .gt_grand_summary_row {
+#uhcfwdpsgc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2375,7 +2371,7 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   padding-right: 5px;
 }
 
-#vowfrwdfyb .gt_first_grand_summary_row {
+#uhcfwdpsgc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2385,7 +2381,7 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   border-top-color: #D3D3D3;
 }
 
-#vowfrwdfyb .gt_last_grand_summary_row_top {
+#uhcfwdpsgc .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2395,11 +2391,11 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   border-bottom-color: #D3D3D3;
 }
 
-#vowfrwdfyb .gt_striped {
+#uhcfwdpsgc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vowfrwdfyb .gt_table_body {
+#uhcfwdpsgc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2408,7 +2404,7 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   border-bottom-color: #D3D3D3;
 }
 
-#vowfrwdfyb .gt_footnotes {
+#uhcfwdpsgc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2422,7 +2418,7 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   border-right-color: #D3D3D3;
 }
 
-#vowfrwdfyb .gt_footnote {
+#uhcfwdpsgc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2431,7 +2427,7 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   padding-right: 5px;
 }
 
-#vowfrwdfyb .gt_sourcenotes {
+#uhcfwdpsgc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2445,7 +2441,7 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   border-right-color: #D3D3D3;
 }
 
-#vowfrwdfyb .gt_sourcenote {
+#uhcfwdpsgc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2453,72 +2449,72 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
   padding-right: 5px;
 }
 
-#vowfrwdfyb .gt_left {
+#uhcfwdpsgc .gt_left {
   text-align: left;
 }
 
-#vowfrwdfyb .gt_center {
+#uhcfwdpsgc .gt_center {
   text-align: center;
 }
 
-#vowfrwdfyb .gt_right {
+#uhcfwdpsgc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vowfrwdfyb .gt_font_normal {
+#uhcfwdpsgc .gt_font_normal {
   font-weight: normal;
 }
 
-#vowfrwdfyb .gt_font_bold {
+#uhcfwdpsgc .gt_font_bold {
   font-weight: bold;
 }
 
-#vowfrwdfyb .gt_font_italic {
+#uhcfwdpsgc .gt_font_italic {
   font-style: italic;
 }
 
-#vowfrwdfyb .gt_super {
+#uhcfwdpsgc .gt_super {
   font-size: 65%;
 }
 
-#vowfrwdfyb .gt_footnote_marks {
+#uhcfwdpsgc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vowfrwdfyb .gt_asterisk {
+#uhcfwdpsgc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vowfrwdfyb .gt_indent_1 {
+#uhcfwdpsgc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vowfrwdfyb .gt_indent_2 {
+#uhcfwdpsgc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vowfrwdfyb .gt_indent_3 {
+#uhcfwdpsgc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vowfrwdfyb .gt_indent_4 {
+#uhcfwdpsgc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vowfrwdfyb .gt_indent_5 {
+#uhcfwdpsgc .gt_indent_5 {
   text-indent: 25px;
 }
 
-#vowfrwdfyb .katex-display {
+#uhcfwdpsgc .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#vowfrwdfyb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#uhcfwdpsgc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2593,8 +2589,8 @@ Table&nbsp;4: Strongest positive and negative contrasts. Based on Pearson correl
 </div>
 </div>
 </section>
-<section id="index-rocauc" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="index-rocauc"><span class="header-section-number">7</span> Index ROC/AUC</h2>
+<section id="index-rocauc" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="index-rocauc"><span class="header-section-number">6</span> Index ROC/AUC</h2>
 <p>The ROC/AUC diagnostics below are loaded from the <code>jmMSE</code> output file <code>output/index_auc_h1_h2_0.16.rda</code>. They compare annual index changes against annual changes in model-estimated SSB. For each index, the score is <span class="math inline">\(\log(I_y / I_{y-1})\)</span> and the truth is whether <span class="math inline">\(SSB_y &gt; SSB_{y-1}\)</span>. For <code>h1_0.16</code>, each index is compared with the single-stock SSB trajectory. For <code>h2_0.16</code>, each index is compared with the SSB trajectory for the stock-specific output block in which the index appears. The <code>Chile_AcousN</code> ROC diagnostic uses only observations after 2005, following the implementation in <code>jmMSE/output_auc_peru_cpue.R</code>.</p>
 <p><a href="#fig-h1-index-roc" class="quarto-xref">Figure&nbsp;6</a> shows the h1 single-stock ROC diagnostics. Curves above the one-to-one dashed line indicate that positive index changes tend to coincide with years when model-estimated SSB increased; AUC values closer to one indicate stronger discrimination.</p>
 <p><a href="#fig-h2-index-roc" class="quarto-xref">Figure&nbsp;7</a> applies the same diagnostic to the h2 stock-specific outputs. The southern-stock indices and northern-stock indices are evaluated against their corresponding stock-specific SSB changes, so these panels should not be interpreted as a single pooled-stock diagnostic.</p>
@@ -2635,23 +2631,23 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
 </figcaption>
 <div aria-describedby="tbl-index-roc-auc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="gjqqzelgwp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gjqqzelgwp table {
+<div id="ivtkemfkqr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ivtkemfkqr table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gjqqzelgwp thead, #gjqqzelgwp tbody, #gjqqzelgwp tfoot, #gjqqzelgwp tr, #gjqqzelgwp td, #gjqqzelgwp th {
+#ivtkemfkqr thead, #ivtkemfkqr tbody, #ivtkemfkqr tfoot, #ivtkemfkqr tr, #ivtkemfkqr td, #ivtkemfkqr th {
   border-style: none;
 }
 
-#gjqqzelgwp p {
+#ivtkemfkqr p {
   margin: 0;
   padding: 0;
 }
 
-#gjqqzelgwp .gt_table {
+#ivtkemfkqr .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2677,12 +2673,12 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   border-left-color: #D3D3D3;
 }
 
-#gjqqzelgwp .gt_caption {
+#ivtkemfkqr .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gjqqzelgwp .gt_title {
+#ivtkemfkqr .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2694,7 +2690,7 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   border-bottom-width: 0;
 }
 
-#gjqqzelgwp .gt_subtitle {
+#ivtkemfkqr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2706,7 +2702,7 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   border-top-width: 0;
 }
 
-#gjqqzelgwp .gt_heading {
+#ivtkemfkqr .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2718,13 +2714,13 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   border-right-color: #D3D3D3;
 }
 
-#gjqqzelgwp .gt_bottom_border {
+#ivtkemfkqr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gjqqzelgwp .gt_col_headings {
+#ivtkemfkqr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2739,7 +2735,7 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   border-right-color: #D3D3D3;
 }
 
-#gjqqzelgwp .gt_col_heading {
+#ivtkemfkqr .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2759,7 +2755,7 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   overflow-x: hidden;
 }
 
-#gjqqzelgwp .gt_column_spanner_outer {
+#ivtkemfkqr .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2771,15 +2767,15 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   padding-right: 4px;
 }
 
-#gjqqzelgwp .gt_column_spanner_outer:first-child {
+#ivtkemfkqr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gjqqzelgwp .gt_column_spanner_outer:last-child {
+#ivtkemfkqr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gjqqzelgwp .gt_column_spanner {
+#ivtkemfkqr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2791,11 +2787,11 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   width: 100%;
 }
 
-#gjqqzelgwp .gt_spanner_row {
+#ivtkemfkqr .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gjqqzelgwp .gt_group_heading {
+#ivtkemfkqr .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2821,7 +2817,7 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   text-align: left;
 }
 
-#gjqqzelgwp .gt_empty_group_heading {
+#ivtkemfkqr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2836,15 +2832,15 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   vertical-align: middle;
 }
 
-#gjqqzelgwp .gt_from_md > :first-child {
+#ivtkemfkqr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gjqqzelgwp .gt_from_md > :last-child {
+#ivtkemfkqr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gjqqzelgwp .gt_row {
+#ivtkemfkqr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2863,7 +2859,7 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   overflow-x: hidden;
 }
 
-#gjqqzelgwp .gt_stub {
+#ivtkemfkqr .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2876,7 +2872,7 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   padding-right: 5px;
 }
 
-#gjqqzelgwp .gt_stub_row_group {
+#ivtkemfkqr .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2890,15 +2886,15 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   vertical-align: top;
 }
 
-#gjqqzelgwp .gt_row_group_first td {
+#ivtkemfkqr .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gjqqzelgwp .gt_row_group_first th {
+#ivtkemfkqr .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gjqqzelgwp .gt_summary_row {
+#ivtkemfkqr .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2908,16 +2904,16 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   padding-right: 5px;
 }
 
-#gjqqzelgwp .gt_first_summary_row {
+#ivtkemfkqr .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gjqqzelgwp .gt_first_summary_row.thick {
+#ivtkemfkqr .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gjqqzelgwp .gt_last_summary_row {
+#ivtkemfkqr .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2927,7 +2923,7 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   border-bottom-color: #D3D3D3;
 }
 
-#gjqqzelgwp .gt_grand_summary_row {
+#ivtkemfkqr .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2937,7 +2933,7 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   padding-right: 5px;
 }
 
-#gjqqzelgwp .gt_first_grand_summary_row {
+#ivtkemfkqr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2947,7 +2943,7 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   border-top-color: #D3D3D3;
 }
 
-#gjqqzelgwp .gt_last_grand_summary_row_top {
+#ivtkemfkqr .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2957,11 +2953,11 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   border-bottom-color: #D3D3D3;
 }
 
-#gjqqzelgwp .gt_striped {
+#ivtkemfkqr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gjqqzelgwp .gt_table_body {
+#ivtkemfkqr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2970,7 +2966,7 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   border-bottom-color: #D3D3D3;
 }
 
-#gjqqzelgwp .gt_footnotes {
+#ivtkemfkqr .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2984,7 +2980,7 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   border-right-color: #D3D3D3;
 }
 
-#gjqqzelgwp .gt_footnote {
+#ivtkemfkqr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2993,7 +2989,7 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   padding-right: 5px;
 }
 
-#gjqqzelgwp .gt_sourcenotes {
+#ivtkemfkqr .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3007,7 +3003,7 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   border-right-color: #D3D3D3;
 }
 
-#gjqqzelgwp .gt_sourcenote {
+#ivtkemfkqr .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3015,72 +3011,72 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
   padding-right: 5px;
 }
 
-#gjqqzelgwp .gt_left {
+#ivtkemfkqr .gt_left {
   text-align: left;
 }
 
-#gjqqzelgwp .gt_center {
+#ivtkemfkqr .gt_center {
   text-align: center;
 }
 
-#gjqqzelgwp .gt_right {
+#ivtkemfkqr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gjqqzelgwp .gt_font_normal {
+#ivtkemfkqr .gt_font_normal {
   font-weight: normal;
 }
 
-#gjqqzelgwp .gt_font_bold {
+#ivtkemfkqr .gt_font_bold {
   font-weight: bold;
 }
 
-#gjqqzelgwp .gt_font_italic {
+#ivtkemfkqr .gt_font_italic {
   font-style: italic;
 }
 
-#gjqqzelgwp .gt_super {
+#ivtkemfkqr .gt_super {
   font-size: 65%;
 }
 
-#gjqqzelgwp .gt_footnote_marks {
+#ivtkemfkqr .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gjqqzelgwp .gt_asterisk {
+#ivtkemfkqr .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gjqqzelgwp .gt_indent_1 {
+#ivtkemfkqr .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gjqqzelgwp .gt_indent_2 {
+#ivtkemfkqr .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gjqqzelgwp .gt_indent_3 {
+#ivtkemfkqr .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gjqqzelgwp .gt_indent_4 {
+#ivtkemfkqr .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gjqqzelgwp .gt_indent_5 {
+#ivtkemfkqr .gt_indent_5 {
   text-indent: 25px;
 }
 
-#gjqqzelgwp .katex-display {
+#ivtkemfkqr .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#gjqqzelgwp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ivtkemfkqr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3189,6 +3185,10 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
 </figure>
 </div>
 </div>
+</section>
+<section id="summary" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="summary"><span class="header-section-number">7</span> Summary</h2>
+<p>This evaluation shows that, for the two-stock hypotheses, the nominal CPUE indices for Peru generally track stock trends. Those same indices perform relatively poorer under the single-stock hypothesis. For the single-stock case, the offshore CPUE and Chilean CPUE indices appear to perform better. These conclusions are broadly consistent between the pairwise index comparisons and the ROC/AUC evaluations.</p>
 
 
 <!-- -->
@@ -3942,293 +3942,293 @@ Table&nbsp;5: Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annu
 <span id="cb1-295"><a href="#cb1-295" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-296"><a href="#cb1-296" aria-hidden="true" tabindex="-1"></a>The final section uses the ROC/AUC diagnostic generated in the <span class="in">`jmMSE`</span> repository (<span class="in">`output/index_auc_h1_h2_0.16.rda`</span>, produced by <span class="in">`output_auc_peru_cpue.R`</span>). Each index is evaluated as an indicator of annual changes in spawning stock biomass (SSB). The binary truth is whether SSB increased from the previous year, and the index score is the log annual index ratio. The area under the ROC curve (AUC) summarizes how well each index discriminates years of increasing SSB from years of non-increasing SSB.</span>
 <span id="cb1-297"><a href="#cb1-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a><span class="fu">## Models</span></span>
 <span id="cb1-299"><a href="#cb1-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-300"><a href="#cb1-300" aria-hidden="true" tabindex="-1"></a>This evaluation shows that, for the two-stock hypotheses, the nominal CPUE indices for Peru generally track stock trends. Those same indices perform relatively poorer under the single-stock hypothesis. For the single-stock case, the offshore CPUE and Chilean CPUE indices appear to perform better. These conclusions are broadly consistent between the pairwise index comparisons and the ROC/AUC evaluations.</span>
+<span id="cb1-300"><a href="#cb1-300" aria-hidden="true" tabindex="-1"></a>The report evaluates observed abundance indices in <span class="in">`h1_0.16.ctl`</span>, omitting <span class="in">`Chile_AcousCS`</span> and dropping <span class="in">`Chile_AcousN`</span> years before 2006. Correlations are computed pairwise using only years where both indices have positive observations. Pearson correlations use log observed indices; Spearman correlations use the observed index values.</span>
 <span id="cb1-301"><a href="#cb1-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-302"><a href="#cb1-302" aria-hidden="true" tabindex="-1"></a><span class="fu">## Models</span></span>
+<span id="cb1-302"><a href="#cb1-302" aria-hidden="true" tabindex="-1"></a>@tbl-model-summary identifies the model input and output files used for the index-correlation diagnostics. The retained index set and the filter applied to <span class="in">`Chile_AcousN`</span> define the data used in all index-series and correlation figures below.</span>
 <span id="cb1-303"><a href="#cb1-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-304"><a href="#cb1-304" aria-hidden="true" tabindex="-1"></a>The report evaluates observed abundance indices in <span class="in">`h1_0.16.ctl`</span>, omitting <span class="in">`Chile_AcousCS`</span> and dropping <span class="in">`Chile_AcousN`</span> years before 2006. Correlations are computed pairwise using only years where both indices have positive observations. Pearson correlations use log observed indices; Spearman correlations use the observed index values.</span>
+<span id="cb1-304"><a href="#cb1-304" aria-hidden="true" tabindex="-1"></a>@tbl-index-summary gives the effective observation coverage after applying these filters. These counts are important when interpreting pairwise correlations because each contrast is calculated only over the years where both indices are available.</span>
 <span id="cb1-305"><a href="#cb1-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-306"><a href="#cb1-306" aria-hidden="true" tabindex="-1"></a>@tbl-model-summary identifies the model input and output files used for the index-correlation diagnostics. The retained index set and the filter applied to <span class="in">`Chile_AcousN`</span> define the data used in all index-series and correlation figures below.</span>
-<span id="cb1-307"><a href="#cb1-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a>@tbl-index-summary gives the effective observation coverage after applying these filters. These counts are important when interpreting pairwise correlations because each contrast is calculated only over the years where both indices are available.</span>
-<span id="cb1-309"><a href="#cb1-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-312"><a href="#cb1-312" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-313"><a href="#cb1-313" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-model-summary</span></span>
-<span id="cb1-314"><a href="#cb1-314" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Model file included in the index-correlation evaluation."</span></span>
-<span id="cb1-315"><a href="#cb1-315" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-309"><a href="#cb1-309" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-model-summary</span></span>
+<span id="cb1-310"><a href="#cb1-310" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Model file included in the index-correlation evaluation."</span></span>
+<span id="cb1-311"><a href="#cb1-311" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-312"><a href="#cb1-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-313"><a href="#cb1-313" aria-hidden="true" tabindex="-1"></a>model_summary <span class="sc">|&gt;</span></span>
+<span id="cb1-314"><a href="#cb1-314" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>()</span>
+<span id="cb1-315"><a href="#cb1-315" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb1-316"><a href="#cb1-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-317"><a href="#cb1-317" aria-hidden="true" tabindex="-1"></a>model_summary <span class="sc">|&gt;</span></span>
-<span id="cb1-318"><a href="#cb1-318" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>()</span>
-<span id="cb1-319"><a href="#cb1-319" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-320"><a href="#cb1-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-323"><a href="#cb1-323" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-324"><a href="#cb1-324" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-index-summary</span></span>
-<span id="cb1-325"><a href="#cb1-325" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Observed index coverage by model and index."</span></span>
-<span id="cb1-326"><a href="#cb1-326" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-327"><a href="#cb1-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-328"><a href="#cb1-328" aria-hidden="true" tabindex="-1"></a>index_summary <span class="sc">|&gt;</span></span>
-<span id="cb1-329"><a href="#cb1-329" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-330"><a href="#cb1-330" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(geometric_mean, min_observed, max_observed), <span class="at">decimals =</span> <span class="dv">3</span>)</span>
-<span id="cb1-331"><a href="#cb1-331" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-319"><a href="#cb1-319" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-320"><a href="#cb1-320" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-index-summary</span></span>
+<span id="cb1-321"><a href="#cb1-321" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Observed index coverage by model and index."</span></span>
+<span id="cb1-322"><a href="#cb1-322" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-323"><a href="#cb1-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-324"><a href="#cb1-324" aria-hidden="true" tabindex="-1"></a>index_summary <span class="sc">|&gt;</span></span>
+<span id="cb1-325"><a href="#cb1-325" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-326"><a href="#cb1-326" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(geometric_mean, min_observed, max_observed), <span class="at">decimals =</span> <span class="dv">3</span>)</span>
+<span id="cb1-327"><a href="#cb1-327" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-328"><a href="#cb1-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-329"><a href="#cb1-329" aria-hidden="true" tabindex="-1"></a><span class="fu">## Index Series</span></span>
+<span id="cb1-330"><a href="#cb1-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-331"><a href="#cb1-331" aria-hidden="true" tabindex="-1"></a>@fig-relative-index-series shows the retained observed index series after rescaling each series to its own geometric mean. <span class="in">`Chile_AcousN`</span> is shown in a separate lower panel because it is the only retained survey index and has a different scale from the CPUE-style indices; separating it makes the remaining index trajectories easier to compare. @fig-relative-index-series-arithmetic shows the same retained index series on an arithmetic y-axis after scaling each index to its own arithmetic mean; this view preserves the separate <span class="in">`Chile_AcousN`</span> panel but avoids the compression introduced by the log scale.</span>
 <span id="cb1-332"><a href="#cb1-332" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-333"><a href="#cb1-333" aria-hidden="true" tabindex="-1"></a><span class="fu">## Index Series</span></span>
-<span id="cb1-334"><a href="#cb1-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-335"><a href="#cb1-335" aria-hidden="true" tabindex="-1"></a>@fig-relative-index-series shows the retained observed index series after rescaling each series to its own geometric mean. <span class="in">`Chile_AcousN`</span> is shown in a separate lower panel because it is the only retained survey index and has a different scale from the CPUE-style indices; separating it makes the remaining index trajectories easier to compare. @fig-relative-index-series-arithmetic shows the same retained index series on an arithmetic y-axis after scaling each index to its own arithmetic mean; this view preserves the separate <span class="in">`Chile_AcousN`</span> panel but avoids the compression introduced by the log scale.</span>
-<span id="cb1-336"><a href="#cb1-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-339"><a href="#cb1-339" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-340"><a href="#cb1-340" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-relative-index-series</span></span>
-<span id="cb1-341"><a href="#cb1-341" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Observed indices for h1_0.16, rescaled to each index's geometric mean. Chile_AcousN is shown in a separate panel with its own y-axis scale."</span></span>
-<span id="cb1-342"><a href="#cb1-342" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-343"><a href="#cb1-343" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb1-344"><a href="#cb1-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-345"><a href="#cb1-345" aria-hidden="true" tabindex="-1"></a>index_data <span class="sc">|&gt;</span></span>
-<span id="cb1-346"><a href="#cb1-346" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-347"><a href="#cb1-347" aria-hidden="true" tabindex="-1"></a>    <span class="at">index_panel =</span> <span class="fu">if_else</span>(</span>
-<span id="cb1-348"><a href="#cb1-348" aria-hidden="true" tabindex="-1"></a>      index <span class="sc">==</span> <span class="st">"Chile_AcousN"</span>,</span>
-<span id="cb1-349"><a href="#cb1-349" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Chile_AcousN survey"</span>,</span>
-<span id="cb1-350"><a href="#cb1-350" aria-hidden="true" tabindex="-1"></a>      <span class="st">"CPUE and fishery indices"</span></span>
-<span id="cb1-351"><a href="#cb1-351" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb1-352"><a href="#cb1-352" aria-hidden="true" tabindex="-1"></a>    <span class="at">index_panel =</span> <span class="fu">factor</span>(index_panel, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"CPUE and fishery indices"</span>, <span class="st">"Chile_AcousN survey"</span>))</span>
-<span id="cb1-353"><a href="#cb1-353" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb1-354"><a href="#cb1-354" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, relative_index, <span class="at">color =</span> index)) <span class="sc">+</span></span>
-<span id="cb1-355"><a href="#cb1-355" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"grey75"</span>, <span class="at">linewidth =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb1-356"><a href="#cb1-356" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.65</span>) <span class="sc">+</span></span>
-<span id="cb1-357"><a href="#cb1-357" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span></span>
-<span id="cb1-358"><a href="#cb1-358" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(index_panel <span class="sc">~</span> model, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb1-359"><a href="#cb1-359" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
-<span id="cb1-360"><a href="#cb1-360" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Relative index"</span>, <span class="at">color =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb1-361"><a href="#cb1-361" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_report</span>()</span>
-<span id="cb1-362"><a href="#cb1-362" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-363"><a href="#cb1-363" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-366"><a href="#cb1-366" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-367"><a href="#cb1-367" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-relative-index-series-arithmetic</span></span>
-<span id="cb1-368"><a href="#cb1-368" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Observed indices for h1_0.16, rescaled to each index's arithmetic mean and shown on an arithmetic y-axis. Chile_AcousN is shown in a separate panel with its own y-axis scale."</span></span>
-<span id="cb1-369"><a href="#cb1-369" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-370"><a href="#cb1-370" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb1-371"><a href="#cb1-371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-372"><a href="#cb1-372" aria-hidden="true" tabindex="-1"></a>index_data <span class="sc">|&gt;</span></span>
-<span id="cb1-373"><a href="#cb1-373" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-374"><a href="#cb1-374" aria-hidden="true" tabindex="-1"></a>    <span class="at">index_panel =</span> <span class="fu">if_else</span>(</span>
-<span id="cb1-375"><a href="#cb1-375" aria-hidden="true" tabindex="-1"></a>      index <span class="sc">==</span> <span class="st">"Chile_AcousN"</span>,</span>
-<span id="cb1-376"><a href="#cb1-376" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Chile_AcousN survey"</span>,</span>
-<span id="cb1-377"><a href="#cb1-377" aria-hidden="true" tabindex="-1"></a>      <span class="st">"CPUE and fishery indices"</span></span>
-<span id="cb1-378"><a href="#cb1-378" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb1-379"><a href="#cb1-379" aria-hidden="true" tabindex="-1"></a>    <span class="at">index_panel =</span> <span class="fu">factor</span>(index_panel, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"CPUE and fishery indices"</span>, <span class="st">"Chile_AcousN survey"</span>))</span>
-<span id="cb1-380"><a href="#cb1-380" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb1-381"><a href="#cb1-381" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, relative_index_arithmetic, <span class="at">color =</span> index)) <span class="sc">+</span></span>
-<span id="cb1-382"><a href="#cb1-382" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"grey75"</span>, <span class="at">linewidth =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb1-383"><a href="#cb1-383" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.65</span>) <span class="sc">+</span></span>
-<span id="cb1-384"><a href="#cb1-384" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span></span>
-<span id="cb1-385"><a href="#cb1-385" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(index_panel <span class="sc">~</span> model, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb1-386"><a href="#cb1-386" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Relative index"</span>, <span class="at">color =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb1-387"><a href="#cb1-387" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_report</span>()</span>
-<span id="cb1-388"><a href="#cb1-388" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-335"><a href="#cb1-335" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-336"><a href="#cb1-336" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-relative-index-series</span></span>
+<span id="cb1-337"><a href="#cb1-337" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Observed indices for h1_0.16, rescaled to each index's geometric mean. Chile_AcousN is shown in a separate panel with its own y-axis scale."</span></span>
+<span id="cb1-338"><a href="#cb1-338" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-339"><a href="#cb1-339" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb1-340"><a href="#cb1-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-341"><a href="#cb1-341" aria-hidden="true" tabindex="-1"></a>index_data <span class="sc">|&gt;</span></span>
+<span id="cb1-342"><a href="#cb1-342" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-343"><a href="#cb1-343" aria-hidden="true" tabindex="-1"></a>    <span class="at">index_panel =</span> <span class="fu">if_else</span>(</span>
+<span id="cb1-344"><a href="#cb1-344" aria-hidden="true" tabindex="-1"></a>      index <span class="sc">==</span> <span class="st">"Chile_AcousN"</span>,</span>
+<span id="cb1-345"><a href="#cb1-345" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Chile_AcousN survey"</span>,</span>
+<span id="cb1-346"><a href="#cb1-346" aria-hidden="true" tabindex="-1"></a>      <span class="st">"CPUE and fishery indices"</span></span>
+<span id="cb1-347"><a href="#cb1-347" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb1-348"><a href="#cb1-348" aria-hidden="true" tabindex="-1"></a>    <span class="at">index_panel =</span> <span class="fu">factor</span>(index_panel, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"CPUE and fishery indices"</span>, <span class="st">"Chile_AcousN survey"</span>))</span>
+<span id="cb1-349"><a href="#cb1-349" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-350"><a href="#cb1-350" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, relative_index, <span class="at">color =</span> index)) <span class="sc">+</span></span>
+<span id="cb1-351"><a href="#cb1-351" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"grey75"</span>, <span class="at">linewidth =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb1-352"><a href="#cb1-352" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.65</span>) <span class="sc">+</span></span>
+<span id="cb1-353"><a href="#cb1-353" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span></span>
+<span id="cb1-354"><a href="#cb1-354" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(index_panel <span class="sc">~</span> model, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb1-355"><a href="#cb1-355" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb1-356"><a href="#cb1-356" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Relative index"</span>, <span class="at">color =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb1-357"><a href="#cb1-357" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_report</span>()</span>
+<span id="cb1-358"><a href="#cb1-358" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-359"><a href="#cb1-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-362"><a href="#cb1-362" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-363"><a href="#cb1-363" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-relative-index-series-arithmetic</span></span>
+<span id="cb1-364"><a href="#cb1-364" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Observed indices for h1_0.16, rescaled to each index's arithmetic mean and shown on an arithmetic y-axis. Chile_AcousN is shown in a separate panel with its own y-axis scale."</span></span>
+<span id="cb1-365"><a href="#cb1-365" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-366"><a href="#cb1-366" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb1-367"><a href="#cb1-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-368"><a href="#cb1-368" aria-hidden="true" tabindex="-1"></a>index_data <span class="sc">|&gt;</span></span>
+<span id="cb1-369"><a href="#cb1-369" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-370"><a href="#cb1-370" aria-hidden="true" tabindex="-1"></a>    <span class="at">index_panel =</span> <span class="fu">if_else</span>(</span>
+<span id="cb1-371"><a href="#cb1-371" aria-hidden="true" tabindex="-1"></a>      index <span class="sc">==</span> <span class="st">"Chile_AcousN"</span>,</span>
+<span id="cb1-372"><a href="#cb1-372" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Chile_AcousN survey"</span>,</span>
+<span id="cb1-373"><a href="#cb1-373" aria-hidden="true" tabindex="-1"></a>      <span class="st">"CPUE and fishery indices"</span></span>
+<span id="cb1-374"><a href="#cb1-374" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb1-375"><a href="#cb1-375" aria-hidden="true" tabindex="-1"></a>    <span class="at">index_panel =</span> <span class="fu">factor</span>(index_panel, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"CPUE and fishery indices"</span>, <span class="st">"Chile_AcousN survey"</span>))</span>
+<span id="cb1-376"><a href="#cb1-376" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-377"><a href="#cb1-377" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, relative_index_arithmetic, <span class="at">color =</span> index)) <span class="sc">+</span></span>
+<span id="cb1-378"><a href="#cb1-378" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"grey75"</span>, <span class="at">linewidth =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb1-379"><a href="#cb1-379" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.65</span>) <span class="sc">+</span></span>
+<span id="cb1-380"><a href="#cb1-380" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span></span>
+<span id="cb1-381"><a href="#cb1-381" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(index_panel <span class="sc">~</span> model, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb1-382"><a href="#cb1-382" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Relative index"</span>, <span class="at">color =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb1-383"><a href="#cb1-383" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_report</span>()</span>
+<span id="cb1-384"><a href="#cb1-384" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-385"><a href="#cb1-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-386"><a href="#cb1-386" aria-hidden="true" tabindex="-1"></a><span class="fu">## Correlations</span></span>
+<span id="cb1-387"><a href="#cb1-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-388"><a href="#cb1-388" aria-hidden="true" tabindex="-1"></a>@fig-correlation-heatmap summarizes the pairwise Pearson correlations between log observed indices. The lower triangle gives the correlation coefficient for each pair: blue cells indicate positive correlations, red cells indicate negative correlations, and values closer to zero indicate weaker linear agreement over the overlapping years.</span>
 <span id="cb1-389"><a href="#cb1-389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-390"><a href="#cb1-390" aria-hidden="true" tabindex="-1"></a><span class="fu">## Correlations</span></span>
+<span id="cb1-390"><a href="#cb1-390" aria-hidden="true" tabindex="-1"></a>@tbl-correlations gives the numerical values behind @fig-correlation-heatmap and also includes Spearman rank correlations on the observed scale. The overlap columns should be read alongside the coefficients because correlations based on short overlapping periods are less informative than those based on longer shared histories.</span>
 <span id="cb1-391"><a href="#cb1-391" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-392"><a href="#cb1-392" aria-hidden="true" tabindex="-1"></a>@fig-correlation-heatmap summarizes the pairwise Pearson correlations between log observed indices. The lower triangle gives the correlation coefficient for each pair: blue cells indicate positive correlations, red cells indicate negative correlations, and values closer to zero indicate weaker linear agreement over the overlapping years.</span>
+<span id="cb1-392"><a href="#cb1-392" aria-hidden="true" tabindex="-1"></a>@fig-correlation-pairs shows the underlying paired observations for each Pearson correlation. Each panel uses only years where both indices have positive observations, with point color indicating year and the grey line giving a simple linear fit on the log-index scale.</span>
 <span id="cb1-393"><a href="#cb1-393" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-394"><a href="#cb1-394" aria-hidden="true" tabindex="-1"></a>@tbl-correlations gives the numerical values behind @fig-correlation-heatmap and also includes Spearman rank correlations on the observed scale. The overlap columns should be read alongside the coefficients because correlations based on short overlapping periods are less informative than those based on longer shared histories.</span>
+<span id="cb1-394"><a href="#cb1-394" aria-hidden="true" tabindex="-1"></a>@fig-correlation-ggpairs shows the same log-index data as a scatterplot matrix. Pearson correlations are printed in the upper triangle, while the lower triangle shows the paired observations with linear fits and uncertainty ribbons.</span>
 <span id="cb1-395"><a href="#cb1-395" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-396"><a href="#cb1-396" aria-hidden="true" tabindex="-1"></a>@fig-correlation-pairs shows the underlying paired observations for each Pearson correlation. Each panel uses only years where both indices have positive observations, with point color indicating year and the grey line giving a simple linear fit on the log-index scale.</span>
+<span id="cb1-396"><a href="#cb1-396" aria-hidden="true" tabindex="-1"></a>The pairwise overlap was largest for <span class="in">`r overlap_summary$max_pairs`</span>, with <span class="in">`r overlap_summary$max_overlap`</span> shared years. The lowest overlap was for <span class="in">`r overlap_summary$min_pairs`</span>, with <span class="in">`r overlap_summary$min_overlap`</span> shared years. This difference in overlap should be considered when comparing the apparent strength of correlations across index pairs.</span>
 <span id="cb1-397"><a href="#cb1-397" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-398"><a href="#cb1-398" aria-hidden="true" tabindex="-1"></a>@fig-correlation-ggpairs shows the same log-index data as a scatterplot matrix. Pearson correlations are printed in the upper triangle, while the lower triangle shows the paired observations with linear fits and uncertainty ribbons.</span>
-<span id="cb1-399"><a href="#cb1-399" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-400"><a href="#cb1-400" aria-hidden="true" tabindex="-1"></a>The pairwise overlap was largest for <span class="in">`r overlap_summary$max_pairs`</span>, with <span class="in">`r overlap_summary$max_overlap`</span> shared years. The lowest overlap was for <span class="in">`r overlap_summary$min_pairs`</span>, with <span class="in">`r overlap_summary$min_overlap`</span> shared years. This difference in overlap should be considered when comparing the apparent strength of correlations across index pairs.</span>
-<span id="cb1-401"><a href="#cb1-401" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-404"><a href="#cb1-404" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-405"><a href="#cb1-405" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-correlation-heatmap</span></span>
-<span id="cb1-406"><a href="#cb1-406" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Pearson correlations between log observed indices after omitting Chile_AcousCS. Blue cells indicate positive correlations, red cells indicate negative correlations, and the lower triangle reports r for each pair."</span></span>
-<span id="cb1-407"><a href="#cb1-407" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-408"><a href="#cb1-408" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5.5</span></span>
-<span id="cb1-409"><a href="#cb1-409" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-410"><a href="#cb1-410" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(</span>
-<span id="cb1-411"><a href="#cb1-411" aria-hidden="true" tabindex="-1"></a>  correlation_matrix,</span>
-<span id="cb1-412"><a href="#cb1-412" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"lower"</span>,</span>
-<span id="cb1-413"><a href="#cb1-413" aria-hidden="true" tabindex="-1"></a>  <span class="at">lab =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb1-414"><a href="#cb1-414" aria-hidden="true" tabindex="-1"></a>  <span class="at">lab_size =</span> <span class="fl">3.5</span>,</span>
-<span id="cb1-415"><a href="#cb1-415" aria-hidden="true" tabindex="-1"></a>  <span class="at">show.diag =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-416"><a href="#cb1-416" aria-hidden="true" tabindex="-1"></a>  <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#b2182b"</span>, <span class="st">"white"</span>, <span class="st">"#2166ac"</span>),</span>
-<span id="cb1-417"><a href="#cb1-417" aria-hidden="true" tabindex="-1"></a>  <span class="at">outline.color =</span> <span class="st">"white"</span>,</span>
-<span id="cb1-418"><a href="#cb1-418" aria-hidden="true" tabindex="-1"></a>  <span class="at">ggtheme =</span> <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
-<span id="cb1-419"><a href="#cb1-419" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb1-420"><a href="#cb1-420" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"r"</span>) <span class="sc">+</span></span>
-<span id="cb1-421"><a href="#cb1-421" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb1-422"><a href="#cb1-422" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
-<span id="cb1-423"><a href="#cb1-423" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span></span>
-<span id="cb1-424"><a href="#cb1-424" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-425"><a href="#cb1-425" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-426"><a href="#cb1-426" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-429"><a href="#cb1-429" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-430"><a href="#cb1-430" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-correlations</span></span>
-<span id="cb1-431"><a href="#cb1-431" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Pairwise index correlations. Pearson correlations use log observed indices; Spearman correlations use observed values. Pairs with fewer than the minimum overlapping years are reported as NA."</span></span>
-<span id="cb1-432"><a href="#cb1-432" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-433"><a href="#cb1-433" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-434"><a href="#cb1-434" aria-hidden="true" tabindex="-1"></a>correlation_results <span class="sc">|&gt;</span></span>
-<span id="cb1-435"><a href="#cb1-435" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>()</span>
-<span id="cb1-436"><a href="#cb1-436" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-437"><a href="#cb1-437" aria-hidden="true" tabindex="-1"></a>correlation_table <span class="sc">|&gt;</span></span>
-<span id="cb1-438"><a href="#cb1-438" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-439"><a href="#cb1-439" aria-hidden="true" tabindex="-1"></a>    <span class="at">Pearson =</span> <span class="fu">round</span>(Pearson, <span class="dv">3</span>),</span>
-<span id="cb1-440"><a href="#cb1-440" aria-hidden="true" tabindex="-1"></a>    <span class="at">Spearman =</span> <span class="fu">round</span>(Spearman, <span class="dv">3</span>)</span>
-<span id="cb1-441"><a href="#cb1-441" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb1-442"><a href="#cb1-442" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-443"><a href="#cb1-443" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_spanner</span>(<span class="at">label =</span> <span class="st">"Correlation"</span>, <span class="at">columns =</span> <span class="fu">c</span>(Pearson, Spearman)) <span class="sc">|&gt;</span></span>
-<span id="cb1-444"><a href="#cb1-444" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
-<span id="cb1-445"><a href="#cb1-445" aria-hidden="true" tabindex="-1"></a>    <span class="at">index_1 =</span> <span class="st">"index_1"</span>,</span>
-<span id="cb1-446"><a href="#cb1-446" aria-hidden="true" tabindex="-1"></a>    <span class="at">index_2 =</span> <span class="st">"index_2"</span>,</span>
-<span id="cb1-447"><a href="#cb1-447" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_overlap =</span> <span class="st">"n_overlap"</span>,</span>
-<span id="cb1-448"><a href="#cb1-448" aria-hidden="true" tabindex="-1"></a>    <span class="at">first_overlap =</span> <span class="st">"first_overlap"</span>,</span>
-<span id="cb1-449"><a href="#cb1-449" aria-hidden="true" tabindex="-1"></a>    <span class="at">last_overlap =</span> <span class="st">"last_overlap"</span></span>
-<span id="cb1-450"><a href="#cb1-450" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb1-451"><a href="#cb1-451" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(Pearson, Spearman), <span class="at">decimals =</span> <span class="dv">3</span>)</span>
-<span id="cb1-452"><a href="#cb1-452" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-453"><a href="#cb1-453" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-456"><a href="#cb1-456" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-457"><a href="#cb1-457" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-correlation-pairs</span></span>
-<span id="cb1-458"><a href="#cb1-458" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Pairwise index relationships for h1_0.16, excluding Chile_AcousCS. Axes are log observed indices and points are overlapping years used in the Pearson correlations."</span></span>
-<span id="cb1-459"><a href="#cb1-459" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-460"><a href="#cb1-460" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 12</span></span>
-<span id="cb1-461"><a href="#cb1-461" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-462"><a href="#cb1-462" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pair_plot_data, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb1-463"><a href="#cb1-463" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> year), <span class="at">size =</span> <span class="fl">1.7</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
-<span id="cb1-464"><a href="#cb1-464" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"grey30"</span>, <span class="at">linewidth =</span> <span class="fl">0.45</span>) <span class="sc">+</span></span>
-<span id="cb1-465"><a href="#cb1-465" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>pair, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb1-466"><a href="#cb1-466" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">option =</span> <span class="st">"C"</span>) <span class="sc">+</span></span>
-<span id="cb1-467"><a href="#cb1-467" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Log index 1"</span>, <span class="at">y =</span> <span class="st">"Log index 2"</span>, <span class="at">color =</span> <span class="st">"Year"</span>) <span class="sc">+</span></span>
-<span id="cb1-468"><a href="#cb1-468" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_report</span>() <span class="sc">+</span></span>
-<span id="cb1-469"><a href="#cb1-469" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb1-470"><a href="#cb1-470" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb1-471"><a href="#cb1-471" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.y =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>, <span class="at">hjust =</span> <span class="dv">0</span>)</span>
-<span id="cb1-472"><a href="#cb1-472" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-473"><a href="#cb1-473" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-474"><a href="#cb1-474" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-477"><a href="#cb1-477" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-478"><a href="#cb1-478" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-correlation-ggpairs</span></span>
-<span id="cb1-479"><a href="#cb1-479" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Scatterplot matrix for log observed indices. Upper panels show Pearson correlations; lower panels show paired observations with linear fits and uncertainty ribbons."</span></span>
-<span id="cb1-480"><a href="#cb1-480" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-481"><a href="#cb1-481" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
-<span id="cb1-482"><a href="#cb1-482" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 10</span></span>
-<span id="cb1-483"><a href="#cb1-483" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-484"><a href="#cb1-484" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(</span>
-<span id="cb1-485"><a href="#cb1-485" aria-hidden="true" tabindex="-1"></a>  pair_matrix_data,</span>
-<span id="cb1-486"><a href="#cb1-486" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="fu">wrap</span>(<span class="st">"cor"</span>, <span class="at">method =</span> <span class="st">"pearson"</span>, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>)),</span>
-<span id="cb1-487"><a href="#cb1-487" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> <span class="fu">list</span>(<span class="at">continuous =</span> ggpairs_lower_lm),</span>
-<span id="cb1-488"><a href="#cb1-488" aria-hidden="true" tabindex="-1"></a>  <span class="at">diag =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="st">"blankDiag"</span>)</span>
-<span id="cb1-489"><a href="#cb1-489" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb1-490"><a href="#cb1-490" aria-hidden="true" tabindex="-1"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_few</span>(<span class="at">base_size =</span> <span class="dv">9</span>) <span class="sc">+</span></span>
-<span id="cb1-491"><a href="#cb1-491" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>))</span>
-<span id="cb1-492"><a href="#cb1-492" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-400"><a href="#cb1-400" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-401"><a href="#cb1-401" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-correlation-heatmap</span></span>
+<span id="cb1-402"><a href="#cb1-402" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Pearson correlations between log observed indices after omitting Chile_AcousCS. Blue cells indicate positive correlations, red cells indicate negative correlations, and the lower triangle reports r for each pair."</span></span>
+<span id="cb1-403"><a href="#cb1-403" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-404"><a href="#cb1-404" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5.5</span></span>
+<span id="cb1-405"><a href="#cb1-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-406"><a href="#cb1-406" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(</span>
+<span id="cb1-407"><a href="#cb1-407" aria-hidden="true" tabindex="-1"></a>  correlation_matrix,</span>
+<span id="cb1-408"><a href="#cb1-408" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"lower"</span>,</span>
+<span id="cb1-409"><a href="#cb1-409" aria-hidden="true" tabindex="-1"></a>  <span class="at">lab =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-410"><a href="#cb1-410" aria-hidden="true" tabindex="-1"></a>  <span class="at">lab_size =</span> <span class="fl">3.5</span>,</span>
+<span id="cb1-411"><a href="#cb1-411" aria-hidden="true" tabindex="-1"></a>  <span class="at">show.diag =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-412"><a href="#cb1-412" aria-hidden="true" tabindex="-1"></a>  <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#b2182b"</span>, <span class="st">"white"</span>, <span class="st">"#2166ac"</span>),</span>
+<span id="cb1-413"><a href="#cb1-413" aria-hidden="true" tabindex="-1"></a>  <span class="at">outline.color =</span> <span class="st">"white"</span>,</span>
+<span id="cb1-414"><a href="#cb1-414" aria-hidden="true" tabindex="-1"></a>  <span class="at">ggtheme =</span> <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
+<span id="cb1-415"><a href="#cb1-415" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb1-416"><a href="#cb1-416" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"r"</span>) <span class="sc">+</span></span>
+<span id="cb1-417"><a href="#cb1-417" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-418"><a href="#cb1-418" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb1-419"><a href="#cb1-419" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span></span>
+<span id="cb1-420"><a href="#cb1-420" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-421"><a href="#cb1-421" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-422"><a href="#cb1-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-425"><a href="#cb1-425" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-426"><a href="#cb1-426" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-correlations</span></span>
+<span id="cb1-427"><a href="#cb1-427" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Pairwise index correlations. Pearson correlations use log observed indices; Spearman correlations use observed values. Pairs with fewer than the minimum overlapping years are reported as NA."</span></span>
+<span id="cb1-428"><a href="#cb1-428" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-429"><a href="#cb1-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-430"><a href="#cb1-430" aria-hidden="true" tabindex="-1"></a>correlation_results <span class="sc">|&gt;</span></span>
+<span id="cb1-431"><a href="#cb1-431" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>()</span>
+<span id="cb1-432"><a href="#cb1-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-433"><a href="#cb1-433" aria-hidden="true" tabindex="-1"></a>correlation_table <span class="sc">|&gt;</span></span>
+<span id="cb1-434"><a href="#cb1-434" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-435"><a href="#cb1-435" aria-hidden="true" tabindex="-1"></a>    <span class="at">Pearson =</span> <span class="fu">round</span>(Pearson, <span class="dv">3</span>),</span>
+<span id="cb1-436"><a href="#cb1-436" aria-hidden="true" tabindex="-1"></a>    <span class="at">Spearman =</span> <span class="fu">round</span>(Spearman, <span class="dv">3</span>)</span>
+<span id="cb1-437"><a href="#cb1-437" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-438"><a href="#cb1-438" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-439"><a href="#cb1-439" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_spanner</span>(<span class="at">label =</span> <span class="st">"Correlation"</span>, <span class="at">columns =</span> <span class="fu">c</span>(Pearson, Spearman)) <span class="sc">|&gt;</span></span>
+<span id="cb1-440"><a href="#cb1-440" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
+<span id="cb1-441"><a href="#cb1-441" aria-hidden="true" tabindex="-1"></a>    <span class="at">index_1 =</span> <span class="st">"index_1"</span>,</span>
+<span id="cb1-442"><a href="#cb1-442" aria-hidden="true" tabindex="-1"></a>    <span class="at">index_2 =</span> <span class="st">"index_2"</span>,</span>
+<span id="cb1-443"><a href="#cb1-443" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_overlap =</span> <span class="st">"n_overlap"</span>,</span>
+<span id="cb1-444"><a href="#cb1-444" aria-hidden="true" tabindex="-1"></a>    <span class="at">first_overlap =</span> <span class="st">"first_overlap"</span>,</span>
+<span id="cb1-445"><a href="#cb1-445" aria-hidden="true" tabindex="-1"></a>    <span class="at">last_overlap =</span> <span class="st">"last_overlap"</span></span>
+<span id="cb1-446"><a href="#cb1-446" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-447"><a href="#cb1-447" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(Pearson, Spearman), <span class="at">decimals =</span> <span class="dv">3</span>)</span>
+<span id="cb1-448"><a href="#cb1-448" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-449"><a href="#cb1-449" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-452"><a href="#cb1-452" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-453"><a href="#cb1-453" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-correlation-pairs</span></span>
+<span id="cb1-454"><a href="#cb1-454" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Pairwise index relationships for h1_0.16, excluding Chile_AcousCS. Axes are log observed indices and points are overlapping years used in the Pearson correlations."</span></span>
+<span id="cb1-455"><a href="#cb1-455" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-456"><a href="#cb1-456" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 12</span></span>
+<span id="cb1-457"><a href="#cb1-457" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-458"><a href="#cb1-458" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pair_plot_data, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb1-459"><a href="#cb1-459" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> year), <span class="at">size =</span> <span class="fl">1.7</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb1-460"><a href="#cb1-460" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"grey30"</span>, <span class="at">linewidth =</span> <span class="fl">0.45</span>) <span class="sc">+</span></span>
+<span id="cb1-461"><a href="#cb1-461" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>pair, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb1-462"><a href="#cb1-462" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">option =</span> <span class="st">"C"</span>) <span class="sc">+</span></span>
+<span id="cb1-463"><a href="#cb1-463" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Log index 1"</span>, <span class="at">y =</span> <span class="st">"Log index 2"</span>, <span class="at">color =</span> <span class="st">"Year"</span>) <span class="sc">+</span></span>
+<span id="cb1-464"><a href="#cb1-464" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_report</span>() <span class="sc">+</span></span>
+<span id="cb1-465"><a href="#cb1-465" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-466"><a href="#cb1-466" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb1-467"><a href="#cb1-467" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.y =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>, <span class="at">hjust =</span> <span class="dv">0</span>)</span>
+<span id="cb1-468"><a href="#cb1-468" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-469"><a href="#cb1-469" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-470"><a href="#cb1-470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-473"><a href="#cb1-473" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-474"><a href="#cb1-474" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-correlation-ggpairs</span></span>
+<span id="cb1-475"><a href="#cb1-475" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Scatterplot matrix for log observed indices. Upper panels show Pearson correlations; lower panels show paired observations with linear fits and uncertainty ribbons."</span></span>
+<span id="cb1-476"><a href="#cb1-476" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-477"><a href="#cb1-477" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb1-478"><a href="#cb1-478" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 10</span></span>
+<span id="cb1-479"><a href="#cb1-479" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-480"><a href="#cb1-480" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(</span>
+<span id="cb1-481"><a href="#cb1-481" aria-hidden="true" tabindex="-1"></a>  pair_matrix_data,</span>
+<span id="cb1-482"><a href="#cb1-482" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="fu">wrap</span>(<span class="st">"cor"</span>, <span class="at">method =</span> <span class="st">"pearson"</span>, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>)),</span>
+<span id="cb1-483"><a href="#cb1-483" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> <span class="fu">list</span>(<span class="at">continuous =</span> ggpairs_lower_lm),</span>
+<span id="cb1-484"><a href="#cb1-484" aria-hidden="true" tabindex="-1"></a>  <span class="at">diag =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="st">"blankDiag"</span>)</span>
+<span id="cb1-485"><a href="#cb1-485" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb1-486"><a href="#cb1-486" aria-hidden="true" tabindex="-1"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_few</span>(<span class="at">base_size =</span> <span class="dv">9</span>) <span class="sc">+</span></span>
+<span id="cb1-487"><a href="#cb1-487" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>))</span>
+<span id="cb1-488"><a href="#cb1-488" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-489"><a href="#cb1-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-490"><a href="#cb1-490" aria-hidden="true" tabindex="-1"></a><span class="fu">## Strongest Relationships</span></span>
+<span id="cb1-491"><a href="#cb1-491" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-492"><a href="#cb1-492" aria-hidden="true" tabindex="-1"></a>@tbl-strongest-correlations extracts the largest positive and most negative Pearson correlations from the correlation table. This is a compact way to identify the index pairs with the strongest agreement and strongest disagreement after accounting for the available overlapping years.</span>
 <span id="cb1-493"><a href="#cb1-493" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-494"><a href="#cb1-494" aria-hidden="true" tabindex="-1"></a><span class="fu">## Strongest Relationships</span></span>
-<span id="cb1-495"><a href="#cb1-495" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-496"><a href="#cb1-496" aria-hidden="true" tabindex="-1"></a>@tbl-strongest-correlations extracts the largest positive and most negative Pearson correlations from the correlation table. This is a compact way to identify the index pairs with the strongest agreement and strongest disagreement after accounting for the available overlapping years.</span>
-<span id="cb1-497"><a href="#cb1-497" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-500"><a href="#cb1-500" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-501"><a href="#cb1-501" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-strongest-correlations</span></span>
-<span id="cb1-502"><a href="#cb1-502" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Strongest positive and negative contrasts. Based on Pearson correlations of log-observed indices."</span></span>
-<span id="cb1-503"><a href="#cb1-503" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-504"><a href="#cb1-504" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-505"><a href="#cb1-505" aria-hidden="true" tabindex="-1"></a>correlation_results <span class="sc">|&gt;</span></span>
-<span id="cb1-506"><a href="#cb1-506" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(method <span class="sc">==</span> <span class="st">"Pearson"</span>, scale <span class="sc">==</span> <span class="st">"log observed"</span>, <span class="sc">!</span><span class="fu">is.na</span>(correlation)) <span class="sc">|&gt;</span></span>
-<span id="cb1-507"><a href="#cb1-507" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(model) <span class="sc">|&gt;</span></span>
-<span id="cb1-508"><a href="#cb1-508" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(correlation, <span class="at">n =</span> <span class="dv">3</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-509"><a href="#cb1-509" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
-<span id="cb1-510"><a href="#cb1-510" aria-hidden="true" tabindex="-1"></a>    correlation_results <span class="sc">|&gt;</span></span>
-<span id="cb1-511"><a href="#cb1-511" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(method <span class="sc">==</span> <span class="st">"Pearson"</span>, scale <span class="sc">==</span> <span class="st">"log observed"</span>, <span class="sc">!</span><span class="fu">is.na</span>(correlation)) <span class="sc">|&gt;</span></span>
-<span id="cb1-512"><a href="#cb1-512" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(model) <span class="sc">|&gt;</span></span>
-<span id="cb1-513"><a href="#cb1-513" aria-hidden="true" tabindex="-1"></a>      <span class="fu">slice_min</span>(correlation, <span class="at">n =</span> <span class="dv">3</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-514"><a href="#cb1-514" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb1-515"><a href="#cb1-515" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-516"><a href="#cb1-516" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(model, index_1, index_2, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-517"><a href="#cb1-517" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(model, <span class="fu">desc</span>(correlation)) <span class="sc">|&gt;</span></span>
-<span id="cb1-518"><a href="#cb1-518" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(index_1, index_2, n_overlap, first_overlap, last_overlap, correlation) <span class="sc">|&gt;</span></span>
-<span id="cb1-519"><a href="#cb1-519" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">correlation =</span> <span class="fu">round</span>(correlation, <span class="dv">3</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb1-520"><a href="#cb1-520" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-521"><a href="#cb1-521" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> correlation, <span class="at">decimals =</span> <span class="dv">3</span>)</span>
-<span id="cb1-522"><a href="#cb1-522" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-496"><a href="#cb1-496" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-497"><a href="#cb1-497" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-strongest-correlations</span></span>
+<span id="cb1-498"><a href="#cb1-498" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Strongest positive and negative contrasts. Based on Pearson correlations of log-observed indices."</span></span>
+<span id="cb1-499"><a href="#cb1-499" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-500"><a href="#cb1-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-501"><a href="#cb1-501" aria-hidden="true" tabindex="-1"></a>correlation_results <span class="sc">|&gt;</span></span>
+<span id="cb1-502"><a href="#cb1-502" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(method <span class="sc">==</span> <span class="st">"Pearson"</span>, scale <span class="sc">==</span> <span class="st">"log observed"</span>, <span class="sc">!</span><span class="fu">is.na</span>(correlation)) <span class="sc">|&gt;</span></span>
+<span id="cb1-503"><a href="#cb1-503" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(model) <span class="sc">|&gt;</span></span>
+<span id="cb1-504"><a href="#cb1-504" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(correlation, <span class="at">n =</span> <span class="dv">3</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-505"><a href="#cb1-505" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb1-506"><a href="#cb1-506" aria-hidden="true" tabindex="-1"></a>    correlation_results <span class="sc">|&gt;</span></span>
+<span id="cb1-507"><a href="#cb1-507" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(method <span class="sc">==</span> <span class="st">"Pearson"</span>, scale <span class="sc">==</span> <span class="st">"log observed"</span>, <span class="sc">!</span><span class="fu">is.na</span>(correlation)) <span class="sc">|&gt;</span></span>
+<span id="cb1-508"><a href="#cb1-508" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(model) <span class="sc">|&gt;</span></span>
+<span id="cb1-509"><a href="#cb1-509" aria-hidden="true" tabindex="-1"></a>      <span class="fu">slice_min</span>(correlation, <span class="at">n =</span> <span class="dv">3</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-510"><a href="#cb1-510" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-511"><a href="#cb1-511" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-512"><a href="#cb1-512" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(model, index_1, index_2, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-513"><a href="#cb1-513" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(model, <span class="fu">desc</span>(correlation)) <span class="sc">|&gt;</span></span>
+<span id="cb1-514"><a href="#cb1-514" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(index_1, index_2, n_overlap, first_overlap, last_overlap, correlation) <span class="sc">|&gt;</span></span>
+<span id="cb1-515"><a href="#cb1-515" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">correlation =</span> <span class="fu">round</span>(correlation, <span class="dv">3</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb1-516"><a href="#cb1-516" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-517"><a href="#cb1-517" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> correlation, <span class="at">decimals =</span> <span class="dv">3</span>)</span>
+<span id="cb1-518"><a href="#cb1-518" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-519"><a href="#cb1-519" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-520"><a href="#cb1-520" aria-hidden="true" tabindex="-1"></a><span class="fu">## Index ROC/AUC</span></span>
+<span id="cb1-521"><a href="#cb1-521" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-522"><a href="#cb1-522" aria-hidden="true" tabindex="-1"></a>The ROC/AUC diagnostics below are loaded from the <span class="in">`jmMSE`</span> output file <span class="in">`output/index_auc_h1_h2_0.16.rda`</span>. They compare annual index changes against annual changes in model-estimated SSB. For each index, the score is $\log(I_y / I_{y-1})$ and the truth is whether $SSB_y &gt; SSB_{y-1}$. For <span class="in">`h1_0.16`</span>, each index is compared with the single-stock SSB trajectory. For <span class="in">`h2_0.16`</span>, each index is compared with the SSB trajectory for the stock-specific output block in which the index appears. The <span class="in">`Chile_AcousN`</span> ROC diagnostic uses only observations after 2005, following the implementation in <span class="in">`jmMSE/output_auc_peru_cpue.R`</span>.</span>
 <span id="cb1-523"><a href="#cb1-523" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-524"><a href="#cb1-524" aria-hidden="true" tabindex="-1"></a><span class="fu">## Index ROC/AUC</span></span>
+<span id="cb1-524"><a href="#cb1-524" aria-hidden="true" tabindex="-1"></a>@fig-h1-index-roc shows the h1 single-stock ROC diagnostics. Curves above the one-to-one dashed line indicate that positive index changes tend to coincide with years when model-estimated SSB increased; AUC values closer to one indicate stronger discrimination.</span>
 <span id="cb1-525"><a href="#cb1-525" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-526"><a href="#cb1-526" aria-hidden="true" tabindex="-1"></a>The ROC/AUC diagnostics below are loaded from the <span class="in">`jmMSE`</span> output file <span class="in">`output/index_auc_h1_h2_0.16.rda`</span>. They compare annual index changes against annual changes in model-estimated SSB. For each index, the score is $\log(I_y / I_{y-1})$ and the truth is whether $SSB_y &gt; SSB_{y-1}$. For <span class="in">`h1_0.16`</span>, each index is compared with the single-stock SSB trajectory. For <span class="in">`h2_0.16`</span>, each index is compared with the SSB trajectory for the stock-specific output block in which the index appears. The <span class="in">`Chile_AcousN`</span> ROC diagnostic uses only observations after 2005, following the implementation in <span class="in">`jmMSE/output_auc_peru_cpue.R`</span>.</span>
+<span id="cb1-526"><a href="#cb1-526" aria-hidden="true" tabindex="-1"></a>@fig-h2-index-roc applies the same diagnostic to the h2 stock-specific outputs. The southern-stock indices and northern-stock indices are evaluated against their corresponding stock-specific SSB changes, so these panels should not be interpreted as a single pooled-stock diagnostic.</span>
 <span id="cb1-527"><a href="#cb1-527" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-528"><a href="#cb1-528" aria-hidden="true" tabindex="-1"></a>@fig-h1-index-roc shows the h1 single-stock ROC diagnostics. Curves above the one-to-one dashed line indicate that positive index changes tend to coincide with years when model-estimated SSB increased; AUC values closer to one indicate stronger discrimination.</span>
+<span id="cb1-528"><a href="#cb1-528" aria-hidden="true" tabindex="-1"></a>@tbl-index-roc-auc summarizes the AUC and number of annual index changes used in each ROC curve from @fig-h1-index-roc and @fig-h2-index-roc.</span>
 <span id="cb1-529"><a href="#cb1-529" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-530"><a href="#cb1-530" aria-hidden="true" tabindex="-1"></a>@fig-h2-index-roc applies the same diagnostic to the h2 stock-specific outputs. The southern-stock indices and northern-stock indices are evaluated against their corresponding stock-specific SSB changes, so these panels should not be interpreted as a single pooled-stock diagnostic.</span>
-<span id="cb1-531"><a href="#cb1-531" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-532"><a href="#cb1-532" aria-hidden="true" tabindex="-1"></a>@tbl-index-roc-auc summarizes the AUC and number of annual index changes used in each ROC curve from @fig-h1-index-roc and @fig-h2-index-roc.</span>
-<span id="cb1-533"><a href="#cb1-533" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-536"><a href="#cb1-536" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-537"><a href="#cb1-537" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-h1-index-roc</span></span>
-<span id="cb1-538"><a href="#cb1-538" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Receiver Operating Characteristic (ROC) curves for abundance indices as indicators of changes in spawning stock biomass (SSB) in h1_0.16. Chile_AcousN uses only observations after 2005."</span></span>
-<span id="cb1-539"><a href="#cb1-539" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-540"><a href="#cb1-540" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
-<span id="cb1-541"><a href="#cb1-541" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 11</span></span>
-<span id="cb1-542"><a href="#cb1-542" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-543"><a href="#cb1-543" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(h1_index_roc, <span class="fu">aes</span>(<span class="at">x =</span> FPR, <span class="at">y =</span> TPR, <span class="at">color =</span> index)) <span class="sc">+</span></span>
-<span id="cb1-544"><a href="#cb1-544" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"grey60"</span>) <span class="sc">+</span></span>
-<span id="cb1-545"><a href="#cb1-545" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">linewidth =</span> <span class="fl">0.9</span>, <span class="at">direction =</span> <span class="st">"hv"</span>) <span class="sc">+</span></span>
-<span id="cb1-546"><a href="#cb1-546" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb1-547"><a href="#cb1-547" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>facet, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb1-548"><a href="#cb1-548" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb1-549"><a href="#cb1-549" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.25</span>)) <span class="sc">+</span></span>
-<span id="cb1-550"><a href="#cb1-550" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.25</span>)) <span class="sc">+</span></span>
-<span id="cb1-551"><a href="#cb1-551" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1-552"><a href="#cb1-552" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Index ROC/AUC for h1_0.16"</span>,</span>
-<span id="cb1-553"><a href="#cb1-553" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"False positive rate"</span>,</span>
-<span id="cb1-554"><a href="#cb1-554" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"True positive rate"</span>,</span>
-<span id="cb1-555"><a href="#cb1-555" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Index"</span></span>
-<span id="cb1-556"><a href="#cb1-556" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1-557"><a href="#cb1-557" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb1-558"><a href="#cb1-558" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb1-559"><a href="#cb1-559" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb1-560"><a href="#cb1-560" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">lineheight =</span> <span class="fl">1.05</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>)),</span>
-<span id="cb1-561"><a href="#cb1-561" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"grey85"</span>, <span class="at">color =</span> <span class="st">"grey20"</span>)</span>
-<span id="cb1-562"><a href="#cb1-562" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-563"><a href="#cb1-563" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-564"><a href="#cb1-564" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-567"><a href="#cb1-567" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-568"><a href="#cb1-568" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-h2-index-roc</span></span>
-<span id="cb1-569"><a href="#cb1-569" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Receiver Operating Characteristic (ROC) curves for abundance indices as indicators of changes in stock-specific spawning stock biomass (SSB) in h2_0.16. Chile_AcousN uses only observations after 2005."</span></span>
-<span id="cb1-570"><a href="#cb1-570" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-571"><a href="#cb1-571" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
-<span id="cb1-572"><a href="#cb1-572" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 11</span></span>
-<span id="cb1-573"><a href="#cb1-573" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-574"><a href="#cb1-574" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(h2_index_roc, <span class="fu">aes</span>(<span class="at">x =</span> FPR, <span class="at">y =</span> TPR, <span class="at">color =</span> index)) <span class="sc">+</span></span>
-<span id="cb1-575"><a href="#cb1-575" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"grey60"</span>) <span class="sc">+</span></span>
-<span id="cb1-576"><a href="#cb1-576" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">linewidth =</span> <span class="fl">0.9</span>, <span class="at">direction =</span> <span class="st">"hv"</span>) <span class="sc">+</span></span>
-<span id="cb1-577"><a href="#cb1-577" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb1-578"><a href="#cb1-578" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>facet, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb1-579"><a href="#cb1-579" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb1-580"><a href="#cb1-580" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.25</span>)) <span class="sc">+</span></span>
-<span id="cb1-581"><a href="#cb1-581" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.25</span>)) <span class="sc">+</span></span>
-<span id="cb1-582"><a href="#cb1-582" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1-583"><a href="#cb1-583" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Index ROC/AUC for h2_0.16"</span>,</span>
-<span id="cb1-584"><a href="#cb1-584" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"False positive rate"</span>,</span>
-<span id="cb1-585"><a href="#cb1-585" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"True positive rate"</span>,</span>
-<span id="cb1-586"><a href="#cb1-586" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Index"</span></span>
-<span id="cb1-587"><a href="#cb1-587" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb1-588"><a href="#cb1-588" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb1-589"><a href="#cb1-589" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb1-590"><a href="#cb1-590" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb1-591"><a href="#cb1-591" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">lineheight =</span> <span class="fl">1.05</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>)),</span>
-<span id="cb1-592"><a href="#cb1-592" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"grey85"</span>, <span class="at">color =</span> <span class="st">"grey20"</span>)</span>
-<span id="cb1-593"><a href="#cb1-593" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-594"><a href="#cb1-594" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-595"><a href="#cb1-595" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-598"><a href="#cb1-598" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-599"><a href="#cb1-599" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-index-roc-auc</span></span>
-<span id="cb1-600"><a href="#cb1-600" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annual SSB direction and the score is the annual log index ratio."</span></span>
-<span id="cb1-601"><a href="#cb1-601" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb1-602"><a href="#cb1-602" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-603"><a href="#cb1-603" aria-hidden="true" tabindex="-1"></a>index_roc_summary <span class="sc">|&gt;</span></span>
-<span id="cb1-604"><a href="#cb1-604" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">auc =</span> <span class="fu">round</span>(auc, <span class="dv">3</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb1-605"><a href="#cb1-605" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(model, stock, <span class="fu">desc</span>(auc)) <span class="sc">|&gt;</span></span>
-<span id="cb1-606"><a href="#cb1-606" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-607"><a href="#cb1-607" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> auc, <span class="at">decimals =</span> <span class="dv">3</span>)</span>
-<span id="cb1-608"><a href="#cb1-608" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-532"><a href="#cb1-532" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-533"><a href="#cb1-533" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-h1-index-roc</span></span>
+<span id="cb1-534"><a href="#cb1-534" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Receiver Operating Characteristic (ROC) curves for abundance indices as indicators of changes in spawning stock biomass (SSB) in h1_0.16. Chile_AcousN uses only observations after 2005."</span></span>
+<span id="cb1-535"><a href="#cb1-535" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-536"><a href="#cb1-536" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb1-537"><a href="#cb1-537" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 11</span></span>
+<span id="cb1-538"><a href="#cb1-538" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-539"><a href="#cb1-539" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(h1_index_roc, <span class="fu">aes</span>(<span class="at">x =</span> FPR, <span class="at">y =</span> TPR, <span class="at">color =</span> index)) <span class="sc">+</span></span>
+<span id="cb1-540"><a href="#cb1-540" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"grey60"</span>) <span class="sc">+</span></span>
+<span id="cb1-541"><a href="#cb1-541" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">linewidth =</span> <span class="fl">0.9</span>, <span class="at">direction =</span> <span class="st">"hv"</span>) <span class="sc">+</span></span>
+<span id="cb1-542"><a href="#cb1-542" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb1-543"><a href="#cb1-543" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>facet, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb1-544"><a href="#cb1-544" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb1-545"><a href="#cb1-545" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb1-546"><a href="#cb1-546" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb1-547"><a href="#cb1-547" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-548"><a href="#cb1-548" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Index ROC/AUC for h1_0.16"</span>,</span>
+<span id="cb1-549"><a href="#cb1-549" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"False positive rate"</span>,</span>
+<span id="cb1-550"><a href="#cb1-550" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"True positive rate"</span>,</span>
+<span id="cb1-551"><a href="#cb1-551" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Index"</span></span>
+<span id="cb1-552"><a href="#cb1-552" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-553"><a href="#cb1-553" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb1-554"><a href="#cb1-554" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-555"><a href="#cb1-555" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb1-556"><a href="#cb1-556" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">lineheight =</span> <span class="fl">1.05</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>)),</span>
+<span id="cb1-557"><a href="#cb1-557" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"grey85"</span>, <span class="at">color =</span> <span class="st">"grey20"</span>)</span>
+<span id="cb1-558"><a href="#cb1-558" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-559"><a href="#cb1-559" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-560"><a href="#cb1-560" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-563"><a href="#cb1-563" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-564"><a href="#cb1-564" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-h2-index-roc</span></span>
+<span id="cb1-565"><a href="#cb1-565" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Receiver Operating Characteristic (ROC) curves for abundance indices as indicators of changes in stock-specific spawning stock biomass (SSB) in h2_0.16. Chile_AcousN uses only observations after 2005."</span></span>
+<span id="cb1-566"><a href="#cb1-566" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-567"><a href="#cb1-567" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb1-568"><a href="#cb1-568" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 11</span></span>
+<span id="cb1-569"><a href="#cb1-569" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-570"><a href="#cb1-570" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(h2_index_roc, <span class="fu">aes</span>(<span class="at">x =</span> FPR, <span class="at">y =</span> TPR, <span class="at">color =</span> index)) <span class="sc">+</span></span>
+<span id="cb1-571"><a href="#cb1-571" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"grey60"</span>) <span class="sc">+</span></span>
+<span id="cb1-572"><a href="#cb1-572" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">linewidth =</span> <span class="fl">0.9</span>, <span class="at">direction =</span> <span class="st">"hv"</span>) <span class="sc">+</span></span>
+<span id="cb1-573"><a href="#cb1-573" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb1-574"><a href="#cb1-574" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>facet, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb1-575"><a href="#cb1-575" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb1-576"><a href="#cb1-576" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb1-577"><a href="#cb1-577" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb1-578"><a href="#cb1-578" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-579"><a href="#cb1-579" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Index ROC/AUC for h2_0.16"</span>,</span>
+<span id="cb1-580"><a href="#cb1-580" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"False positive rate"</span>,</span>
+<span id="cb1-581"><a href="#cb1-581" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"True positive rate"</span>,</span>
+<span id="cb1-582"><a href="#cb1-582" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Index"</span></span>
+<span id="cb1-583"><a href="#cb1-583" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb1-584"><a href="#cb1-584" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb1-585"><a href="#cb1-585" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-586"><a href="#cb1-586" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb1-587"><a href="#cb1-587" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">lineheight =</span> <span class="fl">1.05</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>)),</span>
+<span id="cb1-588"><a href="#cb1-588" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"grey85"</span>, <span class="at">color =</span> <span class="st">"grey20"</span>)</span>
+<span id="cb1-589"><a href="#cb1-589" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-590"><a href="#cb1-590" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-591"><a href="#cb1-591" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-594"><a href="#cb1-594" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-595"><a href="#cb1-595" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-index-roc-auc</span></span>
+<span id="cb1-596"><a href="#cb1-596" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Index ROC/AUC summaries for h1_0.16 and h2_0.16. The truth is annual SSB direction and the score is the annual log index ratio."</span></span>
+<span id="cb1-597"><a href="#cb1-597" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-598"><a href="#cb1-598" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-599"><a href="#cb1-599" aria-hidden="true" tabindex="-1"></a>index_roc_summary <span class="sc">|&gt;</span></span>
+<span id="cb1-600"><a href="#cb1-600" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">auc =</span> <span class="fu">round</span>(auc, <span class="dv">3</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb1-601"><a href="#cb1-601" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(model, stock, <span class="fu">desc</span>(auc)) <span class="sc">|&gt;</span></span>
+<span id="cb1-602"><a href="#cb1-602" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-603"><a href="#cb1-603" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fmt_number</span>(<span class="at">columns =</span> auc, <span class="at">decimals =</span> <span class="dv">3</span>)</span>
+<span id="cb1-604"><a href="#cb1-604" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-605"><a href="#cb1-605" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-606"><a href="#cb1-606" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb1-607"><a href="#cb1-607" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-608"><a href="#cb1-608" aria-hidden="true" tabindex="-1"></a>This evaluation shows that, for the two-stock hypotheses, the nominal CPUE indices for Peru generally track stock trends. Those same indices perform relatively poorer under the single-stock hypothesis. For the single-stock case, the offshore CPUE and Chilean CPUE indices appear to perform better. These conclusions are broadly consistent between the pairwise index comparisons and the ROC/AUC evaluations.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
