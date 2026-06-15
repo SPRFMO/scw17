@@ -469,34 +469,6 @@ ggpairs(
   theme(strip.text = element_text(size = 18))
 ```
 
-## Strongest Relationships
-
-@tbl-strongest-correlations extracts the largest positive and most negative Pearson correlations from the correlation table. This is a compact way to identify the index pairs with the strongest agreement and strongest disagreement after accounting for the available overlapping years.
-
-```{r}
-#| label: tbl-strongest-correlations
-#| tbl-cap: "Strongest positive and negative contrasts. Based on Pearson correlations of log-observed indices."
-#| echo: false
-
-correlation_results |>
-  filter(method == "Pearson", scale == "log observed", !is.na(correlation)) |>
-  group_by(model) |>
-  slice_max(correlation, n = 3, with_ties = FALSE) |>
-  bind_rows(
-    correlation_results |>
-      filter(method == "Pearson", scale == "log observed", !is.na(correlation)) |>
-      group_by(model) |>
-      slice_min(correlation, n = 3, with_ties = FALSE)
-  ) |>
-  ungroup() |>
-  distinct(model, index_1, index_2, .keep_all = TRUE) |>
-  arrange(model, desc(correlation)) |>
-  select(index_1, index_2, n_overlap, first_overlap, last_overlap, correlation) |>
-  mutate(correlation = round(correlation, 3)) |>
-  gt() |>
-  fmt_number(columns = correlation, decimals = 3)
-```
-
 ## Index ROC/AUC
 
 The ROC/AUC diagnostics below are loaded from the `jmMSE` output file `output/index_auc_h1_h2_0.16.rda`. They compare annual index changes against annual changes in model-estimated SSB. For each index, the score is $\log(I_y / I_{y-1})$ and the truth is whether $SSB_y > SSB_{y-1}$. For `h1_0.16`, each index is compared with the single-stock SSB trajectory. For `h2_0.16`, each index is compared with the SSB trajectory for the stock-specific output block in which the index appears. The `Chile_AcousN` ROC diagnostic uses only observations after 2005, following the implementation in `jmMSE/output_auc_peru_cpue.R`.
@@ -578,5 +550,31 @@ index_roc_summary |>
 ```
 
 ## Summary
+
+@tbl-strongest-correlations extracts the largest positive and most negative Pearson correlations from the correlation table. This is a compact way to identify the index pairs with the strongest agreement and strongest disagreement after accounting for the available overlapping years.
+
+```{r}
+#| label: tbl-strongest-correlations
+#| tbl-cap: "Strongest positive and negative contrasts. Based on Pearson correlations of log-observed indices."
+#| echo: false
+
+correlation_results |>
+  filter(method == "Pearson", scale == "log observed", !is.na(correlation)) |>
+  group_by(model) |>
+  slice_max(correlation, n = 3, with_ties = FALSE) |>
+  bind_rows(
+    correlation_results |>
+      filter(method == "Pearson", scale == "log observed", !is.na(correlation)) |>
+      group_by(model) |>
+      slice_min(correlation, n = 3, with_ties = FALSE)
+  ) |>
+  ungroup() |>
+  distinct(model, index_1, index_2, .keep_all = TRUE) |>
+  arrange(model, desc(correlation)) |>
+  select(index_1, index_2, n_overlap, first_overlap, last_overlap, correlation) |>
+  mutate(correlation = round(correlation, 3)) |>
+  gt() |>
+  fmt_number(columns = correlation, decimals = 3)
+```
 
 This evaluation shows that, for the two-stock hypotheses, the nominal CPUE indices for Peru generally track stock trends. Those same indices perform relatively poorer under the single-stock hypothesis. For the single-stock case, the offshore CPUE and Chilean CPUE indices appear to perform better. These conclusions are broadly consistent between the pairwise index comparisons and the ROC/AUC evaluations.
