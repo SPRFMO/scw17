@@ -15,6 +15,7 @@ project:
     - SCW17-Paper-04-MSE-Flow.qmd
     - SCW17-Paper-05-Chile-HCR-Proposals.qmd
     - SCW17-Paper-06-Evaluation-of-indices-for-MP-considerations.qmd
+    - SCW17-Paper-07-Projection-evaluations.qmd
 
 website:
   title: "SPRFMO SCW17"
@@ -44,6 +45,8 @@ website:
         text: SCW17/paper-05 Chile HCR proposals
       - href: SCW17-Paper-06-Evaluation-of-indices-for-MP-considerations.qmd
         text: SCW17/Paper-06 Evaluation of indices for MP considerations
+      - href: SCW17-Paper-07-Projection-evaluations.qmd
+        text: SCW17/Paper-07 Projection evaluations
 
 format:
   html:
