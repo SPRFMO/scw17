@@ -344,6 +344,9 @@ productivity_reference <- bind_rows(
     )
   )
 
+base_case_model <- "h1_0.16"
+base_case_reference <- summarize_productivity_model(base_case_model)
+
 productivity_yield_profiles <- bind_rows(
   lapply(productivity_models$model, \(model_name) {
     read_yield_profile(model_name) |>
@@ -893,6 +896,45 @@ kobe_bmsy_x_upper <- max(1.4, ceiling(max(majuro_series$ssb_bmsy, na.rm = TRUE) 
 majuro_y_upper <- max(1.2, ceiling(max(majuro_series$f_fmsy[majuro_series$year >= 2000], na.rm = TRUE) * 10) / 10)
 majuro_f35_y_upper <- max(1.2, ceiling(max(majuro_series$f_f35[majuro_series$year >= 2000], na.rm = TRUE) * 10) / 10)
 kobe_y_upper <- max(1.2, ceiling(max(majuro_series$f_fmsy, na.rm = TRUE) * 10) / 10)
+
+base_case_kobe <- {
+  base_model <- read_model(base_case_model)
+  base_stock <- base_model$output[[params$stock]]
+  base_f_names <- grep("^F_fsh_[0-9]+$", names(base_stock), value = TRUE)
+
+  base_annual_f <- bind_rows(
+    lapply(base_f_names, \(name) {
+      values <- as_tibble(base_stock[[name]], .name_repair = "minimal")
+      names(values) <- c("year", "mean_f", "max_selectivity_scaled_f")
+      values
+    })
+  ) |>
+    mutate(across(everything(), as.numeric)) |>
+    group_by(year) |>
+    summarize(f = sum(mean_f), .groups = "drop")
+
+  base_ssb <- as_tibble(base_stock$df1)
+  names(base_ssb) <- c("quantity", "year", "estimate", "sd", "lower", "upper")
+  base_ssb <- base_ssb |>
+    mutate(across(-quantity, as.numeric)) |>
+    filter(quantity == "SSB") |>
+    select(year, ssb = estimate)
+
+  base_ssb |>
+    left_join(base_annual_f, by = "year") |>
+    mutate(
+      model = base_case_model,
+      f_fmsy = f / base_case_reference$Fmsy,
+      ssb_bmsy = ssb / base_case_reference$Bmsy,
+      .before = 1
+    )
+}
+
+base_case_terminal <- base_case_kobe |>
+  filter(year == max(year))
+
+base_kobe_x_upper <- max(1.4, ceiling(max(base_case_kobe$ssb_bmsy, na.rm = TRUE) * 10) / 10)
+base_kobe_y_upper <- max(1.2, ceiling(max(base_case_kobe$f_fmsy, na.rm = TRUE) * 10) / 10)
 
 df1 <- as_tibble(stock_output$df1)
 names(df1) <- c("quantity", "year", "estimate", "sd", "lower", "upper")
@@ -1559,6 +1601,32 @@ majuro_terminal |>
     F_over_Fmsy = f_fmsy
   ) |>
   kable(digits = 4)
+```
+
+```{r}
+#| label: fig-kobe-h1-016-base
+#| fig-cap: "Traditional Kobe plot for the base-case h1_0.16.ctl model, showing the full annual trajectory with annual F scaled by Fmsy and spawning biomass scaled by Bmsy. The larger point marks terminal-year status. The vertical line marks SSB/Bmsy = 1 and the horizontal line marks F/Fmsy = 1."
+
+base_case_kobe |>
+  ggplot(aes(ssb_bmsy, f_fmsy)) +
+  annotate("rect", xmin = -Inf, xmax = 1, ymin = 1, ymax = Inf, fill = "red", alpha = 0.25) +
+  annotate("rect", xmin = 1, xmax = Inf, ymin = 1, ymax = Inf, fill = "orange", alpha = 0.28) +
+  annotate("rect", xmin = -Inf, xmax = 1, ymin = -Inf, ymax = 1, fill = "yellow", alpha = 0.32) +
+  annotate("rect", xmin = 1, xmax = Inf, ymin = -Inf, ymax = 1, fill = "green", alpha = 0.25) +
+  geom_vline(xintercept = 1, linewidth = 0.65, linetype = "dashed", color = "gray35") +
+  geom_hline(yintercept = 1, linewidth = 0.65, linetype = "dashed", color = "gray35") +
+  geom_path(linewidth = 0.75, alpha = 0.85) +
+  geom_point(aes(alpha = year == max(year)), size = 1.4, show.legend = FALSE) +
+  geom_point(
+    data = base_case_terminal,
+    aes(ssb_bmsy, f_fmsy),
+    inherit.aes = FALSE,
+    size = 3
+  ) +
+  scale_alpha_manual(values = c(`FALSE` = 0.45, `TRUE` = 1)) +
+  coord_cartesian(xlim = c(0, base_kobe_x_upper), ylim = c(0, base_kobe_y_upper), expand = FALSE) +
+  labs(x = expression(SSB / B[MSY]), y = expression(F / F[MSY])) +
+  theme_report()
 ```
 
 # Discussion
