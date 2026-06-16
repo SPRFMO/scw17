@@ -844,12 +844,21 @@ read_productivity_majuro <- function(model_name) {
   depletion <- as_estimate_df(stock_obj$SSB_NoFishR, "SSB_NoFishR") |>
     select(year, depletion = estimate, depletion_lower = lower, depletion_upper = upper)
 
+  ssb <- as_tibble(stock_obj$df1)
+  names(ssb) <- c("quantity", "year", "estimate", "sd", "lower", "upper")
+  ssb <- ssb |>
+    mutate(across(-quantity, as.numeric)) |>
+    filter(quantity == "SSB") |>
+    select(year, ssb = estimate)
+
   depletion |>
+    left_join(ssb, by = "year") |>
     left_join(annual_f, by = "year") |>
     mutate(
       model = model_name,
       f_fmsy = f / productivity_reference$Fmsy[match(model_name, productivity_reference$model)],
       f_f35 = f / productivity_reference$F35_est[match(model_name, productivity_reference$model)],
+      ssb_bmsy = ssb / productivity_reference$Bmsy[match(model_name, productivity_reference$model)],
       .before = 1
     )
 }
@@ -879,6 +888,7 @@ terminal_status <- majuro_terminal |>
   )
 
 majuro_x_upper <- max(0.6, ceiling(max(majuro_series$depletion[majuro_series$year >= 2000], na.rm = TRUE) * 10) / 10)
+majuro_bmsy_x_upper <- max(1.4, ceiling(max(majuro_series$ssb_bmsy[majuro_series$year >= 2000], na.rm = TRUE) * 10) / 10)
 majuro_y_upper <- max(1.2, ceiling(max(majuro_series$f_fmsy[majuro_series$year >= 2000], na.rm = TRUE) * 10) / 10)
 majuro_f35_y_upper <- max(1.2, ceiling(max(majuro_series$f_f35[majuro_series$year >= 2000], na.rm = TRUE) * 10) / 10)
 
@@ -1471,6 +1481,38 @@ majuro_series |>
 ```
 
 ```{r}
+#| label: fig-majuro-f35-bmsy-productivity
+#| fig-cap: "Majuro-style plot for model 0.16 productivity assumptions, showing the 2000-2025 trajectory with annual F scaled by F35% and spawning biomass scaled by Bmsy. Larger points mark terminal-year status. The vertical line marks SSB/Bmsy = 1 and the horizontal line marks F/F35% = 1."
+
+majuro_series |>
+  filter(year >= 2000) |>
+  ggplot(aes(ssb_bmsy, f_f35, color = scenario)) +
+  annotate("rect", xmin = -Inf, xmax = 1, ymin = 1, ymax = Inf, fill = "#d73027", alpha = 0.08) +
+  annotate("rect", xmin = 1, xmax = Inf, ymin = 1, ymax = Inf, fill = "#fc8d59", alpha = 0.08) +
+  annotate("rect", xmin = -Inf, xmax = 1, ymin = -Inf, ymax = 1, fill = "#fee08b", alpha = 0.12) +
+  geom_vline(xintercept = 1, linewidth = 0.65, linetype = "dashed", color = "gray35") +
+  geom_hline(yintercept = 1, linewidth = 0.65, linetype = "dashed", color = "gray35") +
+  geom_path(linewidth = 0.75, alpha = 0.85) +
+  geom_point(aes(alpha = year == max(year)), size = 1.4, show.legend = FALSE) +
+  geom_point(
+    data = majuro_terminal,
+    aes(ssb_bmsy, f_f35, color = scenario),
+    inherit.aes = FALSE,
+    size = 3
+  ) +
+  scale_color_manual(values = productivity_scenario_colors) +
+  scale_alpha_manual(values = c(`FALSE` = 0.45, `TRUE` = 1)) +
+  coord_cartesian(xlim = c(0, majuro_bmsy_x_upper), ylim = c(0, majuro_f35_y_upper), expand = FALSE) +
+  labs(x = expression(SSB / B[MSY]), y = expression(F / F[35 * "%"]), color = NULL) +
+  guides(color = guide_legend(nrow = 2)) +
+  theme_report() +
+  theme(
+    legend.position = "bottom",
+    legend.box = "vertical"
+  )
+```
+
+```{r}
 #| label: tbl-majuro-terminal
 #| tbl-cap: "Terminal-year Majuro plot coordinates for the productivity sensitivity runs."
 
@@ -1480,6 +1522,7 @@ majuro_terminal |>
     scenario = as.character(scenario),
     year,
     SSB_over_SSB_F0 = depletion,
+    SSB_over_Bmsy = ssb_bmsy,
     F_over_Fmsy = f_fmsy
   ) |>
   kable(digits = 4)
