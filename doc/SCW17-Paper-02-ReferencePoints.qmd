@@ -889,8 +889,10 @@ terminal_status <- majuro_terminal |>
 
 majuro_x_upper <- max(0.6, ceiling(max(majuro_series$depletion[majuro_series$year >= 2000], na.rm = TRUE) * 10) / 10)
 majuro_bmsy_x_upper <- max(1.4, ceiling(max(majuro_series$ssb_bmsy[majuro_series$year >= 2000], na.rm = TRUE) * 10) / 10)
+kobe_bmsy_x_upper <- max(1.4, ceiling(max(majuro_series$ssb_bmsy, na.rm = TRUE) * 10) / 10)
 majuro_y_upper <- max(1.2, ceiling(max(majuro_series$f_fmsy[majuro_series$year >= 2000], na.rm = TRUE) * 10) / 10)
 majuro_f35_y_upper <- max(1.2, ceiling(max(majuro_series$f_f35[majuro_series$year >= 2000], na.rm = TRUE) * 10) / 10)
+kobe_y_upper <- max(1.2, ceiling(max(majuro_series$f_fmsy, na.rm = TRUE) * 10) / 10)
 
 df1 <- as_tibble(stock_output$df1)
 names(df1) <- c("quantity", "year", "estimate", "sd", "lower", "upper")
@@ -1514,14 +1516,14 @@ majuro_series |>
 
 ```{r}
 #| label: fig-kobe-h1-016-productivity
-#| fig-cap: "Traditional Kobe plot for h1_0.16 productivity assumptions, showing the 2000-2025 trajectory with annual F scaled by Fmsy and spawning biomass scaled by Bmsy. Larger points mark terminal-year status. The vertical line marks SSB/Bmsy = 1 and the horizontal line marks F/Fmsy = 1."
+#| fig-cap: "Traditional Kobe plot for h1_0.16 productivity assumptions, showing the full annual trajectory with annual F scaled by Fmsy and spawning biomass scaled by Bmsy. Larger points mark terminal-year status. The vertical line marks SSB/Bmsy = 1 and the horizontal line marks F/Fmsy = 1."
 
 majuro_series |>
-  filter(year >= 2000) |>
   ggplot(aes(ssb_bmsy, f_fmsy, color = scenario)) +
-  annotate("rect", xmin = -Inf, xmax = 1, ymin = 1, ymax = Inf, fill = "#d73027", alpha = 0.08) +
-  annotate("rect", xmin = 1, xmax = Inf, ymin = 1, ymax = Inf, fill = "#fc8d59", alpha = 0.08) +
-  annotate("rect", xmin = -Inf, xmax = 1, ymin = -Inf, ymax = 1, fill = "#fee08b", alpha = 0.12) +
+  annotate("rect", xmin = -Inf, xmax = 1, ymin = 1, ymax = Inf, fill = "red", alpha = 0.10) +
+  annotate("rect", xmin = 1, xmax = Inf, ymin = 1, ymax = Inf, fill = "orange", alpha = 0.12) +
+  annotate("rect", xmin = -Inf, xmax = 1, ymin = -Inf, ymax = 1, fill = "yellow", alpha = 0.14) +
+  annotate("rect", xmin = 1, xmax = Inf, ymin = -Inf, ymax = 1, fill = "green", alpha = 0.10) +
   geom_vline(xintercept = 1, linewidth = 0.65, linetype = "dashed", color = "gray35") +
   geom_hline(yintercept = 1, linewidth = 0.65, linetype = "dashed", color = "gray35") +
   geom_path(linewidth = 0.75, alpha = 0.85) +
@@ -1534,7 +1536,7 @@ majuro_series |>
   ) +
   scale_color_manual(values = productivity_scenario_colors) +
   scale_alpha_manual(values = c(`FALSE` = 0.45, `TRUE` = 1)) +
-  coord_cartesian(xlim = c(0, majuro_bmsy_x_upper), ylim = c(0, majuro_y_upper), expand = FALSE) +
+  coord_cartesian(xlim = c(0, kobe_bmsy_x_upper), ylim = c(0, kobe_y_upper), expand = FALSE) +
   labs(x = expression(SSB / B[MSY]), y = expression(F / F[MSY]), color = NULL) +
   guides(color = guide_legend(nrow = 2)) +
   theme_report() +
