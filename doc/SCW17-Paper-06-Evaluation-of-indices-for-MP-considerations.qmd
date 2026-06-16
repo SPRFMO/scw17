@@ -628,7 +628,7 @@ ggcorrplot(
   )
 ```
 
-For `h2_0.16`, the residual correlations are interpreted within the two-stock model structure. Pairs with strong positive residual correlations indicate indices that still tend to be high or low together after fitting the stock-specific trends; pairs closer to zero or negative values indicate more distinct residual information and may be more informative for availability trade-offs.
+For `h2_0.16`, the residual correlations span the two-stock model structure. The `Peru_Artis` and `Peru_Ind` residuals come from stock 2, while `Chile_AcousN`, `Chile_CPUE`, and `Offshore_CPUE` come from stock 1. Pairs with strong positive residual correlations indicate indices that still tend to be high or low together after fitting their stock-specific trends; pairs closer to zero or negative values indicate more distinct residual information and may be more informative for availability trade-offs. Cross-stock residual correlations should therefore be read as comparisons between independently fitted stock components rather than as residuals from a single shared abundance trajectory.
 
 ```{r}
 #| label: fig-h2-residual-correlation-heatmap
