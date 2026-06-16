@@ -1517,13 +1517,14 @@ majuro_series |>
 ```{r}
 #| label: fig-kobe-h1-016-productivity
 #| fig-cap: "Traditional Kobe plots for h1_0.16 productivity assumptions, showing the full annual trajectory with annual F scaled by Fmsy and spawning biomass scaled by Bmsy. Panels split the model specifications. Larger points mark terminal-year status. The vertical line marks SSB/Bmsy = 1 and the horizontal line marks F/Fmsy = 1."
+#| fig-height: 8.5
 
 majuro_series |>
   ggplot(aes(ssb_bmsy, f_fmsy)) +
-  annotate("rect", xmin = -Inf, xmax = 1, ymin = 1, ymax = Inf, fill = "red", alpha = 0.10) +
-  annotate("rect", xmin = 1, xmax = Inf, ymin = 1, ymax = Inf, fill = "orange", alpha = 0.12) +
-  annotate("rect", xmin = -Inf, xmax = 1, ymin = -Inf, ymax = 1, fill = "yellow", alpha = 0.14) +
-  annotate("rect", xmin = 1, xmax = Inf, ymin = -Inf, ymax = 1, fill = "green", alpha = 0.10) +
+  annotate("rect", xmin = -Inf, xmax = 1, ymin = 1, ymax = Inf, fill = "red", alpha = 0.25) +
+  annotate("rect", xmin = 1, xmax = Inf, ymin = 1, ymax = Inf, fill = "orange", alpha = 0.28) +
+  annotate("rect", xmin = -Inf, xmax = 1, ymin = -Inf, ymax = 1, fill = "yellow", alpha = 0.32) +
+  annotate("rect", xmin = 1, xmax = Inf, ymin = -Inf, ymax = 1, fill = "green", alpha = 0.25) +
   geom_vline(xintercept = 1, linewidth = 0.65, linetype = "dashed", color = "gray35") +
   geom_hline(yintercept = 1, linewidth = 0.65, linetype = "dashed", color = "gray35") +
   geom_path(linewidth = 0.75, alpha = 0.85) +
