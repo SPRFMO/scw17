@@ -71,6 +71,7 @@ available_models <- all_model_names[
 mods <- setNames(map(available_models, read_model), available_models)
 index_models <- intersect(index_model_names, available_models)
 auc_models <- intersect(auc_model_names, available_models)
+residual_models <- auc_models
 
 theme_report <- function() {
   theme_minimal(base_size = 12) +
@@ -156,7 +157,7 @@ model_index_residual_df <- function(model_name) {
   })
 }
 
-index_residual_data <- map_dfr(index_models, model_index_residual_df)
+index_residual_data <- map_dfr(residual_models, model_index_residual_df)
 
 model_summary <- map_dfr(index_models, function(model_name) {
   dat <- mods[[model_name]]$data
@@ -383,13 +384,18 @@ residual_summary <- index_residual_data |>
     .groups = "drop"
   )
 
-residual_correlation_matrix <- index_residual_data |>
-  filter(index %in% covariance_indices) |>
-  select(year, index, fit_residual) |>
-  pivot_wider(names_from = index, values_from = fit_residual) |>
-  select(any_of(covariance_indices)) |>
-  as.data.frame() |>
-  cor(use = "pairwise.complete.obs", method = "pearson")
+residual_correlation_matrix <- function(model_name) {
+  index_residual_data |>
+    filter(model == model_name, index %in% covariance_indices) |>
+    select(year, index, fit_residual) |>
+    pivot_wider(names_from = index, values_from = fit_residual) |>
+    select(any_of(covariance_indices)) |>
+    as.data.frame() |>
+    cor(use = "pairwise.complete.obs", method = "pearson")
+}
+
+h1_residual_correlation_matrix <- residual_correlation_matrix("h1_0.16")
+h2_residual_correlation_matrix <- residual_correlation_matrix("h2_0.16")
 ```
 
 {{< include _includes/sprfmo-banner.html >}}
@@ -586,26 +592,52 @@ ggpairs(
 
 The observation correlations above describe whether index observations move together. A complementary diagnostic is to compare model fit residuals, because shared residual patterns indicate years where indices contain similar information after the `h1_0.16` model fit has already explained the common stock trend. This is more directly related to availability trade-offs among indices: two indices with strongly correlated residuals are likely to add less independent information than two indices whose residuals differ.
 
-@tbl-residual-summary gives the retained residual coverage by index. Residuals are the standardized index-fit residuals reported in the JJM `Obs_Survey_*` output for `h1_0.16`, after omitting `Chile_AcousCS` and dropping `Chile_AcousN` observations before 2006. @fig-residual-correlation-heatmap shows the Pearson correlations among those residuals for the same five retained indices used in the covariance simulation.
+@tbl-residual-summary gives the retained residual coverage by index for `h1_0.16` and `h2_0.16`. Residuals are the standardized index-fit residuals reported in the JJM `Obs_Survey_*` output, after omitting `Chile_AcousCS` and dropping `Chile_AcousN` observations before 2006. @fig-h1-residual-correlation-heatmap shows the Pearson correlations among residuals for the one-stock hypothesis; @fig-h2-residual-correlation-heatmap shows the same diagnostic for the two-stock hypothesis.
 
 ```{r}
 #| label: tbl-residual-summary
-#| tbl-cap: "Model fit residual coverage by index for h1_0.16. Residuals are standardized index-fit residuals from the JJM Obs_Survey output."
+#| tbl-cap: "Model fit residual coverage by model and index. Residuals are standardized index-fit residuals from the JJM Obs_Survey output."
 #| echo: false
 
 residual_summary |>
+  arrange(model, index) |>
   gt() |>
   fmt_number(columns = c(mean_residual, sd_residual), decimals = 3)
 ```
 
 ```{r}
-#| label: fig-residual-correlation-heatmap
+#| label: fig-h1-residual-correlation-heatmap
 #| fig-cap: "Pearson correlations between standardized model fit residuals for retained indices in h1_0.16. Blue cells indicate positive residual correlations and red cells indicate negative residual correlations."
 #| echo: false
 #| fig-height: 5.5
 
 ggcorrplot(
-  residual_correlation_matrix,
+  h1_residual_correlation_matrix,
+  type = "lower",
+  lab = TRUE,
+  lab_size = 3.5,
+  show.diag = FALSE,
+  colors = c("#b2182b", "white", "#2166ac"),
+  outline.color = "white",
+  ggtheme = theme_minimal(base_size = 12)
+) +
+  labs(fill = "r") +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "right"
+  )
+```
+
+For `h2_0.16`, the residual correlations are interpreted within the two-stock model structure. Pairs with strong positive residual correlations indicate indices that still tend to be high or low together after fitting the stock-specific trends; pairs closer to zero or negative values indicate more distinct residual information and may be more informative for availability trade-offs.
+
+```{r}
+#| label: fig-h2-residual-correlation-heatmap
+#| fig-cap: "Pearson correlations between standardized model fit residuals for retained indices in h2_0.16. Blue cells indicate positive residual correlations and red cells indicate negative residual correlations."
+#| echo: false
+#| fig-height: 5.5
+
+ggcorrplot(
+  h2_residual_correlation_matrix,
   type = "lower",
   lab = TRUE,
   lab_size = 3.5,
