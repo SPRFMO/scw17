@@ -118,6 +118,46 @@ model_index_df <- function(model_name) {
 
 index_data <- map_dfr(index_models, model_index_df)
 
+model_index_residual_df <- function(model_name) {
+  dat <- mods[[model_name]]$data
+  out <- mods[[model_name]]$output[[1]]
+  index_names <- dat$Inames
+  obs_survey_names <- grep("^Obs_Survey_", names(out), value = TRUE)
+
+  map_dfr(seq_along(obs_survey_names), function(i) {
+    if (i > length(index_names)) {
+      return(NULL)
+    }
+
+    x <- as_tibble(out[[obs_survey_names[[i]]]], .name_repair = "unique")
+    if (ncol(x) < 5) {
+      return(NULL)
+    }
+
+    names(x)[seq_len(5)] <- c("year", "observed", "fitted", "sd", "fit_residual")
+
+    x |>
+      transmute(
+        model = model_name,
+        index = index_names[[i]],
+        year = as.integer(year),
+        observed = as.numeric(observed),
+        fitted = as.numeric(fitted),
+        sd = as.numeric(sd),
+        fit_residual = as.numeric(fit_residual)
+      ) |>
+      filter(
+        !index %in% omit_indices,
+        index != "Chile_AcousN" | year >= chile_acousn_start_year,
+        is.finite(fit_residual),
+        observed > 0,
+        fitted > 0
+      )
+  })
+}
+
+index_residual_data <- map_dfr(index_models, model_index_residual_df)
+
 model_summary <- map_dfr(index_models, function(model_name) {
   dat <- mods[[model_name]]$data
   tibble(
@@ -302,6 +342,18 @@ covariance_sdlog <- sqrt(log1p(covariance_cvs[covariance_indices]^2))
 index_covariance <- diag(covariance_sdlog) %*%
   make_positive_definite(as.matrix(covariance_correlation)) %*%
   diag(covariance_sdlog)
+dimnames(index_covariance) <- list(covariance_indices, covariance_indices)
+
+covariance_matrix_long <- expand_grid(
+  index_1 = covariance_indices,
+  index_2 = covariance_indices
+) |>
+  mutate(
+    cv_1 = unname(covariance_cvs[index_1]),
+    cv_2 = unname(covariance_cvs[index_2]),
+    correlation = as.numeric(covariance_correlation[cbind(index_1, index_2)]),
+    covariance = as.numeric(index_covariance[cbind(index_1, index_2)])
+  )
 
 set.seed(20260615)
 index_covariance_draws <- matrix(
@@ -319,6 +371,25 @@ index_covariance_draws <- sweep(
   exp() |>
   as_tibble(.name_repair = "minimal")
 names(index_covariance_draws) <- covariance_indices
+
+residual_summary <- index_residual_data |>
+  group_by(model, index) |>
+  summarise(
+    n = n(),
+    first_year = min(year),
+    last_year = max(year),
+    mean_residual = mean(fit_residual),
+    sd_residual = sd(fit_residual),
+    .groups = "drop"
+  )
+
+residual_correlation_matrix <- index_residual_data |>
+  filter(index %in% covariance_indices) |>
+  select(year, index, fit_residual) |>
+  pivot_wider(names_from = index, values_from = fit_residual) |>
+  select(any_of(covariance_indices)) |>
+  as.data.frame() |>
+  cor(use = "pairwise.complete.obs", method = "pearson")
 ```
 
 {{< include _includes/sprfmo-banner.html >}}
@@ -511,6 +582,45 @@ ggpairs(
   theme(strip.text = element_text(size = 18))
 ```
 
+## Patterns in model fit residuals
+
+The observation correlations above describe whether index observations move together. A complementary diagnostic is to compare model fit residuals, because shared residual patterns indicate years where indices contain similar information after the `h1_0.16` model fit has already explained the common stock trend. This is more directly related to availability trade-offs among indices: two indices with strongly correlated residuals are likely to add less independent information than two indices whose residuals differ.
+
+@tbl-residual-summary gives the retained residual coverage by index. Residuals are the standardized index-fit residuals reported in the JJM `Obs_Survey_*` output for `h1_0.16`, after omitting `Chile_AcousCS` and dropping `Chile_AcousN` observations before 2006. @fig-residual-correlation-heatmap shows the Pearson correlations among those residuals for the same five retained indices used in the covariance simulation.
+
+```{r}
+#| label: tbl-residual-summary
+#| tbl-cap: "Model fit residual coverage by index for h1_0.16. Residuals are standardized index-fit residuals from the JJM Obs_Survey output."
+#| echo: false
+
+residual_summary |>
+  gt() |>
+  fmt_number(columns = c(mean_residual, sd_residual), decimals = 3)
+```
+
+```{r}
+#| label: fig-residual-correlation-heatmap
+#| fig-cap: "Pearson correlations between standardized model fit residuals for retained indices in h1_0.16. Blue cells indicate positive residual correlations and red cells indicate negative residual correlations."
+#| echo: false
+#| fig-height: 5.5
+
+ggcorrplot(
+  residual_correlation_matrix,
+  type = "lower",
+  lab = TRUE,
+  lab_size = 3.5,
+  show.diag = FALSE,
+  colors = c("#b2182b", "white", "#2166ac"),
+  outline.color = "white",
+  ggtheme = theme_minimal(base_size = 12)
+) +
+  labs(fill = "r") +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "right"
+  )
+```
+
 ## Index ROC/AUC
 
 The ROC/AUC diagnostics below are loaded from the `jmMSE` output file `output/index_auc_h1_h2_0.16.rda`. They compare annual index changes against annual changes in model-estimated SSB. For each index, the score is $\log(I_y / I_{y-1})$ and the truth is whether $SSB_y > SSB_{y-1}$. For `h1_0.16`, each index is compared with the single-stock SSB trajectory. For `h2_0.16`, each index is compared with the SSB trajectory for the stock-specific output block in which the index appears. The `Chile_AcousN` ROC diagnostic uses only observations after 2005, following the implementation in `jmMSE/output_auc_peru_cpue.R`.
@@ -595,7 +705,7 @@ index_roc_summary |>
 
 @tbl-strongest-correlations extracts the largest positive and most negative Pearson correlations from the correlation table. This is a compact way to identify the index pairs with the strongest agreement and strongest disagreement after accounting for the available overlapping years.
 
-@fig-index-covariance-draws uses the estimated correlation structure among the retained index series to simulate 100 multivariate draws. The simulation uses the Pearson correlations among log observed indices for `Chile_AcousN`, `Chile_CPUE`, `Offshore_CPUE`, `Peru_Artis`, and `Peru_Ind`; the diagonal uncertainty is set to 20% CV for all indices except the two Peruvian CPUE series, which use 30% CV.
+@tbl-index-covariance-matrix reports the covariance matrix used to simulate the multivariate index draws in long form. @fig-index-covariance-draws uses that estimated correlation structure among the retained index series to simulate 100 multivariate draws. The simulation uses the Pearson correlations among log observed indices for `Chile_AcousN`, `Chile_CPUE`, `Offshore_CPUE`, `Peru_Artis`, and `Peru_Ind`; the diagonal uncertainty is set to 20% CV for all indices except the two Peruvian CPUE series, which use 30% CV.
 
 ```{r}
 #| label: tbl-strongest-correlations
@@ -619,6 +729,28 @@ correlation_results |>
   mutate(correlation = round(correlation, 3)) |>
   gt() |>
   fmt_number(columns = correlation, decimals = 3)
+```
+
+```{r}
+#| label: tbl-index-covariance-matrix
+#| tbl-cap: "Long-form covariance matrix used to generate the simulated multivariate index draws. Covariances are on the log-index multiplier scale after converting specified CVs to log-scale standard deviations."
+#| echo: false
+
+covariance_matrix_long |>
+  mutate(
+    cv_1 = sprintf("%.0f%%", 100 * cv_1),
+    cv_2 = sprintf("%.0f%%", 100 * cv_2)
+  ) |>
+  gt() |>
+  cols_label(
+    index_1 = "index_1",
+    index_2 = "index_2",
+    cv_1 = "cv_1",
+    cv_2 = "cv_2",
+    correlation = "correlation",
+    covariance = "covariance"
+  ) |>
+  fmt_number(columns = c(correlation, covariance), decimals = 4)
 ```
 
 ```{r}
