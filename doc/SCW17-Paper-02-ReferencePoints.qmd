@@ -956,6 +956,7 @@ majuro_y_upper <- max(1.2, ceiling(max(majuro_series$f_fmsy[majuro_series$year >
 majuro_f35_y_upper <- max(1.2, ceiling(max(majuro_series$f_f35[majuro_series$year >= 2000], na.rm = TRUE) * 10) / 10)
 kobe_y_upper <- max(1.2, ceiling(max(kobe_series$f_fmsy, na.rm = TRUE) * 10) / 10)
 proxy_kobe_x_upper <- max(1.4, ceiling(max(proxy_kobe_series$ssb_b35_dynamic, na.rm = TRUE) * 10) / 10)
+proxy_kobe_y_upper <- max(1.2, ceiling(max(proxy_kobe_series$f_f35, na.rm = TRUE) * 10) / 10)
 
 base_case_kobe <- {
   base_model <- read_model(base_case_model)
@@ -1626,7 +1627,7 @@ proxy_kobe_series |>
   ) +
   scale_alpha_manual(values = c(`FALSE` = 0.45, `TRUE` = 1)) +
   facet_wrap(vars(scenario), nrow = 2) +
-  coord_cartesian(xlim = c(0, proxy_kobe_x_upper), ylim = c(0, majuro_f35_y_upper), expand = FALSE) +
+  coord_cartesian(xlim = c(0, proxy_kobe_x_upper), ylim = c(0, proxy_kobe_y_upper), expand = FALSE) +
   labs(x = expression(SSB / (0.35 * SSB[F == 0])), y = expression(F / F[35 * "%"])) +
   theme_report() +
   theme(
