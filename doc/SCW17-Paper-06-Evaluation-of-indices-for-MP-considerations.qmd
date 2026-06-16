@@ -121,39 +121,45 @@ index_data <- map_dfr(index_models, model_index_df)
 
 model_index_residual_df <- function(model_name) {
   dat <- mods[[model_name]]$data
-  out <- mods[[model_name]]$output[[1]]
-  index_names <- dat$Inames
-  obs_survey_names <- grep("^Obs_Survey_", names(out), value = TRUE)
+  outputs <- mods[[model_name]]$output
 
-  map_dfr(seq_along(obs_survey_names), function(i) {
-    if (i > length(index_names)) {
-      return(NULL)
-    }
+  map_dfr(outputs, function(out) {
+    obs_survey_names <- grep("^Obs_Survey_", names(out), value = TRUE)
+    index_names <- as.vector(out$Index_names)
 
-    x <- as_tibble(out[[obs_survey_names[[i]]]], .name_repair = "unique")
-    if (ncol(x) < 5) {
-      return(NULL)
-    }
+    map_dfr(seq_along(obs_survey_names), function(i) {
+      survey_number <- as.integer(sub("^Obs_Survey_", "", obs_survey_names[[i]]))
+      index_name <- if (i <= length(index_names)) {
+        index_names[[i]]
+      } else {
+        dat$Inames[[survey_number]]
+      }
 
-    names(x)[seq_len(5)] <- c("year", "observed", "fitted", "sd", "fit_residual")
+      x <- as_tibble(out[[obs_survey_names[[i]]]], .name_repair = "unique")
+      if (ncol(x) < 5) {
+        return(NULL)
+      }
 
-    x |>
-      transmute(
-        model = model_name,
-        index = index_names[[i]],
-        year = as.integer(year),
-        observed = as.numeric(observed),
-        fitted = as.numeric(fitted),
-        sd = as.numeric(sd),
-        fit_residual = as.numeric(fit_residual)
-      ) |>
-      filter(
-        !index %in% omit_indices,
-        index != "Chile_AcousN" | year >= chile_acousn_start_year,
-        is.finite(fit_residual),
-        observed > 0,
-        fitted > 0
-      )
+      names(x)[seq_len(5)] <- c("year", "observed", "fitted", "sd", "fit_residual")
+
+      x |>
+        transmute(
+          model = model_name,
+          index = index_name,
+          year = as.integer(year),
+          observed = as.numeric(observed),
+          fitted = as.numeric(fitted),
+          sd = as.numeric(sd),
+          fit_residual = as.numeric(fit_residual)
+        ) |>
+        filter(
+          !index %in% omit_indices,
+          index != "Chile_AcousN" | year >= chile_acousn_start_year,
+          is.finite(fit_residual),
+          observed > 0,
+          fitted > 0
+        )
+    })
   })
 }
 
@@ -396,6 +402,17 @@ residual_correlation_matrix <- function(model_name) {
 
 h1_residual_correlation_matrix <- residual_correlation_matrix("h1_0.16")
 h2_residual_correlation_matrix <- residual_correlation_matrix("h2_0.16")
+
+h2_stock2_residual_pair <- index_residual_data |>
+  filter(model == "h2_0.16", index %in% c("Peru_Artis", "Peru_Ind")) |>
+  select(year, index, fit_residual) |>
+  pivot_wider(names_from = index, values_from = fit_residual) |>
+  filter(!is.na(Peru_Artis), !is.na(Peru_Ind))
+
+h2_stock2_residual_correlation <- cor(
+  h2_stock2_residual_pair$Peru_Artis,
+  h2_stock2_residual_pair$Peru_Ind
+)
 ```
 
 {{< include _includes/sprfmo-banner.html >}}
@@ -628,7 +645,7 @@ ggcorrplot(
   )
 ```
 
-For `h2_0.16`, the residual correlations span the two-stock model structure. The `Peru_Artis` and `Peru_Ind` residuals come from stock 2, while `Chile_AcousN`, `Chile_CPUE`, and `Offshore_CPUE` come from stock 1. Pairs with strong positive residual correlations indicate indices that still tend to be high or low together after fitting their stock-specific trends; pairs closer to zero or negative values indicate more distinct residual information and may be more informative for availability trade-offs. Cross-stock residual correlations should therefore be read as comparisons between independently fitted stock components rather than as residuals from a single shared abundance trajectory.
+For `h2_0.16`, the residual correlations span the two-stock model structure. The `Peru_Artis` and `Peru_Ind` residuals come from stock 2, while `Chile_AcousN`, `Chile_CPUE`, and `Offshore_CPUE` come from stock 1. Within stock 2, the residual correlation between `Peru_Artis` and `Peru_Ind` was `r sprintf("%.2f", h2_stock2_residual_correlation)` across `r nrow(h2_stock2_residual_pair)` overlapping years (`r min(h2_stock2_residual_pair$year)`-`r max(h2_stock2_residual_pair$year)`). Pairs with strong positive residual correlations indicate indices that still tend to be high or low together after fitting their stock-specific trends; pairs closer to zero or negative values indicate more distinct residual information and may be more informative for availability trade-offs. Cross-stock residual correlations should therefore be read as comparisons between independently fitted stock components rather than as residuals from a single shared abundance trajectory.
 
 ```{r}
 #| label: fig-h2-residual-correlation-heatmap
