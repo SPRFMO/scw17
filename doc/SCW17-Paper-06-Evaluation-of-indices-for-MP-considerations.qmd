@@ -403,6 +403,78 @@ residual_correlation_matrix <- function(model_name) {
 h1_residual_correlation_matrix <- residual_correlation_matrix("h1_0.16")
 h2_residual_correlation_matrix <- residual_correlation_matrix("h2_0.16")
 
+residual_wide <- function(model_name) {
+  index_residual_data |>
+    filter(model == model_name, index %in% covariance_indices) |>
+    select(year, index, fit_residual) |>
+    pivot_wider(names_from = index, values_from = fit_residual) |>
+    select(any_of(covariance_indices))
+}
+
+residual_covariance_matrix <- function(model_name) {
+  residual_wide(model_name) |>
+    as.data.frame() |>
+    cov(use = "pairwise.complete.obs")
+}
+
+residual_overlap_matrix <- function(model_name) {
+  wide <- residual_wide(model_name)
+  indices <- names(wide)
+
+  expand_grid(index_1 = indices, index_2 = indices) |>
+    mutate(
+      n_overlap = map2_int(
+        index_1,
+        index_2,
+        \(x, y) sum(!is.na(wide[[x]]) & !is.na(wide[[y]]))
+      )
+    )
+}
+
+residual_covariance_long <- function(model_name, covariance_matrix, correlation_matrix) {
+  residual_overlap_matrix(model_name) |>
+    mutate(
+      model = model_name,
+      correlation = as.numeric(correlation_matrix[cbind(index_1, index_2)]),
+      covariance = as.numeric(covariance_matrix[cbind(index_1, index_2)])
+    ) |>
+    select(model, index_1, index_2, n_overlap, correlation, covariance)
+}
+
+simulate_residual_covariance_draws <- function(covariance_matrix, seed) {
+  set.seed(seed)
+  draw_matrix <- matrix(
+    rnorm(100 * ncol(covariance_matrix)),
+    nrow = 100,
+    ncol = ncol(covariance_matrix)
+  ) %*% chol(make_positive_definite(as.matrix(covariance_matrix)))
+
+  as_tibble(draw_matrix, .name_repair = "minimal") |>
+    set_names(colnames(covariance_matrix))
+}
+
+h1_residual_covariance_matrix <- residual_covariance_matrix("h1_0.16")
+h2_residual_covariance_matrix <- residual_covariance_matrix("h2_0.16")
+h1_residual_covariance_long <- residual_covariance_long(
+  "h1_0.16",
+  h1_residual_covariance_matrix,
+  h1_residual_correlation_matrix
+)
+h2_residual_covariance_long <- residual_covariance_long(
+  "h2_0.16",
+  h2_residual_covariance_matrix,
+  h2_residual_correlation_matrix
+)
+
+h1_residual_covariance_draws <- simulate_residual_covariance_draws(
+  h1_residual_covariance_matrix,
+  20260616
+)
+h2_residual_covariance_draws <- simulate_residual_covariance_draws(
+  h2_residual_covariance_matrix,
+  20260617
+)
+
 h2_stock2_residual_pair <- index_residual_data |>
   filter(model == "h2_0.16", index %in% c("Peru_Artis", "Peru_Ind")) |>
   select(year, index, fit_residual) |>
@@ -754,7 +826,11 @@ index_roc_summary |>
 
 @tbl-strongest-correlations extracts the largest positive and most negative Pearson correlations from the correlation table. This is a compact way to identify the index pairs with the strongest agreement and strongest disagreement after accounting for the available overlapping years.
 
+This evaluation shows that, for the two-stock hypotheses, the nominal CPUE indices for Peru generally track stock trends. Those same indices perform relatively poorer under the single-stock hypothesis. For the single-stock case, the offshore CPUE and Chilean CPUE indices appear to perform better. These conclusions are broadly consistent between the pairwise index comparisons and the ROC/AUC evaluations.
+
 @tbl-index-covariance-matrix reports the covariance matrix used to simulate the multivariate index draws in long form. @fig-index-covariance-draws uses that estimated correlation structure among the retained index series to simulate 100 multivariate draws. The simulation uses the Pearson correlations among log observed indices for `Chile_AcousN`, `Chile_CPUE`, `Offshore_CPUE`, `Peru_Artis`, and `Peru_Ind`; the diagonal uncertainty is set to 20% CV for all indices except the two Peruvian CPUE series, which use 30% CV.
+
+@tbl-h1-residual-covariance-matrix and @tbl-h2-residual-covariance-matrix report the fitted-residual covariance structures used for residual-based simulations. @fig-h1-residual-covariance-draws and @fig-h2-residual-covariance-draws use the residual covariance among retained indices for `h1_0.16` and `h2_0.16`, respectively. In these residual-based simulations, the diagonal is not externally specified; it is the empirical variance of the model fit residuals for each index.
 
 ```{r}
 #| label: tbl-strongest-correlations
@@ -819,4 +895,56 @@ ggpairs(
   theme(strip.text = element_text(size = 18))
 ```
 
-This evaluation shows that, for the two-stock hypotheses, the nominal CPUE indices for Peru generally track stock trends. Those same indices perform relatively poorer under the single-stock hypothesis. For the single-stock case, the offshore CPUE and Chilean CPUE indices appear to perform better. These conclusions are broadly consistent between the pairwise index comparisons and the ROC/AUC evaluations.
+```{r}
+#| label: tbl-h1-residual-covariance-matrix
+#| tbl-cap: "Long-form covariance matrix used to generate simulated residual draws for h1_0.16. Covariances are computed from standardized index-fit residuals."
+#| echo: false
+
+h1_residual_covariance_long |>
+  gt() |>
+  fmt_number(columns = c(correlation, covariance), decimals = 4)
+```
+
+```{r}
+#| label: fig-h1-residual-covariance-draws
+#| fig-cap: "Simulated multivariate residual draws for h1_0.16 using the estimated covariance structure among retained index fit residuals. Diagonal uncertainty is the empirical residual variance for each index."
+#| echo: false
+#| fig-width: 10
+#| fig-height: 10
+
+ggpairs(
+  h1_residual_covariance_draws,
+  upper = list(continuous = wrap("cor", method = "pearson")),
+  lower = list(continuous = ggpairs_lower_lm),
+  diag = list(continuous = "blankDiag")
+) +
+  ggthemes::theme_few(base_size = 9) +
+  theme(strip.text = element_text(size = 18))
+```
+
+```{r}
+#| label: tbl-h2-residual-covariance-matrix
+#| tbl-cap: "Long-form covariance matrix used to generate simulated residual draws for h2_0.16. Covariances are computed from standardized index-fit residuals."
+#| echo: false
+
+h2_residual_covariance_long |>
+  gt() |>
+  fmt_number(columns = c(correlation, covariance), decimals = 4)
+```
+
+```{r}
+#| label: fig-h2-residual-covariance-draws
+#| fig-cap: "Simulated multivariate residual draws for h2_0.16 using the estimated covariance structure among retained index fit residuals. Diagonal uncertainty is the empirical residual variance for each index."
+#| echo: false
+#| fig-width: 10
+#| fig-height: 10
+
+ggpairs(
+  h2_residual_covariance_draws,
+  upper = list(continuous = wrap("cor", method = "pearson")),
+  lower = list(continuous = ggpairs_lower_lm),
+  diag = list(continuous = "blankDiag")
+) +
+  ggthemes::theme_few(base_size = 9) +
+  theme(strip.text = element_text(size = 18))
+```
