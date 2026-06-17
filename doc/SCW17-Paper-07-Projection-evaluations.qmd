@@ -539,10 +539,13 @@ The dashed vertical line marks the final historical year.
 
 ```{r}
 #| label: fig-recruitment
-#| fig-cap: !expr paste("Historical and future recruitment for the selected operating model. The future portion uses the F = 0 projection. Colored lines show", length(unique(rec_worms_dt$iter)), "sampled MCMC draws.")
+#| fig-cap: !expr paste("Historical and future recruitment for the selected operating model. The future portion uses the F = 0 projection. Colored lines show", length(unique(rec_worms_plot_dt$iter)), "sampled MCMC draws.")
 #| fig-width: 12
 #| fig-height: 6
-plot_qmd_recruitment(rec_dt, rec_worms_dt, init_year=INIT_YEAR,
+rec_worm_plot_iters <- sort(unique(rec_worms_dt$iter))[seq_len(min(15,
+  length(unique(rec_worms_dt$iter))))]
+rec_worms_plot_dt <- as.data.table(rec_worms_dt)[iter %in% rec_worm_plot_iters]
+plot_qmd_recruitment(rec_dt, rec_worms_plot_dt, init_year=INIT_YEAR,
   final_year=FINAL_YEAR, ref_om=REF_OM)
 ```
 

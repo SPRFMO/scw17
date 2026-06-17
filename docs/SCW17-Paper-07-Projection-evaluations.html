@@ -634,17 +634,20 @@ Figure&nbsp;2: Historical exploitation metrics for the selected operating model.
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_recruitment</span>(rec_dt, rec_worms_dt, <span class="at">init_year=</span>INIT_YEAR,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">final_year=</span>FINAL_YEAR, <span class="at">ref_om=</span>REF_OM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>rec_worm_plot_iters <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(rec_worms_dt<span class="sc">$</span>iter))[<span class="fu">seq_len</span>(<span class="fu">min</span>(<span class="dv">15</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">length</span>(<span class="fu">unique</span>(rec_worms_dt<span class="sc">$</span>iter))))]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>rec_worms_plot_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(rec_worms_dt)[iter <span class="sc">%in%</span> rec_worm_plot_iters]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_recruitment</span>(rec_dt, rec_worms_plot_dt, <span class="at">init_year=</span>INIT_YEAR,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">final_year=</span>FINAL_YEAR, <span class="at">ref_om=</span>REF_OM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-recruitment" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-recruitment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="SCW17-Paper-07-Projection-evaluations_files/figure-html/fig-recruitment-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Historical and future recruitment for the selected operating model. The future portion uses the F = 0 projection. Colored lines show 30 sampled MCMC draws."><img src="SCW17-Paper-07-Projection-evaluations_files/figure-html/fig-recruitment-1.png" class="img-fluid figure-img" width="1152"></a>
+<a href="SCW17-Paper-07-Projection-evaluations_files/figure-html/fig-recruitment-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Historical and future recruitment for the selected operating model. The future portion uses the F = 0 projection. Colored lines show 15 sampled MCMC draws."><img src="SCW17-Paper-07-Projection-evaluations_files/figure-html/fig-recruitment-1.png" class="img-fluid figure-img" width="1152"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-recruitment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Historical and future recruitment for the selected operating model. The future portion uses the F = 0 projection. Colored lines show 30 sampled MCMC draws.
+Figure&nbsp;3: Historical and future recruitment for the selected operating model. The future portion uses the F = 0 projection. Colored lines show 15 sampled MCMC draws.
 </figcaption>
 </figure>
 </div>
@@ -1898,138 +1901,141 @@ Figure&nbsp;10: Sensitivity of projections to named historical selectivity block
 <span id="cb18-555"><a href="#cb18-555" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-558"><a href="#cb18-558" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb18-559"><a href="#cb18-559" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-recruitment</span></span>
-<span id="cb18-560"><a href="#cb18-560" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Historical and future recruitment for the selected operating model. The future portion uses the F = 0 projection. Colored lines show", length(unique(rec_worms_dt$iter)), "sampled MCMC draws.")</span></span>
+<span id="cb18-560"><a href="#cb18-560" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Historical and future recruitment for the selected operating model. The future portion uses the F = 0 projection. Colored lines show", length(unique(rec_worms_plot_dt$iter)), "sampled MCMC draws.")</span></span>
 <span id="cb18-561"><a href="#cb18-561" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
 <span id="cb18-562"><a href="#cb18-562" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb18-563"><a href="#cb18-563" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_recruitment</span>(rec_dt, rec_worms_dt, <span class="at">init_year=</span>INIT_YEAR,</span>
-<span id="cb18-564"><a href="#cb18-564" aria-hidden="true" tabindex="-1"></a>  <span class="at">final_year=</span>FINAL_YEAR, <span class="at">ref_om=</span>REF_OM)</span>
-<span id="cb18-565"><a href="#cb18-565" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-566"><a href="#cb18-566" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-567"><a href="#cb18-567" aria-hidden="true" tabindex="-1"></a><span class="fu"># Future Fishing Pattern Scenarios</span></span>
-<span id="cb18-568"><a href="#cb18-568" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-569"><a href="#cb18-569" aria-hidden="true" tabindex="-1"></a>The main projection comparison applies the fishing-pattern controls over the projection horizon.</span>
-<span id="cb18-570"><a href="#cb18-570" aria-hidden="true" tabindex="-1"></a>The plot shows median trajectories by scenario for the cached projection summaries, including spawning biomass, fishing mortality, and catch where available.</span>
+<span id="cb18-563"><a href="#cb18-563" aria-hidden="true" tabindex="-1"></a>rec_worm_plot_iters <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(rec_worms_dt<span class="sc">$</span>iter))[<span class="fu">seq_len</span>(<span class="fu">min</span>(<span class="dv">15</span>,</span>
+<span id="cb18-564"><a href="#cb18-564" aria-hidden="true" tabindex="-1"></a>  <span class="fu">length</span>(<span class="fu">unique</span>(rec_worms_dt<span class="sc">$</span>iter))))]</span>
+<span id="cb18-565"><a href="#cb18-565" aria-hidden="true" tabindex="-1"></a>rec_worms_plot_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(rec_worms_dt)[iter <span class="sc">%in%</span> rec_worm_plot_iters]</span>
+<span id="cb18-566"><a href="#cb18-566" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_recruitment</span>(rec_dt, rec_worms_plot_dt, <span class="at">init_year=</span>INIT_YEAR,</span>
+<span id="cb18-567"><a href="#cb18-567" aria-hidden="true" tabindex="-1"></a>  <span class="at">final_year=</span>FINAL_YEAR, <span class="at">ref_om=</span>REF_OM)</span>
+<span id="cb18-568"><a href="#cb18-568" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-569"><a href="#cb18-569" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-570"><a href="#cb18-570" aria-hidden="true" tabindex="-1"></a><span class="fu"># Future Fishing Pattern Scenarios</span></span>
 <span id="cb18-571"><a href="#cb18-571" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-574"><a href="#cb18-574" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-575"><a href="#cb18-575" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-fixed-scenarios</span></span>
-<span id="cb18-576"><a href="#cb18-576" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr scenario_caption()</span></span>
-<span id="cb18-577"><a href="#cb18-577" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
-<span id="cb18-578"><a href="#cb18-578" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 10</span></span>
-<span id="cb18-579"><a href="#cb18-579" aria-hidden="true" tabindex="-1"></a>futs_excluded <span class="ot">&lt;-</span> <span class="fu">median_fbar_exclusions</span>(</span>
-<span id="cb18-580"><a href="#cb18-580" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.table</span>(futs_dt)[year <span class="sc">&gt;</span> INIT_YEAR], <span class="st">"scenario"</span>)</span>
-<span id="cb18-581"><a href="#cb18-581" aria-hidden="true" tabindex="-1"></a>futs_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_group_stock</span>(futs_dt, futs_excluded, <span class="st">"scenario"</span>)</span>
-<span id="cb18-582"><a href="#cb18-582" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-583"><a href="#cb18-583" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_scenarios</span>(futs_plot_dt, INIT_YEAR, sbmsy_ref, fmsy_ref,</span>
-<span id="cb18-584"><a href="#cb18-584" aria-hidden="true" tabindex="-1"></a>  <span class="at">final_year=</span>FINAL_YEAR, <span class="at">ref_om=</span>REF_OM)</span>
-<span id="cb18-585"><a href="#cb18-585" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-586"><a href="#cb18-586" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-587"><a href="#cb18-587" aria-hidden="true" tabindex="-1"></a>The terminal-status plot shows the distribution of projected spawning biomass relative to SBMSY in the final projection year.</span>
-<span id="cb18-588"><a href="#cb18-588" aria-hidden="true" tabindex="-1"></a>This gives a compact comparison of scenario risk at the end of the projection horizon.</span>
+<span id="cb18-572"><a href="#cb18-572" aria-hidden="true" tabindex="-1"></a>The main projection comparison applies the fishing-pattern controls over the projection horizon.</span>
+<span id="cb18-573"><a href="#cb18-573" aria-hidden="true" tabindex="-1"></a>The plot shows median trajectories by scenario for the cached projection summaries, including spawning biomass, fishing mortality, and catch where available.</span>
+<span id="cb18-574"><a href="#cb18-574" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-577"><a href="#cb18-577" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-578"><a href="#cb18-578" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-fixed-scenarios</span></span>
+<span id="cb18-579"><a href="#cb18-579" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr scenario_caption()</span></span>
+<span id="cb18-580"><a href="#cb18-580" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
+<span id="cb18-581"><a href="#cb18-581" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 10</span></span>
+<span id="cb18-582"><a href="#cb18-582" aria-hidden="true" tabindex="-1"></a>futs_excluded <span class="ot">&lt;-</span> <span class="fu">median_fbar_exclusions</span>(</span>
+<span id="cb18-583"><a href="#cb18-583" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.table</span>(futs_dt)[year <span class="sc">&gt;</span> INIT_YEAR], <span class="st">"scenario"</span>)</span>
+<span id="cb18-584"><a href="#cb18-584" aria-hidden="true" tabindex="-1"></a>futs_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_group_stock</span>(futs_dt, futs_excluded, <span class="st">"scenario"</span>)</span>
+<span id="cb18-585"><a href="#cb18-585" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-586"><a href="#cb18-586" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_scenarios</span>(futs_plot_dt, INIT_YEAR, sbmsy_ref, fmsy_ref,</span>
+<span id="cb18-587"><a href="#cb18-587" aria-hidden="true" tabindex="-1"></a>  <span class="at">final_year=</span>FINAL_YEAR, <span class="at">ref_om=</span>REF_OM)</span>
+<span id="cb18-588"><a href="#cb18-588" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb18-589"><a href="#cb18-589" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-592"><a href="#cb18-592" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-593"><a href="#cb18-593" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-terminal-status</span></span>
-<span id="cb18-594"><a href="#cb18-594" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Distribution of SSB / SBMSY in", FINAL_YEAR, "under each projection scenario.", N_ITER, "iterations. The dotted line marks SBMSY.", filter_note)</span></span>
-<span id="cb18-595"><a href="#cb18-595" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
-<span id="cb18-596"><a href="#cb18-596" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb18-597"><a href="#cb18-597" aria-hidden="true" tabindex="-1"></a>status_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_fbar_iterations</span>(status_dt, futs_fbar_max_dt, <span class="st">"scenario"</span>)</span>
-<span id="cb18-598"><a href="#cb18-598" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_status</span>(status_plot_dt, FINAL_YEAR, <span class="at">n_iter=</span>N_ITER, <span class="at">ref_om=</span>REF_OM)</span>
-<span id="cb18-599"><a href="#cb18-599" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-600"><a href="#cb18-600" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-603"><a href="#cb18-603" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-604"><a href="#cb18-604" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-terminal-tradeoff</span></span>
-<span id="cb18-605"><a href="#cb18-605" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Median catch and SSB / SBMSY in", FINAL_YEAR, "under each projection scenario. Points show scenario medians; bars show 90% intervals. The dotted line marks SBMSY.", filter_note)</span></span>
-<span id="cb18-606"><a href="#cb18-606" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
-<span id="cb18-607"><a href="#cb18-607" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
-<span id="cb18-608"><a href="#cb18-608" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_tradeoff</span>(status_plot_dt, FINAL_YEAR, <span class="at">ref_om=</span>REF_OM)</span>
-<span id="cb18-609"><a href="#cb18-609" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-610"><a href="#cb18-610" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-613"><a href="#cb18-613" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-614"><a href="#cb18-614" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-terminal-tradeoff-ssb</span></span>
-<span id="cb18-615"><a href="#cb18-615" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Median catch and SSB in", FINAL_YEAR, "under each projection scenario. Points show scenario medians; bars show 90% intervals. The dotted line marks SBMSY.", filter_note)</span></span>
-<span id="cb18-616"><a href="#cb18-616" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
-<span id="cb18-617"><a href="#cb18-617" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
-<span id="cb18-618"><a href="#cb18-618" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_tradeoff</span>(status_plot_dt, FINAL_YEAR, <span class="at">ref_om=</span>REF_OM,</span>
-<span id="cb18-619"><a href="#cb18-619" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_metric=</span><span class="st">"ssb"</span>)</span>
-<span id="cb18-620"><a href="#cb18-620" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-621"><a href="#cb18-621" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-624"><a href="#cb18-624" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-625"><a href="#cb18-625" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-catch-2026</span></span>
-<span id="cb18-626"><a href="#cb18-626" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Distribution of catch in 2026 under each projection scenario.", N_ITER, "iterations.", filter_note)</span></span>
-<span id="cb18-627"><a href="#cb18-627" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
-<span id="cb18-628"><a href="#cb18-628" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb18-629"><a href="#cb18-629" aria-hidden="true" tabindex="-1"></a>catch_2026_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_fbar_iterations</span>(catch_2026_dt,</span>
-<span id="cb18-630"><a href="#cb18-630" aria-hidden="true" tabindex="-1"></a>  futs_fbar_max_dt, <span class="st">"scenario"</span>)</span>
-<span id="cb18-631"><a href="#cb18-631" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_catch_distribution</span>(catch_2026_plot_dt, <span class="dv">2026</span>,</span>
-<span id="cb18-632"><a href="#cb18-632" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_iter=</span>N_ITER, <span class="at">ref_om=</span>REF_OM)</span>
-<span id="cb18-633"><a href="#cb18-633" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-634"><a href="#cb18-634" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-635"><a href="#cb18-635" aria-hidden="true" tabindex="-1"></a><span class="fu"># Selectivity Window Sensitivity</span></span>
-<span id="cb18-636"><a href="#cb18-636" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-637"><a href="#cb18-637" aria-hidden="true" tabindex="-1"></a>The selectivity-window sensitivity analysis projects at FMSY while replacing future selectivity with averages over alternative terminal-year windows.</span>
-<span id="cb18-638"><a href="#cb18-638" aria-hidden="true" tabindex="-1"></a>For example, a three-year window uses the mean selectivity pattern from the final three historical years.</span>
+<span id="cb18-590"><a href="#cb18-590" aria-hidden="true" tabindex="-1"></a>The terminal-status plot shows the distribution of projected spawning biomass relative to SBMSY in the final projection year.</span>
+<span id="cb18-591"><a href="#cb18-591" aria-hidden="true" tabindex="-1"></a>This gives a compact comparison of scenario risk at the end of the projection horizon.</span>
+<span id="cb18-592"><a href="#cb18-592" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-595"><a href="#cb18-595" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-596"><a href="#cb18-596" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-terminal-status</span></span>
+<span id="cb18-597"><a href="#cb18-597" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Distribution of SSB / SBMSY in", FINAL_YEAR, "under each projection scenario.", N_ITER, "iterations. The dotted line marks SBMSY.", filter_note)</span></span>
+<span id="cb18-598"><a href="#cb18-598" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
+<span id="cb18-599"><a href="#cb18-599" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb18-600"><a href="#cb18-600" aria-hidden="true" tabindex="-1"></a>status_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_fbar_iterations</span>(status_dt, futs_fbar_max_dt, <span class="st">"scenario"</span>)</span>
+<span id="cb18-601"><a href="#cb18-601" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_status</span>(status_plot_dt, FINAL_YEAR, <span class="at">n_iter=</span>N_ITER, <span class="at">ref_om=</span>REF_OM)</span>
+<span id="cb18-602"><a href="#cb18-602" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-603"><a href="#cb18-603" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-606"><a href="#cb18-606" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-607"><a href="#cb18-607" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-terminal-tradeoff</span></span>
+<span id="cb18-608"><a href="#cb18-608" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Median catch and SSB / SBMSY in", FINAL_YEAR, "under each projection scenario. Points show scenario medians; bars show 90% intervals. The dotted line marks SBMSY.", filter_note)</span></span>
+<span id="cb18-609"><a href="#cb18-609" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb18-610"><a href="#cb18-610" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
+<span id="cb18-611"><a href="#cb18-611" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_tradeoff</span>(status_plot_dt, FINAL_YEAR, <span class="at">ref_om=</span>REF_OM)</span>
+<span id="cb18-612"><a href="#cb18-612" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-613"><a href="#cb18-613" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-616"><a href="#cb18-616" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-617"><a href="#cb18-617" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-terminal-tradeoff-ssb</span></span>
+<span id="cb18-618"><a href="#cb18-618" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Median catch and SSB in", FINAL_YEAR, "under each projection scenario. Points show scenario medians; bars show 90% intervals. The dotted line marks SBMSY.", filter_note)</span></span>
+<span id="cb18-619"><a href="#cb18-619" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb18-620"><a href="#cb18-620" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
+<span id="cb18-621"><a href="#cb18-621" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_tradeoff</span>(status_plot_dt, FINAL_YEAR, <span class="at">ref_om=</span>REF_OM,</span>
+<span id="cb18-622"><a href="#cb18-622" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_metric=</span><span class="st">"ssb"</span>)</span>
+<span id="cb18-623"><a href="#cb18-623" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-624"><a href="#cb18-624" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-627"><a href="#cb18-627" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-628"><a href="#cb18-628" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-catch-2026</span></span>
+<span id="cb18-629"><a href="#cb18-629" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Distribution of catch in 2026 under each projection scenario.", N_ITER, "iterations.", filter_note)</span></span>
+<span id="cb18-630"><a href="#cb18-630" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
+<span id="cb18-631"><a href="#cb18-631" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb18-632"><a href="#cb18-632" aria-hidden="true" tabindex="-1"></a>catch_2026_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_fbar_iterations</span>(catch_2026_dt,</span>
+<span id="cb18-633"><a href="#cb18-633" aria-hidden="true" tabindex="-1"></a>  futs_fbar_max_dt, <span class="st">"scenario"</span>)</span>
+<span id="cb18-634"><a href="#cb18-634" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_catch_distribution</span>(catch_2026_plot_dt, <span class="dv">2026</span>,</span>
+<span id="cb18-635"><a href="#cb18-635" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_iter=</span>N_ITER, <span class="at">ref_om=</span>REF_OM)</span>
+<span id="cb18-636"><a href="#cb18-636" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-637"><a href="#cb18-637" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-638"><a href="#cb18-638" aria-hidden="true" tabindex="-1"></a><span class="fu"># Selectivity Window Sensitivity</span></span>
 <span id="cb18-639"><a href="#cb18-639" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-642"><a href="#cb18-642" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-643"><a href="#cb18-643" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-selectivity-windows</span></span>
-<span id="cb18-644"><a href="#cb18-644" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Terminal-year selectivity averaging windows."</span></span>
-<span id="cb18-645"><a href="#cb18-645" aria-hidden="true" tabindex="-1"></a>window_tbl <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb18-646"><a href="#cb18-646" aria-hidden="true" tabindex="-1"></a>  <span class="at">window_years =</span> SELEX_WINDOWS,</span>
-<span id="cb18-647"><a href="#cb18-647" aria-hidden="true" tabindex="-1"></a>  <span class="at">description =</span> <span class="fu">paste</span>(<span class="st">"Mean selectivity over the final"</span>, SELEX_WINDOWS, <span class="st">"historical years"</span>)</span>
-<span id="cb18-648"><a href="#cb18-648" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-649"><a href="#cb18-649" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-650"><a href="#cb18-650" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(window_tbl, <span class="at">col.names=</span><span class="fu">c</span>(<span class="st">"Window (years)"</span>, <span class="st">"Projection assumption"</span>))</span>
-<span id="cb18-651"><a href="#cb18-651" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-640"><a href="#cb18-640" aria-hidden="true" tabindex="-1"></a>The selectivity-window sensitivity analysis projects at FMSY while replacing future selectivity with averages over alternative terminal-year windows.</span>
+<span id="cb18-641"><a href="#cb18-641" aria-hidden="true" tabindex="-1"></a>For example, a three-year window uses the mean selectivity pattern from the final three historical years.</span>
+<span id="cb18-642"><a href="#cb18-642" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-645"><a href="#cb18-645" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-646"><a href="#cb18-646" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-selectivity-windows</span></span>
+<span id="cb18-647"><a href="#cb18-647" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Terminal-year selectivity averaging windows."</span></span>
+<span id="cb18-648"><a href="#cb18-648" aria-hidden="true" tabindex="-1"></a>window_tbl <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb18-649"><a href="#cb18-649" aria-hidden="true" tabindex="-1"></a>  <span class="at">window_years =</span> SELEX_WINDOWS,</span>
+<span id="cb18-650"><a href="#cb18-650" aria-hidden="true" tabindex="-1"></a>  <span class="at">description =</span> <span class="fu">paste</span>(<span class="st">"Mean selectivity over the final"</span>, SELEX_WINDOWS, <span class="st">"historical years"</span>)</span>
+<span id="cb18-651"><a href="#cb18-651" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb18-652"><a href="#cb18-652" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-655"><a href="#cb18-655" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-656"><a href="#cb18-656" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-selectivity-window-sensitivity</span></span>
-<span id="cb18-657"><a href="#cb18-657" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr sensitivity_caption("Sensitivity of projections to the terminal-year selectivity averaging window.")</span></span>
-<span id="cb18-658"><a href="#cb18-658" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
-<span id="cb18-659"><a href="#cb18-659" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8</span></span>
-<span id="cb18-660"><a href="#cb18-660" aria-hidden="true" tabindex="-1"></a>selex_excluded <span class="ot">&lt;-</span> selex_fbar_max_dt[</span>
-<span id="cb18-661"><a href="#cb18-661" aria-hidden="true" tabindex="-1"></a>  , .(<span class="at">max_median_fbar=</span><span class="fu">median</span>(max_fbar, <span class="at">na.rm=</span><span class="cn">TRUE</span>)),</span>
-<span id="cb18-662"><a href="#cb18-662" aria-hidden="true" tabindex="-1"></a>  by<span class="ot">=</span>.(window, stock)][max_median_fbar <span class="sc">&gt;</span> FBAR_MAX]</span>
-<span id="cb18-663"><a href="#cb18-663" aria-hidden="true" tabindex="-1"></a>selex_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_group_stock</span>(selex_dt, selex_excluded, <span class="st">"window"</span>)</span>
-<span id="cb18-664"><a href="#cb18-664" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-665"><a href="#cb18-665" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_sensitivity</span>(selex_plot_dt, <span class="at">group_col=</span><span class="st">"window"</span>, <span class="at">group_lab=</span><span class="st">"Avg. years"</span>,</span>
-<span id="cb18-666"><a href="#cb18-666" aria-hidden="true" tabindex="-1"></a>  <span class="at">init_year=</span>INIT_YEAR, <span class="at">sbmsy_ref=</span>sbmsy_ref, <span class="at">fmsy_ref=</span>fmsy_ref,</span>
-<span id="cb18-667"><a href="#cb18-667" aria-hidden="true" tabindex="-1"></a>  <span class="at">ref_om=</span>REF_OM,</span>
-<span id="cb18-668"><a href="#cb18-668" aria-hidden="true" tabindex="-1"></a>  <span class="at">title_prefix=</span><span class="st">"Selectivity averaging window sensitivity"</span>)</span>
-<span id="cb18-669"><a href="#cb18-669" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-670"><a href="#cb18-670" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-671"><a href="#cb18-671" aria-hidden="true" tabindex="-1"></a><span class="fu"># Selectivity Block Sensitivity</span></span>
-<span id="cb18-672"><a href="#cb18-672" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-673"><a href="#cb18-673" aria-hidden="true" tabindex="-1"></a>The named-block sensitivity analysis is similar to the rolling-window analysis, but the averaged selectivity pattern comes from specified historical year blocks.</span>
-<span id="cb18-674"><a href="#cb18-674" aria-hidden="true" tabindex="-1"></a>This is useful when historical periods represent different fishery or stock-selectivity regimes.</span>
+<span id="cb18-653"><a href="#cb18-653" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(window_tbl, <span class="at">col.names=</span><span class="fu">c</span>(<span class="st">"Window (years)"</span>, <span class="st">"Projection assumption"</span>))</span>
+<span id="cb18-654"><a href="#cb18-654" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-655"><a href="#cb18-655" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-658"><a href="#cb18-658" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-659"><a href="#cb18-659" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-selectivity-window-sensitivity</span></span>
+<span id="cb18-660"><a href="#cb18-660" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr sensitivity_caption("Sensitivity of projections to the terminal-year selectivity averaging window.")</span></span>
+<span id="cb18-661"><a href="#cb18-661" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
+<span id="cb18-662"><a href="#cb18-662" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8</span></span>
+<span id="cb18-663"><a href="#cb18-663" aria-hidden="true" tabindex="-1"></a>selex_excluded <span class="ot">&lt;-</span> selex_fbar_max_dt[</span>
+<span id="cb18-664"><a href="#cb18-664" aria-hidden="true" tabindex="-1"></a>  , .(<span class="at">max_median_fbar=</span><span class="fu">median</span>(max_fbar, <span class="at">na.rm=</span><span class="cn">TRUE</span>)),</span>
+<span id="cb18-665"><a href="#cb18-665" aria-hidden="true" tabindex="-1"></a>  by<span class="ot">=</span>.(window, stock)][max_median_fbar <span class="sc">&gt;</span> FBAR_MAX]</span>
+<span id="cb18-666"><a href="#cb18-666" aria-hidden="true" tabindex="-1"></a>selex_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_group_stock</span>(selex_dt, selex_excluded, <span class="st">"window"</span>)</span>
+<span id="cb18-667"><a href="#cb18-667" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-668"><a href="#cb18-668" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_sensitivity</span>(selex_plot_dt, <span class="at">group_col=</span><span class="st">"window"</span>, <span class="at">group_lab=</span><span class="st">"Avg. years"</span>,</span>
+<span id="cb18-669"><a href="#cb18-669" aria-hidden="true" tabindex="-1"></a>  <span class="at">init_year=</span>INIT_YEAR, <span class="at">sbmsy_ref=</span>sbmsy_ref, <span class="at">fmsy_ref=</span>fmsy_ref,</span>
+<span id="cb18-670"><a href="#cb18-670" aria-hidden="true" tabindex="-1"></a>  <span class="at">ref_om=</span>REF_OM,</span>
+<span id="cb18-671"><a href="#cb18-671" aria-hidden="true" tabindex="-1"></a>  <span class="at">title_prefix=</span><span class="st">"Selectivity averaging window sensitivity"</span>)</span>
+<span id="cb18-672"><a href="#cb18-672" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-673"><a href="#cb18-673" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-674"><a href="#cb18-674" aria-hidden="true" tabindex="-1"></a><span class="fu"># Selectivity Block Sensitivity</span></span>
 <span id="cb18-675"><a href="#cb18-675" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-678"><a href="#cb18-678" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-679"><a href="#cb18-679" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-selectivity-blocks</span></span>
-<span id="cb18-680"><a href="#cb18-680" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Named historical selectivity blocks used for projection sensitivity."</span></span>
-<span id="cb18-681"><a href="#cb18-681" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(block_tbl, <span class="at">col.names=</span><span class="fu">c</span>(<span class="st">"Block"</span>, <span class="st">"Years"</span>))</span>
-<span id="cb18-682"><a href="#cb18-682" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-683"><a href="#cb18-683" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-686"><a href="#cb18-686" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-687"><a href="#cb18-687" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-selectivity-block-sensitivity</span></span>
-<span id="cb18-688"><a href="#cb18-688" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr sensitivity_caption("Sensitivity of projections to named historical selectivity blocks.")</span></span>
-<span id="cb18-689"><a href="#cb18-689" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
-<span id="cb18-690"><a href="#cb18-690" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8</span></span>
-<span id="cb18-691"><a href="#cb18-691" aria-hidden="true" tabindex="-1"></a>block_excluded <span class="ot">&lt;-</span> block_fbar_max_dt[</span>
-<span id="cb18-692"><a href="#cb18-692" aria-hidden="true" tabindex="-1"></a>  , .(<span class="at">max_median_fbar=</span><span class="fu">median</span>(max_fbar, <span class="at">na.rm=</span><span class="cn">TRUE</span>)),</span>
-<span id="cb18-693"><a href="#cb18-693" aria-hidden="true" tabindex="-1"></a>  by<span class="ot">=</span>.(block, stock)][max_median_fbar <span class="sc">&gt;</span> FBAR_MAX]</span>
-<span id="cb18-694"><a href="#cb18-694" aria-hidden="true" tabindex="-1"></a>block_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_group_stock</span>(block_dt, block_excluded, <span class="st">"block"</span>)</span>
-<span id="cb18-695"><a href="#cb18-695" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-696"><a href="#cb18-696" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_sensitivity</span>(block_plot_dt, <span class="at">group_col=</span><span class="st">"block"</span>, <span class="at">group_lab=</span><span class="st">"Selectivity block"</span>,</span>
-<span id="cb18-697"><a href="#cb18-697" aria-hidden="true" tabindex="-1"></a>  <span class="at">init_year=</span>INIT_YEAR, <span class="at">sbmsy_ref=</span>sbmsy_ref, <span class="at">fmsy_ref=</span>fmsy_ref,</span>
-<span id="cb18-698"><a href="#cb18-698" aria-hidden="true" tabindex="-1"></a>  <span class="at">ref_om=</span>REF_OM,</span>
-<span id="cb18-699"><a href="#cb18-699" aria-hidden="true" tabindex="-1"></a>  <span class="at">title_prefix=</span><span class="st">"Selectivity block sensitivity"</span>)</span>
-<span id="cb18-700"><a href="#cb18-700" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-701"><a href="#cb18-701" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-702"><a href="#cb18-702" aria-hidden="true" tabindex="-1"></a><span class="fu"># Outputs</span></span>
-<span id="cb18-703"><a href="#cb18-703" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-704"><a href="#cb18-704" aria-hidden="true" tabindex="-1"></a>The cached projection workflow writes two main files:</span>
-<span id="cb18-705"><a href="#cb18-705" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-706"><a href="#cb18-706" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`report/projections/cache.rda`</span>, containing the settings, summary values, and plot objects used by this report; and</span>
-<span id="cb18-707"><a href="#cb18-707" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`report/projections/projections_report.html`</span>, the original HTML report built by <span class="in">`report_run_projections.R`</span>.</span>
+<span id="cb18-676"><a href="#cb18-676" aria-hidden="true" tabindex="-1"></a>The named-block sensitivity analysis is similar to the rolling-window analysis, but the averaged selectivity pattern comes from specified historical year blocks.</span>
+<span id="cb18-677"><a href="#cb18-677" aria-hidden="true" tabindex="-1"></a>This is useful when historical periods represent different fishery or stock-selectivity regimes.</span>
+<span id="cb18-678"><a href="#cb18-678" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-681"><a href="#cb18-681" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-682"><a href="#cb18-682" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-selectivity-blocks</span></span>
+<span id="cb18-683"><a href="#cb18-683" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Named historical selectivity blocks used for projection sensitivity."</span></span>
+<span id="cb18-684"><a href="#cb18-684" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(block_tbl, <span class="at">col.names=</span><span class="fu">c</span>(<span class="st">"Block"</span>, <span class="st">"Years"</span>))</span>
+<span id="cb18-685"><a href="#cb18-685" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-686"><a href="#cb18-686" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-689"><a href="#cb18-689" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-690"><a href="#cb18-690" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-selectivity-block-sensitivity</span></span>
+<span id="cb18-691"><a href="#cb18-691" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr sensitivity_caption("Sensitivity of projections to named historical selectivity blocks.")</span></span>
+<span id="cb18-692"><a href="#cb18-692" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
+<span id="cb18-693"><a href="#cb18-693" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8</span></span>
+<span id="cb18-694"><a href="#cb18-694" aria-hidden="true" tabindex="-1"></a>block_excluded <span class="ot">&lt;-</span> block_fbar_max_dt[</span>
+<span id="cb18-695"><a href="#cb18-695" aria-hidden="true" tabindex="-1"></a>  , .(<span class="at">max_median_fbar=</span><span class="fu">median</span>(max_fbar, <span class="at">na.rm=</span><span class="cn">TRUE</span>)),</span>
+<span id="cb18-696"><a href="#cb18-696" aria-hidden="true" tabindex="-1"></a>  by<span class="ot">=</span>.(block, stock)][max_median_fbar <span class="sc">&gt;</span> FBAR_MAX]</span>
+<span id="cb18-697"><a href="#cb18-697" aria-hidden="true" tabindex="-1"></a>block_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_group_stock</span>(block_dt, block_excluded, <span class="st">"block"</span>)</span>
+<span id="cb18-698"><a href="#cb18-698" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-699"><a href="#cb18-699" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_sensitivity</span>(block_plot_dt, <span class="at">group_col=</span><span class="st">"block"</span>, <span class="at">group_lab=</span><span class="st">"Selectivity block"</span>,</span>
+<span id="cb18-700"><a href="#cb18-700" aria-hidden="true" tabindex="-1"></a>  <span class="at">init_year=</span>INIT_YEAR, <span class="at">sbmsy_ref=</span>sbmsy_ref, <span class="at">fmsy_ref=</span>fmsy_ref,</span>
+<span id="cb18-701"><a href="#cb18-701" aria-hidden="true" tabindex="-1"></a>  <span class="at">ref_om=</span>REF_OM,</span>
+<span id="cb18-702"><a href="#cb18-702" aria-hidden="true" tabindex="-1"></a>  <span class="at">title_prefix=</span><span class="st">"Selectivity block sensitivity"</span>)</span>
+<span id="cb18-703"><a href="#cb18-703" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-704"><a href="#cb18-704" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-705"><a href="#cb18-705" aria-hidden="true" tabindex="-1"></a><span class="fu"># Outputs</span></span>
+<span id="cb18-706"><a href="#cb18-706" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-707"><a href="#cb18-707" aria-hidden="true" tabindex="-1"></a>The cached projection workflow writes two main files:</span>
 <span id="cb18-708"><a href="#cb18-708" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-709"><a href="#cb18-709" aria-hidden="true" tabindex="-1"></a>This Quarto document provides an editable report source for the same projection results.</span>
+<span id="cb18-709"><a href="#cb18-709" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`report/projections/cache.rda`</span>, containing the settings, summary values, and plot objects used by this report; and</span>
+<span id="cb18-710"><a href="#cb18-710" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`report/projections/projections_report.html`</span>, the original HTML report built by <span class="in">`report_run_projections.R`</span>.</span>
+<span id="cb18-711"><a href="#cb18-711" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-712"><a href="#cb18-712" aria-hidden="true" tabindex="-1"></a>This Quarto document provides an editable report source for the same projection results.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
