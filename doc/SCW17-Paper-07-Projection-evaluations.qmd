@@ -28,6 +28,8 @@ library(ggplot2)
 library(ggthemes)
 library(data.table)
 library(knitr)
+library(FLCore)
+library(mse)
 
 jmMSE_path <- params$jmMSE_path
 cache_file <- file.path(jmMSE_path, "report", "projections", "cache.rda")
@@ -38,6 +40,7 @@ if(!file.exists(cache_file)) {
 }
 
 load(cache_file)
+load(file.path(jmMSE_path, "data", "models.rda"))
 
 fmt_num <- function(x, digits=0) {
   format(round(x, digits), big.mark=",", trim=TRUE, scientific=FALSE)
@@ -374,6 +377,114 @@ plot_qmd_tradeoff <- function(status_dt, final_year, ref_om=NULL,
   if(length(unique(dat$stock)) > 1) p + facet_wrap(~stock, scales="free") else p
 }
 
+om_ref_ratio_dt <- function(om_short, n_iter) {
+  row <- models[short == om_short]
+  om_obj <- readRDS(file.path(jmMSE_path, "data", row$file))
+  om <- iter(om_obj$om, seq_len(n_iter))
+  rp <- refpts(om)
+  stock_names <- names(biols(om))
+  if(is(rp, "FLPars")) {
+    rbindlist(lapply(seq_along(stock_names), function(i) {
+      rpi <- rp[[i]]
+      data.table(stock=stock_names[i], iter=seq_len(dim(rpi)[2]),
+        bmsy_bzero=as.numeric(rpi["SBMSY", ]) /
+          as.numeric(rpi["SB0", ]))
+    }))
+  } else {
+    data.table(stock=stock_names[1], iter=seq_len(dim(rp)[2]),
+      bmsy_bzero=as.numeric(rp["SBMSY", ]) / as.numeric(rp["SB0", ]))
+  }
+}
+
+om_dynamic_bzero_dt <- function(om_short, n_iter, year_filter=NULL) {
+  row <- models[short == om_short]
+  om_obj <- readRDS(file.path(jmMSE_path, "data", row$file))
+  out <- rbindlist(lapply(names(om_obj$unfishedSSB), function(stock) {
+    dat <- as.data.table(as.data.frame(om_obj$unfishedSSB[[stock]]))
+    dat[, `:=`(stock=stock, year=as.integer(as.character(year)),
+      iter=as.integer(as.character(iter)))]
+    dat[iter <= n_iter, .(stock, year, iter, dyn_bzero=data)]
+  }))
+  if(!is.null(year_filter))
+    out <- out[year == year_filter]
+  out
+}
+
+scaled_tradeoff_data <- function(status_dt, fbar_max_dt, om_short, n_iter,
+  group_col="scenario") {
+  status_plot_dt <- drop_fbar_iterations(status_dt, fbar_max_dt, group_col)
+  dyn_dt <- om_dynamic_bzero_dt(om_short, n_iter, FINAL_YEAR)
+  ratio_dt <- om_ref_ratio_dt(om_short, n_iter)
+  dat <- merge(status_plot_dt, dyn_dt, by=c("stock", "iter"))
+  dat <- merge(dat, ratio_dt, by=c("stock", "iter"))
+  dat[, ssb_dynbzero_scaled := (ssb / dyn_bzero) / bmsy_bzero]
+  dat[, .(
+    x=median(ssb_dynbzero_scaled, na.rm=TRUE),
+    x_lo=quantile(ssb_dynbzero_scaled, 0.05, na.rm=TRUE),
+    x_hi=quantile(ssb_dynbzero_scaled, 0.95, na.rm=TRUE),
+    catch=median(catch, na.rm=TRUE),
+    catch_lo=quantile(catch, 0.05, na.rm=TRUE),
+    catch_hi=quantile(catch, 0.95, na.rm=TRUE)
+  ), by=.(scenario, stock, label)]
+}
+
+plot_qmd_scaled_tradeoff <- function(dat, final_year, ref_om) {
+  title <- paste("Terminal catch and scaled stock status at", final_year, "-",
+    ref_om)
+  lvls <- if(is.factor(dat$label)) levels(dat$label) else
+    unique(as.character(dat$label))
+  shapes <- c(16, 17, 15, 18, 3, 7, 8, 4, 9, 10, 0, 1, 2, 5, 6)
+  p <- ggplot(dat, aes(x=x, y=catch, colour=label, shape=label)) +
+    geom_vline(xintercept=1, linetype="dotted", colour="#d55e00") +
+    geom_segment(aes(x=x_lo, xend=x_hi, y=catch, yend=catch),
+      linewidth=0.7, alpha=0.75, show.legend=FALSE) +
+    geom_errorbar(aes(ymin=catch_lo, ymax=catch_hi),
+      width=0, linewidth=0.7, alpha=0.75, show.legend=FALSE) +
+    geom_point(size=4.2, stroke=1.1) +
+    scale_colour_cycling(dat$label, name="Scenario") +
+    scale_shape_manual(values=setNames(
+      shapes[(seq_along(lvls) - 1L) %% length(shapes) + 1L], lvls),
+      name="Scenario") +
+    scale_x_continuous(limits=c(0, NA),
+      labels=function(x) format(round(x, 1), trim=TRUE, scientific=FALSE),
+      expand=expansion(mult=c(0, 0.05))) +
+    scale_y_continuous(limits=c(-200, NA),
+      breaks=function(x) seq(0, ceiling(max(x, na.rm=TRUE) / 500) * 500,
+        by=500),
+      labels=function(x) format(round(x), big.mark=",", scientific=FALSE),
+      expand=expansion(mult=c(0, 0.05))) +
+    labs(title=title, x="Scaled SSB / Dynamic Bzero", y="Catch (t)") +
+    report_theme()
+  if(length(unique(dat$stock)) > 1) p + facet_wrap(~stock, scales="free") else p
+}
+
+plot_qmd_dynamic_bzero <- function(om_short, n_iter, init_year, worm_n=15) {
+  dat <- om_dynamic_bzero_dt(om_short, n_iter)[year <= init_year]
+  sum_dt <- dat[, .(
+    q05=quantile(dyn_bzero, 0.05, na.rm=TRUE),
+    q50=median(dyn_bzero, na.rm=TRUE),
+    q95=quantile(dyn_bzero, 0.95, na.rm=TRUE)
+  ), by=.(stock, year)]
+  set.seed(2026)
+  worm_ids <- sort(sample(unique(dat$iter), min(worm_n, length(unique(dat$iter)))))
+  worm_dt <- dat[iter %in% worm_ids]
+  worm_cols <- setNames(grDevices::hcl.colors(length(worm_ids), "Viridis"),
+    worm_ids)
+  worm_dt[, worm_col := worm_cols[as.character(iter)]]
+  p <- ggplot(sum_dt, aes(x=year)) +
+    geom_ribbon(aes(ymin=q05, ymax=q95), fill="#4c78a8", alpha=0.24) +
+    geom_line(data=worm_dt, aes(x=year, y=dyn_bzero, group=iter,
+      colour=worm_col), inherit.aes=FALSE, alpha=0.78, linewidth=0.45) +
+    geom_line(aes(y=q50), colour="black", linewidth=0.95) +
+    scale_colour_identity(guide="none") +
+    zero_y_scale(labels=function(x) format(round(x), big.mark=",",
+      scientific=FALSE)) +
+    labs(title=paste("Historical dynamic Bzero -", om_short), x=NULL,
+      y="Dynamic Bzero (t)") +
+    report_theme()
+  if(length(unique(dat$stock)) > 1) p + facet_wrap(~stock, scales="free_y") else p
+}
+
 plot_qmd_catch_distribution <- function(catch_dt, year, n_iter=NULL, ref_om=NULL) {
   title <- paste("Catch distribution in", year)
   if(!is.null(ref_om)) title <- paste(title, "-", ref_om)
@@ -549,6 +660,19 @@ plot_qmd_recruitment(rec_dt, rec_worms_plot_dt, init_year=INIT_YEAR,
   final_year=FINAL_YEAR, ref_om=REF_OM)
 ```
 
+# Dynamic Bzero
+
+The dynamic Bzero diagnostic shows the historical unfished spawning biomass
+trajectory used to scale the terminal stock-status comparison.
+
+```{r}
+#| label: fig-dynamic-bzero
+#| fig-cap: !expr paste0("Historical dynamic Bzero for ", REF_OM, " through ", INIT_YEAR, ". The ribbon shows the 90% interval across MCMC draws, the black line shows the median, and colored lines show 15 sampled MCMC draws.")
+#| fig-width: 12
+#| fig-height: 6
+plot_qmd_dynamic_bzero(REF_OM, N_ITER, INIT_YEAR, worm_n=15)
+```
+
 # Future Fishing Pattern Scenarios
 
 The main projection comparison applies the fishing-pattern controls over the projection horizon.
@@ -594,6 +718,35 @@ plot_qmd_tradeoff(status_plot_dt, FINAL_YEAR, ref_om=REF_OM)
 #| fig-height: 7
 plot_qmd_tradeoff(status_plot_dt, FINAL_YEAR, ref_om=REF_OM,
   x_metric="ssb")
+```
+
+```{r}
+#| label: fig-terminal-tradeoff-scaled-om11
+#| fig-cap: !expr paste("Median catch and scaled stock status in", FINAL_YEAR, "under each projection scenario for om11. The x-axis is (SSB / dynamic Bzero) divided by the draw-specific Bmsy / Bzero value. Points show scenario medians; bars show 90% intervals. The dotted vertical line marks the draw-specific Bmsy / Bzero level.", filter_note)
+#| fig-width: 10
+#| fig-height: 7
+scaled_tradeoff_om11_dt <- scaled_tradeoff_data(status_dt, futs_fbar_max_dt,
+  REF_OM, N_ITER)
+plot_qmd_scaled_tradeoff(scaled_tradeoff_om11_dt, FINAL_YEAR, ref_om=REF_OM)
+```
+
+```{r}
+#| label: fig-terminal-tradeoff-scaled-om12
+#| fig-cap: !expr paste("Median catch and scaled stock status in", FINAL_YEAR, "under each projection scenario for om12, the steepness = 0.8 operating model. The x-axis is (SSB / dynamic Bzero) divided by the draw-specific Bmsy / Bzero value. Points show scenario medians; bars show 90% intervals. The dotted vertical line marks the draw-specific Bmsy / Bzero level.", filter_note)
+#| fig-width: 10
+#| fig-height: 7
+om12_cache_file <- file.path(jmMSE_path, "report", "projections_om12",
+  "cache.rda")
+if(!file.exists(om12_cache_file)) {
+  stop("OM12 projection cache not found at ", om12_cache_file,
+    ". Run explore_projections.R with REF_OM set to 'om12' before rendering.")
+}
+om12_cache <- new.env(parent=emptyenv())
+load(om12_cache_file, envir=om12_cache)
+scaled_tradeoff_om12_dt <- scaled_tradeoff_data(om12_cache$status_dt,
+  om12_cache$futs_fbar_max_dt, om12_cache$REF_OM, om12_cache$N_ITER)
+plot_qmd_scaled_tradeoff(scaled_tradeoff_om12_dt, om12_cache$FINAL_YEAR,
+  ref_om=om12_cache$REF_OM)
 ```
 
 ```{r}
