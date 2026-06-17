@@ -1,0 +1,461 @@
+---
+title: "SCW17 MSE Workshop Report"
+pagetitle: "SPRFMO SCW17 MSE Workshop Report"
+date: today
+format:
+  html:
+    output-file: "SCW17-MSE-Workshop-report.html"
+    self-contained: true
+    embed-resources: true
+    html-math-method: katex
+    theme: cosmo
+    toc: true
+    toc-title: "Contents"
+    toc-depth: 2
+    toc-location: left
+    number-sections: false
+execute:
+  warning: false
+  message: false
+  echo: false
+  results: false
+---
+
+```{r}
+date_stamp <- format(Sys.Date(), "%d %B %Y")
+```
+
+{{< include _includes/sprfmo-banner.html >}}
+
+```{=html}
+<div style="font-style: italic; margin-top: 0.5rem;">Jack Mackerel Working Group</div>
+```
+
+```{=html}
+<div class="paper-title">Report of the Jack Mackerel Management Strategy Evaluation Workshop - SCW17</div>
+```
+
+```{=html}
+<style>
+#day-1-decisions-and-agreements table th:first-child,
+#day-1-decisions-and-agreements table td:first-child,
+#day-2-decisions-and-agreements table th:first-child,
+#day-2-decisions-and-agreements table td:first-child {
+  width: 12rem;
+  min-width: 12rem;
+  max-width: 12rem;
+  white-space: nowrap;
+}
+</style>
+```
+
+**Meeting:** JMWG Management Strategy Evaluation workshop (SCW17)  
+**Dates:** 15-19 June 2026  
+**Location:** Wageningen, the Netherlands  
+**Organisation:** South Pacific Regional Fisheries Management Organisation  
+**Working group:** Jack Mackerel Working Group  
+**Host:** EU / PFA  
+**Chair:** Jim Ianelli  
+**Status:** Draft, Days 1-2  
+**Updated:** `r date_stamp`
+
+::: {.callout-note}
+## Scope note
+
+This draft covers Monday 15 June and Tuesday 16 June 2026. Days 3-5 should be added as the workshop proceeds. Participant names, affiliations, and unresolved actions should be checked before submission to the Scientific Committee.
+:::
+
+::: {.callout-note}
+## Acknowledgement
+
+The Working Group expresses its gratitude to Niels Hintzen and the Pelagic Freezer Trawler Association (PFA) for sponsoring and supporting the Wageningen workshop.
+:::
+
+# Summary
+
+1. This report summarizes the first two days of the 2026 Jack Mackerel Working Group Management Strategy Evaluation (MSE) workshop, held in Wageningen, the Netherlands. The workshop continued the MSE programme advanced at SCW15 and was intended to prepare candidate management procedures (MPs), performance metrics, robustness scenarios, and supporting documentation for SC14.
+
+2. Day 1 focused on the workshop opening, the link to the 2026 benchmark, post-benchmark model developments, operating-model (OM) conditioning, reference points, index simulation, and principles for tuning candidate MPs. The group treated model 0.16 as the primary reference for OM conditioning during the workshop, while retaining model 0.00 and the SC13-era configuration as explicitly flagged alternatives or robustness tests.
+
+3. Day 2 focused on the operating-model deep dive. The group discussed future recruitment and index simulation, ENSO and broader climate effects, the OM set and naming conventions, reference-point proxies, and projection-scenario definitions. The group agreed to use 0.65 steepness as the base case, move 0.8 steepness to robustness testing, and treat regime/ENSO behaviour as a robustness issue rather than an integral component of the core simulations.
+
+4. Several technical issues were left open for later in the week, including the final OM reference set, treatment of exceptional circumstances, the representation of standardized indices in projections, reference-point calculation and presentation, and how alternative models should be communicated to the Scientific Committee and Commission.
+
+5. This draft was developed from Day 1 and Day 2 meeting notes, the SCW17 working documents, and the daily summary documents. Artificial-intelligence tools were used to help convert notes into report text; all content should be reviewed by the report authors and meeting participants before submission.
+
+# Meeting Details
+
+| Item | Detail |
+|---|---|
+| Meeting | JMWG Management Strategy Evaluation workshop (SCW17) |
+| Dates | 15-19 June 2026 |
+| Days covered | Monday 15 June and Tuesday 16 June 2026 |
+| Location | Wageningen, the Netherlands |
+| Organisation | South Pacific Regional Fisheries Management Organisation |
+| Working group | Jack Mackerel Working Group |
+| Host | EU / PFA |
+| Chair | Jim Ianelli |
+| Rapporteur | Niels Hintzen |
+| External reviewers | David Miller (ICES); Rosana Ourens (CEFAS) |
+| Invited expert | Tom Carruthers (Blue Matter) |
+| Format | In person, with remote participation by Microsoft Teams |
+
+# Opening of the Meeting
+
+6. The Chair opened the workshop and welcomed participants to Wageningen. The local organizer reviewed venue logistics, connectivity, and arrangements for remote participation. Participants, external reviewers, invited experts, and observers introduced themselves.
+
+7. The Chair described the main purpose of the week: to take the assessment work completed at and since the 2026 benchmark and develop operating models suitable for MSE conditioning; to consider candidate MPs and performance metrics; and to prepare documentation for SC14. The workshop would also revisit technical items left open at the benchmark.
+
+# Background and Link to Previous Work
+
+8. The Chair reviewed the history of the jack mackerel assessment and MSE programme. Early work included an FAO-supported workshop in Chile and a 2010 workshop in Peru that tested candidate assessment methods against simulated data sets. The Joint Jack Mackerel Model (JJM) subsequently became the agreed assessment platform.
+
+9. The current management advice is based on the management procedure adopted around 2014 and described in Annex K. That procedure links TAC changes to stock status from the assessment and constrains annual TAC changes to provide stability under assessment uncertainty. The Commission and Scientific Committee have since requested a more rigorous, feedback-based MSE with explicit robustness testing.
+
+10. SCW17 builds directly on the SCW15 MSE workshop and the 2026 benchmark. SCW15 developed OM specifications, robustness scenarios, and candidate MP tuning concepts. The 2026 benchmark reviewed assessment inputs, abundance indices, biological assumptions, and model alternatives. SCW17 is intended to convert that material into a practical MSE design and documentation package for SC14.
+
+# Adoption of Agenda and Organization of Work
+
+11. The Chair reviewed the five-day work plan. The group agreed that work would proceed by consensus. A draft agenda item referring to a Thursday "vote" should be revised to "collaboratively agree", because a formal vote would require a quorum and was not the intended decision process.
+
+12. It was confirmed that the workshop report, the benchmark report, and the post-benchmark model-developments document should be provided to the Scientific Committee so that members and Commissioners can review the methods, alternative model runs, and associated risks.
+
+# Workshop Objectives
+
+13. The main objectives for the week were to:
+
+   1. Finalize the set of OMs used for MSE conditioning and document the rationale for including or excluding alternatives.
+   2. Agree how reference points should be calculated and presented for cross-OM comparison and communication.
+   3. Develop and screen candidate MPs, including the indices they would use.
+   4. Define robustness scenarios and the treatment of exceptional circumstances.
+   5. Record decisions, unresolved issues, and follow-up tasks for the workshop report to SC14.
+
+# Key Discussion Summary
+
+## Assessment, Operating Models, and MSE Approach
+
+14. The group distinguished the annual assessment from the OM used in the MSE. The assessment will continue to support Scientific Committee advice, whereas OM conditioning is a broader exercise intended to represent plausible system dynamics for testing MPs. Participants cautioned against treating the OM reference set as a single best assessment.
+
+15. The group discussed empirical and assessment-based MPs. Participants noted that complex assessment-based MPs can be difficult to simulate faithfully, slow to run, and hard to reproduce if the assessment is repeatedly adjusted. The prevailing view favored simple, locked-in empirical rules tested through MSE, with assessments and legal requirements used as external checks rather than as the core automated rule.
+
+16. Exceptional circumstances were introduced as a key design issue. The group noted that a full assessment is one possible response, while indicator-based monitoring could also be used. The Scientific Committee would use the best available information to judge whether exceptional circumstances should be declared, with the detailed response to be developed later in the week.
+
+## Model Developments Since the Benchmark
+
+17. Paper 01 summarized post-benchmark work, including corrections to the Peruvian industrial CPUE series and revised selectivity treatment. A CPUE scaling error was corrected: the effort-creep factor had been applied by multiplication rather than division. Correcting the error lowered the end of the industrial CPUE series, while the artisanal series was unchanged.
+
+18. A reduced-parameter selectivity formulation was presented for the Peruvian fleet. The revised block-based selectivity reduced the number of parameters substantially while producing little change in the length-frequency negative log-likelihood. The group considered the reduced formulation and final-F handling more plausible for OM conditioning.
+
+19. A differentiable penalty was added to discourage mean fishing mortality over ages 2-5 from exceeding high values in implausible solutions. The penalty was described as a regularizing device to help the solver and was not expected to affect converged estimates of biomass or recruitment.
+
+## Model Variants and Diagnostics
+
+20. The group compared several benchmark-derived model variants, including the SC13-era model 0.00/1.14 and the post-benchmark sequence 0.14, 0.15, and 0.16. Model 0.16 was treated as the primary reference for OM conditioning during the workshop. Model 0.00 was considered less defensible as a base OM but was retained as an explicitly flagged alternative and robustness test.
+
+21. Participants noted that the differences among model variants were driven substantially by the revised Peruvian inputs and effort-creep treatment. Critiques of model 0.16 were recorded as concerns about its characteristics, not as a positive conclusion that model 0.00 was biologically superior.
+
+22. Diagnostic outputs included one-step-ahead residuals, length-data residuals, retrospective patterns, and MCMC comparisons of posterior and asymptotic estimates. Overall diagnostics were considered adequate for OM conditioning, while retrospective bias, slow-mixing parameters, and dynamic reference-point volatility remained areas for further review.
+
+## One-Stock and Two-Stock Behaviour
+
+23. The group reviewed differences between single-stock and two-stock estimates. Splitting the population into two stocks produced a lower combined biomass estimate than the single-stock model. Participants discussed how optimistic and pessimistic indices are redistributed between components and noted that naive merging of components should be avoided.
+
+24. The two-stock configurations showed somewhat different MCMC behaviour but remained usable for comparison. The group noted that structurally divergent OMs are harder to tune jointly and require careful communication if they are included in the reference or robustness set.
+
+## Simulating Indices for Management Procedures
+
+25. The group discussed how to simulate future observations for indices that may not track stock biomass consistently through time. This is central to the availability and El Nino robustness issues raised at SCW15.
+
+26. Participants agreed that exact simulation of GLM, GAMM, or spatio-temporal standardization procedures is generally infeasible in forward projections. A simpler representation, such as autocorrelation plus observation error, may be more practical. Routine checks should compare simulated index behaviour with historical variability and observed index-stock correlations.
+
+27. On combining multiple indices in empirical rules, weighting by catch was not supported by some participants. The group agreed that weighting by representativity was more appropriate.
+
+## Operating-Model Reference Set
+
+28. The composition of the OM reference set was debated. Including model 0.00 would add an optimistic high-biomass, low-exploitation outcome that could affect MP tuning and communication. No working document proposing alternative data weighting was tabled during Day 1.
+
+29. There was no consensus to retain model 0.00 as a base OM. The practical Day 1 approach was to focus immediate tuning work on model 0.16, while retaining model 0.00 and the SC13-era configuration as clearly labelled alternatives or robustness tests. The final reference-set decision was left for further discussion and Scientific Committee review.
+
+## Reference Points
+
+30. Paper 02 presented alternative reference-point calculations, including dynamic B~0~ and F~35%~ as a practical proxy for F~MSY~. The averaging window for selectivity used in reference-point calculations affects the results and should be documented.
+
+31. The group agreed to retain Kobe plots as the primary stakeholder communication tool and to add an F~35~-based figure to test consistency across OMs. Participants noted that apical-F metrics can be unstable when driven by highly selected older ages that are rare in the population, and that a vulnerability-weighted exploitation metric may be more stable.
+
+32. The group noted that the probability target for being in the green zone cannot be finalized independently of the reference-point calculation method. Methodological choices, including steepness and reference-point definitions, may shift outcomes more than the difference between candidate probability targets.
+
+## Management-Procedure Tuning
+
+33. The Chair advised against tuning MPs to individual OMs, because that would imply knowledge of which OM is true. The standard practice is to tune across a reference grid of OMs, producing MPs with performance that reflects the range of plausible productivity and observation assumptions.
+
+34. Joint tuning across structurally divergent OMs, such as one-stock and two-stock models, increases computational and communication challenges. Weighting schemes for combining OMs remain a substantive design choice and should be documented if used.
+
+# Day 1 Decisions and Agreements
+
+```{=html}
+<table>
+<colgroup>
+<col style="width: 12rem;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Decision or agreement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agenda</td>
+<td>Replace the Thursday "vote" wording with "collaboratively agree"; the group works by consensus.</td>
+</tr>
+<tr>
+<td>Base model</td>
+<td>Use model 0.16 as the primary reference for OM conditioning during this workshop.</td>
+</tr>
+<tr>
+<td>Model 0.00</td>
+<td>Do not treat model 0.00 as a base OM on Day 1; retain it and the SC13-era configuration as labelled alternatives or robustness tests.</td>
+</tr>
+<tr>
+<td>Selectivity</td>
+<td>Use the reduced-parameter, block-based Peruvian fleet selectivity formulation for current OM work.</td>
+</tr>
+<tr>
+<td>F penalty</td>
+<td>Accept the differentiable high-F penalty as a solver aid; record that it is not expected to change biomass or recruitment estimates.</td>
+</tr>
+<tr>
+<td>Data simulation</td>
+<td>Do not change the procedure used to simulate data at this stage.</td>
+</tr>
+<tr>
+<td>Index weighting</td>
+<td>Weight combined indices by representativity rather than catch.</td>
+</tr>
+<tr>
+<td>Reference points</td>
+<td>Keep Kobe plots for stakeholder communication and add F<sub>35%</sub>-based comparisons across OMs.</td>
+</tr>
+<tr>
+<td>Tuning</td>
+<td>Tune MPs across the reference set, not to individual OMs.</td>
+</tr>
+<tr>
+<td>Reporting</td>
+<td>Submit the benchmark report, final Paper 01, and this workshop report to the Scientific Committee.</td>
+</tr>
+</tbody>
+</table>
+```
+
+# Day 1 Action Items
+
+| Action | Owner |
+|---|---|
+| Provide model 0.16 diagnostics for comparison with other model variants. | Assessment team |
+| Confirm whether model 0.00 matches the previous year's spawning-biomass estimates. | I. Paya |
+| Decide whether to freeze current data inputs and proceed with OM conditioning. | Working group |
+| Reintroduce explicit effort constraints in code to limit implausible inter-annual effort spikes for Peru artisanal fisheries. | Assessment team |
+| Display the previously submitted document on the Peru two-regime hypothesis for review. | Assessment team |
+| Compare model configurations to assess robustness and the effect of Peruvian CPUE changes. | Working group |
+| Focus immediate MP tuning work on model 0.16 and present model 0.00 as a labelled alternative. | Analysts |
+| Add an F~35%-based comparison figure and document selectivity assumptions and averaging windows. | Assessment team |
+| Prepare final Paper 01 and the workshop report for Scientific Committee submission. | Workshop organizers |
+
+# Day 1 Open Issues and Risks
+
+35. The following issues were identified for further work during the remainder of SCW17:
+
+   - The final composition and weighting of the OM reference set.
+   - The relative influence of Peruvian CPUE changes, effort-creep treatment, and alternative biological interpretations on model 0.16.
+   - How to simulate standardized CPUE and other indices in forward projections.
+   - Whether structurally divergent OMs should be tuned jointly or treated separately.
+   - Instability in dynamic reference points and apical-F metrics.
+   - The choice of running-average window for reference-point calculations.
+   - The effect of including optimistic alternatives on probability-of-green-zone tuning and Commission communication.
+   - The operational definition and response process for exceptional circumstances.
+
+# Day 2 Operating-Model Deep Dive
+
+36. Day 2 addressed future recruitment and index simulation, ENSO and broader climate effects, the composition and naming of the OM set, reference-point proxies, and projection-scenario definitions. The day continued directly from the Day 1 discussion of OM conditioning and management-procedure tuning.
+
+## Recruitment Deviations and Index Correlation
+
+37. The group discussed using cross-correlation among indices to simulate future recruitment deviations. Participants noted that historical correlations are not estimated exactly because the series include changes in catchability and selectivity, whereas the projection settings use the more recent period. Residual autocorrelation should also be represented where possible.
+
+38. The group agreed to implement an approximate treatment rather than attempting a fully specified multivariate autocorrelated time-series model. The practical check is whether simulated deviations are consistent with the historical period and suitable for testing candidate MPs.
+
+## ENSO, Regimes, and Climate Effects
+
+39. The Chair reviewed earlier El Nino work, including catchability drift and the possibility of changing the offshore versus inshore catch distribution in projections. Participants noted that there is no direct mechanism in the current setup to alter availability to indices, so the main practical handle is through recruitment or productivity.
+
+40. The group discussed whether ENSO or regime behaviour should be represented in the core simulations. There was no clear recruitment signal from earlier ENSO checks, and each El Nino event may differ in spatial and biological effect. The group agreed to treat regime/ENSO behaviour as a robustness issue, potentially through resampling high- and low-productivity historical periods, rather than as an integral component of the reference simulations.
+
+41. Dr. Tom Carruthers presented options for treating climate effects within MSE, drawing on recent ICCAT climate-test work on robustness trials and climate-robustness performance metrics [Carruthers 2024a, 2024b]. His presentation emphasized that climate effects on single-species dynamics can be reduced to a limited set of impact types: increased natural mortality, reduced somatic growth, reduced condition factor, reduced recruitment strength, spatial redistribution or range contraction, and reduced carrying capacity.
+
+42. The presentation argued that uncertain climate forecasts need not prevent progress on robust fishery management. Rather than constructing many climate-specific operating models with uncertain credibility, climate robustness can be reported as an attribute of each MP. Under this framing, MPs are tested against directional stressors and assigned robustness metrics according to the level of impact they can absorb before breaching a defined threshold. This is consistent with the ICCAT proof-of-concept approach, which shifted the emphasis from defensible forecasts of exact future climate impacts to comparable performance metrics for candidate MPs.
+
+43. The demonstration used empirical MPs and climate stress tests for natural mortality, recruitment, growth, and condition factor. It showed how different MP archetypes can differ in climate robustness, and how the result can be expressed in practical terms for tactical advice. The Working Group expressed its gratitude to Dr. Carruthers for contributing this presentation and for helping frame climate robustness in a form that can support Scientific Committee and Commission discussion.
+
+## Operating-Model Set and Naming
+
+44. The group worked through the OM list and naming conventions. The agreed set included one-stock versus two-stock configurations, model 0.16 versus model 1.14, movement variants, and a selectivity-change variant. The reference set would be conditioned and tuned on the one-stock model, with additional two-stock conditioning; the two-stock 1.14 configuration would serve as a robustness test and must perform acceptably.
+
+45. Movement would be smoothed from 2026 toward the average of the last ten years to avoid an abrupt discontinuity. The selectivity-change robustness test compares a 2005-2015 average with the 2015-2025 recent pattern. No dedicated ENSO OM run was included because autocorrelation in recruitment deviations is already present.
+
+```{r}
+#| label: tbl-day2-om-set
+#| tbl-cap: "Day 2 operating-model and projection set."
+#| echo: false
+#| warning: false
+#| message: false
+#| results: asis
+
+library(gt)
+
+day2_om_set <- data.frame(
+  om_case = c("om11", "om21", "om13", "om12", "om22", "om23", "om21_1", "om11_1", "om11_2", "om11_3"),
+  proj = c("proj11", "proj21", "proj18", "proj12", "proj22", "proj28", "proj31", "proj11.selex", "proj11.ENSO1", "proj11.ENSO2"),
+  om = c("om11", "om21", "om18", "om12", "om22", "om28", "om21", "om11", "om11", "om11"),
+  model = c("h1_0.16", "h2_0.16", "h1_1.14", "h1_0.16", "h2_0.16", "h2_1.14", "h2_0.16", "h1_0.16", "h1_0.16", "h1_0.16"),
+  SR = c("0.65", "0.65", "0.8", "0.8", "0.8", "0.65", "0.65", "0.65", "0.65, residual failure", "0.65, residual 7-year El Nino cycle"),
+  mvt = c("NA", "0", "NA", "NA", "0", "0", "1", "NA", "NA", "NA"),
+  selex = c("2015-2025", "2015-2025", "2015-2025", "2015-2025", "2015-2025", "2015-2025", "2015-2025", "2005-2015", "2015-2025", "2015-2025"),
+  set = c("ref", "rob tuning", "rob", "rob", "rob", "rob", "rob", "rob", "rob", "rob")
+)
+
+day2_om_set |>
+  gt() |>
+  cols_label(
+    om_case = "om",
+    proj = "proj",
+    om = "om",
+    model = "model",
+    SR = "SR",
+    mvt = "mvt",
+    selex = "selex",
+    set = "set"
+  ) |>
+  cols_width(
+    om_case ~ px(78),
+    proj ~ px(118),
+    om ~ px(78),
+    model ~ px(92),
+    SR ~ px(210),
+    mvt ~ px(60),
+    selex ~ px(96),
+    set ~ px(92)
+  ) |>
+  tab_options(
+    table.font.size = px(13),
+    table.width = pct(100),
+    data_row.padding = px(3),
+    column_labels.padding = px(4)
+  )
+```
+
+## Reference Points and Projection Scenarios
+
+46. The group discussed the Kobe plot and noted that much of the apparent movement in the plot reflects changes in the reference points rather than changes in the underlying trajectory. F~MSY~ is highly sensitive to steepness because the yield curve is shallow, while B~MSY~ appears more stable.
+
+47. Proxy reference-point options were discussed to avoid relying directly on a poorly defined F~MSY~. Options included 35% of dynamic B~0~ with F~35%~, a U/U~MSY~ proxy based on catch over vulnerable biomass, and a constant-F projection approach to deriving F~MSY~ from a yield curve. Reference points would be recomputed within projections, with a configurable averaging window.
+
+48. The group agreed to use 0.65 steepness as the base case and move 0.8 steepness to robustness testing. Iago Mosqueira also presented recruitment-deviation scenarios to be run with the one-stock reference OM; detailed specifications should be checked against the working documents.
+
+# Day 2 Decisions and Agreements
+
+| Topic | Decision or agreement |
+|---|---|
+| Recruitment simulation | Implement an approximate cross-correlation/autocorrelation treatment of future recruitment deviations and compare simulated deviations with the historical period. |
+| ENSO / regimes | Treat regime and ENSO behaviour as robustness tests rather than integral core-simulation components; timing remains to be confirmed. |
+| Climate | No fixed method adopted; use robustness or stress-test framing and prepare a clear Scientific Committee presentation. |
+| OM set | Use one- versus two-stock, 0.16 versus 1.14, movement variants, and a selectivity-change variant. Smooth the 2026 movement transition to the 10-year average. |
+| Steepness | Use 0.65 steepness as the base; move 0.8 steepness to robustness testing. |
+| Reference points | Pursue proxies for poorly defined F~MSY~, including 35% dynamic B~0~ with F~35%~, U/U~MSY~, and/or constant-F yield-curve calculations. |
+
+# Day 2 Action Items
+
+| Action | Owner |
+|---|---|
+| Implement approximate recruitment-deviation simulation with autocorrelation and compare simulations against the historical period. | I. Mosqueira / team |
+| Clarify and fix the anomalous F forecast identified in the OM set. | Assessment team |
+| Resolve how the northern stock can be handled when F~MSY~ is not available inside the MP. | Working group |
+| Prepare a Scientific Committee presentation on climate treatment in the MSE. | J. Ianelli / T. Carruthers |
+| Finalize, fix, and distribute the agreed OM set and naming conventions. | I. Mosqueira / team |
+| Produce proxy-based Kobe plots and constant-F yield-curve reference-point calculations. | J. Ianelli / assessment team |
+| Run the recruitment-deviation scenarios in combination with the reference OM. | I. Mosqueira |
+
+# Day 2 Open Issues and Risks
+
+49. The following issues were identified for follow-up:
+
+   - The exact statistical treatment of autocorrelated, multivariate recruitment simulation remains approximate.
+   - Whether regime/ENSO robustness enters the current round or later pre-/post-SC work remains undecided.
+   - Climate effects still require a clear Scientific Committee framing.
+   - An anomalous F forecast in the OM set remains outstanding.
+   - The northern stock cannot yet be managed through the MP because no F~MSY~ is defined there.
+   - The final reference-point proxy and averaging window still need to be selected.
+   - The total OM count and associated computational load need confirmation.
+
+# References
+
+- SPRFMO. 2025. Report of the Management Strategy Evaluation Workshop (SCW15), 14-18 July 2025. <https://sprfmo.github.io/SCW15_report/>
+- SPRFMO. 2026. JMWG Benchmark Meeting Report 2026, 18-22 May 2026, Lima. <https://sprfmo.github.io/JM_SCW_prep/JMWG-Benchmark-Meeting-report-2026.html>
+- SPRFMO. 2026. SCW17 working documents. <https://sprfmo.github.io/scw17/>
+- Carruthers, T. R. 2024a. Developing the Climate Test: Robustness Trials for Climate-Ready Management Procedures. SCRS/2024/104. Collect. Vol. Sci. Pap. ICCAT, 81(6): 1-26. <https://www.iccat.int/Documents/CVSP/CV081_2024/n_6/CV08106104.pdf>
+- Carruthers, T. R. 2024b. Developing the Climate Test: Performance Metrics of Climate Robustness. SCRS/2024/148. Collect. Vol. Sci. Pap. ICCAT, 81(2): 1-7. <https://www.iccat.int/Documents/CVSP/CV081_2024/n_2/CV08102148.pdf>
+- Carruthers, T. 2026. Developing the Climate Test: Climate Robustness as an Attribute of Management Procedures. Presentation to the SPRFMO Jack Mackerel MSE Workshop, 15 June 2026.
+- Annex K. Original jack mackerel management procedure.
+
+# Appendix A. Participants
+
+::: {.callout-warning}
+## Verification needed
+
+Names and affiliations below are reconstructed from the Day 1 summary and should be confirmed before submission.
+:::
+
+| Name | Affiliation / delegation | Role |
+|---|---|---|
+| Jim Ianelli | NOAA Fisheries (USA) | Chair / coordinator |
+| Niels Hintzen | PFA (EU delegation) | Local organizer / rapporteur |
+| Karolina Molla Gazi | European Union delegation | Member |
+| Iago Mosqueira | MSE analyst (FLR / openMSE) | Analyst |
+| Benoit Berges | Wageningen Marine Research | Member |
+| Ignacio Paya | IFOP (Chile) | Member |
+| Jose Zenteno | IFOP (Chile) | Member |
+| Aquiles Sepulveda | INPESCA (Chile) | Member |
+| Nicole Berlin | Subsecretaria de Pesca y Acuicultura (Chile) | Head of delegation |
+| Criscely Lujan | IMARPE (Peru) | Member |
+| Miriam Geronimo | IMARPE (Peru) | Member |
+| David Miller | ICES Secretariat | External reviewer |
+| Rosana Ourens | CEFAS (UK) | External reviewer |
+| Tom Carruthers | Blue Matter Science | Invited expert |
+| Ash Wilson | Pew Charitable Trusts | Observer |
+
+# Appendix B. Workshop Schedule
+
+| Day | Theme | Hours |
+|---|---|---|
+| Monday 15 June | Opening and benchmark handoff | 09:00-18:00 |
+| Tuesday 16 June | Operating-model deep dive | 08:30-17:00 |
+| Wednesday 17 June | Candidate management procedures | 09:00-18:00 |
+| Thursday 18 June | Trade-offs, robustness, and shortlist decision | 09:00-18:00 |
+| Friday 19 June | Recommendations and close | 09:00-12:00 |
+
+# Appendix C. SCW17 Working Documents
+
+| Document | Title |
+|---|---|
+| Paper 00 | Agenda and schedule |
+| Paper 01 | Model developments |
+| Paper 01a | Far North model selectivity |
+| Paper 02 | Consideration of reference points used for SPRFMO jack mackerel management |
+| Paper 03 | Management-procedures inventory for the jack mackerel MSE |
+| Paper 04 | MSE flow |
+| Paper 05 | Chile harvest-control-rule proposals |
+| Paper 06 | Evaluation of indices for MP considerations |
+| Paper 07 | Projection evaluations |
+
+*Draft working report - Day 1 of the SCW17 MSE workshop, 15 June 2026. Prepared for review and correction by participants before submission to the SPRFMO Scientific Committee.*

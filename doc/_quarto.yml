@@ -7,6 +7,7 @@ project:
   render:
     - index.qmd
     - SCW17-schedule.qmd
+    - SCW17-MSE-Workshop-report.qmd
     - SCW17-MSE-training.qmd
     - SCW17-acronym-glossary.qmd
     - SCW17-Paper-01-ModelDevelopments.qmd
@@ -30,6 +31,8 @@ website:
         text: SCW17 agenda / schedule
       - href: SCW17-MSE-training.qmd
         text: MSE Training
+      - href: SCW17-MSE-Workshop-report.qmd
+        text: SCW17 MSE Workshop Report
       - href: SCW17-acronym-glossary.qmd
         text: Glossary
       - href: SCW17-Paper-01-ModelDevelopments.html
