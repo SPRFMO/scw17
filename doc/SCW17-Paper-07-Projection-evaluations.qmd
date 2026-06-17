@@ -171,10 +171,11 @@ scale_colour_cycling <- function(x, ...) {
 }
 
 metric_panels <- function(dat, ref_lines=NULL) {
-  metric_levels <- c("SSB (t)", "Fbar", "Catch (t)", "F[a=1-12]",
+  metric_levels <- c("SSB (t)", "Fbar", "Catch (kt)", "F[a=1-12]",
     "F[a=3-8]", "F[N-wtd]", "HR")
   dat <- as.data.table(copy(dat))
   if("metric" %in% names(dat)) {
+    dat[metric == "Catch (t)", metric := "Catch (kt)"]
     m_present <- unique(as.character(dat$metric))
     m_levels <- c(intersect(metric_levels, m_present), setdiff(m_present, metric_levels))
     dat[, metric := factor(as.character(metric), levels=m_levels)]
@@ -372,7 +373,7 @@ plot_qmd_tradeoff <- function(status_dt, final_year, ref_om=NULL,
       breaks=function(x) seq(0, ceiling(max(x, na.rm=TRUE) / 500) * 500, by=500),
       labels=function(x) format(round(x), big.mark=",", scientific=FALSE),
       expand=expansion(mult=c(0, 0.05))) +
-    labs(title=title, x=x_lab, y="Catch (t)") +
+    labs(title=title, x=x_lab, y="Catch (kt)") +
     report_theme()
   if(length(unique(dat$stock)) > 1) p + facet_wrap(~stock, scales="free") else p
 }
@@ -453,7 +454,7 @@ plot_qmd_scaled_tradeoff <- function(dat, final_year, ref_om) {
         by=500),
       labels=function(x) format(round(x), big.mark=",", scientific=FALSE),
       expand=expansion(mult=c(0, 0.05))) +
-    labs(title=title, x="Scaled SSB / Dynamic Bzero", y="Catch (t)") +
+    labs(title=title, x="Scaled SSB / Dynamic Bzero", y="Catch (kt)") +
     report_theme()
   if(length(unique(dat$stock)) > 1) p + facet_wrap(~stock, scales="free") else p
 }
@@ -532,7 +533,7 @@ plot_qmd_catch_distribution <- function(catch_dt, year, n_iter=NULL, ref_om=NULL
     scale_colour_cycling(clr) +
     zero_y_scale(labels=function(x) format(round(x), big.mark=",", scientific=FALSE)) +
     scale_x_discrete(drop=TRUE) +
-    labs(title=title, x=NULL, y="Catch (t)") +
+    labs(title=title, x=NULL, y="Catch (kt)") +
     report_theme() +
     theme(axis.text.x=element_text(angle=45, hjust=1))
   if(length(unique(catch_dt$stock)) > 1) p + facet_wrap(~stock, scales="free_y") else p
