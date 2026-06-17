@@ -23,9 +23,11 @@ params:
 
 ```{r}
 #| label: setup
+#| include: false
 library(ggplot2)
+library(ggthemes)
+library(data.table)
 library(knitr)
-library(patchwork)
 
 jmMSE_path <- params$jmMSE_path
 cache_file <- file.path(jmMSE_path, "report", "projections", "cache.rda")
@@ -46,10 +48,13 @@ fmt_value <- function(x) {
 }
 
 scenario_tbl <- do.call(rbind, lapply(names(SCENARIOS), function(nm) {
+  desc <- SCENARIOS[[nm]]$description
+  if(is.null(desc)) desc <- ""
   data.frame(
     scenario = nm,
     control_quantity = SCENARIOS[[nm]]$quant,
     target = fmt_value(SCENARIOS[[nm]]$value),
+    description = desc,
     stringsAsFactors = FALSE
   )
 }))
@@ -61,6 +66,23 @@ refpt_tbl <- data.frame(
   stringsAsFactors = FALSE
 )
 
+current_tbl <- as.data.frame(state_dt)
+current_tbl$ssb <- fmt_num(current_tbl$ssb)
+current_tbl$catch <- fmt_num(current_tbl$catch)
+current_tbl$sbmsy <- fmt_num(current_tbl$sbmsy)
+current_tbl$f <- fmt_num(current_tbl$f, 3)
+current_tbl$fmsy <- fmt_num(current_tbl$fmsy, 3)
+current_tbl$ssb_sbmsy <- fmt_num(current_tbl$ssb_sbmsy, 2)
+
+fleet_split_tbl <- NULL
+if(exists("cprop")) {
+  fleet_split_tbl <- data.frame(
+    fleet = names(cprop),
+    share = fmt_num(100 * unname(cprop), 1),
+    stringsAsFactors = FALSE
+  )
+}
+
 block_tbl <- do.call(rbind, lapply(names(SELEX_BLOCKS), function(nm) {
   yrs <- SELEX_BLOCKS[[nm]]
   data.frame(
@@ -69,15 +91,286 @@ block_tbl <- do.call(rbind, lapply(names(SELEX_BLOCKS), function(nm) {
     stringsAsFactors = FALSE
   )
 }))
+
+FBAR_MAX <- 0.8
+
+filter_note <- paste("Results with Fbar greater than", FBAR_MAX, "are excluded.")
+
+scenario_caption <- function() {
+  ref_txt <- paste(mapply(function(s, sbm, fms)
+    sprintf("%s: SBMSY = %s t, FMSY = %s", s,
+      format(round(sbm), big.mark=","), round(fms, 3)),
+    names(sbmsy_ref), sbmsy_ref, fmsy_ref), collapse=" | ")
+  paste("Forward projections under the simplified future fishing-pattern scenarios.",
+    ref_txt, paste0("Projections: ", INIT_YEAR + 1, "-", FINAL_YEAR),
+    filter_note)
+}
+
+sensitivity_caption <- function(prefix) {
+  ref_txt <- paste(mapply(function(s, sbm, fms)
+    sprintf("%s: SBMSY = %s t, FMSY = %s", s,
+      format(round(sbm), big.mark=","), round(fms, 3)),
+    names(sbmsy_ref), sbmsy_ref, fmsy_ref), collapse=" | ")
+  paste(prefix, ref_txt, filter_note)
+}
+
+median_fbar_exclusions <- function(dat, group_col, fbar_max=FBAR_MAX) {
+  dat <- as.data.table(dat)
+  if(!"Fbar" %in% dat$metric)
+    return(data.table())
+  dat[metric == "Fbar",
+    .(max_median_fbar=max(value, na.rm=TRUE)),
+    by=c(group_col, "stock")][max_median_fbar > fbar_max]
+}
+
+drop_group_stock <- function(dat, excluded, group_col) {
+  dat <- as.data.table(copy(dat))
+  if(nrow(excluded) == 0)
+    return(dat)
+  dat[!excluded[, .SD, .SDcols=c(group_col, "stock")],
+    on=c(group_col, "stock")]
+}
+
+drop_fbar_iterations <- function(dat, fbar_max_dt, group_col, fbar_max=FBAR_MAX) {
+  dat <- as.data.table(copy(dat))
+  if(is.null(fbar_max_dt) || nrow(fbar_max_dt) == 0 || !"iter" %in% names(dat))
+    return(dat)
+  excluded <- as.data.table(fbar_max_dt)[max_fbar > fbar_max,
+    .SD, .SDcols=c(group_col, "stock", "iter")]
+  if(nrow(excluded) == 0)
+    return(dat)
+  dat[!excluded, on=c(group_col, "stock", "iter")]
+}
+
+report_theme <- function(base_size=16) {
+  ggthemes::theme_few(base_size=base_size) +
+    theme(
+      plot.title=element_text(size=base_size + 4, face="bold"),
+      plot.subtitle=element_text(size=base_size + 1),
+      axis.title=element_text(size=base_size + 1),
+      axis.text=element_text(size=base_size),
+      strip.text=element_text(size=base_size, face="bold"),
+      legend.title=element_text(size=base_size),
+      legend.text=element_text(size=base_size - 1),
+      legend.position="bottom"
+    )
+}
+
+zero_y_scale <- function(...) {
+  scale_y_continuous(limits=c(0, NA), expand=expansion(mult=c(0, 0.05)), ...)
+}
+
+scale_colour_cycling <- function(x, ...) {
+  pal <- c("#cc79a7", "#009e73", "#e69f00", "#56b4e9", "#999999",
+           "#f0e442", "#0072b2", "#d55e00")
+  lvls <- if(is.factor(x)) levels(x) else unique(as.character(x))
+  scale_colour_manual(values=setNames(pal[(seq_along(lvls) - 1L) %% length(pal) + 1L], lvls), ...)
+}
+
+metric_panels <- function(dat, ref_lines=NULL) {
+  metric_levels <- c("SSB (t)", "Fbar", "Catch (t)", "F[a=1-12]",
+    "F[a=3-8]", "F[N-wtd]", "HR")
+  dat <- as.data.table(copy(dat))
+  if("metric" %in% names(dat)) {
+    m_present <- unique(as.character(dat$metric))
+    m_levels <- c(intersect(metric_levels, m_present), setdiff(m_present, metric_levels))
+    dat[, metric := factor(as.character(metric), levels=m_levels)]
+  }
+  if(!is.null(ref_lines)) {
+    ref_lines <- as.data.table(copy(ref_lines))
+    if("metric" %in% names(ref_lines))
+      ref_lines[, metric := factor(as.character(metric), levels=levels(dat$metric))]
+  }
+  multi_stock <- "stock" %in% names(dat) && length(unique(dat$stock)) > 1
+  if(multi_stock) {
+    s_lvls <- as.character(unique(dat$stock))
+    m_lvls <- as.character(unique(dat$metric))
+    panel_lvls <- as.vector(outer(s_lvls, m_lvls, function(s, m) paste(m, s, sep="\n")))
+    dat[, panel := factor(paste(metric, stock, sep="\n"), levels=panel_lvls)]
+    if(!is.null(ref_lines))
+      ref_lines[, panel := factor(paste(metric, stock, sep="\n"), levels=panel_lvls)]
+    list(dat=dat, ref_lines=ref_lines, multi_stock=TRUE, ncol=length(s_lvls))
+  } else {
+    list(dat=dat, ref_lines=ref_lines, multi_stock=FALSE, ncol=1)
+  }
+}
+
+plot_qmd_selectivity <- function(selex_ts_dt, ref_om=NULL) {
+  title <- if(!is.null(ref_om))
+    paste("Catch selectivity at age by fishery -", ref_om)
+  else "Catch selectivity at age by fishery"
+  multi_stock <- "stock" %in% names(selex_ts_dt) && length(unique(selex_ts_dt$stock)) > 1
+  ggplot(selex_ts_dt, aes(x=age, y=sel, group=year, colour=year)) +
+    geom_line(linewidth=0.7, alpha=0.85) +
+    scale_colour_viridis_c(name="Year") +
+    zero_y_scale() +
+    { if(multi_stock) facet_grid(stock ~ fishery) else facet_wrap(~fishery, ncol=2) } +
+    labs(title=title, x="Age", y="Selectivity") +
+    report_theme() +
+    theme(legend.position="right")
+}
+
+plot_qmd_exploitation <- function(mets_dt, worms_dt=NULL, init_year, n_iter=NULL, ref_om=NULL) {
+  title <- if(!is.null(ref_om))
+    paste("Exploitation metrics -", ref_om, "(historical)")
+  else "Exploitation metrics (historical)"
+  sub <- if(!is.null(n_iter)) paste("80% interval across", n_iter, "iterations")
+    else "80% interval across iterations"
+  if(!is.null(worms_dt) && nrow(worms_dt) > 0)
+    sub <- paste0(sub, " | grey lines: ", length(unique(worms_dt$iter)), " MCMC draws")
+  sum_dt <- as.data.table(mets_dt)[year <= init_year,
+    .(q10=quantile(value, 0.10, na.rm=TRUE),
+      q50=median(value, na.rm=TRUE),
+      q90=quantile(value, 0.90, na.rm=TRUE)),
+    by=.(stock, metric, year)]
+  panel <- metric_panels(sum_dt)
+  sum_dt <- panel$dat
+  if(!is.null(worms_dt) && nrow(worms_dt) > 0)
+    worms_dt <- metric_panels(as.data.table(worms_dt)[year <= init_year])$dat
+  p <- ggplot(sum_dt, aes(x=year)) +
+    geom_ribbon(aes(ymin=q10, ymax=q90), fill="#d55e00", alpha=0.18, colour=NA) +
+    { if(!is.null(worms_dt) && nrow(worms_dt) > 0)
+        geom_line(data=worms_dt, aes(y=value, group=interaction(metric, stock, iter)),
+          colour="grey45", alpha=0.38, linewidth=0.45) } +
+    geom_line(aes(y=q50), colour="black", linewidth=0.95) +
+    zero_y_scale() +
+    labs(title=title, subtitle=sub, x=NULL, y=NULL) +
+    report_theme()
+  if(panel$multi_stock) p + facet_wrap(~panel, scales="free_y", ncol=panel$ncol)
+  else p + facet_wrap(~metric, scales="free_y", ncol=1)
+}
+
+plot_qmd_scenarios <- function(futs_dt, init_year, sbmsy_ref, fmsy_ref,
+  final_year=NULL, ref_om=NULL, worms_dt=NULL) {
+  title <- if(!is.null(ref_om)) paste("Fishing-pattern projections -", ref_om)
+    else "Fishing-pattern projections"
+  ref_lines <- data.table(
+    stock=rep(names(sbmsy_ref), each=2),
+    metric=rep(c("SSB (t)", "Fbar"), length(sbmsy_ref)),
+    ref=c(rbind(sbmsy_ref, fmsy_ref)))
+  panel <- metric_panels(as.data.table(futs_dt)[year >= init_year], ref_lines)
+  dat <- panel$dat
+  ref_lines <- panel$ref_lines
+  if(!is.null(worms_dt) && nrow(worms_dt) > 0)
+    worms_dt <- metric_panels(as.data.table(worms_dt)[year >= init_year])$dat
+  clr <- if("label" %in% names(dat)) dat$label else dat$scenario
+  p <- ggplot(dat, aes(x=year, y=value, group=scenario,
+      colour=if("label" %in% names(dat)) label else scenario)) +
+    geom_vline(xintercept=init_year, linetype="dashed", colour="grey60") +
+    geom_hline(data=ref_lines, aes(yintercept=ref),
+      linetype="dotted", colour="#d55e00", linewidth=0.6) +
+    { if(!is.null(worms_dt) && nrow(worms_dt) > 0)
+        geom_line(data=worms_dt, aes(x=year, y=value,
+          group=interaction(scenario, stock, metric, iter)),
+          inherit.aes=FALSE, colour="grey45", alpha=0.30, linewidth=0.4) } +
+    geom_line(linewidth=0.95, alpha=0.9) +
+    scale_colour_cycling(clr, name="Scenario") +
+    zero_y_scale() +
+    labs(title=title, x=NULL, y=NULL) +
+    report_theme()
+  if(panel$multi_stock) p + facet_wrap(~panel, scales="free_y", ncol=panel$ncol)
+  else p + facet_wrap(~metric, scales="free_y", ncol=1)
+}
+
+plot_qmd_status <- function(status_dt, final_year, n_iter=NULL, ref_om=NULL) {
+  title <- paste("SSB / SBMSY at", final_year)
+  if(!is.null(ref_om)) title <- paste(title, "-", ref_om)
+  clr <- if("label" %in% names(status_dt)) status_dt$label else status_dt$scenario
+  xvar <- if("label" %in% names(status_dt)) quote(label) else quote(scenario)
+  p <- ggplot(status_dt, aes(x=!!xvar, y=psbmsy, colour=!!xvar)) +
+    geom_hline(yintercept=1, linetype="dotted", colour="#d55e00") +
+    geom_boxplot(width=0.5, outlier.size=0.8, outlier.alpha=0.4, show.legend=FALSE) +
+    scale_colour_cycling(clr) +
+    zero_y_scale() +
+    scale_x_discrete(drop=TRUE) +
+    labs(title=title, x=NULL, y="SSB / SBMSY") +
+    report_theme() +
+    theme(axis.text.x=element_text(angle=45, hjust=1))
+  if(length(unique(status_dt$stock)) > 1) p + facet_wrap(~stock, scales="free_y") else p
+}
+
+plot_qmd_tradeoff <- function(status_dt, final_year, ref_om=NULL) {
+  title <- paste("Terminal catch and stock status at", final_year)
+  if(!is.null(ref_om)) title <- paste(title, "-", ref_om)
+  dat <- as.data.table(status_dt)[
+    , .(ssb_sbmsy=median(psbmsy, na.rm=TRUE),
+        ssb_lo=quantile(psbmsy, 0.05, na.rm=TRUE),
+        ssb_hi=quantile(psbmsy, 0.95, na.rm=TRUE),
+        catch=median(catch, na.rm=TRUE),
+        catch_lo=quantile(catch, 0.05, na.rm=TRUE),
+        catch_hi=quantile(catch, 0.95, na.rm=TRUE)),
+    by=.(scenario, stock, label)]
+  lvls <- if(is.factor(dat$label)) levels(dat$label) else unique(as.character(dat$label))
+  shapes <- c(16, 17, 15, 18, 3, 7, 8, 4, 9, 10)
+  p <- ggplot(dat, aes(x=ssb_sbmsy, y=catch, colour=label, shape=label)) +
+    geom_vline(xintercept=1, linetype="dotted", colour="#d55e00") +
+    geom_segment(aes(x=ssb_lo, xend=ssb_hi, y=catch, yend=catch),
+      linewidth=0.7, alpha=0.75, show.legend=FALSE) +
+    geom_errorbar(aes(ymin=catch_lo, ymax=catch_hi),
+      width=0, linewidth=0.7, alpha=0.75, show.legend=FALSE) +
+    geom_point(size=4.2, stroke=1.1) +
+    scale_colour_cycling(dat$label, name="Scenario") +
+    scale_shape_manual(values=setNames(shapes[(seq_along(lvls) - 1L) %% length(shapes) + 1L], lvls),
+      name="Scenario") +
+    scale_x_continuous(limits=c(0, NA), expand=expansion(mult=c(0, 0.05))) +
+    scale_y_continuous(limits=c(-200, NA),
+      breaks=function(x) seq(0, ceiling(max(x, na.rm=TRUE) / 500) * 500, by=500),
+      labels=function(x) format(round(x), big.mark=",", scientific=FALSE),
+      expand=expansion(mult=c(0, 0.05))) +
+    labs(title=title, x="SSB / SBMSY", y="Catch (t)") +
+    report_theme()
+  if(length(unique(dat$stock)) > 1) p + facet_wrap(~stock, scales="free") else p
+}
+
+plot_qmd_catch_distribution <- function(catch_dt, year, n_iter=NULL, ref_om=NULL) {
+  title <- paste("Catch distribution in", year)
+  if(!is.null(ref_om)) title <- paste(title, "-", ref_om)
+  clr <- if("label" %in% names(catch_dt)) catch_dt$label else catch_dt$scenario
+  xvar <- if("label" %in% names(catch_dt)) quote(label) else quote(scenario)
+  p <- ggplot(catch_dt, aes(x=!!xvar, y=value, colour=!!xvar)) +
+    geom_boxplot(width=0.5, outlier.size=0.8, outlier.alpha=0.4, show.legend=FALSE) +
+    scale_colour_cycling(clr) +
+    zero_y_scale(labels=function(x) format(round(x), big.mark=",", scientific=FALSE)) +
+    scale_x_discrete(drop=TRUE) +
+    labs(title=title, x=NULL, y="Catch (t)") +
+    report_theme() +
+    theme(axis.text.x=element_text(angle=45, hjust=1))
+  if(length(unique(catch_dt$stock)) > 1) p + facet_wrap(~stock, scales="free_y") else p
+}
+
+plot_qmd_sensitivity <- function(dat, group_col, group_lab, init_year,
+  sbmsy_ref, fmsy_ref=NULL, ref_om=NULL, worms_dt=NULL, title_prefix) {
+  title <- if(!is.null(ref_om)) paste(title_prefix, "-", ref_om, "@ FMSY") else paste(title_prefix, "@ FMSY")
+  ref_lines <- data.table(stock=names(sbmsy_ref), metric="SSB (t)", ref=unname(sbmsy_ref))
+  panel <- metric_panels(as.data.table(dat)[year >= init_year], ref_lines)
+  dat <- panel$dat
+  ref_lines <- panel$ref_lines
+  if(!is.null(worms_dt) && nrow(worms_dt) > 0)
+    worms_dt <- metric_panels(as.data.table(worms_dt)[year >= init_year])$dat
+  p <- ggplot(dat, aes(x=year, y=value, colour=.data[[group_col]], group=.data[[group_col]])) +
+    geom_vline(xintercept=init_year, linetype="dashed", colour="grey60") +
+    geom_hline(data=ref_lines, aes(yintercept=ref), linetype="dotted", colour="#d55e00", linewidth=0.6) +
+    { if(!is.null(worms_dt) && nrow(worms_dt) > 0)
+        geom_line(data=worms_dt, aes(x=year, y=value,
+          group=interaction(.data[[group_col]], stock, metric, iter)),
+          inherit.aes=FALSE, colour="grey45", alpha=0.30, linewidth=0.4) } +
+    geom_line(linewidth=0.95, alpha=0.9) +
+    scale_colour_cycling(dat[[group_col]], name=group_lab) +
+    zero_y_scale() +
+    labs(title=title, x=NULL, y=NULL) +
+    report_theme()
+  if(panel$multi_stock) p + facet_wrap(~panel, scales="free_y", ncol=panel$ncol)
+  else p + facet_wrap(~metric, scales="free_y", ncol=1)
+}
 ```
 
 # Purpose
 
-This report documents the forward-projection outputs generated by `run_projections.R` and assembled by `report_run_projections.R` in the jmMSE repository.
+This report documents the forward-projection outputs generated by `run_projections.R` and assembled by `report_run_projections.R`.
 It is a Quarto version of the cached HTML report: it loads the saved projection cache, summarizes the run settings, and displays the diagnostic plots that were produced during the projection workflow.
 
 No projection calculations are rerun in this document.
-The report uses the cached objects in `r cache_file`, which are produced by `run_projections.R`.
+The report uses the cached objects in `report/projections/cache.rda`, which are produced by `run_projections.R`.
 This keeps the report rendering step separate from the computational projection step.
 
 # Workflow Summary
@@ -87,12 +380,12 @@ The projection workflow does the following:
 - loads the selected operating model (`REF_OM`) and subsets it to `N_ITER` iterations;
 - extends the model from the last historical year to the final projection year;
 - calculates reference points and current-state summaries;
-- evaluates user-defined fixed fishing mortality and fixed catch scenarios;
+- evaluates simplified future fishing patterns;
 - compares terminal stock status across scenarios;
 - explores sensitivity to future selectivity assumptions using rolling terminal-year windows; and
 - compares named historical selectivity blocks as alternative frozen future selectivity patterns.
 
-`report_run_projections.R` then reads the cache and writes `report/projections/projections_report.html` in jmMSE.
+`report_run_projections.R` then reads the cache and writes `report/projections/projections_report.html`.
 This Quarto file reads the same cache and presents the same report content in a format that can be rendered, edited, and extended with standard Quarto tooling.
 
 # Run Summary
@@ -104,6 +397,7 @@ settings_tbl <- data.frame(
   setting = c(
     "Operating model",
     "Iterations",
+    "MCMC worms shown",
     "Projection horizon",
     "Selectivity averaging windows",
     "Named selectivity blocks"
@@ -111,6 +405,7 @@ settings_tbl <- data.frame(
   value = c(
     REF_OM,
     fmt_num(N_ITER),
+    if(exists("worm_iters")) fmt_num(length(worm_iters)) else "0",
     paste(INIT_YEAR + 1, FINAL_YEAR, sep="-"),
     paste(SELEX_WINDOWS, collapse=", "),
     paste(names(SELEX_BLOCKS), collapse=", ")
@@ -127,40 +422,35 @@ kable(settings_tbl)
 kable(refpt_tbl, col.names=c("Stock", "SBMSY (t)", "FMSY"))
 ```
 
-For the first stock in the operating model, the cached current-state values are:
+The cached current-state values are:
 
 ```{r}
 #| label: tbl-current-state
-#| tbl-cap: "Cached current-state values for the first stock in the operating model."
-current_tbl <- data.frame(
-  quantity = c(
-    paste0("SSB in ", INIT_YEAR, " (t)"),
-    paste0("SSB / SBMSY in ", INIT_YEAR),
-    paste0("Fbar in ", INIT_YEAR),
-    paste0("Catch in ", INIT_YEAR, " (t)")
-  ),
-  value = c(
-    fmt_num(ssb2025),
-    fmt_num(ssb2025 / sbmsy_ref[[1]], 2),
-    fmt_num(f2025, 3),
-    fmt_num(catch2025)
-  ),
-  stringsAsFactors = FALSE
-)
-
-kable(current_tbl)
+#| tbl-cap: !expr paste("Cached current-state values in", INIT_YEAR, "by stock.")
+kable(current_tbl[, c("stock", "ssb", "ssb_sbmsy", "f", "catch", "sbmsy", "fmsy")],
+  col.names=c("Stock", "SSB (t)", "SSB / SBMSY", "Fbar", "Catch (t)", "SBMSY (t)", "FMSY"))
 ```
 
 # Scenario Definitions
 
 The fixed projection scenarios are defined in `run_projections.R`.
-Each scenario either fixes fishing mortality (`fbar`) or total catch (`catch`) over the projection years.
-Special targets such as `FMSY`, `F2025`, and `C2025` are resolved during the projection run before the cache is saved.
+The simplified comparison uses future fishing patterns that include no fishing, constant future fishing mortality set to FMSY, constant future fishing mortality set to the 2025 value, constant future fishing mortality set to 75% and 50% of the 2025 value, constant fishing mortality set to the F35 SPR rate, and constant future catch set to half of the 2025 catch.
+The catch-based scenario is allocated among fleets using the 2025 fleet catch proportions.
+Special targets such as `FMSY`, `F2025`, `F2025_75`, `F2025_50`, `F35`, and `C2025_HALF` are resolved during the projection run before the cache is saved. `F35` is read from the model yield-profile output as the SPR rate that gives 35% of spawning biomass per recruit.
+Projection result trajectories are excluded from the figures below when their Fbar exceeds `r FBAR_MAX`.
 
 ```{r}
 #| label: tbl-scenarios
-#| tbl-cap: "User-defined fixed F and fixed catch scenarios."
-kable(scenario_tbl, col.names=c("Scenario", "Control quantity", "Target"))
+#| tbl-cap: "Simplified future fishing-pattern scenarios."
+kable(scenario_tbl, col.names=c("Scenario", "Control quantity", "Target", "Description"))
+```
+
+```{r}
+#| label: tbl-fleet-split
+#| tbl-cap: !expr paste("Fleet shares used to allocate future catch, based on", INIT_YEAR, "catch proportions.")
+if(!is.null(fleet_split_tbl)) {
+  kable(fleet_split_tbl, col.names=c("Fleet", "Share (%)"))
+}
 ```
 
 # Selectivity History
@@ -173,33 +463,39 @@ This context is important because future projections freeze or average historica
 #| fig-cap: "Historical selectivity-at-age time series used to interpret the projection selectivity assumptions."
 #| fig-width: 14
 #| fig-height: 8
-selex_ts_plot
+plot_qmd_selectivity(selex_ts_dt, ref_om=REF_OM)
 ```
 
 # Historical Exploitation Metrics
 
 The exploitation diagnostic compares alternative fishing mortality or harvest-rate summaries through the historical period.
-These metrics provide context for the fixed-F scenarios and for the current fishing mortality level used by the `F2025` scenario.
+These metrics provide context for the current fishing mortality level used by the `F2025` scenario.
 
 ```{r}
 #| label: fig-exploitation-metrics
 #| fig-cap: "Historical exploitation metrics for the selected operating model."
 #| fig-width: 14
 #| fig-height: 9
-mets_plot
+plot_qmd_exploitation(mets_dt, mets_worms_dt, init_year=INIT_YEAR,
+  n_iter=N_ITER, ref_om=REF_OM)
 ```
 
-# Fixed F And Catch Scenarios
+# Simplified Fishing Pattern Scenarios
 
-The main projection comparison applies the fixed-F and fixed-catch controls over the projection horizon.
+The main projection comparison applies the simplified fishing-pattern controls over the projection horizon.
 The plot shows median trajectories by scenario for the cached projection summaries, including spawning biomass, fishing mortality, and catch where available.
 
 ```{r}
 #| label: fig-fixed-scenarios
-#| fig-cap: "Forward projections under the user-defined fixed F and fixed catch scenarios."
+#| fig-cap: !expr scenario_caption()
 #| fig-width: 14
 #| fig-height: 10
-futs_plot
+futs_excluded <- median_fbar_exclusions(
+  as.data.table(futs_dt)[year > INIT_YEAR], "scenario")
+futs_plot_dt <- drop_group_stock(futs_dt, futs_excluded, "scenario")
+
+plot_qmd_scenarios(futs_plot_dt, INIT_YEAR, sbmsy_ref, fmsy_ref,
+  final_year=FINAL_YEAR, ref_om=REF_OM)
 ```
 
 The terminal-status plot shows the distribution of projected spawning biomass relative to SBMSY in the final projection year.
@@ -207,10 +503,30 @@ This gives a compact comparison of scenario risk at the end of the projection ho
 
 ```{r}
 #| label: fig-terminal-status
-#| fig-cap: !expr paste("Distribution of SSB / SBMSY in", FINAL_YEAR, "under each projection scenario.")
+#| fig-cap: !expr paste("Distribution of SSB / SBMSY in", FINAL_YEAR, "under each projection scenario.", N_ITER, "iterations. The dotted line marks SBMSY.", filter_note)
 #| fig-width: 12
 #| fig-height: 6
-status_plot
+status_plot_dt <- drop_fbar_iterations(status_dt, futs_fbar_max_dt, "scenario")
+plot_qmd_status(status_plot_dt, FINAL_YEAR, n_iter=N_ITER, ref_om=REF_OM)
+```
+
+```{r}
+#| label: fig-terminal-tradeoff
+#| fig-cap: !expr paste("Median catch and SSB / SBMSY in", FINAL_YEAR, "under each projection scenario. Points show scenario medians; bars show 90% intervals. The dotted line marks SBMSY.", filter_note)
+#| fig-width: 10
+#| fig-height: 7
+plot_qmd_tradeoff(status_plot_dt, FINAL_YEAR, ref_om=REF_OM)
+```
+
+```{r}
+#| label: fig-catch-2026
+#| fig-cap: !expr paste("Distribution of catch in 2026 under each projection scenario.", N_ITER, "iterations.", filter_note)
+#| fig-width: 12
+#| fig-height: 6
+catch_2026_plot_dt <- drop_fbar_iterations(catch_2026_dt,
+  futs_fbar_max_dt, "scenario")
+plot_qmd_catch_distribution(catch_2026_plot_dt, 2026,
+  n_iter=N_ITER, ref_om=REF_OM)
 ```
 
 # Selectivity Window Sensitivity
@@ -231,10 +547,18 @@ kable(window_tbl, col.names=c("Window (years)", "Projection assumption"))
 
 ```{r}
 #| label: fig-selectivity-window-sensitivity
-#| fig-cap: "Sensitivity of projections to the terminal-year selectivity averaging window."
+#| fig-cap: !expr sensitivity_caption("Sensitivity of projections to the terminal-year selectivity averaging window.")
 #| fig-width: 14
 #| fig-height: 8
-selex_plot
+selex_excluded <- selex_fbar_max_dt[
+  , .(max_median_fbar=median(max_fbar, na.rm=TRUE)),
+  by=.(window, stock)][max_median_fbar > FBAR_MAX]
+selex_plot_dt <- drop_group_stock(selex_dt, selex_excluded, "window")
+
+plot_qmd_sensitivity(selex_plot_dt, group_col="window", group_lab="Avg. years",
+  init_year=INIT_YEAR, sbmsy_ref=sbmsy_ref, fmsy_ref=fmsy_ref,
+  ref_om=REF_OM,
+  title_prefix="Selectivity averaging window sensitivity")
 ```
 
 # Selectivity Block Sensitivity
@@ -250,17 +574,25 @@ kable(block_tbl, col.names=c("Block", "Years"))
 
 ```{r}
 #| label: fig-selectivity-block-sensitivity
-#| fig-cap: "Sensitivity of projections to named historical selectivity blocks."
+#| fig-cap: !expr sensitivity_caption("Sensitivity of projections to named historical selectivity blocks.")
 #| fig-width: 14
 #| fig-height: 8
-block_plot
+block_excluded <- block_fbar_max_dt[
+  , .(max_median_fbar=median(max_fbar, na.rm=TRUE)),
+  by=.(block, stock)][max_median_fbar > FBAR_MAX]
+block_plot_dt <- drop_group_stock(block_dt, block_excluded, "block")
+
+plot_qmd_sensitivity(block_plot_dt, group_col="block", group_lab="Selectivity block",
+  init_year=INIT_YEAR, sbmsy_ref=sbmsy_ref, fmsy_ref=fmsy_ref,
+  ref_om=REF_OM,
+  title_prefix="Selectivity block sensitivity")
 ```
 
 # Outputs
 
 The cached projection workflow writes two main files:
 
-- `jmMSE/report/projections/cache.rda`, containing the settings, summary values, and plot objects used by this report; and
-- `jmMSE/report/projections/projections_report.html`, the original HTML report built by `report_run_projections.R`.
+- `report/projections/cache.rda`, containing the settings, summary values, and plot objects used by this report; and
+- `report/projections/projections_report.html`, the original HTML report built by `report_run_projections.R`.
 
 This Quarto document provides an editable report source for the same projection results.
