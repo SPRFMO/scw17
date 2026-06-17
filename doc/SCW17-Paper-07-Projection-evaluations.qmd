@@ -458,12 +458,18 @@ plot_qmd_scaled_tradeoff <- function(dat, final_year, ref_om) {
   if(length(unique(dat$stock)) > 1) p + facet_wrap(~stock, scales="free") else p
 }
 
-plot_qmd_dynamic_bzero <- function(om_short, n_iter, init_year, worm_n=15) {
-  dat <- om_dynamic_bzero_dt(om_short, n_iter)[year <= init_year]
+plot_qmd_ssb_dynamic_bzero <- function(worms_dt, om_short, n_iter, init_year,
+  final_year, scenario_filter="F0", worm_n=15) {
+  ssb_dt <- as.data.table(worms_dt)[scenario == scenario_filter &
+    metric == "SSB (t)" & year <= final_year,
+    .(stock, year, iter, ssb=value)]
+  dyn_dt <- om_dynamic_bzero_dt(om_short, n_iter)[year <= final_year]
+  dat <- merge(ssb_dt, dyn_dt, by=c("stock", "year", "iter"))
+  dat[, ssb_dyn_bzero := ssb / dyn_bzero]
   sum_dt <- dat[, .(
-    q05=quantile(dyn_bzero, 0.05, na.rm=TRUE),
-    q50=median(dyn_bzero, na.rm=TRUE),
-    q95=quantile(dyn_bzero, 0.95, na.rm=TRUE)
+    q05=quantile(ssb_dyn_bzero, 0.05, na.rm=TRUE),
+    q50=median(ssb_dyn_bzero, na.rm=TRUE),
+    q95=quantile(ssb_dyn_bzero, 0.95, na.rm=TRUE)
   ), by=.(stock, year)]
   set.seed(2026)
   worm_ids <- sort(sample(unique(dat$iter), min(worm_n, length(unique(dat$iter)))))
@@ -473,14 +479,15 @@ plot_qmd_dynamic_bzero <- function(om_short, n_iter, init_year, worm_n=15) {
   worm_dt[, worm_col := worm_cols[as.character(iter)]]
   p <- ggplot(sum_dt, aes(x=year)) +
     geom_ribbon(aes(ymin=q05, ymax=q95), fill="#4c78a8", alpha=0.24) +
-    geom_line(data=worm_dt, aes(x=year, y=dyn_bzero, group=iter,
+    geom_vline(xintercept=init_year, linetype="dashed", colour="grey60") +
+    geom_line(data=worm_dt, aes(x=year, y=ssb_dyn_bzero, group=iter,
       colour=worm_col), inherit.aes=FALSE, alpha=0.78, linewidth=0.45) +
     geom_line(aes(y=q50), colour="black", linewidth=0.95) +
     scale_colour_identity(guide="none") +
-    zero_y_scale(labels=function(x) format(round(x), big.mark=",",
+    zero_y_scale(labels=function(x) format(round(x, 2), trim=TRUE,
       scientific=FALSE)) +
-    labs(title=paste("Historical dynamic Bzero -", om_short), x=NULL,
-      y="Dynamic Bzero (t)") +
+    labs(title=paste("SSB / dynamic Bzero -", om_short), x=NULL,
+      y="SSB / dynamic Bzero") +
     report_theme()
   if(length(unique(dat$stock)) > 1) p + facet_wrap(~stock, scales="free_y") else p
 }
@@ -660,17 +667,19 @@ plot_qmd_recruitment(rec_dt, rec_worms_plot_dt, init_year=INIT_YEAR,
   final_year=FINAL_YEAR, ref_om=REF_OM)
 ```
 
-# Dynamic Bzero
+# SSB / Dynamic Bzero
 
-The dynamic Bzero diagnostic shows the historical unfished spawning biomass
+This diagnostic shows SSB relative to the dynamic unfished spawning biomass
 trajectory used to scale the terminal stock-status comparison.
+The future portion uses the `F0` projection for the selected operating model.
 
 ```{r}
 #| label: fig-dynamic-bzero
-#| fig-cap: !expr paste0("Historical dynamic Bzero for ", REF_OM, " through ", INIT_YEAR, ". The ribbon shows the 90% interval across MCMC draws, the black line shows the median, and colored lines show 15 sampled MCMC draws.")
+#| fig-cap: !expr paste0("SSB / dynamic Bzero for ", REF_OM, " through ", FINAL_YEAR, ". The future portion uses the F = 0 projection. The ribbon shows the 90% interval across cached MCMC draw trajectories, the black line shows the median, and colored lines show 15 sampled MCMC draws.")
 #| fig-width: 12
 #| fig-height: 6
-plot_qmd_dynamic_bzero(REF_OM, N_ITER, INIT_YEAR, worm_n=15)
+plot_qmd_ssb_dynamic_bzero(futs_worms_dt, REF_OM, N_ITER, INIT_YEAR,
+  FINAL_YEAR, scenario_filter="F0", worm_n=15)
 ```
 
 # Future Fishing Pattern Scenarios

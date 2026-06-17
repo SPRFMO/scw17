@@ -204,7 +204,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#selectivity-history" id="toc-selectivity-history" class="nav-link" data-scroll-target="#selectivity-history"><span class="header-section-number">5</span> Selectivity History</a></li>
   <li><a href="#historical-exploitation-metrics" id="toc-historical-exploitation-metrics" class="nav-link" data-scroll-target="#historical-exploitation-metrics"><span class="header-section-number">6</span> Historical Exploitation Metrics</a></li>
   <li><a href="#recruitment" id="toc-recruitment" class="nav-link" data-scroll-target="#recruitment"><span class="header-section-number">7</span> Recruitment</a></li>
-  <li><a href="#dynamic-bzero" id="toc-dynamic-bzero" class="nav-link" data-scroll-target="#dynamic-bzero"><span class="header-section-number">8</span> Dynamic Bzero</a></li>
+  <li><a href="#ssb-dynamic-bzero" id="toc-ssb-dynamic-bzero" class="nav-link" data-scroll-target="#ssb-dynamic-bzero"><span class="header-section-number">8</span> SSB / Dynamic Bzero</a></li>
   <li><a href="#future-fishing-pattern-scenarios" id="toc-future-fishing-pattern-scenarios" class="nav-link" data-scroll-target="#future-fishing-pattern-scenarios"><span class="header-section-number">9</span> Future Fishing Pattern Scenarios</a></li>
   <li><a href="#selectivity-window-sensitivity" id="toc-selectivity-window-sensitivity" class="nav-link" data-scroll-target="#selectivity-window-sensitivity"><span class="header-section-number">10</span> Selectivity Window Sensitivity</a></li>
   <li><a href="#selectivity-block-sensitivity" id="toc-selectivity-block-sensitivity" class="nav-link" data-scroll-target="#selectivity-block-sensitivity"><span class="header-section-number">11</span> Selectivity Block Sensitivity</a></li>
@@ -655,22 +655,23 @@ Figure&nbsp;3: Historical and future recruitment for the selected operating mode
 </div>
 </div>
 </section>
-<section id="dynamic-bzero" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Dynamic Bzero</h1>
-<p>The dynamic Bzero diagnostic shows the historical unfished spawning biomass trajectory used to scale the terminal stock-status comparison.</p>
+<section id="ssb-dynamic-bzero" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> SSB / Dynamic Bzero</h1>
+<p>This diagnostic shows SSB relative to the dynamic unfished spawning biomass trajectory used to scale the terminal stock-status comparison. The future portion uses the <code>F0</code> projection for the selected operating model.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_dynamic_bzero</span>(REF_OM, N_ITER, INIT_YEAR, <span class="at">worm_n=</span><span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_ssb_dynamic_bzero</span>(futs_worms_dt, REF_OM, N_ITER, INIT_YEAR,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  FINAL_YEAR, <span class="at">scenario_filter=</span><span class="st">"F0"</span>, <span class="at">worm_n=</span><span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-dynamic-bzero" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-dynamic-bzero-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="SCW17-Paper-07-Projection-evaluations_files/figure-html/fig-dynamic-bzero-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Historical dynamic Bzero for om11 through 2025. The ribbon shows the 90% interval across MCMC draws, the black line shows the median, and colored lines show 15 sampled MCMC draws."><img src="SCW17-Paper-07-Projection-evaluations_files/figure-html/fig-dynamic-bzero-1.png" class="img-fluid figure-img" width="1152"></a>
+<a href="SCW17-Paper-07-Projection-evaluations_files/figure-html/fig-dynamic-bzero-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: SSB / dynamic Bzero for om11 through 2050. The future portion uses the F = 0 projection. The ribbon shows the 90% interval across cached MCMC draw trajectories, the black line shows the median, and colored lines show 15 sampled MCMC draws."><img src="SCW17-Paper-07-Projection-evaluations_files/figure-html/fig-dynamic-bzero-1.png" class="img-fluid figure-img" width="1152"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dynamic-bzero-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Historical dynamic Bzero for om11 through 2025. The ribbon shows the 90% interval across MCMC draws, the black line shows the median, and colored lines show 15 sampled MCMC draws.
+Figure&nbsp;4: SSB / dynamic Bzero for om11 through 2050. The future portion uses the F = 0 projection. The ribbon shows the 90% interval across cached MCMC draw trajectories, the black line shows the median, and colored lines show 15 sampled MCMC draws.
 </figcaption>
 </figure>
 </div>
@@ -1892,375 +1893,384 @@ Figure&nbsp;13: Sensitivity of projections to named historical selectivity block
 <span id="cb21-460"><a href="#cb21-460" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(<span class="fu">unique</span>(dat<span class="sc">$</span>stock)) <span class="sc">&gt;</span> <span class="dv">1</span>) p <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>stock, <span class="at">scales=</span><span class="st">"free"</span>) <span class="cf">else</span> p</span>
 <span id="cb21-461"><a href="#cb21-461" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb21-462"><a href="#cb21-462" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-463"><a href="#cb21-463" aria-hidden="true" tabindex="-1"></a>plot_qmd_dynamic_bzero <span class="ot">&lt;-</span> <span class="cf">function</span>(om_short, n_iter, init_year, <span class="at">worm_n=</span><span class="dv">15</span>) {</span>
-<span id="cb21-464"><a href="#cb21-464" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">om_dynamic_bzero_dt</span>(om_short, n_iter)[year <span class="sc">&lt;=</span> init_year]</span>
-<span id="cb21-465"><a href="#cb21-465" aria-hidden="true" tabindex="-1"></a>  sum_dt <span class="ot">&lt;-</span> dat[, .(</span>
-<span id="cb21-466"><a href="#cb21-466" aria-hidden="true" tabindex="-1"></a>    <span class="at">q05=</span><span class="fu">quantile</span>(dyn_bzero, <span class="fl">0.05</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb21-467"><a href="#cb21-467" aria-hidden="true" tabindex="-1"></a>    <span class="at">q50=</span><span class="fu">median</span>(dyn_bzero, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb21-468"><a href="#cb21-468" aria-hidden="true" tabindex="-1"></a>    <span class="at">q95=</span><span class="fu">quantile</span>(dyn_bzero, <span class="fl">0.95</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb21-469"><a href="#cb21-469" aria-hidden="true" tabindex="-1"></a>  ), by<span class="ot">=</span>.(stock, year)]</span>
-<span id="cb21-470"><a href="#cb21-470" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
-<span id="cb21-471"><a href="#cb21-471" aria-hidden="true" tabindex="-1"></a>  worm_ids <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">sample</span>(<span class="fu">unique</span>(dat<span class="sc">$</span>iter), <span class="fu">min</span>(worm_n, <span class="fu">length</span>(<span class="fu">unique</span>(dat<span class="sc">$</span>iter)))))</span>
-<span id="cb21-472"><a href="#cb21-472" aria-hidden="true" tabindex="-1"></a>  worm_dt <span class="ot">&lt;-</span> dat[iter <span class="sc">%in%</span> worm_ids]</span>
-<span id="cb21-473"><a href="#cb21-473" aria-hidden="true" tabindex="-1"></a>  worm_cols <span class="ot">&lt;-</span> <span class="fu">setNames</span>(grDevices<span class="sc">::</span><span class="fu">hcl.colors</span>(<span class="fu">length</span>(worm_ids), <span class="st">"Viridis"</span>),</span>
-<span id="cb21-474"><a href="#cb21-474" aria-hidden="true" tabindex="-1"></a>    worm_ids)</span>
-<span id="cb21-475"><a href="#cb21-475" aria-hidden="true" tabindex="-1"></a>  worm_dt[, worm_col <span class="sc">:</span><span class="er">=</span> worm_cols[<span class="fu">as.character</span>(iter)]]</span>
-<span id="cb21-476"><a href="#cb21-476" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sum_dt, <span class="fu">aes</span>(<span class="at">x=</span>year)) <span class="sc">+</span></span>
-<span id="cb21-477"><a href="#cb21-477" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>q05, <span class="at">ymax=</span>q95), <span class="at">fill=</span><span class="st">"#4c78a8"</span>, <span class="at">alpha=</span><span class="fl">0.24</span>) <span class="sc">+</span></span>
-<span id="cb21-478"><a href="#cb21-478" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data=</span>worm_dt, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>dyn_bzero, <span class="at">group=</span>iter,</span>
-<span id="cb21-479"><a href="#cb21-479" aria-hidden="true" tabindex="-1"></a>      <span class="at">colour=</span>worm_col), <span class="at">inherit.aes=</span><span class="cn">FALSE</span>, <span class="at">alpha=</span><span class="fl">0.78</span>, <span class="at">linewidth=</span><span class="fl">0.45</span>) <span class="sc">+</span></span>
-<span id="cb21-480"><a href="#cb21-480" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>q50), <span class="at">colour=</span><span class="st">"black"</span>, <span class="at">linewidth=</span><span class="fl">0.95</span>) <span class="sc">+</span></span>
-<span id="cb21-481"><a href="#cb21-481" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_identity</span>(<span class="at">guide=</span><span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb21-482"><a href="#cb21-482" aria-hidden="true" tabindex="-1"></a>    <span class="fu">zero_y_scale</span>(<span class="at">labels=</span><span class="cf">function</span>(x) <span class="fu">format</span>(<span class="fu">round</span>(x), <span class="at">big.mark=</span><span class="st">","</span>,</span>
-<span id="cb21-483"><a href="#cb21-483" aria-hidden="true" tabindex="-1"></a>      <span class="at">scientific=</span><span class="cn">FALSE</span>)) <span class="sc">+</span></span>
-<span id="cb21-484"><a href="#cb21-484" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="fu">paste</span>(<span class="st">"Historical dynamic Bzero -"</span>, om_short), <span class="at">x=</span><span class="cn">NULL</span>,</span>
-<span id="cb21-485"><a href="#cb21-485" aria-hidden="true" tabindex="-1"></a>      <span class="at">y=</span><span class="st">"Dynamic Bzero (t)"</span>) <span class="sc">+</span></span>
-<span id="cb21-486"><a href="#cb21-486" aria-hidden="true" tabindex="-1"></a>    <span class="fu">report_theme</span>()</span>
-<span id="cb21-487"><a href="#cb21-487" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(<span class="fu">unique</span>(dat<span class="sc">$</span>stock)) <span class="sc">&gt;</span> <span class="dv">1</span>) p <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>stock, <span class="at">scales=</span><span class="st">"free_y"</span>) <span class="cf">else</span> p</span>
-<span id="cb21-488"><a href="#cb21-488" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb21-489"><a href="#cb21-489" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-490"><a href="#cb21-490" aria-hidden="true" tabindex="-1"></a>plot_qmd_catch_distribution <span class="ot">&lt;-</span> <span class="cf">function</span>(catch_dt, year, <span class="at">n_iter=</span><span class="cn">NULL</span>, <span class="at">ref_om=</span><span class="cn">NULL</span>) {</span>
-<span id="cb21-491"><a href="#cb21-491" aria-hidden="true" tabindex="-1"></a>  title <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Catch distribution in"</span>, year)</span>
-<span id="cb21-492"><a href="#cb21-492" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(ref_om)) title <span class="ot">&lt;-</span> <span class="fu">paste</span>(title, <span class="st">"-"</span>, ref_om)</span>
-<span id="cb21-493"><a href="#cb21-493" aria-hidden="true" tabindex="-1"></a>  clr <span class="ot">&lt;-</span> <span class="cf">if</span>(<span class="st">"label"</span> <span class="sc">%in%</span> <span class="fu">names</span>(catch_dt)) catch_dt<span class="sc">$</span>label <span class="cf">else</span> catch_dt<span class="sc">$</span>scenario</span>
-<span id="cb21-494"><a href="#cb21-494" aria-hidden="true" tabindex="-1"></a>  xvar <span class="ot">&lt;-</span> <span class="cf">if</span>(<span class="st">"label"</span> <span class="sc">%in%</span> <span class="fu">names</span>(catch_dt)) <span class="fu">quote</span>(label) <span class="cf">else</span> <span class="fu">quote</span>(scenario)</span>
-<span id="cb21-495"><a href="#cb21-495" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(catch_dt, <span class="fu">aes</span>(<span class="at">x=</span><span class="sc">!!</span>xvar, <span class="at">y=</span>value, <span class="at">colour=</span><span class="sc">!!</span>xvar)) <span class="sc">+</span></span>
-<span id="cb21-496"><a href="#cb21-496" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.5</span>, <span class="at">outlier.size=</span><span class="fl">0.8</span>, <span class="at">outlier.alpha=</span><span class="fl">0.4</span>, <span class="at">show.legend=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb21-497"><a href="#cb21-497" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_cycling</span>(clr) <span class="sc">+</span></span>
-<span id="cb21-498"><a href="#cb21-498" aria-hidden="true" tabindex="-1"></a>    <span class="fu">zero_y_scale</span>(<span class="at">labels=</span><span class="cf">function</span>(x) <span class="fu">format</span>(<span class="fu">round</span>(x), <span class="at">big.mark=</span><span class="st">","</span>, <span class="at">scientific=</span><span class="cn">FALSE</span>)) <span class="sc">+</span></span>
-<span id="cb21-499"><a href="#cb21-499" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_discrete</span>(<span class="at">drop=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb21-500"><a href="#cb21-500" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span>title, <span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="st">"Catch (t)"</span>) <span class="sc">+</span></span>
-<span id="cb21-501"><a href="#cb21-501" aria-hidden="true" tabindex="-1"></a>    <span class="fu">report_theme</span>() <span class="sc">+</span></span>
-<span id="cb21-502"><a href="#cb21-502" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">45</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span>
-<span id="cb21-503"><a href="#cb21-503" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(<span class="fu">unique</span>(catch_dt<span class="sc">$</span>stock)) <span class="sc">&gt;</span> <span class="dv">1</span>) p <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>stock, <span class="at">scales=</span><span class="st">"free_y"</span>) <span class="cf">else</span> p</span>
-<span id="cb21-504"><a href="#cb21-504" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb21-505"><a href="#cb21-505" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-506"><a href="#cb21-506" aria-hidden="true" tabindex="-1"></a>plot_qmd_sensitivity <span class="ot">&lt;-</span> <span class="cf">function</span>(dat, group_col, group_lab, init_year,</span>
-<span id="cb21-507"><a href="#cb21-507" aria-hidden="true" tabindex="-1"></a>  sbmsy_ref, <span class="at">fmsy_ref=</span><span class="cn">NULL</span>, <span class="at">ref_om=</span><span class="cn">NULL</span>, <span class="at">worms_dt=</span><span class="cn">NULL</span>, title_prefix) {</span>
-<span id="cb21-508"><a href="#cb21-508" aria-hidden="true" tabindex="-1"></a>  title <span class="ot">&lt;-</span> <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(ref_om)) <span class="fu">paste</span>(title_prefix, <span class="st">"-"</span>, ref_om, <span class="st">"@ FMSY"</span>) <span class="cf">else</span> <span class="fu">paste</span>(title_prefix, <span class="st">"@ FMSY"</span>)</span>
-<span id="cb21-509"><a href="#cb21-509" aria-hidden="true" tabindex="-1"></a>  ref_lines <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">stock=</span><span class="fu">names</span>(sbmsy_ref), <span class="at">metric=</span><span class="st">"SSB (t)"</span>, <span class="at">ref=</span><span class="fu">unname</span>(sbmsy_ref))</span>
-<span id="cb21-510"><a href="#cb21-510" aria-hidden="true" tabindex="-1"></a>  panel <span class="ot">&lt;-</span> <span class="fu">metric_panels</span>(<span class="fu">as.data.table</span>(dat)[year <span class="sc">&gt;=</span> init_year], ref_lines)</span>
-<span id="cb21-511"><a href="#cb21-511" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> panel<span class="sc">$</span>dat</span>
-<span id="cb21-512"><a href="#cb21-512" aria-hidden="true" tabindex="-1"></a>  ref_lines <span class="ot">&lt;-</span> panel<span class="sc">$</span>ref_lines</span>
-<span id="cb21-513"><a href="#cb21-513" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(worms_dt) <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(worms_dt) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb21-514"><a href="#cb21-514" aria-hidden="true" tabindex="-1"></a>    worms_dt <span class="ot">&lt;-</span> <span class="fu">metric_panels</span>(<span class="fu">as.data.table</span>(worms_dt)[year <span class="sc">&gt;=</span> init_year])<span class="sc">$</span>dat</span>
-<span id="cb21-515"><a href="#cb21-515" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>value, <span class="at">colour=</span>.data[[group_col]], <span class="at">group=</span>.data[[group_col]])) <span class="sc">+</span></span>
-<span id="cb21-516"><a href="#cb21-516" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span>init_year, <span class="at">linetype=</span><span class="st">"dashed"</span>, <span class="at">colour=</span><span class="st">"grey60"</span>) <span class="sc">+</span></span>
-<span id="cb21-517"><a href="#cb21-517" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">data=</span>ref_lines, <span class="fu">aes</span>(<span class="at">yintercept=</span>ref), <span class="at">linetype=</span><span class="st">"dotted"</span>, <span class="at">colour=</span><span class="st">"#d55e00"</span>, <span class="at">linewidth=</span><span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb21-518"><a href="#cb21-518" aria-hidden="true" tabindex="-1"></a>    { <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(worms_dt) <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(worms_dt) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb21-519"><a href="#cb21-519" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_line</span>(<span class="at">data=</span>worms_dt, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>value,</span>
-<span id="cb21-520"><a href="#cb21-520" aria-hidden="true" tabindex="-1"></a>          <span class="at">group=</span><span class="fu">interaction</span>(.data[[group_col]], stock, metric, iter)),</span>
-<span id="cb21-521"><a href="#cb21-521" aria-hidden="true" tabindex="-1"></a>          <span class="at">inherit.aes=</span><span class="cn">FALSE</span>, <span class="at">colour=</span><span class="st">"grey45"</span>, <span class="at">alpha=</span><span class="fl">0.30</span>, <span class="at">linewidth=</span><span class="fl">0.4</span>) } <span class="sc">+</span></span>
-<span id="cb21-522"><a href="#cb21-522" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">linewidth=</span><span class="fl">0.95</span>, <span class="at">alpha=</span><span class="fl">0.9</span>) <span class="sc">+</span></span>
-<span id="cb21-523"><a href="#cb21-523" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_cycling</span>(dat[[group_col]], <span class="at">name=</span>group_lab) <span class="sc">+</span></span>
-<span id="cb21-524"><a href="#cb21-524" aria-hidden="true" tabindex="-1"></a>    <span class="fu">zero_y_scale</span>() <span class="sc">+</span></span>
-<span id="cb21-525"><a href="#cb21-525" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span>title, <span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb21-526"><a href="#cb21-526" aria-hidden="true" tabindex="-1"></a>    <span class="fu">report_theme</span>()</span>
-<span id="cb21-527"><a href="#cb21-527" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(panel<span class="sc">$</span>multi_stock) p <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>panel, <span class="at">scales=</span><span class="st">"free_y"</span>, <span class="at">ncol=</span>panel<span class="sc">$</span>ncol)</span>
-<span id="cb21-528"><a href="#cb21-528" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> p <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>metric, <span class="at">scales=</span><span class="st">"free_y"</span>, <span class="at">ncol=</span><span class="dv">1</span>)</span>
-<span id="cb21-529"><a href="#cb21-529" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb21-530"><a href="#cb21-530" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-531"><a href="#cb21-531" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-532"><a href="#cb21-532" aria-hidden="true" tabindex="-1"></a><span class="fu"># Purpose</span></span>
-<span id="cb21-533"><a href="#cb21-533" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-534"><a href="#cb21-534" aria-hidden="true" tabindex="-1"></a>This report documents the forward-projection outputs generated by <span class="in">`run_projections.R`</span> and assembled by <span class="in">`report_run_projections.R`</span>.</span>
-<span id="cb21-535"><a href="#cb21-535" aria-hidden="true" tabindex="-1"></a>It is a Quarto version of the cached HTML report: it loads the saved projection cache, summarizes the run settings, and displays the diagnostic plots that were produced during the projection workflow.</span>
-<span id="cb21-536"><a href="#cb21-536" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-537"><a href="#cb21-537" aria-hidden="true" tabindex="-1"></a>No projection calculations are rerun in this document.</span>
-<span id="cb21-538"><a href="#cb21-538" aria-hidden="true" tabindex="-1"></a>The report uses the cached objects in <span class="in">`report/projections/cache.rda`</span>, which are produced by <span class="in">`run_projections.R`</span>.</span>
-<span id="cb21-539"><a href="#cb21-539" aria-hidden="true" tabindex="-1"></a>This keeps the report rendering step separate from the computational projection step.</span>
+<span id="cb21-463"><a href="#cb21-463" aria-hidden="true" tabindex="-1"></a>plot_qmd_ssb_dynamic_bzero <span class="ot">&lt;-</span> <span class="cf">function</span>(worms_dt, om_short, n_iter, init_year,</span>
+<span id="cb21-464"><a href="#cb21-464" aria-hidden="true" tabindex="-1"></a>  final_year, <span class="at">scenario_filter=</span><span class="st">"F0"</span>, <span class="at">worm_n=</span><span class="dv">15</span>) {</span>
+<span id="cb21-465"><a href="#cb21-465" aria-hidden="true" tabindex="-1"></a>  ssb_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(worms_dt)[scenario <span class="sc">==</span> scenario_filter <span class="sc">&amp;</span></span>
+<span id="cb21-466"><a href="#cb21-466" aria-hidden="true" tabindex="-1"></a>    metric <span class="sc">==</span> <span class="st">"SSB (t)"</span> <span class="sc">&amp;</span> year <span class="sc">&lt;=</span> final_year,</span>
+<span id="cb21-467"><a href="#cb21-467" aria-hidden="true" tabindex="-1"></a>    .(stock, year, iter, <span class="at">ssb=</span>value)]</span>
+<span id="cb21-468"><a href="#cb21-468" aria-hidden="true" tabindex="-1"></a>  dyn_dt <span class="ot">&lt;-</span> <span class="fu">om_dynamic_bzero_dt</span>(om_short, n_iter)[year <span class="sc">&lt;=</span> final_year]</span>
+<span id="cb21-469"><a href="#cb21-469" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> <span class="fu">merge</span>(ssb_dt, dyn_dt, <span class="at">by=</span><span class="fu">c</span>(<span class="st">"stock"</span>, <span class="st">"year"</span>, <span class="st">"iter"</span>))</span>
+<span id="cb21-470"><a href="#cb21-470" aria-hidden="true" tabindex="-1"></a>  dat[, ssb_dyn_bzero <span class="sc">:</span><span class="er">=</span> ssb <span class="sc">/</span> dyn_bzero]</span>
+<span id="cb21-471"><a href="#cb21-471" aria-hidden="true" tabindex="-1"></a>  sum_dt <span class="ot">&lt;-</span> dat[, .(</span>
+<span id="cb21-472"><a href="#cb21-472" aria-hidden="true" tabindex="-1"></a>    <span class="at">q05=</span><span class="fu">quantile</span>(ssb_dyn_bzero, <span class="fl">0.05</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb21-473"><a href="#cb21-473" aria-hidden="true" tabindex="-1"></a>    <span class="at">q50=</span><span class="fu">median</span>(ssb_dyn_bzero, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb21-474"><a href="#cb21-474" aria-hidden="true" tabindex="-1"></a>    <span class="at">q95=</span><span class="fu">quantile</span>(ssb_dyn_bzero, <span class="fl">0.95</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="cb21-475"><a href="#cb21-475" aria-hidden="true" tabindex="-1"></a>  ), by<span class="ot">=</span>.(stock, year)]</span>
+<span id="cb21-476"><a href="#cb21-476" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb21-477"><a href="#cb21-477" aria-hidden="true" tabindex="-1"></a>  worm_ids <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">sample</span>(<span class="fu">unique</span>(dat<span class="sc">$</span>iter), <span class="fu">min</span>(worm_n, <span class="fu">length</span>(<span class="fu">unique</span>(dat<span class="sc">$</span>iter)))))</span>
+<span id="cb21-478"><a href="#cb21-478" aria-hidden="true" tabindex="-1"></a>  worm_dt <span class="ot">&lt;-</span> dat[iter <span class="sc">%in%</span> worm_ids]</span>
+<span id="cb21-479"><a href="#cb21-479" aria-hidden="true" tabindex="-1"></a>  worm_cols <span class="ot">&lt;-</span> <span class="fu">setNames</span>(grDevices<span class="sc">::</span><span class="fu">hcl.colors</span>(<span class="fu">length</span>(worm_ids), <span class="st">"Viridis"</span>),</span>
+<span id="cb21-480"><a href="#cb21-480" aria-hidden="true" tabindex="-1"></a>    worm_ids)</span>
+<span id="cb21-481"><a href="#cb21-481" aria-hidden="true" tabindex="-1"></a>  worm_dt[, worm_col <span class="sc">:</span><span class="er">=</span> worm_cols[<span class="fu">as.character</span>(iter)]]</span>
+<span id="cb21-482"><a href="#cb21-482" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sum_dt, <span class="fu">aes</span>(<span class="at">x=</span>year)) <span class="sc">+</span></span>
+<span id="cb21-483"><a href="#cb21-483" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>q05, <span class="at">ymax=</span>q95), <span class="at">fill=</span><span class="st">"#4c78a8"</span>, <span class="at">alpha=</span><span class="fl">0.24</span>) <span class="sc">+</span></span>
+<span id="cb21-484"><a href="#cb21-484" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span>init_year, <span class="at">linetype=</span><span class="st">"dashed"</span>, <span class="at">colour=</span><span class="st">"grey60"</span>) <span class="sc">+</span></span>
+<span id="cb21-485"><a href="#cb21-485" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data=</span>worm_dt, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>ssb_dyn_bzero, <span class="at">group=</span>iter,</span>
+<span id="cb21-486"><a href="#cb21-486" aria-hidden="true" tabindex="-1"></a>      <span class="at">colour=</span>worm_col), <span class="at">inherit.aes=</span><span class="cn">FALSE</span>, <span class="at">alpha=</span><span class="fl">0.78</span>, <span class="at">linewidth=</span><span class="fl">0.45</span>) <span class="sc">+</span></span>
+<span id="cb21-487"><a href="#cb21-487" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>q50), <span class="at">colour=</span><span class="st">"black"</span>, <span class="at">linewidth=</span><span class="fl">0.95</span>) <span class="sc">+</span></span>
+<span id="cb21-488"><a href="#cb21-488" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_identity</span>(<span class="at">guide=</span><span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb21-489"><a href="#cb21-489" aria-hidden="true" tabindex="-1"></a>    <span class="fu">zero_y_scale</span>(<span class="at">labels=</span><span class="cf">function</span>(x) <span class="fu">format</span>(<span class="fu">round</span>(x, <span class="dv">2</span>), <span class="at">trim=</span><span class="cn">TRUE</span>,</span>
+<span id="cb21-490"><a href="#cb21-490" aria-hidden="true" tabindex="-1"></a>      <span class="at">scientific=</span><span class="cn">FALSE</span>)) <span class="sc">+</span></span>
+<span id="cb21-491"><a href="#cb21-491" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="fu">paste</span>(<span class="st">"SSB / dynamic Bzero -"</span>, om_short), <span class="at">x=</span><span class="cn">NULL</span>,</span>
+<span id="cb21-492"><a href="#cb21-492" aria-hidden="true" tabindex="-1"></a>      <span class="at">y=</span><span class="st">"SSB / dynamic Bzero"</span>) <span class="sc">+</span></span>
+<span id="cb21-493"><a href="#cb21-493" aria-hidden="true" tabindex="-1"></a>    <span class="fu">report_theme</span>()</span>
+<span id="cb21-494"><a href="#cb21-494" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(<span class="fu">unique</span>(dat<span class="sc">$</span>stock)) <span class="sc">&gt;</span> <span class="dv">1</span>) p <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>stock, <span class="at">scales=</span><span class="st">"free_y"</span>) <span class="cf">else</span> p</span>
+<span id="cb21-495"><a href="#cb21-495" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-496"><a href="#cb21-496" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-497"><a href="#cb21-497" aria-hidden="true" tabindex="-1"></a>plot_qmd_catch_distribution <span class="ot">&lt;-</span> <span class="cf">function</span>(catch_dt, year, <span class="at">n_iter=</span><span class="cn">NULL</span>, <span class="at">ref_om=</span><span class="cn">NULL</span>) {</span>
+<span id="cb21-498"><a href="#cb21-498" aria-hidden="true" tabindex="-1"></a>  title <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Catch distribution in"</span>, year)</span>
+<span id="cb21-499"><a href="#cb21-499" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(ref_om)) title <span class="ot">&lt;-</span> <span class="fu">paste</span>(title, <span class="st">"-"</span>, ref_om)</span>
+<span id="cb21-500"><a href="#cb21-500" aria-hidden="true" tabindex="-1"></a>  clr <span class="ot">&lt;-</span> <span class="cf">if</span>(<span class="st">"label"</span> <span class="sc">%in%</span> <span class="fu">names</span>(catch_dt)) catch_dt<span class="sc">$</span>label <span class="cf">else</span> catch_dt<span class="sc">$</span>scenario</span>
+<span id="cb21-501"><a href="#cb21-501" aria-hidden="true" tabindex="-1"></a>  xvar <span class="ot">&lt;-</span> <span class="cf">if</span>(<span class="st">"label"</span> <span class="sc">%in%</span> <span class="fu">names</span>(catch_dt)) <span class="fu">quote</span>(label) <span class="cf">else</span> <span class="fu">quote</span>(scenario)</span>
+<span id="cb21-502"><a href="#cb21-502" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(catch_dt, <span class="fu">aes</span>(<span class="at">x=</span><span class="sc">!!</span>xvar, <span class="at">y=</span>value, <span class="at">colour=</span><span class="sc">!!</span>xvar)) <span class="sc">+</span></span>
+<span id="cb21-503"><a href="#cb21-503" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.5</span>, <span class="at">outlier.size=</span><span class="fl">0.8</span>, <span class="at">outlier.alpha=</span><span class="fl">0.4</span>, <span class="at">show.legend=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb21-504"><a href="#cb21-504" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_cycling</span>(clr) <span class="sc">+</span></span>
+<span id="cb21-505"><a href="#cb21-505" aria-hidden="true" tabindex="-1"></a>    <span class="fu">zero_y_scale</span>(<span class="at">labels=</span><span class="cf">function</span>(x) <span class="fu">format</span>(<span class="fu">round</span>(x), <span class="at">big.mark=</span><span class="st">","</span>, <span class="at">scientific=</span><span class="cn">FALSE</span>)) <span class="sc">+</span></span>
+<span id="cb21-506"><a href="#cb21-506" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_discrete</span>(<span class="at">drop=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb21-507"><a href="#cb21-507" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span>title, <span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="st">"Catch (t)"</span>) <span class="sc">+</span></span>
+<span id="cb21-508"><a href="#cb21-508" aria-hidden="true" tabindex="-1"></a>    <span class="fu">report_theme</span>() <span class="sc">+</span></span>
+<span id="cb21-509"><a href="#cb21-509" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">45</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span>
+<span id="cb21-510"><a href="#cb21-510" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(<span class="fu">unique</span>(catch_dt<span class="sc">$</span>stock)) <span class="sc">&gt;</span> <span class="dv">1</span>) p <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>stock, <span class="at">scales=</span><span class="st">"free_y"</span>) <span class="cf">else</span> p</span>
+<span id="cb21-511"><a href="#cb21-511" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-512"><a href="#cb21-512" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-513"><a href="#cb21-513" aria-hidden="true" tabindex="-1"></a>plot_qmd_sensitivity <span class="ot">&lt;-</span> <span class="cf">function</span>(dat, group_col, group_lab, init_year,</span>
+<span id="cb21-514"><a href="#cb21-514" aria-hidden="true" tabindex="-1"></a>  sbmsy_ref, <span class="at">fmsy_ref=</span><span class="cn">NULL</span>, <span class="at">ref_om=</span><span class="cn">NULL</span>, <span class="at">worms_dt=</span><span class="cn">NULL</span>, title_prefix) {</span>
+<span id="cb21-515"><a href="#cb21-515" aria-hidden="true" tabindex="-1"></a>  title <span class="ot">&lt;-</span> <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(ref_om)) <span class="fu">paste</span>(title_prefix, <span class="st">"-"</span>, ref_om, <span class="st">"@ FMSY"</span>) <span class="cf">else</span> <span class="fu">paste</span>(title_prefix, <span class="st">"@ FMSY"</span>)</span>
+<span id="cb21-516"><a href="#cb21-516" aria-hidden="true" tabindex="-1"></a>  ref_lines <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">stock=</span><span class="fu">names</span>(sbmsy_ref), <span class="at">metric=</span><span class="st">"SSB (t)"</span>, <span class="at">ref=</span><span class="fu">unname</span>(sbmsy_ref))</span>
+<span id="cb21-517"><a href="#cb21-517" aria-hidden="true" tabindex="-1"></a>  panel <span class="ot">&lt;-</span> <span class="fu">metric_panels</span>(<span class="fu">as.data.table</span>(dat)[year <span class="sc">&gt;=</span> init_year], ref_lines)</span>
+<span id="cb21-518"><a href="#cb21-518" aria-hidden="true" tabindex="-1"></a>  dat <span class="ot">&lt;-</span> panel<span class="sc">$</span>dat</span>
+<span id="cb21-519"><a href="#cb21-519" aria-hidden="true" tabindex="-1"></a>  ref_lines <span class="ot">&lt;-</span> panel<span class="sc">$</span>ref_lines</span>
+<span id="cb21-520"><a href="#cb21-520" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(worms_dt) <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(worms_dt) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb21-521"><a href="#cb21-521" aria-hidden="true" tabindex="-1"></a>    worms_dt <span class="ot">&lt;-</span> <span class="fu">metric_panels</span>(<span class="fu">as.data.table</span>(worms_dt)[year <span class="sc">&gt;=</span> init_year])<span class="sc">$</span>dat</span>
+<span id="cb21-522"><a href="#cb21-522" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>value, <span class="at">colour=</span>.data[[group_col]], <span class="at">group=</span>.data[[group_col]])) <span class="sc">+</span></span>
+<span id="cb21-523"><a href="#cb21-523" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span>init_year, <span class="at">linetype=</span><span class="st">"dashed"</span>, <span class="at">colour=</span><span class="st">"grey60"</span>) <span class="sc">+</span></span>
+<span id="cb21-524"><a href="#cb21-524" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">data=</span>ref_lines, <span class="fu">aes</span>(<span class="at">yintercept=</span>ref), <span class="at">linetype=</span><span class="st">"dotted"</span>, <span class="at">colour=</span><span class="st">"#d55e00"</span>, <span class="at">linewidth=</span><span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb21-525"><a href="#cb21-525" aria-hidden="true" tabindex="-1"></a>    { <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(worms_dt) <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(worms_dt) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb21-526"><a href="#cb21-526" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_line</span>(<span class="at">data=</span>worms_dt, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>value,</span>
+<span id="cb21-527"><a href="#cb21-527" aria-hidden="true" tabindex="-1"></a>          <span class="at">group=</span><span class="fu">interaction</span>(.data[[group_col]], stock, metric, iter)),</span>
+<span id="cb21-528"><a href="#cb21-528" aria-hidden="true" tabindex="-1"></a>          <span class="at">inherit.aes=</span><span class="cn">FALSE</span>, <span class="at">colour=</span><span class="st">"grey45"</span>, <span class="at">alpha=</span><span class="fl">0.30</span>, <span class="at">linewidth=</span><span class="fl">0.4</span>) } <span class="sc">+</span></span>
+<span id="cb21-529"><a href="#cb21-529" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">linewidth=</span><span class="fl">0.95</span>, <span class="at">alpha=</span><span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb21-530"><a href="#cb21-530" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_cycling</span>(dat[[group_col]], <span class="at">name=</span>group_lab) <span class="sc">+</span></span>
+<span id="cb21-531"><a href="#cb21-531" aria-hidden="true" tabindex="-1"></a>    <span class="fu">zero_y_scale</span>() <span class="sc">+</span></span>
+<span id="cb21-532"><a href="#cb21-532" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span>title, <span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb21-533"><a href="#cb21-533" aria-hidden="true" tabindex="-1"></a>    <span class="fu">report_theme</span>()</span>
+<span id="cb21-534"><a href="#cb21-534" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(panel<span class="sc">$</span>multi_stock) p <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>panel, <span class="at">scales=</span><span class="st">"free_y"</span>, <span class="at">ncol=</span>panel<span class="sc">$</span>ncol)</span>
+<span id="cb21-535"><a href="#cb21-535" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> p <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>metric, <span class="at">scales=</span><span class="st">"free_y"</span>, <span class="at">ncol=</span><span class="dv">1</span>)</span>
+<span id="cb21-536"><a href="#cb21-536" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-537"><a href="#cb21-537" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-538"><a href="#cb21-538" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-539"><a href="#cb21-539" aria-hidden="true" tabindex="-1"></a><span class="fu"># Purpose</span></span>
 <span id="cb21-540"><a href="#cb21-540" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-541"><a href="#cb21-541" aria-hidden="true" tabindex="-1"></a><span class="fu"># Workflow Summary</span></span>
-<span id="cb21-542"><a href="#cb21-542" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-543"><a href="#cb21-543" aria-hidden="true" tabindex="-1"></a>The projection workflow does the following:</span>
-<span id="cb21-544"><a href="#cb21-544" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-545"><a href="#cb21-545" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>loads the selected operating model (<span class="in">`REF_OM`</span>) and subsets it to <span class="in">`N_ITER`</span> iterations;</span>
-<span id="cb21-546"><a href="#cb21-546" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>extends the model from the last historical year to the final projection year;</span>
-<span id="cb21-547"><a href="#cb21-547" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>calculates reference points and current-state summaries;</span>
-<span id="cb21-548"><a href="#cb21-548" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>evaluates simplified future fishing patterns;</span>
-<span id="cb21-549"><a href="#cb21-549" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>compares terminal stock status across scenarios;</span>
-<span id="cb21-550"><a href="#cb21-550" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>explores sensitivity to future selectivity assumptions using rolling terminal-year windows; and</span>
-<span id="cb21-551"><a href="#cb21-551" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>compares named historical selectivity blocks as alternative frozen future selectivity patterns.</span>
-<span id="cb21-552"><a href="#cb21-552" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-553"><a href="#cb21-553" aria-hidden="true" tabindex="-1"></a><span class="in">`report_run_projections.R`</span> then reads the cache and writes <span class="in">`report/projections/projections_report.html`</span>.</span>
-<span id="cb21-554"><a href="#cb21-554" aria-hidden="true" tabindex="-1"></a>This Quarto file reads the same cache and presents the same report content in a format that can be rendered, edited, and extended with standard Quarto tooling.</span>
-<span id="cb21-555"><a href="#cb21-555" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-556"><a href="#cb21-556" aria-hidden="true" tabindex="-1"></a><span class="fu"># Run Summary</span></span>
-<span id="cb21-557"><a href="#cb21-557" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-560"><a href="#cb21-560" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-561"><a href="#cb21-561" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-run-settings</span></span>
-<span id="cb21-562"><a href="#cb21-562" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Projection run settings stored in the cached projection report."</span></span>
-<span id="cb21-563"><a href="#cb21-563" aria-hidden="true" tabindex="-1"></a>settings_tbl <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb21-564"><a href="#cb21-564" aria-hidden="true" tabindex="-1"></a>  <span class="at">setting =</span> <span class="fu">c</span>(</span>
-<span id="cb21-565"><a href="#cb21-565" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Operating model"</span>,</span>
-<span id="cb21-566"><a href="#cb21-566" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Iterations"</span>,</span>
-<span id="cb21-567"><a href="#cb21-567" aria-hidden="true" tabindex="-1"></a>    <span class="st">"MCMC worms shown"</span>,</span>
-<span id="cb21-568"><a href="#cb21-568" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Projection horizon"</span>,</span>
-<span id="cb21-569"><a href="#cb21-569" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Selectivity averaging windows"</span>,</span>
-<span id="cb21-570"><a href="#cb21-570" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Named selectivity blocks"</span></span>
-<span id="cb21-571"><a href="#cb21-571" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb21-572"><a href="#cb21-572" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(</span>
-<span id="cb21-573"><a href="#cb21-573" aria-hidden="true" tabindex="-1"></a>    REF_OM,</span>
-<span id="cb21-574"><a href="#cb21-574" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fmt_num</span>(N_ITER),</span>
-<span id="cb21-575"><a href="#cb21-575" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">exists</span>(<span class="st">"worm_iters"</span>)) <span class="fu">fmt_num</span>(<span class="fu">length</span>(worm_iters)) <span class="cf">else</span> <span class="st">"0"</span>,</span>
-<span id="cb21-576"><a href="#cb21-576" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(INIT_YEAR <span class="sc">+</span> <span class="dv">1</span>, FINAL_YEAR, <span class="at">sep=</span><span class="st">"-"</span>),</span>
-<span id="cb21-577"><a href="#cb21-577" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(SELEX_WINDOWS, <span class="at">collapse=</span><span class="st">", "</span>),</span>
-<span id="cb21-578"><a href="#cb21-578" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="fu">names</span>(SELEX_BLOCKS), <span class="at">collapse=</span><span class="st">", "</span>)</span>
-<span id="cb21-579"><a href="#cb21-579" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb21-580"><a href="#cb21-580" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
-<span id="cb21-581"><a href="#cb21-581" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb21-582"><a href="#cb21-582" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-583"><a href="#cb21-583" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(settings_tbl)</span>
-<span id="cb21-584"><a href="#cb21-584" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-585"><a href="#cb21-585" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-588"><a href="#cb21-588" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-589"><a href="#cb21-589" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-reference-points</span></span>
-<span id="cb21-590"><a href="#cb21-590" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Reference points used to interpret projected stock status."</span></span>
-<span id="cb21-591"><a href="#cb21-591" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(refpt_tbl, <span class="at">col.names=</span><span class="fu">c</span>(<span class="st">"Stock"</span>, <span class="st">"SBMSY (t)"</span>, <span class="st">"FMSY"</span>))</span>
-<span id="cb21-592"><a href="#cb21-592" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-593"><a href="#cb21-593" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-594"><a href="#cb21-594" aria-hidden="true" tabindex="-1"></a>The cached current-state values are:</span>
-<span id="cb21-595"><a href="#cb21-595" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-598"><a href="#cb21-598" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-599"><a href="#cb21-599" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-current-state</span></span>
-<span id="cb21-600"><a href="#cb21-600" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: !expr paste("Cached current-state values in", INIT_YEAR, "by stock.")</span></span>
-<span id="cb21-601"><a href="#cb21-601" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(current_tbl[, <span class="fu">c</span>(<span class="st">"stock"</span>, <span class="st">"ssb"</span>, <span class="st">"ssb_sbmsy"</span>, <span class="st">"f"</span>, <span class="st">"catch"</span>, <span class="st">"sbmsy"</span>, <span class="st">"fmsy"</span>)],</span>
-<span id="cb21-602"><a href="#cb21-602" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names=</span><span class="fu">c</span>(<span class="st">"Stock"</span>, <span class="st">"SSB (t)"</span>, <span class="st">"SSB / SBMSY"</span>, <span class="st">"Fbar"</span>, <span class="st">"Catch (t)"</span>, <span class="st">"SBMSY (t)"</span>, <span class="st">"FMSY"</span>))</span>
-<span id="cb21-603"><a href="#cb21-603" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-604"><a href="#cb21-604" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-605"><a href="#cb21-605" aria-hidden="true" tabindex="-1"></a><span class="fu"># Scenario Definitions</span></span>
-<span id="cb21-606"><a href="#cb21-606" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-607"><a href="#cb21-607" aria-hidden="true" tabindex="-1"></a>The fixed projection scenarios are defined in <span class="in">`run_projections.R`</span>.</span>
-<span id="cb21-608"><a href="#cb21-608" aria-hidden="true" tabindex="-1"></a>The comparison uses future fishing patterns that include no fishing, constant future fishing mortality set to FMSY, constant future fishing mortality set to 0, 25%, 50%, 75%, 100%, and 200% of the 2025 value, constant fishing mortality set to the F35 SPR rate, and constant future catch set to 0, 25%, 50%, 75%, 100%, and 200% of the 2025 catch.</span>
-<span id="cb21-609"><a href="#cb21-609" aria-hidden="true" tabindex="-1"></a>The catch-based scenario is allocated among fleets using the 2025 fleet catch proportions.</span>
-<span id="cb21-610"><a href="#cb21-610" aria-hidden="true" tabindex="-1"></a>Special targets such as <span class="in">`FMSY`</span>, the <span class="in">`F2025_*`</span> multipliers, <span class="in">`F35`</span>, and the <span class="in">`C2025_*`</span> multipliers are resolved during the projection run before the cache is saved. <span class="in">`F35`</span> is read from the model yield-profile output as the SPR rate that gives 35% of spawning biomass per recruit.</span>
-<span id="cb21-611"><a href="#cb21-611" aria-hidden="true" tabindex="-1"></a>Projection result trajectories are excluded from the figures below when their Fbar exceeds <span class="in">`r FBAR_MAX`</span>.</span>
-<span id="cb21-612"><a href="#cb21-612" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-615"><a href="#cb21-615" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-616"><a href="#cb21-616" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-scenarios</span></span>
-<span id="cb21-617"><a href="#cb21-617" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Simplified future fishing-pattern scenarios."</span></span>
-<span id="cb21-618"><a href="#cb21-618" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(scenario_tbl, <span class="at">col.names=</span><span class="fu">c</span>(<span class="st">"Scenario"</span>, <span class="st">"Control quantity"</span>, <span class="st">"Target"</span>, <span class="st">"Description"</span>))</span>
-<span id="cb21-619"><a href="#cb21-619" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-620"><a href="#cb21-620" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-623"><a href="#cb21-623" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-624"><a href="#cb21-624" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-fleet-split</span></span>
-<span id="cb21-625"><a href="#cb21-625" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: !expr paste("Fleet shares used to allocate future catch, based on", INIT_YEAR, "catch proportions.")</span></span>
-<span id="cb21-626"><a href="#cb21-626" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(fleet_split_tbl)) {</span>
-<span id="cb21-627"><a href="#cb21-627" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(fleet_split_tbl, <span class="at">col.names=</span><span class="fu">c</span>(<span class="st">"Fleet"</span>, <span class="st">"Share (%)"</span>))</span>
-<span id="cb21-628"><a href="#cb21-628" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb21-629"><a href="#cb21-629" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-630"><a href="#cb21-630" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-631"><a href="#cb21-631" aria-hidden="true" tabindex="-1"></a><span class="fu"># Selectivity History</span></span>
-<span id="cb21-632"><a href="#cb21-632" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-633"><a href="#cb21-633" aria-hidden="true" tabindex="-1"></a>The first diagnostic summarizes historical catch selectivity at age by fishery and stock.</span>
-<span id="cb21-634"><a href="#cb21-634" aria-hidden="true" tabindex="-1"></a>This context is important because future projections freeze or average historical selectivity patterns, so changes in recent selectivity can affect projected spawning biomass and catch.</span>
-<span id="cb21-635"><a href="#cb21-635" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-638"><a href="#cb21-638" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-639"><a href="#cb21-639" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-selectivity-history</span></span>
-<span id="cb21-640"><a href="#cb21-640" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Historical selectivity-at-age time series used to interpret the projection selectivity assumptions."</span></span>
-<span id="cb21-641"><a href="#cb21-641" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
-<span id="cb21-642"><a href="#cb21-642" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8</span></span>
-<span id="cb21-643"><a href="#cb21-643" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_selectivity</span>(selex_ts_dt, <span class="at">ref_om=</span>REF_OM)</span>
-<span id="cb21-644"><a href="#cb21-644" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-645"><a href="#cb21-645" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-646"><a href="#cb21-646" aria-hidden="true" tabindex="-1"></a><span class="fu"># Historical Exploitation Metrics</span></span>
-<span id="cb21-647"><a href="#cb21-647" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-648"><a href="#cb21-648" aria-hidden="true" tabindex="-1"></a>The exploitation diagnostic compares alternative fishing mortality or harvest-rate summaries through the historical period.</span>
-<span id="cb21-649"><a href="#cb21-649" aria-hidden="true" tabindex="-1"></a>These metrics provide context for the current fishing mortality level used by the <span class="in">`F2025`</span> scenario.</span>
-<span id="cb21-650"><a href="#cb21-650" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-653"><a href="#cb21-653" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-654"><a href="#cb21-654" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-exploitation-metrics</span></span>
-<span id="cb21-655"><a href="#cb21-655" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Historical exploitation metrics for the selected operating model."</span></span>
-<span id="cb21-656"><a href="#cb21-656" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
-<span id="cb21-657"><a href="#cb21-657" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 9</span></span>
-<span id="cb21-658"><a href="#cb21-658" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_exploitation</span>(mets_dt, mets_worms_dt, <span class="at">init_year=</span>INIT_YEAR,</span>
-<span id="cb21-659"><a href="#cb21-659" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_iter=</span>N_ITER, <span class="at">ref_om=</span>REF_OM)</span>
-<span id="cb21-660"><a href="#cb21-660" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-661"><a href="#cb21-661" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-662"><a href="#cb21-662" aria-hidden="true" tabindex="-1"></a><span class="fu"># Recruitment</span></span>
-<span id="cb21-663"><a href="#cb21-663" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-664"><a href="#cb21-664" aria-hidden="true" tabindex="-1"></a>The recruitment diagnostic shows the historical and future recruitment trajectories used in the projected operating model.</span>
-<span id="cb21-665"><a href="#cb21-665" aria-hidden="true" tabindex="-1"></a>The dashed vertical line marks the final historical year.</span>
-<span id="cb21-666"><a href="#cb21-666" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-669"><a href="#cb21-669" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-670"><a href="#cb21-670" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-recruitment</span></span>
-<span id="cb21-671"><a href="#cb21-671" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Historical and future recruitment for the selected operating model. The future portion uses the F = 0 projection. Colored lines show", length(unique(rec_worms_plot_dt$iter)), "sampled MCMC draws.")</span></span>
-<span id="cb21-672"><a href="#cb21-672" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
-<span id="cb21-673"><a href="#cb21-673" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb21-674"><a href="#cb21-674" aria-hidden="true" tabindex="-1"></a>rec_worm_plot_iters <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(rec_worms_dt<span class="sc">$</span>iter))[<span class="fu">seq_len</span>(<span class="fu">min</span>(<span class="dv">15</span>,</span>
-<span id="cb21-675"><a href="#cb21-675" aria-hidden="true" tabindex="-1"></a>  <span class="fu">length</span>(<span class="fu">unique</span>(rec_worms_dt<span class="sc">$</span>iter))))]</span>
-<span id="cb21-676"><a href="#cb21-676" aria-hidden="true" tabindex="-1"></a>rec_worms_plot_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(rec_worms_dt)[iter <span class="sc">%in%</span> rec_worm_plot_iters]</span>
-<span id="cb21-677"><a href="#cb21-677" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_recruitment</span>(rec_dt, rec_worms_plot_dt, <span class="at">init_year=</span>INIT_YEAR,</span>
-<span id="cb21-678"><a href="#cb21-678" aria-hidden="true" tabindex="-1"></a>  <span class="at">final_year=</span>FINAL_YEAR, <span class="at">ref_om=</span>REF_OM)</span>
-<span id="cb21-679"><a href="#cb21-679" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-680"><a href="#cb21-680" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-681"><a href="#cb21-681" aria-hidden="true" tabindex="-1"></a><span class="fu"># Dynamic Bzero</span></span>
-<span id="cb21-682"><a href="#cb21-682" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-683"><a href="#cb21-683" aria-hidden="true" tabindex="-1"></a>The dynamic Bzero diagnostic shows the historical unfished spawning biomass</span>
-<span id="cb21-684"><a href="#cb21-684" aria-hidden="true" tabindex="-1"></a>trajectory used to scale the terminal stock-status comparison.</span>
-<span id="cb21-685"><a href="#cb21-685" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-688"><a href="#cb21-688" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-689"><a href="#cb21-689" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-dynamic-bzero</span></span>
-<span id="cb21-690"><a href="#cb21-690" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste0("Historical dynamic Bzero for ", REF_OM, " through ", INIT_YEAR, ". The ribbon shows the 90% interval across MCMC draws, the black line shows the median, and colored lines show 15 sampled MCMC draws.")</span></span>
-<span id="cb21-691"><a href="#cb21-691" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
-<span id="cb21-692"><a href="#cb21-692" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb21-693"><a href="#cb21-693" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_dynamic_bzero</span>(REF_OM, N_ITER, INIT_YEAR, <span class="at">worm_n=</span><span class="dv">15</span>)</span>
-<span id="cb21-694"><a href="#cb21-694" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-695"><a href="#cb21-695" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-696"><a href="#cb21-696" aria-hidden="true" tabindex="-1"></a><span class="fu"># Future Fishing Pattern Scenarios</span></span>
-<span id="cb21-697"><a href="#cb21-697" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-698"><a href="#cb21-698" aria-hidden="true" tabindex="-1"></a>The main projection comparison applies the fishing-pattern controls over the projection horizon.</span>
-<span id="cb21-699"><a href="#cb21-699" aria-hidden="true" tabindex="-1"></a>The plot shows median trajectories by scenario for the cached projection summaries, including spawning biomass, fishing mortality, and catch where available.</span>
-<span id="cb21-700"><a href="#cb21-700" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-703"><a href="#cb21-703" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-704"><a href="#cb21-704" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-fixed-scenarios</span></span>
-<span id="cb21-705"><a href="#cb21-705" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr scenario_caption()</span></span>
-<span id="cb21-706"><a href="#cb21-706" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
-<span id="cb21-707"><a href="#cb21-707" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 10</span></span>
-<span id="cb21-708"><a href="#cb21-708" aria-hidden="true" tabindex="-1"></a>futs_excluded <span class="ot">&lt;-</span> <span class="fu">median_fbar_exclusions</span>(</span>
-<span id="cb21-709"><a href="#cb21-709" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.table</span>(futs_dt)[year <span class="sc">&gt;</span> INIT_YEAR], <span class="st">"scenario"</span>)</span>
-<span id="cb21-710"><a href="#cb21-710" aria-hidden="true" tabindex="-1"></a>futs_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_group_stock</span>(futs_dt, futs_excluded, <span class="st">"scenario"</span>)</span>
-<span id="cb21-711"><a href="#cb21-711" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-712"><a href="#cb21-712" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_scenarios</span>(futs_plot_dt, INIT_YEAR, sbmsy_ref, fmsy_ref,</span>
-<span id="cb21-713"><a href="#cb21-713" aria-hidden="true" tabindex="-1"></a>  <span class="at">final_year=</span>FINAL_YEAR, <span class="at">ref_om=</span>REF_OM)</span>
-<span id="cb21-714"><a href="#cb21-714" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-715"><a href="#cb21-715" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-716"><a href="#cb21-716" aria-hidden="true" tabindex="-1"></a>The terminal-status plot shows the distribution of projected spawning biomass relative to SBMSY in the final projection year.</span>
-<span id="cb21-717"><a href="#cb21-717" aria-hidden="true" tabindex="-1"></a>This gives a compact comparison of scenario risk at the end of the projection horizon.</span>
-<span id="cb21-718"><a href="#cb21-718" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-721"><a href="#cb21-721" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-722"><a href="#cb21-722" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-terminal-status</span></span>
-<span id="cb21-723"><a href="#cb21-723" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Distribution of SSB / SBMSY in", FINAL_YEAR, "under each projection scenario.", N_ITER, "iterations. The dotted line marks SBMSY.", filter_note)</span></span>
-<span id="cb21-724"><a href="#cb21-724" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
-<span id="cb21-725"><a href="#cb21-725" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb21-726"><a href="#cb21-726" aria-hidden="true" tabindex="-1"></a>status_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_fbar_iterations</span>(status_dt, futs_fbar_max_dt, <span class="st">"scenario"</span>)</span>
-<span id="cb21-727"><a href="#cb21-727" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_status</span>(status_plot_dt, FINAL_YEAR, <span class="at">n_iter=</span>N_ITER, <span class="at">ref_om=</span>REF_OM)</span>
-<span id="cb21-728"><a href="#cb21-728" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-729"><a href="#cb21-729" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-732"><a href="#cb21-732" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-733"><a href="#cb21-733" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-terminal-tradeoff</span></span>
-<span id="cb21-734"><a href="#cb21-734" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Median catch and SSB / SBMSY in", FINAL_YEAR, "under each projection scenario. Points show scenario medians; bars show 90% intervals. The dotted line marks SBMSY.", filter_note)</span></span>
-<span id="cb21-735"><a href="#cb21-735" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
-<span id="cb21-736"><a href="#cb21-736" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
-<span id="cb21-737"><a href="#cb21-737" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_tradeoff</span>(status_plot_dt, FINAL_YEAR, <span class="at">ref_om=</span>REF_OM)</span>
-<span id="cb21-738"><a href="#cb21-738" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-739"><a href="#cb21-739" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-742"><a href="#cb21-742" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-743"><a href="#cb21-743" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-terminal-tradeoff-ssb</span></span>
-<span id="cb21-744"><a href="#cb21-744" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Median catch and SSB in", FINAL_YEAR, "under each projection scenario. Points show scenario medians; bars show 90% intervals. The dotted line marks SBMSY.", filter_note)</span></span>
-<span id="cb21-745"><a href="#cb21-745" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
-<span id="cb21-746"><a href="#cb21-746" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
-<span id="cb21-747"><a href="#cb21-747" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_tradeoff</span>(status_plot_dt, FINAL_YEAR, <span class="at">ref_om=</span>REF_OM,</span>
-<span id="cb21-748"><a href="#cb21-748" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_metric=</span><span class="st">"ssb"</span>)</span>
-<span id="cb21-749"><a href="#cb21-749" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-750"><a href="#cb21-750" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-753"><a href="#cb21-753" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-754"><a href="#cb21-754" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-terminal-tradeoff-scaled-om11</span></span>
-<span id="cb21-755"><a href="#cb21-755" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Median catch and scaled stock status in", FINAL_YEAR, "under each projection scenario for om11. The x-axis is (SSB / dynamic Bzero) divided by the draw-specific Bmsy / Bzero value. Points show scenario medians; bars show 90% intervals. The dotted vertical line marks the draw-specific Bmsy / Bzero level.", filter_note)</span></span>
-<span id="cb21-756"><a href="#cb21-756" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
-<span id="cb21-757"><a href="#cb21-757" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
-<span id="cb21-758"><a href="#cb21-758" aria-hidden="true" tabindex="-1"></a>scaled_tradeoff_om11_dt <span class="ot">&lt;-</span> <span class="fu">scaled_tradeoff_data</span>(status_dt, futs_fbar_max_dt,</span>
-<span id="cb21-759"><a href="#cb21-759" aria-hidden="true" tabindex="-1"></a>  REF_OM, N_ITER)</span>
-<span id="cb21-760"><a href="#cb21-760" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_scaled_tradeoff</span>(scaled_tradeoff_om11_dt, FINAL_YEAR, <span class="at">ref_om=</span>REF_OM)</span>
-<span id="cb21-761"><a href="#cb21-761" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-762"><a href="#cb21-762" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-765"><a href="#cb21-765" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-766"><a href="#cb21-766" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-terminal-tradeoff-scaled-om12</span></span>
-<span id="cb21-767"><a href="#cb21-767" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Median catch and scaled stock status in", FINAL_YEAR, "under each projection scenario for om12, the steepness = 0.8 operating model. The x-axis is (SSB / dynamic Bzero) divided by the draw-specific Bmsy / Bzero value. Points show scenario medians; bars show 90% intervals. The dotted vertical line marks the draw-specific Bmsy / Bzero level.", filter_note)</span></span>
-<span id="cb21-768"><a href="#cb21-768" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
-<span id="cb21-769"><a href="#cb21-769" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
-<span id="cb21-770"><a href="#cb21-770" aria-hidden="true" tabindex="-1"></a>om12_cache_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(jmMSE_path, <span class="st">"report"</span>, <span class="st">"projections_om12"</span>,</span>
-<span id="cb21-771"><a href="#cb21-771" aria-hidden="true" tabindex="-1"></a>  <span class="st">"cache.rda"</span>)</span>
-<span id="cb21-772"><a href="#cb21-772" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">file.exists</span>(om12_cache_file)) {</span>
-<span id="cb21-773"><a href="#cb21-773" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"OM12 projection cache not found at "</span>, om12_cache_file,</span>
-<span id="cb21-774"><a href="#cb21-774" aria-hidden="true" tabindex="-1"></a>    <span class="st">". Run explore_projections.R with REF_OM set to 'om12' before rendering."</span>)</span>
-<span id="cb21-775"><a href="#cb21-775" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb21-776"><a href="#cb21-776" aria-hidden="true" tabindex="-1"></a>om12_cache <span class="ot">&lt;-</span> <span class="fu">new.env</span>(<span class="at">parent=</span><span class="fu">emptyenv</span>())</span>
-<span id="cb21-777"><a href="#cb21-777" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(om12_cache_file, <span class="at">envir=</span>om12_cache)</span>
-<span id="cb21-778"><a href="#cb21-778" aria-hidden="true" tabindex="-1"></a>scaled_tradeoff_om12_dt <span class="ot">&lt;-</span> <span class="fu">scaled_tradeoff_data</span>(om12_cache<span class="sc">$</span>status_dt,</span>
-<span id="cb21-779"><a href="#cb21-779" aria-hidden="true" tabindex="-1"></a>  om12_cache<span class="sc">$</span>futs_fbar_max_dt, om12_cache<span class="sc">$</span>REF_OM, om12_cache<span class="sc">$</span>N_ITER)</span>
-<span id="cb21-780"><a href="#cb21-780" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_scaled_tradeoff</span>(scaled_tradeoff_om12_dt, om12_cache<span class="sc">$</span>FINAL_YEAR,</span>
-<span id="cb21-781"><a href="#cb21-781" aria-hidden="true" tabindex="-1"></a>  <span class="at">ref_om=</span>om12_cache<span class="sc">$</span>REF_OM)</span>
-<span id="cb21-782"><a href="#cb21-782" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-783"><a href="#cb21-783" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-786"><a href="#cb21-786" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-787"><a href="#cb21-787" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-catch-2026</span></span>
-<span id="cb21-788"><a href="#cb21-788" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Distribution of catch in 2026 under each projection scenario.", N_ITER, "iterations.", filter_note)</span></span>
-<span id="cb21-789"><a href="#cb21-789" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
-<span id="cb21-790"><a href="#cb21-790" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb21-791"><a href="#cb21-791" aria-hidden="true" tabindex="-1"></a>catch_2026_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_fbar_iterations</span>(catch_2026_dt,</span>
-<span id="cb21-792"><a href="#cb21-792" aria-hidden="true" tabindex="-1"></a>  futs_fbar_max_dt, <span class="st">"scenario"</span>)</span>
-<span id="cb21-793"><a href="#cb21-793" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_catch_distribution</span>(catch_2026_plot_dt, <span class="dv">2026</span>,</span>
-<span id="cb21-794"><a href="#cb21-794" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_iter=</span>N_ITER, <span class="at">ref_om=</span>REF_OM)</span>
-<span id="cb21-795"><a href="#cb21-795" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-796"><a href="#cb21-796" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-797"><a href="#cb21-797" aria-hidden="true" tabindex="-1"></a><span class="fu"># Selectivity Window Sensitivity</span></span>
-<span id="cb21-798"><a href="#cb21-798" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-799"><a href="#cb21-799" aria-hidden="true" tabindex="-1"></a>The selectivity-window sensitivity analysis projects at FMSY while replacing future selectivity with averages over alternative terminal-year windows.</span>
-<span id="cb21-800"><a href="#cb21-800" aria-hidden="true" tabindex="-1"></a>For example, a three-year window uses the mean selectivity pattern from the final three historical years.</span>
-<span id="cb21-801"><a href="#cb21-801" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-804"><a href="#cb21-804" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-805"><a href="#cb21-805" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-selectivity-windows</span></span>
-<span id="cb21-806"><a href="#cb21-806" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Terminal-year selectivity averaging windows."</span></span>
-<span id="cb21-807"><a href="#cb21-807" aria-hidden="true" tabindex="-1"></a>window_tbl <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb21-808"><a href="#cb21-808" aria-hidden="true" tabindex="-1"></a>  <span class="at">window_years =</span> SELEX_WINDOWS,</span>
-<span id="cb21-809"><a href="#cb21-809" aria-hidden="true" tabindex="-1"></a>  <span class="at">description =</span> <span class="fu">paste</span>(<span class="st">"Mean selectivity over the final"</span>, SELEX_WINDOWS, <span class="st">"historical years"</span>)</span>
-<span id="cb21-810"><a href="#cb21-810" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb21-811"><a href="#cb21-811" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-812"><a href="#cb21-812" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(window_tbl, <span class="at">col.names=</span><span class="fu">c</span>(<span class="st">"Window (years)"</span>, <span class="st">"Projection assumption"</span>))</span>
-<span id="cb21-813"><a href="#cb21-813" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-814"><a href="#cb21-814" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-817"><a href="#cb21-817" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-818"><a href="#cb21-818" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-selectivity-window-sensitivity</span></span>
-<span id="cb21-819"><a href="#cb21-819" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr sensitivity_caption("Sensitivity of projections to the terminal-year selectivity averaging window.")</span></span>
-<span id="cb21-820"><a href="#cb21-820" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
-<span id="cb21-821"><a href="#cb21-821" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8</span></span>
-<span id="cb21-822"><a href="#cb21-822" aria-hidden="true" tabindex="-1"></a>selex_excluded <span class="ot">&lt;-</span> selex_fbar_max_dt[</span>
-<span id="cb21-823"><a href="#cb21-823" aria-hidden="true" tabindex="-1"></a>  , .(<span class="at">max_median_fbar=</span><span class="fu">median</span>(max_fbar, <span class="at">na.rm=</span><span class="cn">TRUE</span>)),</span>
-<span id="cb21-824"><a href="#cb21-824" aria-hidden="true" tabindex="-1"></a>  by<span class="ot">=</span>.(window, stock)][max_median_fbar <span class="sc">&gt;</span> FBAR_MAX]</span>
-<span id="cb21-825"><a href="#cb21-825" aria-hidden="true" tabindex="-1"></a>selex_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_group_stock</span>(selex_dt, selex_excluded, <span class="st">"window"</span>)</span>
-<span id="cb21-826"><a href="#cb21-826" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-827"><a href="#cb21-827" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_sensitivity</span>(selex_plot_dt, <span class="at">group_col=</span><span class="st">"window"</span>, <span class="at">group_lab=</span><span class="st">"Avg. years"</span>,</span>
-<span id="cb21-828"><a href="#cb21-828" aria-hidden="true" tabindex="-1"></a>  <span class="at">init_year=</span>INIT_YEAR, <span class="at">sbmsy_ref=</span>sbmsy_ref, <span class="at">fmsy_ref=</span>fmsy_ref,</span>
-<span id="cb21-829"><a href="#cb21-829" aria-hidden="true" tabindex="-1"></a>  <span class="at">ref_om=</span>REF_OM,</span>
-<span id="cb21-830"><a href="#cb21-830" aria-hidden="true" tabindex="-1"></a>  <span class="at">title_prefix=</span><span class="st">"Selectivity averaging window sensitivity"</span>)</span>
-<span id="cb21-831"><a href="#cb21-831" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-832"><a href="#cb21-832" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-833"><a href="#cb21-833" aria-hidden="true" tabindex="-1"></a><span class="fu"># Selectivity Block Sensitivity</span></span>
-<span id="cb21-834"><a href="#cb21-834" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-835"><a href="#cb21-835" aria-hidden="true" tabindex="-1"></a>The named-block sensitivity analysis is similar to the rolling-window analysis, but the averaged selectivity pattern comes from specified historical year blocks.</span>
-<span id="cb21-836"><a href="#cb21-836" aria-hidden="true" tabindex="-1"></a>This is useful when historical periods represent different fishery or stock-selectivity regimes.</span>
-<span id="cb21-837"><a href="#cb21-837" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-840"><a href="#cb21-840" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-841"><a href="#cb21-841" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-selectivity-blocks</span></span>
-<span id="cb21-842"><a href="#cb21-842" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Named historical selectivity blocks used for projection sensitivity."</span></span>
-<span id="cb21-843"><a href="#cb21-843" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(block_tbl, <span class="at">col.names=</span><span class="fu">c</span>(<span class="st">"Block"</span>, <span class="st">"Years"</span>))</span>
-<span id="cb21-844"><a href="#cb21-844" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-845"><a href="#cb21-845" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-848"><a href="#cb21-848" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-849"><a href="#cb21-849" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-selectivity-block-sensitivity</span></span>
-<span id="cb21-850"><a href="#cb21-850" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr sensitivity_caption("Sensitivity of projections to named historical selectivity blocks.")</span></span>
-<span id="cb21-851"><a href="#cb21-851" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
-<span id="cb21-852"><a href="#cb21-852" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8</span></span>
-<span id="cb21-853"><a href="#cb21-853" aria-hidden="true" tabindex="-1"></a>block_excluded <span class="ot">&lt;-</span> block_fbar_max_dt[</span>
-<span id="cb21-854"><a href="#cb21-854" aria-hidden="true" tabindex="-1"></a>  , .(<span class="at">max_median_fbar=</span><span class="fu">median</span>(max_fbar, <span class="at">na.rm=</span><span class="cn">TRUE</span>)),</span>
-<span id="cb21-855"><a href="#cb21-855" aria-hidden="true" tabindex="-1"></a>  by<span class="ot">=</span>.(block, stock)][max_median_fbar <span class="sc">&gt;</span> FBAR_MAX]</span>
-<span id="cb21-856"><a href="#cb21-856" aria-hidden="true" tabindex="-1"></a>block_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_group_stock</span>(block_dt, block_excluded, <span class="st">"block"</span>)</span>
-<span id="cb21-857"><a href="#cb21-857" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-858"><a href="#cb21-858" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_sensitivity</span>(block_plot_dt, <span class="at">group_col=</span><span class="st">"block"</span>, <span class="at">group_lab=</span><span class="st">"Selectivity block"</span>,</span>
-<span id="cb21-859"><a href="#cb21-859" aria-hidden="true" tabindex="-1"></a>  <span class="at">init_year=</span>INIT_YEAR, <span class="at">sbmsy_ref=</span>sbmsy_ref, <span class="at">fmsy_ref=</span>fmsy_ref,</span>
-<span id="cb21-860"><a href="#cb21-860" aria-hidden="true" tabindex="-1"></a>  <span class="at">ref_om=</span>REF_OM,</span>
-<span id="cb21-861"><a href="#cb21-861" aria-hidden="true" tabindex="-1"></a>  <span class="at">title_prefix=</span><span class="st">"Selectivity block sensitivity"</span>)</span>
-<span id="cb21-862"><a href="#cb21-862" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-863"><a href="#cb21-863" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-864"><a href="#cb21-864" aria-hidden="true" tabindex="-1"></a><span class="fu"># Outputs</span></span>
-<span id="cb21-865"><a href="#cb21-865" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-866"><a href="#cb21-866" aria-hidden="true" tabindex="-1"></a>The cached projection workflow writes two main files:</span>
-<span id="cb21-867"><a href="#cb21-867" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-868"><a href="#cb21-868" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`report/projections/cache.rda`</span>, containing the settings, summary values, and plot objects used by this report; and</span>
-<span id="cb21-869"><a href="#cb21-869" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`report/projections/projections_report.html`</span>, the original HTML report built by <span class="in">`report_run_projections.R`</span>.</span>
-<span id="cb21-870"><a href="#cb21-870" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-871"><a href="#cb21-871" aria-hidden="true" tabindex="-1"></a>This Quarto document provides an editable report source for the same projection results.</span>
+<span id="cb21-541"><a href="#cb21-541" aria-hidden="true" tabindex="-1"></a>This report documents the forward-projection outputs generated by <span class="in">`run_projections.R`</span> and assembled by <span class="in">`report_run_projections.R`</span>.</span>
+<span id="cb21-542"><a href="#cb21-542" aria-hidden="true" tabindex="-1"></a>It is a Quarto version of the cached HTML report: it loads the saved projection cache, summarizes the run settings, and displays the diagnostic plots that were produced during the projection workflow.</span>
+<span id="cb21-543"><a href="#cb21-543" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-544"><a href="#cb21-544" aria-hidden="true" tabindex="-1"></a>No projection calculations are rerun in this document.</span>
+<span id="cb21-545"><a href="#cb21-545" aria-hidden="true" tabindex="-1"></a>The report uses the cached objects in <span class="in">`report/projections/cache.rda`</span>, which are produced by <span class="in">`run_projections.R`</span>.</span>
+<span id="cb21-546"><a href="#cb21-546" aria-hidden="true" tabindex="-1"></a>This keeps the report rendering step separate from the computational projection step.</span>
+<span id="cb21-547"><a href="#cb21-547" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-548"><a href="#cb21-548" aria-hidden="true" tabindex="-1"></a><span class="fu"># Workflow Summary</span></span>
+<span id="cb21-549"><a href="#cb21-549" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-550"><a href="#cb21-550" aria-hidden="true" tabindex="-1"></a>The projection workflow does the following:</span>
+<span id="cb21-551"><a href="#cb21-551" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-552"><a href="#cb21-552" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>loads the selected operating model (<span class="in">`REF_OM`</span>) and subsets it to <span class="in">`N_ITER`</span> iterations;</span>
+<span id="cb21-553"><a href="#cb21-553" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>extends the model from the last historical year to the final projection year;</span>
+<span id="cb21-554"><a href="#cb21-554" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>calculates reference points and current-state summaries;</span>
+<span id="cb21-555"><a href="#cb21-555" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>evaluates simplified future fishing patterns;</span>
+<span id="cb21-556"><a href="#cb21-556" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>compares terminal stock status across scenarios;</span>
+<span id="cb21-557"><a href="#cb21-557" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>explores sensitivity to future selectivity assumptions using rolling terminal-year windows; and</span>
+<span id="cb21-558"><a href="#cb21-558" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>compares named historical selectivity blocks as alternative frozen future selectivity patterns.</span>
+<span id="cb21-559"><a href="#cb21-559" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-560"><a href="#cb21-560" aria-hidden="true" tabindex="-1"></a><span class="in">`report_run_projections.R`</span> then reads the cache and writes <span class="in">`report/projections/projections_report.html`</span>.</span>
+<span id="cb21-561"><a href="#cb21-561" aria-hidden="true" tabindex="-1"></a>This Quarto file reads the same cache and presents the same report content in a format that can be rendered, edited, and extended with standard Quarto tooling.</span>
+<span id="cb21-562"><a href="#cb21-562" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-563"><a href="#cb21-563" aria-hidden="true" tabindex="-1"></a><span class="fu"># Run Summary</span></span>
+<span id="cb21-564"><a href="#cb21-564" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-567"><a href="#cb21-567" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-568"><a href="#cb21-568" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-run-settings</span></span>
+<span id="cb21-569"><a href="#cb21-569" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Projection run settings stored in the cached projection report."</span></span>
+<span id="cb21-570"><a href="#cb21-570" aria-hidden="true" tabindex="-1"></a>settings_tbl <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb21-571"><a href="#cb21-571" aria-hidden="true" tabindex="-1"></a>  <span class="at">setting =</span> <span class="fu">c</span>(</span>
+<span id="cb21-572"><a href="#cb21-572" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Operating model"</span>,</span>
+<span id="cb21-573"><a href="#cb21-573" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Iterations"</span>,</span>
+<span id="cb21-574"><a href="#cb21-574" aria-hidden="true" tabindex="-1"></a>    <span class="st">"MCMC worms shown"</span>,</span>
+<span id="cb21-575"><a href="#cb21-575" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Projection horizon"</span>,</span>
+<span id="cb21-576"><a href="#cb21-576" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Selectivity averaging windows"</span>,</span>
+<span id="cb21-577"><a href="#cb21-577" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Named selectivity blocks"</span></span>
+<span id="cb21-578"><a href="#cb21-578" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb21-579"><a href="#cb21-579" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(</span>
+<span id="cb21-580"><a href="#cb21-580" aria-hidden="true" tabindex="-1"></a>    REF_OM,</span>
+<span id="cb21-581"><a href="#cb21-581" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fmt_num</span>(N_ITER),</span>
+<span id="cb21-582"><a href="#cb21-582" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">exists</span>(<span class="st">"worm_iters"</span>)) <span class="fu">fmt_num</span>(<span class="fu">length</span>(worm_iters)) <span class="cf">else</span> <span class="st">"0"</span>,</span>
+<span id="cb21-583"><a href="#cb21-583" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(INIT_YEAR <span class="sc">+</span> <span class="dv">1</span>, FINAL_YEAR, <span class="at">sep=</span><span class="st">"-"</span>),</span>
+<span id="cb21-584"><a href="#cb21-584" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(SELEX_WINDOWS, <span class="at">collapse=</span><span class="st">", "</span>),</span>
+<span id="cb21-585"><a href="#cb21-585" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="fu">names</span>(SELEX_BLOCKS), <span class="at">collapse=</span><span class="st">", "</span>)</span>
+<span id="cb21-586"><a href="#cb21-586" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb21-587"><a href="#cb21-587" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
+<span id="cb21-588"><a href="#cb21-588" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-589"><a href="#cb21-589" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-590"><a href="#cb21-590" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(settings_tbl)</span>
+<span id="cb21-591"><a href="#cb21-591" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-592"><a href="#cb21-592" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-595"><a href="#cb21-595" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-596"><a href="#cb21-596" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-reference-points</span></span>
+<span id="cb21-597"><a href="#cb21-597" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Reference points used to interpret projected stock status."</span></span>
+<span id="cb21-598"><a href="#cb21-598" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(refpt_tbl, <span class="at">col.names=</span><span class="fu">c</span>(<span class="st">"Stock"</span>, <span class="st">"SBMSY (t)"</span>, <span class="st">"FMSY"</span>))</span>
+<span id="cb21-599"><a href="#cb21-599" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-600"><a href="#cb21-600" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-601"><a href="#cb21-601" aria-hidden="true" tabindex="-1"></a>The cached current-state values are:</span>
+<span id="cb21-602"><a href="#cb21-602" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-605"><a href="#cb21-605" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-606"><a href="#cb21-606" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-current-state</span></span>
+<span id="cb21-607"><a href="#cb21-607" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: !expr paste("Cached current-state values in", INIT_YEAR, "by stock.")</span></span>
+<span id="cb21-608"><a href="#cb21-608" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(current_tbl[, <span class="fu">c</span>(<span class="st">"stock"</span>, <span class="st">"ssb"</span>, <span class="st">"ssb_sbmsy"</span>, <span class="st">"f"</span>, <span class="st">"catch"</span>, <span class="st">"sbmsy"</span>, <span class="st">"fmsy"</span>)],</span>
+<span id="cb21-609"><a href="#cb21-609" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names=</span><span class="fu">c</span>(<span class="st">"Stock"</span>, <span class="st">"SSB (t)"</span>, <span class="st">"SSB / SBMSY"</span>, <span class="st">"Fbar"</span>, <span class="st">"Catch (t)"</span>, <span class="st">"SBMSY (t)"</span>, <span class="st">"FMSY"</span>))</span>
+<span id="cb21-610"><a href="#cb21-610" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-611"><a href="#cb21-611" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-612"><a href="#cb21-612" aria-hidden="true" tabindex="-1"></a><span class="fu"># Scenario Definitions</span></span>
+<span id="cb21-613"><a href="#cb21-613" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-614"><a href="#cb21-614" aria-hidden="true" tabindex="-1"></a>The fixed projection scenarios are defined in <span class="in">`run_projections.R`</span>.</span>
+<span id="cb21-615"><a href="#cb21-615" aria-hidden="true" tabindex="-1"></a>The comparison uses future fishing patterns that include no fishing, constant future fishing mortality set to FMSY, constant future fishing mortality set to 0, 25%, 50%, 75%, 100%, and 200% of the 2025 value, constant fishing mortality set to the F35 SPR rate, and constant future catch set to 0, 25%, 50%, 75%, 100%, and 200% of the 2025 catch.</span>
+<span id="cb21-616"><a href="#cb21-616" aria-hidden="true" tabindex="-1"></a>The catch-based scenario is allocated among fleets using the 2025 fleet catch proportions.</span>
+<span id="cb21-617"><a href="#cb21-617" aria-hidden="true" tabindex="-1"></a>Special targets such as <span class="in">`FMSY`</span>, the <span class="in">`F2025_*`</span> multipliers, <span class="in">`F35`</span>, and the <span class="in">`C2025_*`</span> multipliers are resolved during the projection run before the cache is saved. <span class="in">`F35`</span> is read from the model yield-profile output as the SPR rate that gives 35% of spawning biomass per recruit.</span>
+<span id="cb21-618"><a href="#cb21-618" aria-hidden="true" tabindex="-1"></a>Projection result trajectories are excluded from the figures below when their Fbar exceeds <span class="in">`r FBAR_MAX`</span>.</span>
+<span id="cb21-619"><a href="#cb21-619" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-622"><a href="#cb21-622" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-623"><a href="#cb21-623" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-scenarios</span></span>
+<span id="cb21-624"><a href="#cb21-624" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Simplified future fishing-pattern scenarios."</span></span>
+<span id="cb21-625"><a href="#cb21-625" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(scenario_tbl, <span class="at">col.names=</span><span class="fu">c</span>(<span class="st">"Scenario"</span>, <span class="st">"Control quantity"</span>, <span class="st">"Target"</span>, <span class="st">"Description"</span>))</span>
+<span id="cb21-626"><a href="#cb21-626" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-627"><a href="#cb21-627" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-630"><a href="#cb21-630" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-631"><a href="#cb21-631" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-fleet-split</span></span>
+<span id="cb21-632"><a href="#cb21-632" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: !expr paste("Fleet shares used to allocate future catch, based on", INIT_YEAR, "catch proportions.")</span></span>
+<span id="cb21-633"><a href="#cb21-633" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(fleet_split_tbl)) {</span>
+<span id="cb21-634"><a href="#cb21-634" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(fleet_split_tbl, <span class="at">col.names=</span><span class="fu">c</span>(<span class="st">"Fleet"</span>, <span class="st">"Share (%)"</span>))</span>
+<span id="cb21-635"><a href="#cb21-635" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-636"><a href="#cb21-636" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-637"><a href="#cb21-637" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-638"><a href="#cb21-638" aria-hidden="true" tabindex="-1"></a><span class="fu"># Selectivity History</span></span>
+<span id="cb21-639"><a href="#cb21-639" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-640"><a href="#cb21-640" aria-hidden="true" tabindex="-1"></a>The first diagnostic summarizes historical catch selectivity at age by fishery and stock.</span>
+<span id="cb21-641"><a href="#cb21-641" aria-hidden="true" tabindex="-1"></a>This context is important because future projections freeze or average historical selectivity patterns, so changes in recent selectivity can affect projected spawning biomass and catch.</span>
+<span id="cb21-642"><a href="#cb21-642" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-645"><a href="#cb21-645" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-646"><a href="#cb21-646" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-selectivity-history</span></span>
+<span id="cb21-647"><a href="#cb21-647" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Historical selectivity-at-age time series used to interpret the projection selectivity assumptions."</span></span>
+<span id="cb21-648"><a href="#cb21-648" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
+<span id="cb21-649"><a href="#cb21-649" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8</span></span>
+<span id="cb21-650"><a href="#cb21-650" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_selectivity</span>(selex_ts_dt, <span class="at">ref_om=</span>REF_OM)</span>
+<span id="cb21-651"><a href="#cb21-651" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-652"><a href="#cb21-652" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-653"><a href="#cb21-653" aria-hidden="true" tabindex="-1"></a><span class="fu"># Historical Exploitation Metrics</span></span>
+<span id="cb21-654"><a href="#cb21-654" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-655"><a href="#cb21-655" aria-hidden="true" tabindex="-1"></a>The exploitation diagnostic compares alternative fishing mortality or harvest-rate summaries through the historical period.</span>
+<span id="cb21-656"><a href="#cb21-656" aria-hidden="true" tabindex="-1"></a>These metrics provide context for the current fishing mortality level used by the <span class="in">`F2025`</span> scenario.</span>
+<span id="cb21-657"><a href="#cb21-657" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-660"><a href="#cb21-660" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-661"><a href="#cb21-661" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-exploitation-metrics</span></span>
+<span id="cb21-662"><a href="#cb21-662" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Historical exploitation metrics for the selected operating model."</span></span>
+<span id="cb21-663"><a href="#cb21-663" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
+<span id="cb21-664"><a href="#cb21-664" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 9</span></span>
+<span id="cb21-665"><a href="#cb21-665" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_exploitation</span>(mets_dt, mets_worms_dt, <span class="at">init_year=</span>INIT_YEAR,</span>
+<span id="cb21-666"><a href="#cb21-666" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_iter=</span>N_ITER, <span class="at">ref_om=</span>REF_OM)</span>
+<span id="cb21-667"><a href="#cb21-667" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-668"><a href="#cb21-668" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-669"><a href="#cb21-669" aria-hidden="true" tabindex="-1"></a><span class="fu"># Recruitment</span></span>
+<span id="cb21-670"><a href="#cb21-670" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-671"><a href="#cb21-671" aria-hidden="true" tabindex="-1"></a>The recruitment diagnostic shows the historical and future recruitment trajectories used in the projected operating model.</span>
+<span id="cb21-672"><a href="#cb21-672" aria-hidden="true" tabindex="-1"></a>The dashed vertical line marks the final historical year.</span>
+<span id="cb21-673"><a href="#cb21-673" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-676"><a href="#cb21-676" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-677"><a href="#cb21-677" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-recruitment</span></span>
+<span id="cb21-678"><a href="#cb21-678" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Historical and future recruitment for the selected operating model. The future portion uses the F = 0 projection. Colored lines show", length(unique(rec_worms_plot_dt$iter)), "sampled MCMC draws.")</span></span>
+<span id="cb21-679"><a href="#cb21-679" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
+<span id="cb21-680"><a href="#cb21-680" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb21-681"><a href="#cb21-681" aria-hidden="true" tabindex="-1"></a>rec_worm_plot_iters <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(rec_worms_dt<span class="sc">$</span>iter))[<span class="fu">seq_len</span>(<span class="fu">min</span>(<span class="dv">15</span>,</span>
+<span id="cb21-682"><a href="#cb21-682" aria-hidden="true" tabindex="-1"></a>  <span class="fu">length</span>(<span class="fu">unique</span>(rec_worms_dt<span class="sc">$</span>iter))))]</span>
+<span id="cb21-683"><a href="#cb21-683" aria-hidden="true" tabindex="-1"></a>rec_worms_plot_dt <span class="ot">&lt;-</span> <span class="fu">as.data.table</span>(rec_worms_dt)[iter <span class="sc">%in%</span> rec_worm_plot_iters]</span>
+<span id="cb21-684"><a href="#cb21-684" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_recruitment</span>(rec_dt, rec_worms_plot_dt, <span class="at">init_year=</span>INIT_YEAR,</span>
+<span id="cb21-685"><a href="#cb21-685" aria-hidden="true" tabindex="-1"></a>  <span class="at">final_year=</span>FINAL_YEAR, <span class="at">ref_om=</span>REF_OM)</span>
+<span id="cb21-686"><a href="#cb21-686" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-687"><a href="#cb21-687" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-688"><a href="#cb21-688" aria-hidden="true" tabindex="-1"></a><span class="fu"># SSB / Dynamic Bzero</span></span>
+<span id="cb21-689"><a href="#cb21-689" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-690"><a href="#cb21-690" aria-hidden="true" tabindex="-1"></a>This diagnostic shows SSB relative to the dynamic unfished spawning biomass</span>
+<span id="cb21-691"><a href="#cb21-691" aria-hidden="true" tabindex="-1"></a>trajectory used to scale the terminal stock-status comparison.</span>
+<span id="cb21-692"><a href="#cb21-692" aria-hidden="true" tabindex="-1"></a>The future portion uses the <span class="in">`F0`</span> projection for the selected operating model.</span>
+<span id="cb21-693"><a href="#cb21-693" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-696"><a href="#cb21-696" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-697"><a href="#cb21-697" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-dynamic-bzero</span></span>
+<span id="cb21-698"><a href="#cb21-698" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste0("SSB / dynamic Bzero for ", REF_OM, " through ", FINAL_YEAR, ". The future portion uses the F = 0 projection. The ribbon shows the 90% interval across cached MCMC draw trajectories, the black line shows the median, and colored lines show 15 sampled MCMC draws.")</span></span>
+<span id="cb21-699"><a href="#cb21-699" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
+<span id="cb21-700"><a href="#cb21-700" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb21-701"><a href="#cb21-701" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_ssb_dynamic_bzero</span>(futs_worms_dt, REF_OM, N_ITER, INIT_YEAR,</span>
+<span id="cb21-702"><a href="#cb21-702" aria-hidden="true" tabindex="-1"></a>  FINAL_YEAR, <span class="at">scenario_filter=</span><span class="st">"F0"</span>, <span class="at">worm_n=</span><span class="dv">15</span>)</span>
+<span id="cb21-703"><a href="#cb21-703" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-704"><a href="#cb21-704" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-705"><a href="#cb21-705" aria-hidden="true" tabindex="-1"></a><span class="fu"># Future Fishing Pattern Scenarios</span></span>
+<span id="cb21-706"><a href="#cb21-706" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-707"><a href="#cb21-707" aria-hidden="true" tabindex="-1"></a>The main projection comparison applies the fishing-pattern controls over the projection horizon.</span>
+<span id="cb21-708"><a href="#cb21-708" aria-hidden="true" tabindex="-1"></a>The plot shows median trajectories by scenario for the cached projection summaries, including spawning biomass, fishing mortality, and catch where available.</span>
+<span id="cb21-709"><a href="#cb21-709" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-712"><a href="#cb21-712" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-713"><a href="#cb21-713" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-fixed-scenarios</span></span>
+<span id="cb21-714"><a href="#cb21-714" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr scenario_caption()</span></span>
+<span id="cb21-715"><a href="#cb21-715" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
+<span id="cb21-716"><a href="#cb21-716" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 10</span></span>
+<span id="cb21-717"><a href="#cb21-717" aria-hidden="true" tabindex="-1"></a>futs_excluded <span class="ot">&lt;-</span> <span class="fu">median_fbar_exclusions</span>(</span>
+<span id="cb21-718"><a href="#cb21-718" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.table</span>(futs_dt)[year <span class="sc">&gt;</span> INIT_YEAR], <span class="st">"scenario"</span>)</span>
+<span id="cb21-719"><a href="#cb21-719" aria-hidden="true" tabindex="-1"></a>futs_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_group_stock</span>(futs_dt, futs_excluded, <span class="st">"scenario"</span>)</span>
+<span id="cb21-720"><a href="#cb21-720" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-721"><a href="#cb21-721" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_scenarios</span>(futs_plot_dt, INIT_YEAR, sbmsy_ref, fmsy_ref,</span>
+<span id="cb21-722"><a href="#cb21-722" aria-hidden="true" tabindex="-1"></a>  <span class="at">final_year=</span>FINAL_YEAR, <span class="at">ref_om=</span>REF_OM)</span>
+<span id="cb21-723"><a href="#cb21-723" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-724"><a href="#cb21-724" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-725"><a href="#cb21-725" aria-hidden="true" tabindex="-1"></a>The terminal-status plot shows the distribution of projected spawning biomass relative to SBMSY in the final projection year.</span>
+<span id="cb21-726"><a href="#cb21-726" aria-hidden="true" tabindex="-1"></a>This gives a compact comparison of scenario risk at the end of the projection horizon.</span>
+<span id="cb21-727"><a href="#cb21-727" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-730"><a href="#cb21-730" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-731"><a href="#cb21-731" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-terminal-status</span></span>
+<span id="cb21-732"><a href="#cb21-732" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Distribution of SSB / SBMSY in", FINAL_YEAR, "under each projection scenario.", N_ITER, "iterations. The dotted line marks SBMSY.", filter_note)</span></span>
+<span id="cb21-733"><a href="#cb21-733" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
+<span id="cb21-734"><a href="#cb21-734" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb21-735"><a href="#cb21-735" aria-hidden="true" tabindex="-1"></a>status_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_fbar_iterations</span>(status_dt, futs_fbar_max_dt, <span class="st">"scenario"</span>)</span>
+<span id="cb21-736"><a href="#cb21-736" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_status</span>(status_plot_dt, FINAL_YEAR, <span class="at">n_iter=</span>N_ITER, <span class="at">ref_om=</span>REF_OM)</span>
+<span id="cb21-737"><a href="#cb21-737" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-738"><a href="#cb21-738" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-741"><a href="#cb21-741" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-742"><a href="#cb21-742" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-terminal-tradeoff</span></span>
+<span id="cb21-743"><a href="#cb21-743" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Median catch and SSB / SBMSY in", FINAL_YEAR, "under each projection scenario. Points show scenario medians; bars show 90% intervals. The dotted line marks SBMSY.", filter_note)</span></span>
+<span id="cb21-744"><a href="#cb21-744" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb21-745"><a href="#cb21-745" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
+<span id="cb21-746"><a href="#cb21-746" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_tradeoff</span>(status_plot_dt, FINAL_YEAR, <span class="at">ref_om=</span>REF_OM)</span>
+<span id="cb21-747"><a href="#cb21-747" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-748"><a href="#cb21-748" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-751"><a href="#cb21-751" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-752"><a href="#cb21-752" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-terminal-tradeoff-ssb</span></span>
+<span id="cb21-753"><a href="#cb21-753" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Median catch and SSB in", FINAL_YEAR, "under each projection scenario. Points show scenario medians; bars show 90% intervals. The dotted line marks SBMSY.", filter_note)</span></span>
+<span id="cb21-754"><a href="#cb21-754" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb21-755"><a href="#cb21-755" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
+<span id="cb21-756"><a href="#cb21-756" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_tradeoff</span>(status_plot_dt, FINAL_YEAR, <span class="at">ref_om=</span>REF_OM,</span>
+<span id="cb21-757"><a href="#cb21-757" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_metric=</span><span class="st">"ssb"</span>)</span>
+<span id="cb21-758"><a href="#cb21-758" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-759"><a href="#cb21-759" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-762"><a href="#cb21-762" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-763"><a href="#cb21-763" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-terminal-tradeoff-scaled-om11</span></span>
+<span id="cb21-764"><a href="#cb21-764" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Median catch and scaled stock status in", FINAL_YEAR, "under each projection scenario for om11. The x-axis is (SSB / dynamic Bzero) divided by the draw-specific Bmsy / Bzero value. Points show scenario medians; bars show 90% intervals. The dotted vertical line marks the draw-specific Bmsy / Bzero level.", filter_note)</span></span>
+<span id="cb21-765"><a href="#cb21-765" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb21-766"><a href="#cb21-766" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
+<span id="cb21-767"><a href="#cb21-767" aria-hidden="true" tabindex="-1"></a>scaled_tradeoff_om11_dt <span class="ot">&lt;-</span> <span class="fu">scaled_tradeoff_data</span>(status_dt, futs_fbar_max_dt,</span>
+<span id="cb21-768"><a href="#cb21-768" aria-hidden="true" tabindex="-1"></a>  REF_OM, N_ITER)</span>
+<span id="cb21-769"><a href="#cb21-769" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_scaled_tradeoff</span>(scaled_tradeoff_om11_dt, FINAL_YEAR, <span class="at">ref_om=</span>REF_OM)</span>
+<span id="cb21-770"><a href="#cb21-770" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-771"><a href="#cb21-771" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-774"><a href="#cb21-774" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-775"><a href="#cb21-775" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-terminal-tradeoff-scaled-om12</span></span>
+<span id="cb21-776"><a href="#cb21-776" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Median catch and scaled stock status in", FINAL_YEAR, "under each projection scenario for om12, the steepness = 0.8 operating model. The x-axis is (SSB / dynamic Bzero) divided by the draw-specific Bmsy / Bzero value. Points show scenario medians; bars show 90% intervals. The dotted vertical line marks the draw-specific Bmsy / Bzero level.", filter_note)</span></span>
+<span id="cb21-777"><a href="#cb21-777" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb21-778"><a href="#cb21-778" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 7</span></span>
+<span id="cb21-779"><a href="#cb21-779" aria-hidden="true" tabindex="-1"></a>om12_cache_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(jmMSE_path, <span class="st">"report"</span>, <span class="st">"projections_om12"</span>,</span>
+<span id="cb21-780"><a href="#cb21-780" aria-hidden="true" tabindex="-1"></a>  <span class="st">"cache.rda"</span>)</span>
+<span id="cb21-781"><a href="#cb21-781" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">file.exists</span>(om12_cache_file)) {</span>
+<span id="cb21-782"><a href="#cb21-782" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"OM12 projection cache not found at "</span>, om12_cache_file,</span>
+<span id="cb21-783"><a href="#cb21-783" aria-hidden="true" tabindex="-1"></a>    <span class="st">". Run explore_projections.R with REF_OM set to 'om12' before rendering."</span>)</span>
+<span id="cb21-784"><a href="#cb21-784" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-785"><a href="#cb21-785" aria-hidden="true" tabindex="-1"></a>om12_cache <span class="ot">&lt;-</span> <span class="fu">new.env</span>(<span class="at">parent=</span><span class="fu">emptyenv</span>())</span>
+<span id="cb21-786"><a href="#cb21-786" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(om12_cache_file, <span class="at">envir=</span>om12_cache)</span>
+<span id="cb21-787"><a href="#cb21-787" aria-hidden="true" tabindex="-1"></a>scaled_tradeoff_om12_dt <span class="ot">&lt;-</span> <span class="fu">scaled_tradeoff_data</span>(om12_cache<span class="sc">$</span>status_dt,</span>
+<span id="cb21-788"><a href="#cb21-788" aria-hidden="true" tabindex="-1"></a>  om12_cache<span class="sc">$</span>futs_fbar_max_dt, om12_cache<span class="sc">$</span>REF_OM, om12_cache<span class="sc">$</span>N_ITER)</span>
+<span id="cb21-789"><a href="#cb21-789" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_scaled_tradeoff</span>(scaled_tradeoff_om12_dt, om12_cache<span class="sc">$</span>FINAL_YEAR,</span>
+<span id="cb21-790"><a href="#cb21-790" aria-hidden="true" tabindex="-1"></a>  <span class="at">ref_om=</span>om12_cache<span class="sc">$</span>REF_OM)</span>
+<span id="cb21-791"><a href="#cb21-791" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-792"><a href="#cb21-792" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-795"><a href="#cb21-795" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-796"><a href="#cb21-796" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-catch-2026</span></span>
+<span id="cb21-797"><a href="#cb21-797" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr paste("Distribution of catch in 2026 under each projection scenario.", N_ITER, "iterations.", filter_note)</span></span>
+<span id="cb21-798"><a href="#cb21-798" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 12</span></span>
+<span id="cb21-799"><a href="#cb21-799" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb21-800"><a href="#cb21-800" aria-hidden="true" tabindex="-1"></a>catch_2026_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_fbar_iterations</span>(catch_2026_dt,</span>
+<span id="cb21-801"><a href="#cb21-801" aria-hidden="true" tabindex="-1"></a>  futs_fbar_max_dt, <span class="st">"scenario"</span>)</span>
+<span id="cb21-802"><a href="#cb21-802" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_catch_distribution</span>(catch_2026_plot_dt, <span class="dv">2026</span>,</span>
+<span id="cb21-803"><a href="#cb21-803" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_iter=</span>N_ITER, <span class="at">ref_om=</span>REF_OM)</span>
+<span id="cb21-804"><a href="#cb21-804" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-805"><a href="#cb21-805" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-806"><a href="#cb21-806" aria-hidden="true" tabindex="-1"></a><span class="fu"># Selectivity Window Sensitivity</span></span>
+<span id="cb21-807"><a href="#cb21-807" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-808"><a href="#cb21-808" aria-hidden="true" tabindex="-1"></a>The selectivity-window sensitivity analysis projects at FMSY while replacing future selectivity with averages over alternative terminal-year windows.</span>
+<span id="cb21-809"><a href="#cb21-809" aria-hidden="true" tabindex="-1"></a>For example, a three-year window uses the mean selectivity pattern from the final three historical years.</span>
+<span id="cb21-810"><a href="#cb21-810" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-813"><a href="#cb21-813" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-814"><a href="#cb21-814" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-selectivity-windows</span></span>
+<span id="cb21-815"><a href="#cb21-815" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Terminal-year selectivity averaging windows."</span></span>
+<span id="cb21-816"><a href="#cb21-816" aria-hidden="true" tabindex="-1"></a>window_tbl <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb21-817"><a href="#cb21-817" aria-hidden="true" tabindex="-1"></a>  <span class="at">window_years =</span> SELEX_WINDOWS,</span>
+<span id="cb21-818"><a href="#cb21-818" aria-hidden="true" tabindex="-1"></a>  <span class="at">description =</span> <span class="fu">paste</span>(<span class="st">"Mean selectivity over the final"</span>, SELEX_WINDOWS, <span class="st">"historical years"</span>)</span>
+<span id="cb21-819"><a href="#cb21-819" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-820"><a href="#cb21-820" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-821"><a href="#cb21-821" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(window_tbl, <span class="at">col.names=</span><span class="fu">c</span>(<span class="st">"Window (years)"</span>, <span class="st">"Projection assumption"</span>))</span>
+<span id="cb21-822"><a href="#cb21-822" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-823"><a href="#cb21-823" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-826"><a href="#cb21-826" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-827"><a href="#cb21-827" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-selectivity-window-sensitivity</span></span>
+<span id="cb21-828"><a href="#cb21-828" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr sensitivity_caption("Sensitivity of projections to the terminal-year selectivity averaging window.")</span></span>
+<span id="cb21-829"><a href="#cb21-829" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
+<span id="cb21-830"><a href="#cb21-830" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8</span></span>
+<span id="cb21-831"><a href="#cb21-831" aria-hidden="true" tabindex="-1"></a>selex_excluded <span class="ot">&lt;-</span> selex_fbar_max_dt[</span>
+<span id="cb21-832"><a href="#cb21-832" aria-hidden="true" tabindex="-1"></a>  , .(<span class="at">max_median_fbar=</span><span class="fu">median</span>(max_fbar, <span class="at">na.rm=</span><span class="cn">TRUE</span>)),</span>
+<span id="cb21-833"><a href="#cb21-833" aria-hidden="true" tabindex="-1"></a>  by<span class="ot">=</span>.(window, stock)][max_median_fbar <span class="sc">&gt;</span> FBAR_MAX]</span>
+<span id="cb21-834"><a href="#cb21-834" aria-hidden="true" tabindex="-1"></a>selex_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_group_stock</span>(selex_dt, selex_excluded, <span class="st">"window"</span>)</span>
+<span id="cb21-835"><a href="#cb21-835" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-836"><a href="#cb21-836" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_sensitivity</span>(selex_plot_dt, <span class="at">group_col=</span><span class="st">"window"</span>, <span class="at">group_lab=</span><span class="st">"Avg. years"</span>,</span>
+<span id="cb21-837"><a href="#cb21-837" aria-hidden="true" tabindex="-1"></a>  <span class="at">init_year=</span>INIT_YEAR, <span class="at">sbmsy_ref=</span>sbmsy_ref, <span class="at">fmsy_ref=</span>fmsy_ref,</span>
+<span id="cb21-838"><a href="#cb21-838" aria-hidden="true" tabindex="-1"></a>  <span class="at">ref_om=</span>REF_OM,</span>
+<span id="cb21-839"><a href="#cb21-839" aria-hidden="true" tabindex="-1"></a>  <span class="at">title_prefix=</span><span class="st">"Selectivity averaging window sensitivity"</span>)</span>
+<span id="cb21-840"><a href="#cb21-840" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-841"><a href="#cb21-841" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-842"><a href="#cb21-842" aria-hidden="true" tabindex="-1"></a><span class="fu"># Selectivity Block Sensitivity</span></span>
+<span id="cb21-843"><a href="#cb21-843" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-844"><a href="#cb21-844" aria-hidden="true" tabindex="-1"></a>The named-block sensitivity analysis is similar to the rolling-window analysis, but the averaged selectivity pattern comes from specified historical year blocks.</span>
+<span id="cb21-845"><a href="#cb21-845" aria-hidden="true" tabindex="-1"></a>This is useful when historical periods represent different fishery or stock-selectivity regimes.</span>
+<span id="cb21-846"><a href="#cb21-846" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-849"><a href="#cb21-849" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-850"><a href="#cb21-850" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-selectivity-blocks</span></span>
+<span id="cb21-851"><a href="#cb21-851" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Named historical selectivity blocks used for projection sensitivity."</span></span>
+<span id="cb21-852"><a href="#cb21-852" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(block_tbl, <span class="at">col.names=</span><span class="fu">c</span>(<span class="st">"Block"</span>, <span class="st">"Years"</span>))</span>
+<span id="cb21-853"><a href="#cb21-853" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-854"><a href="#cb21-854" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-857"><a href="#cb21-857" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-858"><a href="#cb21-858" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-selectivity-block-sensitivity</span></span>
+<span id="cb21-859"><a href="#cb21-859" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: !expr sensitivity_caption("Sensitivity of projections to named historical selectivity blocks.")</span></span>
+<span id="cb21-860"><a href="#cb21-860" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 14</span></span>
+<span id="cb21-861"><a href="#cb21-861" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8</span></span>
+<span id="cb21-862"><a href="#cb21-862" aria-hidden="true" tabindex="-1"></a>block_excluded <span class="ot">&lt;-</span> block_fbar_max_dt[</span>
+<span id="cb21-863"><a href="#cb21-863" aria-hidden="true" tabindex="-1"></a>  , .(<span class="at">max_median_fbar=</span><span class="fu">median</span>(max_fbar, <span class="at">na.rm=</span><span class="cn">TRUE</span>)),</span>
+<span id="cb21-864"><a href="#cb21-864" aria-hidden="true" tabindex="-1"></a>  by<span class="ot">=</span>.(block, stock)][max_median_fbar <span class="sc">&gt;</span> FBAR_MAX]</span>
+<span id="cb21-865"><a href="#cb21-865" aria-hidden="true" tabindex="-1"></a>block_plot_dt <span class="ot">&lt;-</span> <span class="fu">drop_group_stock</span>(block_dt, block_excluded, <span class="st">"block"</span>)</span>
+<span id="cb21-866"><a href="#cb21-866" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-867"><a href="#cb21-867" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_qmd_sensitivity</span>(block_plot_dt, <span class="at">group_col=</span><span class="st">"block"</span>, <span class="at">group_lab=</span><span class="st">"Selectivity block"</span>,</span>
+<span id="cb21-868"><a href="#cb21-868" aria-hidden="true" tabindex="-1"></a>  <span class="at">init_year=</span>INIT_YEAR, <span class="at">sbmsy_ref=</span>sbmsy_ref, <span class="at">fmsy_ref=</span>fmsy_ref,</span>
+<span id="cb21-869"><a href="#cb21-869" aria-hidden="true" tabindex="-1"></a>  <span class="at">ref_om=</span>REF_OM,</span>
+<span id="cb21-870"><a href="#cb21-870" aria-hidden="true" tabindex="-1"></a>  <span class="at">title_prefix=</span><span class="st">"Selectivity block sensitivity"</span>)</span>
+<span id="cb21-871"><a href="#cb21-871" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb21-872"><a href="#cb21-872" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-873"><a href="#cb21-873" aria-hidden="true" tabindex="-1"></a><span class="fu"># Outputs</span></span>
+<span id="cb21-874"><a href="#cb21-874" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-875"><a href="#cb21-875" aria-hidden="true" tabindex="-1"></a>The cached projection workflow writes two main files:</span>
+<span id="cb21-876"><a href="#cb21-876" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-877"><a href="#cb21-877" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`report/projections/cache.rda`</span>, containing the settings, summary values, and plot objects used by this report; and</span>
+<span id="cb21-878"><a href="#cb21-878" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`report/projections/projections_report.html`</span>, the original HTML report built by <span class="in">`report_run_projections.R`</span>.</span>
+<span id="cb21-879"><a href="#cb21-879" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-880"><a href="#cb21-880" aria-hidden="true" tabindex="-1"></a>This Quarto document provides an editable report source for the same projection results.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
