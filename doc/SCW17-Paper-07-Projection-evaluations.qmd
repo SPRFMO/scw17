@@ -101,7 +101,7 @@ scenario_caption <- function() {
     sprintf("%s: SBMSY = %s t, FMSY = %s", s,
       format(round(sbm), big.mark=","), round(fms, 3)),
     names(sbmsy_ref), sbmsy_ref, fmsy_ref), collapse=" | ")
-  paste("Forward projections under the simplified future fishing-pattern scenarios.",
+  paste("Forward projections under the future fishing-pattern scenarios.",
     ref_txt, paste0("Projections: ", INIT_YEAR + 1, "-", FINAL_YEAR),
     filter_note)
 }
@@ -289,22 +289,38 @@ plot_qmd_status <- function(status_dt, final_year, n_iter=NULL, ref_om=NULL) {
   if(length(unique(status_dt$stock)) > 1) p + facet_wrap(~stock, scales="free_y") else p
 }
 
-plot_qmd_tradeoff <- function(status_dt, final_year, ref_om=NULL) {
+plot_qmd_tradeoff <- function(status_dt, final_year, ref_om=NULL,
+  x_metric=c("ssb_sbmsy", "ssb")) {
+  x_metric <- match.arg(x_metric)
   title <- paste("Terminal catch and stock status at", final_year)
   if(!is.null(ref_om)) title <- paste(title, "-", ref_om)
   dat <- as.data.table(status_dt)[
     , .(ssb_sbmsy=median(psbmsy, na.rm=TRUE),
         ssb_lo=quantile(psbmsy, 0.05, na.rm=TRUE),
         ssb_hi=quantile(psbmsy, 0.95, na.rm=TRUE),
+        ssb=median(ssb, na.rm=TRUE),
+        ssb_t_lo=quantile(ssb, 0.05, na.rm=TRUE),
+        ssb_t_hi=quantile(ssb, 0.95, na.rm=TRUE),
         catch=median(catch, na.rm=TRUE),
         catch_lo=quantile(catch, 0.05, na.rm=TRUE),
         catch_hi=quantile(catch, 0.95, na.rm=TRUE)),
     by=.(scenario, stock, label)]
+  if(x_metric == "ssb") {
+    dat[, `:=`(x_value=ssb, x_lo=ssb_t_lo, x_hi=ssb_t_hi)]
+    x_lab <- "SSB (t)"
+    x_labels <- function(x) format(round(x), big.mark=",", scientific=FALSE)
+    ref_x <- unname(sbmsy_ref[dat$stock])
+  } else {
+    dat[, `:=`(x_value=ssb_sbmsy, x_lo=ssb_lo, x_hi=ssb_hi)]
+    x_lab <- "SSB / SBMSY"
+    x_labels <- function(x) format(round(x, 2), trim=TRUE, scientific=FALSE)
+    ref_x <- 1
+  }
   lvls <- if(is.factor(dat$label)) levels(dat$label) else unique(as.character(dat$label))
   shapes <- c(16, 17, 15, 18, 3, 7, 8, 4, 9, 10)
-  p <- ggplot(dat, aes(x=ssb_sbmsy, y=catch, colour=label, shape=label)) +
-    geom_vline(xintercept=1, linetype="dotted", colour="#d55e00") +
-    geom_segment(aes(x=ssb_lo, xend=ssb_hi, y=catch, yend=catch),
+  p <- ggplot(dat, aes(x=x_value, y=catch, colour=label, shape=label)) +
+    geom_vline(xintercept=ref_x, linetype="dotted", colour="#d55e00") +
+    geom_segment(aes(x=x_lo, xend=x_hi, y=catch, yend=catch),
       linewidth=0.7, alpha=0.75, show.legend=FALSE) +
     geom_errorbar(aes(ymin=catch_lo, ymax=catch_hi),
       width=0, linewidth=0.7, alpha=0.75, show.legend=FALSE) +
@@ -312,12 +328,14 @@ plot_qmd_tradeoff <- function(status_dt, final_year, ref_om=NULL) {
     scale_colour_cycling(dat$label, name="Scenario") +
     scale_shape_manual(values=setNames(shapes[(seq_along(lvls) - 1L) %% length(shapes) + 1L], lvls),
       name="Scenario") +
-    scale_x_continuous(limits=c(0, NA), expand=expansion(mult=c(0, 0.05))) +
+    scale_x_continuous(limits=c(0, NA),
+      labels=x_labels,
+      expand=expansion(mult=c(0, 0.05))) +
     scale_y_continuous(limits=c(-200, NA),
       breaks=function(x) seq(0, ceiling(max(x, na.rm=TRUE) / 500) * 500, by=500),
       labels=function(x) format(round(x), big.mark=",", scientific=FALSE),
       expand=expansion(mult=c(0, 0.05))) +
-    labs(title=title, x="SSB / SBMSY", y="Catch (t)") +
+    labs(title=title, x=x_lab, y="Catch (t)") +
     report_theme()
   if(length(unique(dat$stock)) > 1) p + facet_wrap(~stock, scales="free") else p
 }
@@ -434,9 +452,9 @@ kable(current_tbl[, c("stock", "ssb", "ssb_sbmsy", "f", "catch", "sbmsy", "fmsy"
 # Scenario Definitions
 
 The fixed projection scenarios are defined in `run_projections.R`.
-The simplified comparison uses future fishing patterns that include no fishing, constant future fishing mortality set to FMSY, constant future fishing mortality set to the 2025 value, constant future fishing mortality set to 75% and 50% of the 2025 value, constant fishing mortality set to the F35 SPR rate, and constant future catch set to half of the 2025 catch.
+The comparison uses future fishing patterns that include no fishing, constant future fishing mortality set to FMSY, constant future fishing mortality set to 0, 25%, 50%, 75%, 100%, and 200% of the 2025 value, constant fishing mortality set to the F35 SPR rate, and constant future catch set to 0, 25%, 50%, 75%, 100%, and 200% of the 2025 catch.
 The catch-based scenario is allocated among fleets using the 2025 fleet catch proportions.
-Special targets such as `FMSY`, `F2025`, `F2025_75`, `F2025_50`, `F35`, and `C2025_HALF` are resolved during the projection run before the cache is saved. `F35` is read from the model yield-profile output as the SPR rate that gives 35% of spawning biomass per recruit.
+Special targets such as `FMSY`, the `F2025_*` multipliers, `F35`, and the `C2025_*` multipliers are resolved during the projection run before the cache is saved. `F35` is read from the model yield-profile output as the SPR rate that gives 35% of spawning biomass per recruit.
 Projection result trajectories are excluded from the figures below when their Fbar exceeds `r FBAR_MAX`.
 
 ```{r}
@@ -480,9 +498,9 @@ plot_qmd_exploitation(mets_dt, mets_worms_dt, init_year=INIT_YEAR,
   n_iter=N_ITER, ref_om=REF_OM)
 ```
 
-# Simplified Fishing Pattern Scenarios
+# Future Fishing Pattern Scenarios
 
-The main projection comparison applies the simplified fishing-pattern controls over the projection horizon.
+The main projection comparison applies the fishing-pattern controls over the projection horizon.
 The plot shows median trajectories by scenario for the cached projection summaries, including spawning biomass, fishing mortality, and catch where available.
 
 ```{r}
@@ -516,6 +534,15 @@ plot_qmd_status(status_plot_dt, FINAL_YEAR, n_iter=N_ITER, ref_om=REF_OM)
 #| fig-width: 10
 #| fig-height: 7
 plot_qmd_tradeoff(status_plot_dt, FINAL_YEAR, ref_om=REF_OM)
+```
+
+```{r}
+#| label: fig-terminal-tradeoff-ssb
+#| fig-cap: !expr paste("Median catch and SSB in", FINAL_YEAR, "under each projection scenario. Points show scenario medians; bars show 90% intervals. The dotted line marks SBMSY.", filter_note)
+#| fig-width: 10
+#| fig-height: 7
+plot_qmd_tradeoff(status_plot_dt, FINAL_YEAR, ref_om=REF_OM,
+  x_metric="ssb")
 ```
 
 ```{r}
