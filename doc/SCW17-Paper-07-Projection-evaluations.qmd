@@ -496,11 +496,10 @@ plot_qmd_ssb_dynamic_bzero <- function(worms_dt, om_short, n_iter, init_year,
 plot_qmd_dynamic_bzero <- function(om_short, n_iter, init_year, final_year,
   worm_n=15) {
   dat <- om_dynamic_bzero_dt(om_short, n_iter)[year <= final_year]
-  dat[, dyn_bzero_kt := dyn_bzero / 1000]
   sum_dt <- dat[, .(
-    q05=quantile(dyn_bzero_kt, 0.05, na.rm=TRUE),
-    q50=median(dyn_bzero_kt, na.rm=TRUE),
-    q95=quantile(dyn_bzero_kt, 0.95, na.rm=TRUE)
+    q05=quantile(dyn_bzero, 0.05, na.rm=TRUE),
+    q50=median(dyn_bzero, na.rm=TRUE),
+    q95=quantile(dyn_bzero, 0.95, na.rm=TRUE)
   ), by=.(stock, year)]
   set.seed(2026)
   worm_ids <- sort(sample(unique(dat$iter), min(worm_n, length(unique(dat$iter)))))
@@ -511,7 +510,7 @@ plot_qmd_dynamic_bzero <- function(om_short, n_iter, init_year, final_year,
   p <- ggplot(sum_dt, aes(x=year)) +
     geom_ribbon(aes(ymin=q05, ymax=q95), fill="#4c78a8", alpha=0.24) +
     geom_vline(xintercept=init_year, linetype="dashed", colour="grey60") +
-    geom_line(data=worm_dt, aes(x=year, y=dyn_bzero_kt, group=iter,
+    geom_line(data=worm_dt, aes(x=year, y=dyn_bzero, group=iter,
       colour=worm_col), inherit.aes=FALSE, alpha=0.78, linewidth=0.45) +
     geom_line(aes(y=q50), colour="black", linewidth=0.95) +
     scale_colour_identity(guide="none") +
