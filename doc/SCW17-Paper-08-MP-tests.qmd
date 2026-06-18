@@ -1,0 +1,264 @@
+---
+title: "SCW17/Paper-08 MP tests"
+subtitle: "Subset tests from the updated jmMSE model_indices.R index MP screen"
+date: today
+format:
+  html:
+    output-file: "SCW17-Paper-08-MP-tests.html"
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    code-tools: true
+    df-print: paged
+    theme: cosmo
+execute:
+  warning: false
+  message: false
+params:
+  jmMSE_path: "../../jmMSE"
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(data.table)
+library(ggplot2)
+library(knitr)
+
+jmMSE_path <- params$jmMSE_path
+full_log <- file.path(jmMSE_path, "model", "indices", "model_indices_20260618.log")
+subset_log <- file.path(jmMSE_path, "model", "indices", "run_indices36_subset_20260618.log")
+subset_file <- file.path(jmMSE_path, "model", "indices", "explore_indices36_buffer_subset.rda")
+subset_runner <- file.path(jmMSE_path, "model_indices_subset.R")
+
+for(path in c(subset_log, subset_file, subset_runner)) {
+  if(!file.exists(path)) {
+    stop("Required Paper 08 input not found at ", path)
+  }
+}
+
+full_log_lines <- if(file.exists(full_log)) readLines(full_log, warn=FALSE) else character()
+subset_log_lines <- readLines(subset_log, warn=FALSE)
+load(subset_file)
+
+setDT(runs)
+setDT(design)
+
+ty <- attr(runs, "tuning_years")
+if(is.null(ty)) ty <- 2036:2040
+
+design[, run := run_id]
+
+green_by_year <- runs[statistic == "green",
+  .(green = mean(data, na.rm=TRUE)), by=.(run, year)]
+
+green_summary <- runs[statistic == "green" & year %in% ty,
+  .(green = mean(data, na.rm=TRUE)), by=run]
+
+catch_summary <- runs[statistic == "C" & year %in% ty,
+  .(catch_t = mean(data, na.rm=TRUE)), by=run]
+
+sb_summary <- runs[statistic == "SB" & year %in% ty,
+  .(spawning_biomass = mean(data, na.rm=TRUE)), by=run]
+
+iacc_summary <- runs[statistic == "IACC" & year %in% ty,
+  .(iacc = mean(data, na.rm=TRUE)), by=run]
+
+summary_dt <- Reduce(function(x, y) merge(x, y, by="run"),
+  list(green_summary, catch_summary, sb_summary, iacc_summary, design[, .(run, lim, bufflow, buffupp)]))
+setorder(summary_dt, -green)
+summary_dt[, rank := .I]
+setcolorder(summary_dt, c("rank", "run", "lim", "bufflow", "buffupp",
+  "green", "catch_t", "spawning_biomass", "iacc"))
+
+top_n <- min(6, nrow(summary_dt))
+top_runs <- summary_dt[seq_len(top_n), run]
+
+kobe_summary <- runs[statistic %in% c("green", "yellow", "orange", "red") &
+    year %in% ty & run %in% top_runs,
+  .(probability = mean(data, na.rm=TRUE)), by=.(run, statistic)]
+kobe_summary[, run := factor(run, levels=top_runs)]
+kobe_summary[, statistic := factor(statistic,
+  levels=c("green", "yellow", "orange", "red"))]
+
+trajectory_dt <- green_by_year[run %in% top_runs]
+trajectory_dt[, run := factor(run, levels=top_runs)]
+
+artifact_paths <- c(full_log, subset_runner, subset_log, subset_file)
+run_info <- data.table(
+  artifact = c("full model_indices.R log", "subset runner", "subset runner log", "subset performance object"),
+  path = artifact_paths,
+  exists = file.exists(artifact_paths),
+  size_kb = fifelse(file.exists(artifact_paths),
+    round(file.info(artifact_paths)$size / 1024, 1), NA_real_),
+  modified = fifelse(file.exists(artifact_paths),
+    format(file.info(artifact_paths)$mtime, "%Y-%m-%d %H:%M:%S"), NA_character_)
+)
+
+full_error_lines <- unique(full_log_lines[grepl("^(Error|Warning|Running on|Execution halted)", full_log_lines)])
+if(length(full_error_lines) == 0) {
+  full_error_lines <- "No full-script log was available or no error marker was found."
+}
+
+subset_markers <- unique(subset_log_lines[grepl("^(Running mps|MP:|There were 50 or more warnings)", subset_log_lines)])
+if(length(subset_markers) == 0) {
+  subset_markers <- "No subset-run progress markers were found."
+}
+
+plot_theme <- function() {
+  theme_minimal(base_size=12) +
+    theme(
+      legend.position="bottom",
+      panel.grid.minor=element_blank(),
+      plot.title.position="plot"
+    )
+}
+```
+
+# Overview
+
+This page updates SCW17/Paper-08 using the coherent index-based `buffer.hcr` section from the pushed `jmMSE/model_indices.R`. The full script was tested as pushed, but it failed before saving its intended new outputs. The failure occurred during an early parallel MP block with:
+
+```{r}
+#| label: full-script-error
+#| echo: false
+#| results: asis
+cat("```text\n")
+cat(full_error_lines, sep="\n")
+cat("\n```")
+```
+
+The useful part of the pushed file appears to be the later `cpues.ind(Chile_CPUE, Offshore_CPUE) + buffer.hcr` screen. Because the end of `model_indices.R` contains exploratory/test code, this document uses a small reproducible subset runner, `model_indices_subset.R`, that keeps the same operating model, indices, estimator, and HCR parameter ranges, but runs 12 Latin-hypercube design points sequentially.
+
+This should be read as a subset test, not as the final 34-point screen from the pushed script.
+
+# Run artifacts
+
+```{r}
+#| label: tbl-run-artifacts
+#| echo: false
+kable(run_info)
+```
+
+# What Was Tested
+
+The subset uses:
+
+- operating model `data/om11_h1_0.16_065.rds`
+- indices `Chile_CPUE` and `Offshore_CPUE`
+- `cpues.ind` with reference years 2015-2020 and `combine = "mean"`
+- `buffer.hcr` with 12 Latin-hypercube samples over `lim`, `bufflow`, and `buffupp`
+- tuning years `r paste(ty, collapse=", ")`
+
+The sampled HCR design is saved with the performance object, so the rankings below identify the actual `lim`, `bufflow`, and `buffupp` values behind each run.
+
+```{r}
+#| label: tbl-design
+#| echo: false
+kable(design[, .(run_id, lim, bufflow, buffupp)], digits=3)
+```
+
+# Results
+
+The subset spans a wide performance range. Mean Kobe green probability over the tuning years ranges from `r round(min(summary_dt$green), 3)` to `r round(max(summary_dt$green), 3)`. The best subset run is `r summary_dt$run[1]`, with lim `r round(summary_dt$lim[1], 3)`, bufflow `r round(summary_dt$bufflow[1], 3)`, and buffupp `r round(summary_dt$buffupp[1], 3)`.
+
+This is a materially different result from the earlier Paper-08 artifact: the updated index-buffer setup does find subset parameterizations with high Kobe-green probability, but those high-green cases also tend to imply lower catches over the tuning window. That tradeoff should be tested with the full intended design before presenting a candidate MP.
+
+```{r}
+#| label: tbl-summary
+#| echo: false
+kable(summary_dt, digits=3)
+```
+
+## Green Probability Ranking
+
+```{r}
+#| label: fig-green-ranking
+#| echo: false
+#| fig-cap: "Ranked mean Kobe green probability over the tuning years for the 12-run subset. Higher values are better."
+ggplot(summary_dt, aes(x=reorder(run, green), y=green)) +
+  geom_col(fill="#009e73", width=0.8) +
+  geom_hline(yintercept=0.60, linetype="dashed", colour="grey35") +
+  coord_flip() +
+  labs(x=NULL, y="Mean green probability") +
+  plot_theme()
+```
+
+## Design Space
+
+```{r}
+#| label: fig-design-space
+#| echo: false
+#| fig-cap: "Subset design points colored by mean Kobe green probability."
+ggplot(summary_dt, aes(x=bufflow, y=buffupp, colour=green, size=catch_t)) +
+  geom_point(alpha=0.9) +
+  geom_text(aes(label=rank), nudge_y=0.08, size=3, show.legend=FALSE) +
+  scale_colour_viridis_c(option="plasma", limits=c(0, 1)) +
+  labs(x="bufflow", y="buffupp", colour="Green probability",
+    size="Mean catch (t)") +
+  plot_theme()
+```
+
+## Green Probability Over Time
+
+```{r}
+#| label: fig-green-trajectories
+#| echo: false
+#| fig-cap: "Annual Kobe green probability for the six highest-ranked subset runs."
+ggplot(trajectory_dt, aes(x=year, y=green, colour=run, group=run)) +
+  geom_rect(aes(xmin=min(ty), xmax=max(ty), ymin=-Inf, ymax=Inf),
+    inherit.aes=FALSE, fill="grey80", alpha=0.25) +
+  geom_line(linewidth=0.8, alpha=0.9) +
+  scale_y_continuous(limits=c(0, 1)) +
+  labs(x="Year", y="Green probability", colour="Run") +
+  plot_theme()
+```
+
+## Catch Tradeoff
+
+```{r}
+#| label: fig-catch-tradeoff
+#| echo: false
+#| fig-cap: "Mean catch over the tuning years compared with mean Kobe green probability."
+ggplot(summary_dt, aes(x=green, y=catch_t)) +
+  geom_point(aes(colour=spawning_biomass), size=3, alpha=0.9) +
+  geom_text(aes(label=rank), nudge_y=35, size=3, show.legend=FALSE) +
+  scale_colour_viridis_c(option="viridis") +
+  labs(x="Mean green probability", y="Mean catch in tuning years (t)",
+    colour="Mean SB") +
+  plot_theme()
+```
+
+## Kobe-Color Composition
+
+```{r}
+#| label: fig-kobe-composition
+#| echo: false
+#| fig-cap: "Mean Kobe color probabilities over the tuning years for the six highest-ranked subset runs."
+ggplot(kobe_summary, aes(x=run, y=probability, fill=statistic)) +
+  geom_col(width=0.8) +
+  coord_flip() +
+  scale_fill_manual(
+    values=c(green="#009e73", yellow="#f0e442", orange="#e69f00", red="#d55e00")
+  ) +
+  labs(x=NULL, y="Mean probability", fill="Kobe status") +
+  plot_theme()
+```
+
+# Interpretation
+
+The pushed `model_indices.R` should inform Paper 08, but not by running the whole file verbatim. As pushed, the full script fails before saving the new index artifacts and later contains exploratory blocks that are not needed for the paper. A focused subset run of the intended index-buffer screen is more informative and reproducible.
+
+The subset result supports continuing with the updated `cpues.ind` plus `buffer.hcr` direction. Several parameterizations exceed a mean green probability of 0.60 during 2036-2040, with the strongest green outcomes coming from larger `bufflow` values and lower catches. The next step is to clean `model_indices.R` into a report-grade driver and run the full 34-point design, saving the design table alongside the performance object as done here.
+
+# Subset run log
+
+```{r}
+#| label: subset-log
+#| echo: false
+#| results: asis
+cat("```text\n")
+cat(subset_markers, sep="\n")
+cat("\n```")
+```
