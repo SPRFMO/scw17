@@ -144,7 +144,7 @@
     "href": "index.html",
     "title": "SPRFMO SCW17",
     "section": "",
-    "text": "SPRFMO\n      South Pacific Regional Fisheries Management Organisation\n      \n      Jack Mackerel Working Group\n    \n  \n\nVisitor Information posted: SPRFMO Jack Mackerel MSE Workshop Visitor Information\nSCW17 Preparation Materials\n\nOverview\nThis site is the working index for SPRFMO Scientific Committee Workshop 17 (SCW17) jack mackerel preparation materials. SCW17 follows the 2026 benchmark work compiled in the SCW16 preparation repository and is expected to focus on management-strategy-evaluation inputs, operating-model conditioning, candidate management procedures, performance metrics, robustness scenarios, and documentation for SC14.\n\nSCW17 MSE Workshop Report [Draft]\n\n\n\nWorking Papers\n\nSCW17/paper-00 Agenda and schedule\nSCW17/Paper-01: Model developments\n\nSCW17/Paper-01a Far North model selectivity\n\nSCW17/Paper-02: Consideration of reference points used for SPRFMO Jack mackerel management\nSCW17/Paper-03: Management procedures inventory for jack mackerel MSE\nSCW17/Paper-04 MSE flow\nSCW17/paper-05 Chile HCR proposals\n\nOriginal Word document\n\nSCW17/Paper-06 Evaluation of indices for MP considerations\nSCW17/Paper-07 Projection evaluations\nSCW17/Paper-08 MP tests\nSCW17/Paper-09 CMP test instructions\n\n\n\nSource Links\n\nSCW17 acronym glossary\nSCW15 report\nSCW16 and benchmark preparation archive\nSCW16 prep repository\nJack mackerel assessment repository\n\n\n\nTraining and Orientation\nThe MSE training resources page links to the IOTC MSE introduction and Shiny app, plus the FAO Training Adventure course option. These are intended as optional orientation material before participants move into the jack mackerel-specific SCW17 documents."
+    "text": "SPRFMO\n      South Pacific Regional Fisheries Management Organisation\n      \n      Jack Mackerel Working Group\n    \n  \n\nVisitor Information posted: SPRFMO Jack Mackerel MSE Workshop Visitor Information\nSCW17 Preparation Materials\n\nOverview\nThis site is the working index for SPRFMO Scientific Committee Workshop 17 (SCW17) jack mackerel preparation materials. SCW17 follows the 2026 benchmark work compiled in the SCW16 preparation repository and is expected to focus on management-strategy-evaluation inputs, operating-model conditioning, candidate management procedures, performance metrics, robustness scenarios, and documentation for SC14.\n\nSCW17 MSE Workshop Report [Draft]\nSCW17 MSE Workshop Report [Draft Word version]\n\n\n\nWorking Papers\n\nSCW17/paper-00 Agenda and schedule\nSCW17/Paper-01: Model developments\n\nSCW17/Paper-01a Far North model selectivity\n\nSCW17/Paper-02: Consideration of reference points used for SPRFMO Jack mackerel management\nSCW17/Paper-03: Management procedures inventory for jack mackerel MSE\nSCW17/Paper-04 MSE flow\nSCW17/paper-05 Chile HCR proposals\n\nOriginal Word document\n\nSCW17/Paper-06 Evaluation of indices for MP considerations\nSCW17/Paper-07 Projection evaluations\nSCW17/Paper-08 MP tests\nSCW17/Paper-09 CMP test instructions\n\n\n\nSource Links\n\nSCW17 acronym glossary\nSCW15 report\nSCW16 and benchmark preparation archive\nSCW16 prep repository\nJack mackerel assessment repository\n\n\n\nTraining and Orientation\nThe MSE training resources page links to the IOTC MSE introduction and Shiny app, plus the FAO Training Adventure course option. These are intended as optional orientation material before participants move into the jack mackerel-specific SCW17 documents."
   },
   {
     "objectID": "Wageningen-MSE-workshop-schedule.html",
@@ -739,35 +739,35 @@
     "href": "SCW17-Paper-08-MP-tests.html",
     "title": "SCW17/Paper-08 MP tests",
     "section": "",
-    "text": "This page records the output from running model_indices.R in the jmMSE repository for SCW17 management-procedure testing. The run used the current data/om11_h1_0.16_065.rds operating-model object and saved the Latin-hypercube buffer-HCR performance object to explore/indices2_buffer_perf.rda.\nThe useful part of this run is the 52-case Latin-hypercube screen of an index-based buffer.hcr management procedure using the combined Chile and offshore CPUE indices. Performance is summarized here using the probability of being in the Kobe green quadrant during the tuning years 2036, 2037, 2038, 2039, 2040.\nThe main result is that this parameter screen did not find a strong candidate MP under this setup. The best case has mean green probability 0.012 over the tuning years, and all tested cases are below 0.012. This suggests the current combined-index buffer-HCR configuration is not meeting the intended green-probability target in the tested OM, or that the explored parameter ranges are not in a useful part of the control-rule space.\nThe source script remains exploratory. Tuning calls that currently fail inside tunebisect() are retained in the diagnostic section and do not overwrite the completed MP test outputs."
+    "text": "This page updates SCW17/Paper-08 using the coherent index-based buffer.hcr section from the pushed jmMSE/model_indices.R. The full script was tested as pushed, but it failed before saving its intended new outputs. The failure occurred during an early parallel MP block with:\nWarning message:\nWarning messages:\nRunning on 3 nodes.\nError in mp(om, oem = oem, ctrl = ctrl, iem = iem, args = list(iy = iy,  : \nExecution halted\n\nThe useful part of the pushed file appears to be the later cpues.ind(Chile_CPUE, Offshore_CPUE) + buffer.hcr screen. Because the end of model_indices.R contains exploratory/test code, this document uses a small reproducible subset runner, model_indices_subset.R, that keeps the same operating model, indices, estimator, and HCR parameter ranges, but runs 12 Latin-hypercube design points sequentially.\nThis should be read as a subset test, not as the final 34-point screen from the pushed script."
   },
   {
     "objectID": "SCW17-Paper-08-MP-tests.html#green-probability-ranking",
     "href": "SCW17-Paper-08-MP-tests.html#green-probability-ranking",
     "title": "SCW17/Paper-08 MP tests",
-    "section": "5.1 Green Probability Ranking",
-    "text": "5.1 Green Probability Ranking\n\n\n\n\n\n\n\n\nFigure 1: Ranked mean Kobe green probability over the tuning years. Higher values are better."
+    "section": "4.1 Green Probability Ranking",
+    "text": "4.1 Green Probability Ranking\n\n\n\n\n\n\n\n\nFigure 1: Ranked mean Kobe green probability over the tuning years for the 12-run subset. Higher values are better."
   },
   {
     "objectID": "SCW17-Paper-08-MP-tests.html#green-probability-over-time",
     "href": "SCW17-Paper-08-MP-tests.html#green-probability-over-time",
     "title": "SCW17/Paper-08 MP tests",
-    "section": "5.2 Green Probability Over Time",
-    "text": "5.2 Green Probability Over Time\n\n\n\n\n\n\n\n\nFigure 2: Annual Kobe green probability for the ten highest-ranked LHS runs."
+    "section": "4.3 Green Probability Over Time",
+    "text": "4.3 Green Probability Over Time\n\n\n\n\n\n\n\n\nFigure 3: Annual Kobe green probability for the six highest-ranked subset runs."
   },
   {
     "objectID": "SCW17-Paper-08-MP-tests.html#catch-tradeoff",
     "href": "SCW17-Paper-08-MP-tests.html#catch-tradeoff",
     "title": "SCW17/Paper-08 MP tests",
-    "section": "5.3 Catch Tradeoff",
-    "text": "5.3 Catch Tradeoff\n\n\n\n\n\n\n\n\nFigure 3: Mean catch over the tuning years compared with mean Kobe green probability."
+    "section": "4.4 Catch Tradeoff",
+    "text": "4.4 Catch Tradeoff\n\n\n\n\n\n\n\n\nFigure 4: Mean catch over the tuning years compared with mean Kobe green probability."
   },
   {
     "objectID": "SCW17-Paper-08-MP-tests.html#kobe-color-composition",
     "href": "SCW17-Paper-08-MP-tests.html#kobe-color-composition",
     "title": "SCW17/Paper-08 MP tests",
-    "section": "5.4 Kobe-Color Composition",
-    "text": "5.4 Kobe-Color Composition\n\n\n\n\n\n\n\n\nFigure 4: Mean Kobe color probabilities over the tuning years for the ten highest-ranked runs."
+    "section": "4.5 Kobe-Color Composition",
+    "text": "4.5 Kobe-Color Composition\n\n\n\n\n\n\n\n\nFigure 5: Mean Kobe color probabilities over the tuning years for the six highest-ranked subset runs."
   },
   {
     "objectID": "SCW17-MSE-Workshop-report.html#representative-hockey-stick-hcrs",
@@ -803,5 +803,12 @@
     "title": "SCW17 MSE Workshop Report",
     "section": "4.3 Consideration of Exceptional Circumstances",
     "text": "4.3 Consideration of Exceptional Circumstances\n\nDr. Tom Carruthers gave a presentation on exceptional-circumstances protocols and the ECP software application, which provides a Shiny interface for examining whether new observations remain consistent with the conditions under which an adopted management procedure was tested [Blue Matter Science 2026]. The group discussed this issue in the jack mackerel MSE context, recognizing that initial exceptional circumstances may need to be considered given current fishing conditions and other stock-condition indicators being substantially below previous assessments.\nRecommendation: The Working Group recommended investigating the potential use of the ECP software for this MSE application. As a proof of concept, the chair demonstrated that current MSE output could be slotted readily into the type of input structure used by the ECP software.\n\nFigure 2 shows a partial screenshot from this preliminary application of the ECP software to the jack mackerel MSE outputs.\n\n\n\n\n\n\nFigure 2: Partial screenshot of a preliminary application of the ECP application to SPRFMO jack mackerel MSE work."
+  },
+  {
+    "objectID": "SCW17-Paper-08-MP-tests.html#design-space",
+    "href": "SCW17-Paper-08-MP-tests.html#design-space",
+    "title": "SCW17/Paper-08 MP tests",
+    "section": "4.2 Design Space",
+    "text": "4.2 Design Space\n\n\n\n\n\n\n\n\nFigure 2: Subset design points colored by mean Kobe green probability."
   }
 ]
