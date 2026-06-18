@@ -111,6 +111,8 @@ This draft covers Monday 15 June and Tuesday 16 June 2026. Days 3-5 should be ad
 The Working Group expresses its gratitude to Niels Hintzen and the Pelagic Freezer Trawler Association (PFA) for sponsoring and supporting the Wageningen workshop.
 :::
 
+![Animated jack mackerel mood graphic](assets/JM_mood_loop_light.gif){width="100%"}
+
 # Summary
 
 1. This report summarizes the first two days of the 2026 Jack Mackerel Working Group Management Strategy Evaluation (MSE) workshop, held in Wageningen, the Netherlands. The workshop continued the MSE programme advanced at SCW15 and was intended to prepare candidate management procedures (CMPs), performance metrics, robustness scenarios, and supporting documentation for SC14.
