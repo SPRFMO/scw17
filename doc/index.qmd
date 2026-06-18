@@ -17,10 +17,11 @@ Visitor Information posted: [SPRFMO Jack Mackerel MSE Workshop Visitor Informati
 
 This site is the working index for SPRFMO Scientific Committee Workshop 17 (SCW17) jack mackerel preparation materials. SCW17 follows the 2026 benchmark work compiled in the SCW16 preparation repository and is expected to focus on management-strategy-evaluation inputs, operating-model conditioning, candidate management procedures, performance metrics, robustness scenarios, and documentation for SC14.
 
-# Current Documents
+- [SCW17 MSE Workshop Report [Draft]](https://sprfmo.github.io/scw17/SCW17-MSE-Workshop-report.html)
+
+# Working Papers
 
 - [SCW17/paper-00 Agenda and schedule](https://sprfmo.github.io/scw17/Wageningen-MSE-workshop-schedule.html)
-- [SCW17 MSE Workshop Report](SCW17-MSE-Workshop-report.html)
 - [SCW17/Paper-01: Model developments](SCW17-Paper-01-ModelDevelopments.html)
    - [SCW17/Paper-01a Far North model selectivity](SCW17-Paper-01a-Far-North-Model-Selectivity.html)
 - [SCW17/Paper-02: Consideration of reference points used for SPRFMO Jack mackerel management](SCW17-Paper-02-ReferencePoints.html)
@@ -30,11 +31,7 @@ This site is the working index for SPRFMO Scientific Committee Workshop 17 (SCW1
    - [Original Word document](assets/HCR_Chile_08-06-26.docx)
 - [SCW17/Paper-06 Evaluation of indices for MP considerations](SCW17-Paper-06-Evaluation-of-indices-for-MP-considerations.html)
 - [SCW17/Paper-07 Projection evaluations](SCW17-Paper-07-Projection-evaluations.html)
-- Anticipated working documents or contributions to the MSE report to SC14:
-   - SCW17-Paper-XX: Operating-model conditioning and diagnostics
-   - SCW17-Paper-XX: Candidate management procedures and performance metrics
-   - SCW17-Paper-XX: Robustness scenarios and exceptional circumstances
-   - SCW17-Paper-XX: Cross-platform validation summary
+- [SCW17/Paper-08 MP tests](SCW17-Paper-08-MP-tests.html)
 
 # Source Links
 
