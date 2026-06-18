@@ -467,9 +467,16 @@ ggplot(hcr_curve, aes(metric, catch)) +
 
 1. The group agreed to use 0.65 steepness as the base case and move 0.8 steepness to robustness testing. Iago Mosqueira also presented recruitment-deviation scenarios to be run with the one-stock reference OM; detailed specifications should be checked against the working documents.
 
-# Recommendations and Next Steps
+## Consideration of Exceptional Circumstances
 
-1. The Day 1 decisions and agreements were to revise the agenda wording so the group would "collaboratively agree" rather than vote; use model 0.16 as the primary reference for OM conditioning during the workshop; retain model 0.00 and the SC13-era configuration as labelled alternatives or robustness tests; use the reduced-parameter, block-based Peruvian fleet selectivity formulation; accept the differentiable high-F penalty as a solver aid with biomass and recruitment estimates expected to remain effectively unchanged; keep the current data-simulation procedure at this stage; weight combined indices by representativity rather than catch; retain Kobe plots for stakeholder communication and add F~35%-based comparisons across OMs; tune CMPs across the reference set rather than to individual OMs; and submit the benchmark report, final Paper 01, and this workshop report to the Scientific Committee.
+1. Dr. Tom Carruthers gave a presentation on exceptional-circumstances protocols and the ECP software application, which provides a Shiny interface for examining whether new observations remain consistent with the conditions under which an adopted management procedure was tested [Blue Matter Science 2026]. The group discussed this issue in the jack mackerel MSE context, recognizing that initial exceptional circumstances may need to be considered given current fishing conditions and other stock-condition indicators being substantially below previous assessments.
+
+1. **Recommendation:** The Working Group recommends investigating the potential use of the ECP software for this MSE application. As a proof of concept, the chair demonstrated that current MSE output could be slotted readily into the type of input structure used by the ECP software.
+
+# Planning for SC14 and Next Steps
+
+::: {.callout-note title="Preliminary note"}
+The following planning notes are preliminary and will likely be deleted or stated elsewhere in the final workshop report.
 
 1. The Day 2 discussions produced several practical directions for the next round of work. Future recruitment deviations should be simulated with an approximate cross-correlation and autocorrelation treatment, followed by comparison with the historical period. ENSO and regime behaviour should be treated as robustness tests rather than integral core-simulation components, although the timing of that work remains to be confirmed. Climate treatment should be framed through robustness or stress testing and presented clearly to the Scientific Committee. The OM set should retain the one- versus two-stock contrast, model 0.16 versus 1.14, movement variants, and a selectivity-change variant, with the 2026 movement transition smoothed to the 10-year average. Reference-point work should continue to focus on proxies for poorly defined F~MSY~, including 35% dynamic B~0~ with F~35%~, U/U~MSY~, and/or constant-F yield-curve calculations.
 
@@ -490,6 +497,7 @@ ggplot(hcr_curve, aes(metric, catch)) +
 - J. Ianelli and the assessment team will produce proxy-based Kobe plots and constant-F yield-curve reference-point calculations.
 
 1. Issues identified for further work during the remainder of SCW17 included the final composition and weighting of the OM reference set; the relative influence of Peruvian CPUE changes, effort-creep treatment, and alternative biological interpretations on model 0.16; how to simulate standardized CPUE and other indices in forward projections; whether structurally divergent OMs should be tuned jointly or treated separately; instability in dynamic reference points and apical-F metrics; the choice of running-average window for reference-point calculations; the effect of including optimistic alternatives on probability-of-green-zone tuning and Commission communication; the operational definition and response process for exceptional circumstances; the approximate nature of autocorrelated, multivariate recruitment simulation; the Scientific Committee framing of climate effects; the anomalous F forecast; the northern-stock F~MSY~ definition inside the CMP; and the total OM count and associated computational load.
+:::
 
 # References {.unnumbered}
 
@@ -499,6 +507,7 @@ ggplot(hcr_curve, aes(metric, catch)) +
 - Carruthers, T. R. 2024a. Developing the Climate Test: Robustness Trials for Climate-Ready Management Procedures. SCRS/2024/104. Collect. Vol. Sci. Pap. ICCAT, 81(6): 1-26. <https://www.iccat.int/Documents/CVSP/CV081_2024/n_6/CV08106104.pdf>
 - Carruthers, T. R. 2024b. Developing the Climate Test: Performance Metrics of Climate Robustness. SCRS/2024/148. Collect. Vol. Sci. Pap. ICCAT, 81(2): 1-7. <https://www.iccat.int/Documents/CVSP/CV081_2024/n_2/CV08102148.pdf>
 - Carruthers, T. 2026. Developing the Climate Test: Climate Robustness as an Attribute of Management Procedures. Presentation to the SPRFMO Jack Mackerel MSE Workshop, 15 June 2026.
+- Blue Matter Science. 2026. ECP: Exceptional Circumstances Protocols for Adopted Management Procedures. R Shiny application. <https://shiny.bluematterscience.com/>
 - Annex K. Original jack mackerel management procedure.
 
 # Appendix A. Participants {.unnumbered}
@@ -535,7 +544,7 @@ The workshop agenda was organized around the main report sections:
 2. Operating-model specifications.
 3. Candidate management procedures.
 4. Trade-offs, robustness, and performance metrics.
-5. Recommendations and next steps.
+5. Planning for SC14 and next steps.
 
 | Day | Theme | Hours |
 |---|---|---|
