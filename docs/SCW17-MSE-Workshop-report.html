@@ -4333,8 +4333,22 @@ list-style: disc;
 <li><p>Reference-point calculation and presentation were a major focus. The group discussed Kobe-plot interpretation, dynamic B<sub>0</sub>, F<sub>35%</sub> proxies, U/U<sub>MSY</sub> options, and constant-F yield-curve calculations. A strong recommendation was developed to use within-draw MCMC output to construct dynamic B<sub>MSY</sub> and use SSB/dynamic B<sub>MSY</sub> for Kobe-plot and reference-point summaries, so that environmental recruitment variability is better separated from the effects of CMPs on fishing pressure and stock status.</p></li>
 <li><p>CMP discussions emphasized simple, interpretable index-based rules, including piecewise-linear harvest-control rules, TAC-change constraints, smoothing choices, and alternative index combinations. The report records that Members and participants should nominate CMPs for Scientific Committee consideration, after which redundant or materially overlapping CMPs should be eliminated so that review can focus on a concise set of distinct alternatives.</p></li>
 <li><p>Exceptional circumstances were also discussed as a core implementation issue. The group considered the potential use of the ECP software framework to identify data patterns associated with poor CMP performance, compare type I and type II error rates, and support a transparent process for determining whether observations fall outside the range of conditions represented in the MSE.</p></li>
-<li><p>This draft was developed from meeting notes, SCW17 working documents, daily summary material, presentation material, and Day 3 transcript summaries. Artificial-intelligence tools were used to help convert notes into report text; all content should be reviewed by the report authors and meeting participants before submission.</p></li>
-<li><p>In addition to full participation in the workshop, the contractors conducted extensive revisions specific to the jack mackerel MSE work. These included updates to the 2026 operating model input files and control settings, correction of one-stock model configuration issues, recalculation and integration of MSY-based reference points, and refinement of OM conditioning and loading workflows to improve reproducibility and error checking. Substantial work was also completed on candidate index-based management procedures, including combined CPUE indicators, hockeystick and buffer harvest-control rules, tuning diagnostics, and dynamic SB/SB<sub>MSY</sub> evaluations. Projection tools and reporting scripts were expanded to support fixed-F and fixed-catch scenarios, selectivity sensitivity analyses, two-stock catch allocation checks, and improved visualization of performance trade-offs. Additional diagnostics were developed for survey and CPUE indices, including vulnerable biomass coverage, index correlations, ROC/AUC analyses, and updated reporting outputs to support review by the SPRFMO Jack Mackerel Working Group.</p></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This draft was developed from meeting notes, SCW17 working documents, daily summary material, presentation material, and some transcript summaries. Artificial-intelligence tools were used to help convert notes into report text; all content was reviewed by meeting participants before finalization.</p>
+</div>
+</div>
+<ol type="1">
+<li>In addition to full participation in the workshop, the contractors conducted extensive revisions specific to the jack mackerel MSE work. These included updates to the 2026 operating model input files and control settings, correction of one-stock model configuration issues, recalculation and integration of MSY-based reference points, and refinement of OM conditioning and loading workflows to improve reproducibility and error checking. Substantial work was also completed on candidate index-based management procedures, including combined CPUE indicators, hockeystick and buffer harvest-control rules, tuning diagnostics, and dynamic SB/SB<sub>MSY</sub> evaluations. Projection tools and reporting scripts were expanded to support fixed-F and fixed-catch scenarios, selectivity sensitivity analyses, two-stock catch allocation checks, and improved visualization of performance trade-offs. Additional diagnostics were developed for survey and CPUE indices, including vulnerable biomass coverage, index correlations, ROC/AUC analyses, and updated reporting outputs to support review by the SPRFMO Jack Mackerel Working Group.</li>
 </ol>
 </section>
 <section id="introduction" class="level1 unnumbered">
@@ -4422,20 +4436,20 @@ list-style: disc;
 Table 1: Day 2 operating-model and projection set.
 </figcaption>
 <div aria-describedby="tbl-day2-om-set-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="uzrkiryban" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#uzrkiryban table {
+<div id="amjnczkpjd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#amjnczkpjd table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#uzrkiryban thead, #uzrkiryban tbody, #uzrkiryban tfoot, #uzrkiryban tr, #uzrkiryban td, #uzrkiryban th {
+#amjnczkpjd thead, #amjnczkpjd tbody, #amjnczkpjd tfoot, #amjnczkpjd tr, #amjnczkpjd td, #amjnczkpjd th {
 border-style: none;
 }
-#uzrkiryban p {
+#amjnczkpjd p {
 margin: 0;
 padding: 0;
 }
-#uzrkiryban .gt_table {
+#amjnczkpjd .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -4460,11 +4474,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#uzrkiryban .gt_caption {
+#amjnczkpjd .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#uzrkiryban .gt_title {
+#amjnczkpjd .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -4475,7 +4489,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#uzrkiryban .gt_subtitle {
+#amjnczkpjd .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -4486,7 +4500,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#uzrkiryban .gt_heading {
+#amjnczkpjd .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -4497,12 +4511,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#uzrkiryban .gt_bottom_border {
+#amjnczkpjd .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#uzrkiryban .gt_col_headings {
+#amjnczkpjd .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -4516,7 +4530,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#uzrkiryban .gt_col_heading {
+#amjnczkpjd .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4535,7 +4549,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#uzrkiryban .gt_column_spanner_outer {
+#amjnczkpjd .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4546,13 +4560,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#uzrkiryban .gt_column_spanner_outer:first-child {
+#amjnczkpjd .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#uzrkiryban .gt_column_spanner_outer:last-child {
+#amjnczkpjd .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#uzrkiryban .gt_column_spanner {
+#amjnczkpjd .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -4563,10 +4577,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#uzrkiryban .gt_spanner_row {
+#amjnczkpjd .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#uzrkiryban .gt_group_heading {
+#amjnczkpjd .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4591,7 +4605,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#uzrkiryban .gt_empty_group_heading {
+#amjnczkpjd .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -4605,13 +4619,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#uzrkiryban .gt_from_md > :first-child {
+#amjnczkpjd .gt_from_md > :first-child {
 margin-top: 0;
 }
-#uzrkiryban .gt_from_md > :last-child {
+#amjnczkpjd .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#uzrkiryban .gt_row {
+#amjnczkpjd .gt_row {
 padding-top: 3px;
 padding-bottom: 3px;
 padding-left: 5px;
@@ -4629,7 +4643,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#uzrkiryban .gt_stub {
+#amjnczkpjd .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4641,7 +4655,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#uzrkiryban .gt_stub_row_group {
+#amjnczkpjd .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4654,13 +4668,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#uzrkiryban .gt_row_group_first td {
+#amjnczkpjd .gt_row_group_first td {
 border-top-width: 2px;
 }
-#uzrkiryban .gt_row_group_first th {
+#amjnczkpjd .gt_row_group_first th {
 border-top-width: 2px;
 }
-#uzrkiryban .gt_summary_row {
+#amjnczkpjd .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -4669,14 +4683,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#uzrkiryban .gt_first_summary_row {
+#amjnczkpjd .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#uzrkiryban .gt_first_summary_row.thick {
+#amjnczkpjd .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#uzrkiryban .gt_last_summary_row {
+#amjnczkpjd .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4685,7 +4699,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#uzrkiryban .gt_grand_summary_row {
+#amjnczkpjd .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -4694,7 +4708,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#uzrkiryban .gt_first_grand_summary_row {
+#amjnczkpjd .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4703,7 +4717,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#uzrkiryban .gt_last_grand_summary_row_top {
+#amjnczkpjd .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4712,10 +4726,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#uzrkiryban .gt_striped {
+#amjnczkpjd .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#uzrkiryban .gt_table_body {
+#amjnczkpjd .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -4723,7 +4737,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#uzrkiryban .gt_footnotes {
+#amjnczkpjd .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -4736,7 +4750,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#uzrkiryban .gt_footnote {
+#amjnczkpjd .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -4744,7 +4758,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#uzrkiryban .gt_sourcenotes {
+#amjnczkpjd .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -4757,64 +4771,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#uzrkiryban .gt_sourcenote {
+#amjnczkpjd .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#uzrkiryban .gt_left {
+#amjnczkpjd .gt_left {
 text-align: left;
 }
-#uzrkiryban .gt_center {
+#amjnczkpjd .gt_center {
 text-align: center;
 }
-#uzrkiryban .gt_right {
+#amjnczkpjd .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#uzrkiryban .gt_font_normal {
+#amjnczkpjd .gt_font_normal {
 font-weight: normal;
 }
-#uzrkiryban .gt_font_bold {
+#amjnczkpjd .gt_font_bold {
 font-weight: bold;
 }
-#uzrkiryban .gt_font_italic {
+#amjnczkpjd .gt_font_italic {
 font-style: italic;
 }
-#uzrkiryban .gt_super {
+#amjnczkpjd .gt_super {
 font-size: 65%;
 }
-#uzrkiryban .gt_footnote_marks {
+#amjnczkpjd .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#uzrkiryban .gt_asterisk {
+#amjnczkpjd .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#uzrkiryban .gt_indent_1 {
+#amjnczkpjd .gt_indent_1 {
 text-indent: 5px;
 }
-#uzrkiryban .gt_indent_2 {
+#amjnczkpjd .gt_indent_2 {
 text-indent: 10px;
 }
-#uzrkiryban .gt_indent_3 {
+#amjnczkpjd .gt_indent_3 {
 text-indent: 15px;
 }
-#uzrkiryban .gt_indent_4 {
+#amjnczkpjd .gt_indent_4 {
 text-indent: 20px;
 }
-#uzrkiryban .gt_indent_5 {
+#amjnczkpjd .gt_indent_5 {
 text-indent: 25px;
 }
-#uzrkiryban .katex-display {
+#amjnczkpjd .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#uzrkiryban div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#amjnczkpjd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -4960,20 +4974,20 @@ height: 0px !important;
 Table 2: Draft piecewise-linear CMP parameters used for the illustrative HCR figure.
 </figcaption>
 <div aria-describedby="tbl-hcr-candidates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="fyvmjkskrh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fyvmjkskrh table {
+<div id="hfuoatwrst" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hfuoatwrst table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#fyvmjkskrh thead, #fyvmjkskrh tbody, #fyvmjkskrh tfoot, #fyvmjkskrh tr, #fyvmjkskrh td, #fyvmjkskrh th {
+#hfuoatwrst thead, #hfuoatwrst tbody, #hfuoatwrst tfoot, #hfuoatwrst tr, #hfuoatwrst td, #hfuoatwrst th {
 border-style: none;
 }
-#fyvmjkskrh p {
+#hfuoatwrst p {
 margin: 0;
 padding: 0;
 }
-#fyvmjkskrh .gt_table {
+#hfuoatwrst .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -4998,11 +5012,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#fyvmjkskrh .gt_caption {
+#hfuoatwrst .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#fyvmjkskrh .gt_title {
+#hfuoatwrst .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -5013,7 +5027,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#fyvmjkskrh .gt_subtitle {
+#hfuoatwrst .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -5024,7 +5038,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#fyvmjkskrh .gt_heading {
+#hfuoatwrst .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -5035,12 +5049,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#fyvmjkskrh .gt_bottom_border {
+#hfuoatwrst .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#fyvmjkskrh .gt_col_headings {
+#hfuoatwrst .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -5054,7 +5068,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#fyvmjkskrh .gt_col_heading {
+#hfuoatwrst .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5073,7 +5087,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#fyvmjkskrh .gt_column_spanner_outer {
+#hfuoatwrst .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5084,13 +5098,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#fyvmjkskrh .gt_column_spanner_outer:first-child {
+#hfuoatwrst .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#fyvmjkskrh .gt_column_spanner_outer:last-child {
+#hfuoatwrst .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#fyvmjkskrh .gt_column_spanner {
+#hfuoatwrst .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -5101,10 +5115,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#fyvmjkskrh .gt_spanner_row {
+#hfuoatwrst .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#fyvmjkskrh .gt_group_heading {
+#hfuoatwrst .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -5129,7 +5143,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#fyvmjkskrh .gt_empty_group_heading {
+#hfuoatwrst .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -5143,13 +5157,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#fyvmjkskrh .gt_from_md > :first-child {
+#hfuoatwrst .gt_from_md > :first-child {
 margin-top: 0;
 }
-#fyvmjkskrh .gt_from_md > :last-child {
+#hfuoatwrst .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#fyvmjkskrh .gt_row {
+#hfuoatwrst .gt_row {
 padding-top: 3px;
 padding-bottom: 3px;
 padding-left: 5px;
@@ -5167,7 +5181,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#fyvmjkskrh .gt_stub {
+#hfuoatwrst .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5179,7 +5193,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#fyvmjkskrh .gt_stub_row_group {
+#hfuoatwrst .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5192,13 +5206,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#fyvmjkskrh .gt_row_group_first td {
+#hfuoatwrst .gt_row_group_first td {
 border-top-width: 2px;
 }
-#fyvmjkskrh .gt_row_group_first th {
+#hfuoatwrst .gt_row_group_first th {
 border-top-width: 2px;
 }
-#fyvmjkskrh .gt_summary_row {
+#hfuoatwrst .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -5207,14 +5221,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#fyvmjkskrh .gt_first_summary_row {
+#hfuoatwrst .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#fyvmjkskrh .gt_first_summary_row.thick {
+#hfuoatwrst .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#fyvmjkskrh .gt_last_summary_row {
+#hfuoatwrst .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -5223,7 +5237,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#fyvmjkskrh .gt_grand_summary_row {
+#hfuoatwrst .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -5232,7 +5246,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#fyvmjkskrh .gt_first_grand_summary_row {
+#hfuoatwrst .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -5241,7 +5255,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#fyvmjkskrh .gt_last_grand_summary_row_top {
+#hfuoatwrst .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -5250,10 +5264,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#fyvmjkskrh .gt_striped {
+#hfuoatwrst .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#fyvmjkskrh .gt_table_body {
+#hfuoatwrst .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -5261,7 +5275,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#fyvmjkskrh .gt_footnotes {
+#hfuoatwrst .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -5274,7 +5288,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#fyvmjkskrh .gt_footnote {
+#hfuoatwrst .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -5282,7 +5296,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#fyvmjkskrh .gt_sourcenotes {
+#hfuoatwrst .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -5295,64 +5309,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#fyvmjkskrh .gt_sourcenote {
+#hfuoatwrst .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#fyvmjkskrh .gt_left {
+#hfuoatwrst .gt_left {
 text-align: left;
 }
-#fyvmjkskrh .gt_center {
+#hfuoatwrst .gt_center {
 text-align: center;
 }
-#fyvmjkskrh .gt_right {
+#hfuoatwrst .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#fyvmjkskrh .gt_font_normal {
+#hfuoatwrst .gt_font_normal {
 font-weight: normal;
 }
-#fyvmjkskrh .gt_font_bold {
+#hfuoatwrst .gt_font_bold {
 font-weight: bold;
 }
-#fyvmjkskrh .gt_font_italic {
+#hfuoatwrst .gt_font_italic {
 font-style: italic;
 }
-#fyvmjkskrh .gt_super {
+#hfuoatwrst .gt_super {
 font-size: 65%;
 }
-#fyvmjkskrh .gt_footnote_marks {
+#hfuoatwrst .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#fyvmjkskrh .gt_asterisk {
+#hfuoatwrst .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#fyvmjkskrh .gt_indent_1 {
+#hfuoatwrst .gt_indent_1 {
 text-indent: 5px;
 }
-#fyvmjkskrh .gt_indent_2 {
+#hfuoatwrst .gt_indent_2 {
 text-indent: 10px;
 }
-#fyvmjkskrh .gt_indent_3 {
+#hfuoatwrst .gt_indent_3 {
 text-indent: 15px;
 }
-#fyvmjkskrh .gt_indent_4 {
+#hfuoatwrst .gt_indent_4 {
 text-indent: 20px;
 }
-#fyvmjkskrh .gt_indent_5 {
+#hfuoatwrst .gt_indent_5 {
 text-indent: 25px;
 }
-#fyvmjkskrh .katex-display {
+#hfuoatwrst .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#fyvmjkskrh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#hfuoatwrst div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
