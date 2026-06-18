@@ -276,7 +276,9 @@ day2_om_set |>
 
 # Candidate Management Procedures
 
-1. CMPs based on piecewise-linear harvest-control rules can be summarized by the threshold metric at which the rule begins to increase catch, the target catch reached above the trigger, and any inter-annual TAC-change constraints. This draft set was discussed on Day 3 and is included here as a placeholder for additional text. Part of the SCW17 process is for Members and participants to nominate CMPs for Scientific Committee consideration, after which redundant or materially overlapping CMPs should be eliminated so that the Scientific Committee can focus on a concise set of distinct alternatives. The table records the parameters used for the illustrative CMP set. The figure shows the static HCR shape for each row; smoothing choices and index selection affect the metric passed into the HCR and are omitted from the curve.
+1. Rapporteur's notes for the Day 3 discussion of CMPs were not yet available when this draft was prepared, and additional text will be added as those notes become available.
+
+1. CMPs based on piecewise-linear harvest-control rules can be summarized by the threshold metric at which the rule begins to increase catch, the target catch reached above the trigger, and any inter-annual TAC-change constraints. This draft set was discussed on Day 3 and is included here as a placeholder for additional text. Part of the SCW17 process is for Members and participants to nominate CMPs for Scientific Committee consideration, after which redundant or materially overlapping CMPs should be eliminated so that the Scientific Committee can focus on a concise set of distinct alternatives. @tbl-hcr-candidates records the parameters used for the illustrative CMP set. @fig-hcr-faceted shows the static HCR shape for each row; smoothing choices and index selection affect the metric passed into the HCR and are omitted from the curve. The quadrant colors in @fig-hcr-faceted are included only to enhance visualization of differences among HCR shapes and do not indicate stock-status concerns.
 
 ```{r}
 #| label: setup-hcr-candidates
@@ -366,7 +368,7 @@ mp_table |>
 
 ```{r}
 #| label: fig-hcr-faceted
-#| fig-cap: 'Draft candidate management procedure piecewise-linear harvest-control-rule shapes. Output = "catch"; dashed vertical lines show trigger values, dotted vertical lines show limits, and horizontal lines show minimum and target catch.'
+#| fig-cap: 'Draft candidate management procedure piecewise-linear harvest-control-rule shapes. Output = "catch"; dashed vertical lines show trigger values, dotted vertical lines show limits, and horizontal lines show minimum and target catch. Quadrant colors are used only to enhance visualization of HCR-shape differences and do not indicate stock-status concerns.'
 #| echo: false
 #| message: false
 #| warning: false
@@ -525,7 +527,15 @@ Names and affiliations below are reconstructed from the Day 1 summary and should
 | Tom Carruthers | Blue Matter Science | Invited expert |
 | Ash Wilson | Pew Charitable Trusts | Observer |
 
-# Appendix B. Workshop Schedule {.unnumbered}
+# Appendix B. Workshop Schedule and Agenda {.unnumbered}
+
+The workshop agenda was organized around the main report sections:
+
+1. Developments since the benchmark.
+2. Operating-model specifications.
+3. Candidate management procedures.
+4. Trade-offs, robustness, and performance metrics.
+5. Recommendations and next steps.
 
 | Day | Theme | Hours |
 |---|---|---|
