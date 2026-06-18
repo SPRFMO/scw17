@@ -195,11 +195,7 @@ The Working Group expresses its gratitude to Niels Hintzen and the Pelagic Freez
 
 ## Operating-Model Reference Set
 
-1. The composition of the OM reference set was debated. Including model 0.00 would add an optimistic high-biomass, low-exploitation outcome that could affect CMP tuning and communication. The Day 1 discussion focused on model variants already available to the group.
-
-1. The practical Day 1 approach was to focus immediate tuning work on model 0.16, while retaining model 0.00 and the SC13-era configuration as clearly labelled alternatives or robustness tests. The final reference-set decision was identified for further discussion and Scientific Committee review.
-
-1. Day 2 addressed future recruitment and index simulation, ENSO and broader climate effects, the composition and naming of the OM set, reference-point proxies, and projection-scenario definitions. The day continued directly from the Day 1 discussion of OM conditioning and management-procedure tuning.
+1. The composition of the OM reference set was debated, including the implications of model 0.00 as an optimistic high-biomass, low-exploitation outcome that could affect CMP tuning and communication. The practical approach was to focus immediate tuning work on model 0.16, while retaining model 0.00 and the SC13-era configuration as clearly labelled alternatives or robustness tests. The final reference-set decision was identified for further discussion and Scientific Committee review, alongside related work on future recruitment and index simulation, ENSO and broader climate effects, OM-set composition and naming, reference-point proxies, and projection-scenario definitions.
 
 1. The group discussed using cross-correlation among indices to simulate future recruitment deviations. Participants noted that historical correlations are approximate because the series include changes in catchability and selectivity, whereas the projection settings use the more recent period. Residual autocorrelation should also be represented where possible.
 
@@ -556,11 +552,13 @@ Names and affiliations below are reconstructed from the Day 1 summary and should
 
 The workshop agenda was organized around the main report sections:
 
+::: {.agenda-list}
 1. Developments since the benchmark.
 2. Operating-model specifications.
 3. Candidate management procedures.
 4. Trade-offs, robustness, and performance metrics.
 5. Planning for SC14 and next steps.
+:::
 
 | Day | Theme | Hours |
 |---|---|---|
