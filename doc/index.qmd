@@ -32,6 +32,7 @@ This site is the working index for SPRFMO Scientific Committee Workshop 17 (SCW1
 - [SCW17/Paper-06 Evaluation of indices for MP considerations](SCW17-Paper-06-Evaluation-of-indices-for-MP-considerations.html)
 - [SCW17/Paper-07 Projection evaluations](SCW17-Paper-07-Projection-evaluations.html)
 - [SCW17/Paper-08 MP tests](SCW17-Paper-08-MP-tests.html)
+- [SCW17/Paper-09 CMP test instructions](SCW17-Paper-09-CMP-test-instructions.html)
 
 # Source Links
 

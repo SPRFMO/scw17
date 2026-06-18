@@ -274,6 +274,8 @@ day2_om_set |>
 
 # Management Procedures
 
+1. Management procedures require careful consideration because their design choices determine how scientific indicators are translated into catch advice and how expected outcomes are communicated. The group therefore considered both the form of CMPs and the practical implications of their performance, including responsiveness to changing stock indicators, robustness to operating-model uncertainty, stability of catch advice, and interpretability for Scientific Committee and Commission review.
+
 1. Recruitment-deviation scenarios were discussed in detail. The group considered low-recruitment, recruitment-failure, and cyclical recruitment patterns, including whether recovery should be abrupt or gradual. There was concern that some future recruitment simulations may generate biomass variability that is broader than expected from the historical record, even under F = 0 projections. The group noted the need to compare historical and projected recruitment and biomass patterns to ensure the projection behavior is realistic and not overly precautionary because of excessive simulated environmental variability.
 
 1. Projection evaluations from Paper 07 were used to examine constant-catch and constant-F scenarios, including no fishing, F~MSY~, current F, and reduced-F or reduced-catch cases. These diagnostics were used to understand trade-offs among spawning biomass, fishing mortality, catch, and terminal status. The group noted that F~MSY~ and B~MSY~ calculations, selectivity averaging windows, and recruitment assumptions can materially affect interpretation, so those methods should be checked and documented.
@@ -451,6 +453,8 @@ ggplot(hcr_curve, aes(metric, catch)) +
   )
 ```
 
+1. Members requested that a simple step-by-step instructional document and/or work session be developed so that scientists who were unable to attend the workshop could test and run CMPs. In response, the chair evaluated the latest version of the `jmMSE` repository and compiled [SCW17/Paper-09: CMP test instructions](SCW17-Paper-09-CMP-test-instructions.html).
+
 # Trade-offs, Robustness, and Performance Metrics
 
 ## Reference Points and Kobe-Plot Summaries
@@ -467,7 +471,7 @@ ggplot(hcr_curve, aes(metric, catch)) +
 
 1. The group gave extensive consideration to how environmental effects on recruitment should be reflected in reference-point calculations and Kobe-plot summaries. Recruitment shows a relatively high degree of autocorrelation, which produces substantial environmental variability in both historical patterns and projections. To better separate the effect of a CMP on human activities and fishing pressure from underlying environmental variability, the group considered a dynamic reference-point approach based on within-draw MCMC output. Under this approach, the MSY spawning-biomass level is first calculated within each draw as B~MSY~/B~0~. That ratio is then multiplied by the corresponding dynamic B~0~ to create a dynamic B~MSY~ that accounts for environmental variability. The trace used for Kobe-plot and reference-point considerations is then spawning biomass divided by this dynamic B~MSY~.
 
-1. **Recommendation:** The Working Group strongly recommends using the range of within-draw MCMC output to compute B~MSY~/B~0~, construct a dynamic B~MSY~ by multiplying that ratio by dynamic B~0~, and use SSB/dynamic B~MSY~ as the Kobe-plot and reference-point trace. This approach better reflects autocorrelated environmental recruitment variability while focusing CMP evaluation on the management effect on fishing and stock status.
+1. **Recommendation:** The Working Group strongly recommended using the range of within-draw MCMC output to compute B~MSY~/B~0~, construct a dynamic B~MSY~ by multiplying that ratio by dynamic B~0~, and use SSB/dynamic B~MSY~ as the Kobe-plot and reference-point trace. This approach better reflects autocorrelated environmental recruitment variability while focusing CMP evaluation on the management effect on fishing and stock status.
 
 ## Tuning and Robustness
 
@@ -481,7 +485,7 @@ ggplot(hcr_curve, aes(metric, catch)) +
 
 1. Dr. Tom Carruthers gave a presentation on exceptional-circumstances protocols and the ECP software application, which provides a Shiny interface for examining whether new observations remain consistent with the conditions under which an adopted management procedure was tested [Blue Matter Science 2026]. The group discussed this issue in the jack mackerel MSE context, recognizing that initial exceptional circumstances may need to be considered given current fishing conditions and other stock-condition indicators being substantially below previous assessments.
 
-1. **Recommendation:** The Working Group recommends investigating the potential use of the ECP software for this MSE application. As a proof of concept, the chair demonstrated that current MSE output could be slotted readily into the type of input structure used by the ECP software.
+1. **Recommendation:** The Working Group recommended investigating the potential use of the ECP software for this MSE application. As a proof of concept, the chair demonstrated that current MSE output could be slotted readily into the type of input structure used by the ECP software.
 
 @fig-ecp-preliminary shows a partial screenshot from this preliminary application of the ECP software to the jack mackerel MSE outputs.
 
