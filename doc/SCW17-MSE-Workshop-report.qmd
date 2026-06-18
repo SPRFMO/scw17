@@ -100,12 +100,6 @@ table:not(.gt_table) td:first-child {
 **Updated:** `r date_stamp`
 
 ::: {.callout-note}
-## Scope note
-
-This draft covers Monday 15 June and Tuesday 16 June 2026. Days 3-5 should be added as the workshop proceeds. Participant names, affiliations, and unresolved actions should be checked before submission to the Scientific Committee.
-:::
-
-::: {.callout-note}
 ## Acknowledgement
 
 The Working Group expresses its gratitude to Niels Hintzen and the Pelagic Freezer Trawler Association (PFA) for sponsoring and supporting the Wageningen workshop.
