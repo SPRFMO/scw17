@@ -274,11 +274,23 @@ day2_om_set |>
   )
 ```
 
-# Candidate Management Procedures
+# Management Procedures
 
-1. Rapporteur's notes for the Day 3 discussion of CMPs were not yet available when this draft was prepared, and additional text will be added as those notes become available.
+1. Recruitment-deviation scenarios were discussed in detail. The group considered low-recruitment, recruitment-failure, and cyclical recruitment patterns, including whether recovery should be abrupt or gradual. There was concern that some future recruitment simulations may generate biomass variability that is broader than expected from the historical record, even under F = 0 projections. The group noted the need to compare historical and projected recruitment and biomass patterns to ensure the projection behavior is realistic and not overly precautionary because of excessive simulated environmental variability.
 
-1. CMPs based on piecewise-linear harvest-control rules can be summarized by the threshold metric at which the rule begins to increase catch, the target catch reached above the trigger, and any inter-annual TAC-change constraints. This draft set was discussed on Day 3 and is included here as a placeholder for additional text. Part of the SCW17 process is for Members and participants to nominate CMPs for Scientific Committee consideration, after which redundant or materially overlapping CMPs should be eliminated so that the Scientific Committee can focus on a concise set of distinct alternatives. @tbl-hcr-candidates records the parameters used for the illustrative CMP set. @fig-hcr-faceted shows the static HCR shape for each row; smoothing choices and index selection affect the metric passed into the HCR and are omitted from the curve. The quadrant colors in @fig-hcr-faceted are included only to enhance visualization of differences among HCR shapes and do not indicate stock-status concerns.
+1. Projection evaluations from Paper 07 were used to examine constant-catch and constant-F scenarios, including no fishing, F~MSY~, current F, and reduced-F or reduced-catch cases. These diagnostics were used to understand trade-offs among spawning biomass, fishing mortality, catch, and terminal status. The group noted that F~MSY~ and B~MSY~ calculations, selectivity averaging windows, and recruitment assumptions can materially affect interpretation, so those methods should be checked and documented.
+
+1. CMP and HCR discussions emphasized starting with simple, interpretable rules. The group discussed index-based rules in which catch responds to changes in one or more abundance indices, rather than relying on constant catch. Several design handles were identified for testing: whether the rule passes through the origin, whether it includes a minimum catch or flat low-index segment, upper catch limits, trigger points, smoothing windows, polynomial smoothing, and TAC-change constraints. The group specifically discussed testing constraints such as 20% increases and 15% decreases, and evaluating whether these constraints still allow the CMP to respond quickly enough to low-recruitment events.
+
+1. There was also discussion of which indices should feed CMPs. The initial rules used a small set of indices, but participants discussed adding or comparing additional indices, including acoustic and CPUE-related indices. The group noted that combined or weighted indices may simplify implementation, but the choice should reflect the simulated observation process and the relative reliability of each index.
+
+1. Tuning and performance summaries were discussed as a practical next step. The group planned to run grids of HCR/CMP configurations and summarize results using compact performance tables and diagnostic plots showing biomass, yield, and yield variability. The aim was to identify broad trade-off behavior rather than over-interpret early individual runs.
+
+1. A substantial part of the Day 3 discussion addressed exceptional circumstances protocols. Tom Carruthers demonstrated the ECP approach, emphasizing that exceptional circumstances should not be based only on whether an observation falls outside a projected range. Instead, robustness simulations can be used to identify data patterns associated with poor CMP performance, and then evaluate type I and type II error rates for detecting those problematic states. The group discussed applying this framework to jack mackerel MSE outputs, including recent concerns about fishing conditions, recruitment, stock indicators, and the possibility that current observations may imply conditions outside the reference simulations.
+
+1. A further point was that fishery behavior and effort constraints may matter. Participants noted that a TAC may be theoretically catchable in the model but not economically or operationally achievable if vessels cannot find fish or if fishing conditions deteriorate. There was interest in whether effort or fleet-behavior constraints could be represented in future scenarios or diagnostics, while recognizing that doing so would require additional assumptions and data.
+
+1. CMPs based on piecewise-linear harvest-control rules can be summarized by the threshold metric at which the rule begins to increase catch, the target catch reached above the trigger, and any inter-annual TAC-change constraints. Part of the SCW17 process is for Members and participants to nominate CMPs for Scientific Committee consideration, after which redundant or materially overlapping CMPs should be eliminated so that the Scientific Committee can focus on a concise set of distinct alternatives. @tbl-hcr-candidates records the parameters used for the illustrative CMP set. @fig-hcr-faceted shows the static HCR shape for each row; smoothing choices and index selection affect the metric passed into the HCR and are omitted from the curve. The quadrant colors in @fig-hcr-faceted are included only to enhance visualization of differences among HCR shapes and do not indicate stock-status concerns.
 
 ```{r}
 #| label: setup-hcr-candidates
@@ -321,7 +333,7 @@ mp_table <- tribble(
 
 ```{r}
 #| label: tbl-hcr-candidates
-#| tbl-cap: "Candidate piecewise-linear CMP parameters used for the illustrative HCR figure."
+#| tbl-cap: "Draft piecewise-linear CMP parameters used for the illustrative HCR figure."
 #| echo: false
 #| message: false
 #| warning: false
@@ -368,7 +380,7 @@ mp_table |>
 
 ```{r}
 #| label: fig-hcr-faceted
-#| fig-cap: 'Draft candidate management procedure piecewise-linear harvest-control-rule shapes. Output = "catch"; dashed vertical lines show trigger values, dotted vertical lines show limits, and horizontal lines show minimum and target catch. Quadrant colors are used only to enhance visualization of HCR-shape differences and do not indicate stock-status concerns.'
+#| fig-cap: 'Draft CMP piecewise-linear harvest-control-rule shapes. Output = "catch"; dashed vertical lines show trigger values, dotted vertical lines show limits, and horizontal lines show minimum and target catch. Quadrant colors are used only to enhance visualization of HCR-shape differences and do not indicate stock-status concerns.'
 #| echo: false
 #| message: false
 #| warning: false
@@ -472,6 +484,10 @@ ggplot(hcr_curve, aes(metric, catch)) +
 1. Dr. Tom Carruthers gave a presentation on exceptional-circumstances protocols and the ECP software application, which provides a Shiny interface for examining whether new observations remain consistent with the conditions under which an adopted management procedure was tested [Blue Matter Science 2026]. The group discussed this issue in the jack mackerel MSE context, recognizing that initial exceptional circumstances may need to be considered given current fishing conditions and other stock-condition indicators being substantially below previous assessments.
 
 1. **Recommendation:** The Working Group recommends investigating the potential use of the ECP software for this MSE application. As a proof of concept, the chair demonstrated that current MSE output could be slotted readily into the type of input structure used by the ECP software.
+
+@fig-ecp-preliminary shows a partial screenshot from this preliminary application of the ECP software to the jack mackerel MSE outputs.
+
+![Partial screenshot of a preliminary application of the ECP application to SPRFMO jack mackerel MSE work.](figures/ecp-preliminary-screenshot.png){#fig-ecp-preliminary fig-alt="Screenshot of an ECP application interface showing violin-style diagnostic plots for SSB over BMSY, F over FMSY, catch, and a settings panel for SPRFMO jack mackerel MSE outputs."}
 
 # Planning for SC14 and Next Steps
 
