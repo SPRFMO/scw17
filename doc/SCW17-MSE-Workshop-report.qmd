@@ -119,15 +119,21 @@ The Working Group expresses its gratitude to Niels Hintzen and the Pelagic Freez
 
 # Summary {.unnumbered}
 
-1. This report summarizes the first two days of the 2026 Jack Mackerel Working Group Management Strategy Evaluation (MSE) workshop, held in Wageningen, the Netherlands. The workshop continued the MSE programme advanced at SCW15 and was intended to prepare candidate management procedures (CMPs), performance metrics, robustness scenarios, and supporting documentation for SC14.
+1. This report summarizes the current state of the 2026 Jack Mackerel Working Group Management Strategy Evaluation (MSE) workshop report, held in Wageningen, the Netherlands. The workshop continued the MSE programme advanced at SCW15 and focused on preparing operating models (OMs), candidate management procedures (CMPs), performance metrics, robustness scenarios, and supporting documentation for SC14.
 
-1. Day 1 focused on the workshop opening, the link to the 2026 benchmark, post-benchmark model developments, operating-model (OM) conditioning, reference points, index simulation, and principles for tuning CMPs. The group treated model 0.16 as the primary reference for OM conditioning during the workshop, while retaining model 0.00 and the SC13-era configuration as explicitly flagged alternatives or robustness tests.
+1. The group treated model 0.16 as the primary reference for OM conditioning during the workshop, while retaining model 0.00 and the SC13-era configuration as clearly labelled alternatives or robustness tests. The final OM reference set, OM naming conventions, projection-scenario definitions, and communication of alternative model outcomes remain important items for Scientific Committee review.
 
-1. Day 2 focused on operating-model specifications. The group discussed future recruitment and index simulation, ENSO and broader climate effects, the OM set and naming conventions, reference-point proxies, and projection-scenario definitions. The group agreed to use 0.65 steepness as the base case, move 0.8 steepness to robustness testing, and treat regime/ENSO behaviour as a robustness issue rather than an integral component of the core simulations.
+1. The group agreed to use 0.65 steepness as the base case, move 0.8 steepness to robustness testing, and treat regime/ENSO behaviour as a robustness issue rather than an integral component of the core simulations. Future recruitment and index simulation, including autocorrelation and cross-correlation, were identified as key technical issues because recruitment variability strongly affects projections, reference points, and CMP performance.
 
-1. Several technical issues were identified for later work during the week, including the final OM reference set, treatment of exceptional circumstances, the representation of standardized indices in projections, reference-point calculation and presentation, and how alternative models should be communicated to the Scientific Committee and Commission.
+1. Reference-point calculation and presentation were a major focus. The group discussed Kobe-plot interpretation, dynamic B~0~, F~35%~ proxies, U/U~MSY~ options, and constant-F yield-curve calculations. A strong recommendation was developed to use within-draw MCMC output to construct dynamic B~MSY~ and use SSB/dynamic B~MSY~ for Kobe-plot and reference-point summaries, so that environmental recruitment variability is better separated from the effects of CMPs on fishing pressure and stock status.
 
-1. This draft was developed from Day 1 and Day 2 meeting notes, the SCW17 working documents, and the daily summary documents. Artificial-intelligence tools were used to help convert notes into report text; all content should be reviewed by the report authors and meeting participants before submission.
+1. CMP discussions emphasized simple, interpretable index-based rules, including piecewise-linear harvest-control rules, TAC-change constraints, smoothing choices, and alternative index combinations. The report records that Members and participants should nominate CMPs for Scientific Committee consideration, after which redundant or materially overlapping CMPs should be eliminated so that review can focus on a concise set of distinct alternatives.
+
+1. Exceptional circumstances were also discussed as a core implementation issue. The group considered the potential use of the ECP software framework to identify data patterns associated with poor CMP performance, compare type I and type II error rates, and support a transparent process for determining whether observations fall outside the range of conditions represented in the MSE.
+
+1. This draft was developed from meeting notes, SCW17 working documents, daily summary material, presentation material, and Day 3 transcript summaries. Artificial-intelligence tools were used to help convert notes into report text; all content should be reviewed by the report authors and meeting participants before submission.
+
+1. In addition to full participation in the workshop, the contractors conducted extensive revisions specific to the jack mackerel MSE work. These included updates to the 2026 operating model input files and control settings, correction of one-stock model configuration issues, recalculation and integration of MSY-based reference points, and refinement of OM conditioning and loading workflows to improve reproducibility and error checking. Substantial work was also completed on candidate index-based management procedures, including combined CPUE indicators, hockeystick and buffer harvest-control rules, tuning diagnostics, and dynamic SB/SB~MSY~ evaluations. Projection tools and reporting scripts were expanded to support fixed-F and fixed-catch scenarios, selectivity sensitivity analyses, two-stock catch allocation checks, and improved visualization of performance trade-offs. Additional diagnostics were developed for survey and CPUE indices, including vulnerable biomass coverage, index correlations, ROC/AUC analyses, and updated reporting outputs to support review by the SPRFMO Jack Mackerel Working Group.
 
 # Introduction {.unnumbered}
 
@@ -572,14 +578,14 @@ The workshop agenda was organized around the main report sections:
 
 | Document | Title |
 |---|---|
-| Paper 00 | Agenda and schedule |
-| Paper 01 | Model developments |
-| Paper 01a | Far North model selectivity |
-| Paper 02 | Consideration of reference points used for SPRFMO jack mackerel management |
-| Paper 03 | Management-procedures inventory for the jack mackerel MSE |
-| Paper 04 | MSE flow |
-| Paper 05 | Chile harvest-control-rule proposals |
-| Paper 06 | Evaluation of indices for CMP considerations |
-| Paper 07 | Projection evaluations |
+| [Paper 00](Wageningen-MSE-workshop-schedule.html) | Agenda and schedule |
+| [Paper 01](SCW17-Paper-01-ModelDevelopments.html) | Model developments |
+| [Paper 01a](SCW17-Paper-01a-Far-North-Model-Selectivity.html) | Far North model selectivity |
+| [Paper 02](SCW17-Paper-02-ReferencePoints.html) | Consideration of reference points used for SPRFMO jack mackerel management |
+| [Paper 03](SCW17-Paper-03-Management-Procedures-Inventory.html) | Management-procedures inventory for the jack mackerel MSE |
+| [Paper 04](SCW17-Paper-04-MSE-Flow.html) | MSE flow |
+| [Paper 05](SCW17-Paper-05-Chile-HCR-Proposals.html) | Chile harvest-control-rule proposals |
+| [Paper 06](SCW17-Paper-06-Evaluation-of-indices-for-MP-considerations.html) | Evaluation of indices for CMP considerations |
+| [Paper 07](SCW17-Paper-07-Projection-evaluations.html) | Projection evaluations |
 
 *Draft working report - Day 1 of the SCW17 MSE workshop, 15 June 2026. Prepared for review and correction by participants before submission to the SPRFMO Scientific Committee.*

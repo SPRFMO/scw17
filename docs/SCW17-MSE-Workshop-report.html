@@ -4340,11 +4340,14 @@ list-style: disc;
 <section id="summary" class="level1 unnumbered">
 <h1 class="unnumbered">Summary</h1>
 <ol type="1">
-<li><p>This report summarizes the first two days of the 2026 Jack Mackerel Working Group Management Strategy Evaluation (MSE) workshop, held in Wageningen, the Netherlands. The workshop continued the MSE programme advanced at SCW15 and was intended to prepare candidate management procedures (CMPs), performance metrics, robustness scenarios, and supporting documentation for SC14.</p></li>
-<li><p>Day 1 focused on the workshop opening, the link to the 2026 benchmark, post-benchmark model developments, operating-model (OM) conditioning, reference points, index simulation, and principles for tuning CMPs. The group treated model 0.16 as the primary reference for OM conditioning during the workshop, while retaining model 0.00 and the SC13-era configuration as explicitly flagged alternatives or robustness tests.</p></li>
-<li><p>Day 2 focused on operating-model specifications. The group discussed future recruitment and index simulation, ENSO and broader climate effects, the OM set and naming conventions, reference-point proxies, and projection-scenario definitions. The group agreed to use 0.65 steepness as the base case, move 0.8 steepness to robustness testing, and treat regime/ENSO behaviour as a robustness issue rather than an integral component of the core simulations.</p></li>
-<li><p>Several technical issues were identified for later work during the week, including the final OM reference set, treatment of exceptional circumstances, the representation of standardized indices in projections, reference-point calculation and presentation, and how alternative models should be communicated to the Scientific Committee and Commission.</p></li>
-<li><p>This draft was developed from Day 1 and Day 2 meeting notes, the SCW17 working documents, and the daily summary documents. Artificial-intelligence tools were used to help convert notes into report text; all content should be reviewed by the report authors and meeting participants before submission.</p></li>
+<li><p>This report summarizes the current state of the 2026 Jack Mackerel Working Group Management Strategy Evaluation (MSE) workshop report, held in Wageningen, the Netherlands. The workshop continued the MSE programme advanced at SCW15 and focused on preparing operating models (OMs), candidate management procedures (CMPs), performance metrics, robustness scenarios, and supporting documentation for SC14.</p></li>
+<li><p>The group treated model 0.16 as the primary reference for OM conditioning during the workshop, while retaining model 0.00 and the SC13-era configuration as clearly labelled alternatives or robustness tests. The final OM reference set, OM naming conventions, projection-scenario definitions, and communication of alternative model outcomes remain important items for Scientific Committee review.</p></li>
+<li><p>The group agreed to use 0.65 steepness as the base case, move 0.8 steepness to robustness testing, and treat regime/ENSO behaviour as a robustness issue rather than an integral component of the core simulations. Future recruitment and index simulation, including autocorrelation and cross-correlation, were identified as key technical issues because recruitment variability strongly affects projections, reference points, and CMP performance.</p></li>
+<li><p>Reference-point calculation and presentation were a major focus. The group discussed Kobe-plot interpretation, dynamic B<sub>0</sub>, F<sub>35%</sub> proxies, U/U<sub>MSY</sub> options, and constant-F yield-curve calculations. A strong recommendation was developed to use within-draw MCMC output to construct dynamic B<sub>MSY</sub> and use SSB/dynamic B<sub>MSY</sub> for Kobe-plot and reference-point summaries, so that environmental recruitment variability is better separated from the effects of CMPs on fishing pressure and stock status.</p></li>
+<li><p>CMP discussions emphasized simple, interpretable index-based rules, including piecewise-linear harvest-control rules, TAC-change constraints, smoothing choices, and alternative index combinations. The report records that Members and participants should nominate CMPs for Scientific Committee consideration, after which redundant or materially overlapping CMPs should be eliminated so that review can focus on a concise set of distinct alternatives.</p></li>
+<li><p>Exceptional circumstances were also discussed as a core implementation issue. The group considered the potential use of the ECP software framework to identify data patterns associated with poor CMP performance, compare type I and type II error rates, and support a transparent process for determining whether observations fall outside the range of conditions represented in the MSE.</p></li>
+<li><p>This draft was developed from meeting notes, SCW17 working documents, daily summary material, presentation material, and Day 3 transcript summaries. Artificial-intelligence tools were used to help convert notes into report text; all content should be reviewed by the report authors and meeting participants before submission.</p></li>
+<li><p>In addition to full participation in the workshop, the contractors conducted extensive revisions specific to the jack mackerel MSE work. These included updates to the 2026 operating model input files and control settings, correction of one-stock model configuration issues, recalculation and integration of MSY-based reference points, and refinement of OM conditioning and loading workflows to improve reproducibility and error checking. Substantial work was also completed on candidate index-based management procedures, including combined CPUE indicators, hockeystick and buffer harvest-control rules, tuning diagnostics, and dynamic SB/SB<sub>MSY</sub> evaluations. Projection tools and reporting scripts were expanded to support fixed-F and fixed-catch scenarios, selectivity sensitivity analyses, two-stock catch allocation checks, and improved visualization of performance trade-offs. Additional diagnostics were developed for survey and CPUE indices, including vulnerable biomass coverage, index correlations, ROC/AUC analyses, and updated reporting outputs to support review by the SPRFMO Jack Mackerel Working Group.</p></li>
 </ol>
 </section>
 <section id="introduction" class="level1 unnumbered">
@@ -4432,20 +4435,20 @@ list-style: disc;
 Table 1: Day 2 operating-model and projection set.
 </figcaption>
 <div aria-describedby="tbl-day2-om-set-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="eqrzmkwzpj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#eqrzmkwzpj table {
+<div id="ijfrwlhdvv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ijfrwlhdvv table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#eqrzmkwzpj thead, #eqrzmkwzpj tbody, #eqrzmkwzpj tfoot, #eqrzmkwzpj tr, #eqrzmkwzpj td, #eqrzmkwzpj th {
+#ijfrwlhdvv thead, #ijfrwlhdvv tbody, #ijfrwlhdvv tfoot, #ijfrwlhdvv tr, #ijfrwlhdvv td, #ijfrwlhdvv th {
 border-style: none;
 }
-#eqrzmkwzpj p {
+#ijfrwlhdvv p {
 margin: 0;
 padding: 0;
 }
-#eqrzmkwzpj .gt_table {
+#ijfrwlhdvv .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -4470,11 +4473,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#eqrzmkwzpj .gt_caption {
+#ijfrwlhdvv .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#eqrzmkwzpj .gt_title {
+#ijfrwlhdvv .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -4485,7 +4488,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#eqrzmkwzpj .gt_subtitle {
+#ijfrwlhdvv .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -4496,7 +4499,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#eqrzmkwzpj .gt_heading {
+#ijfrwlhdvv .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -4507,12 +4510,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#eqrzmkwzpj .gt_bottom_border {
+#ijfrwlhdvv .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#eqrzmkwzpj .gt_col_headings {
+#ijfrwlhdvv .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -4526,7 +4529,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#eqrzmkwzpj .gt_col_heading {
+#ijfrwlhdvv .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4545,7 +4548,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#eqrzmkwzpj .gt_column_spanner_outer {
+#ijfrwlhdvv .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4556,13 +4559,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#eqrzmkwzpj .gt_column_spanner_outer:first-child {
+#ijfrwlhdvv .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#eqrzmkwzpj .gt_column_spanner_outer:last-child {
+#ijfrwlhdvv .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#eqrzmkwzpj .gt_column_spanner {
+#ijfrwlhdvv .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -4573,10 +4576,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#eqrzmkwzpj .gt_spanner_row {
+#ijfrwlhdvv .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#eqrzmkwzpj .gt_group_heading {
+#ijfrwlhdvv .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4601,7 +4604,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#eqrzmkwzpj .gt_empty_group_heading {
+#ijfrwlhdvv .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -4615,13 +4618,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#eqrzmkwzpj .gt_from_md > :first-child {
+#ijfrwlhdvv .gt_from_md > :first-child {
 margin-top: 0;
 }
-#eqrzmkwzpj .gt_from_md > :last-child {
+#ijfrwlhdvv .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#eqrzmkwzpj .gt_row {
+#ijfrwlhdvv .gt_row {
 padding-top: 3px;
 padding-bottom: 3px;
 padding-left: 5px;
@@ -4639,7 +4642,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#eqrzmkwzpj .gt_stub {
+#ijfrwlhdvv .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4651,7 +4654,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#eqrzmkwzpj .gt_stub_row_group {
+#ijfrwlhdvv .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4664,13 +4667,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#eqrzmkwzpj .gt_row_group_first td {
+#ijfrwlhdvv .gt_row_group_first td {
 border-top-width: 2px;
 }
-#eqrzmkwzpj .gt_row_group_first th {
+#ijfrwlhdvv .gt_row_group_first th {
 border-top-width: 2px;
 }
-#eqrzmkwzpj .gt_summary_row {
+#ijfrwlhdvv .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -4679,14 +4682,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#eqrzmkwzpj .gt_first_summary_row {
+#ijfrwlhdvv .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#eqrzmkwzpj .gt_first_summary_row.thick {
+#ijfrwlhdvv .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#eqrzmkwzpj .gt_last_summary_row {
+#ijfrwlhdvv .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4695,7 +4698,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#eqrzmkwzpj .gt_grand_summary_row {
+#ijfrwlhdvv .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -4704,7 +4707,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#eqrzmkwzpj .gt_first_grand_summary_row {
+#ijfrwlhdvv .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4713,7 +4716,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#eqrzmkwzpj .gt_last_grand_summary_row_top {
+#ijfrwlhdvv .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4722,10 +4725,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#eqrzmkwzpj .gt_striped {
+#ijfrwlhdvv .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#eqrzmkwzpj .gt_table_body {
+#ijfrwlhdvv .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -4733,7 +4736,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#eqrzmkwzpj .gt_footnotes {
+#ijfrwlhdvv .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -4746,7 +4749,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#eqrzmkwzpj .gt_footnote {
+#ijfrwlhdvv .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -4754,7 +4757,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#eqrzmkwzpj .gt_sourcenotes {
+#ijfrwlhdvv .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -4767,64 +4770,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#eqrzmkwzpj .gt_sourcenote {
+#ijfrwlhdvv .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#eqrzmkwzpj .gt_left {
+#ijfrwlhdvv .gt_left {
 text-align: left;
 }
-#eqrzmkwzpj .gt_center {
+#ijfrwlhdvv .gt_center {
 text-align: center;
 }
-#eqrzmkwzpj .gt_right {
+#ijfrwlhdvv .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#eqrzmkwzpj .gt_font_normal {
+#ijfrwlhdvv .gt_font_normal {
 font-weight: normal;
 }
-#eqrzmkwzpj .gt_font_bold {
+#ijfrwlhdvv .gt_font_bold {
 font-weight: bold;
 }
-#eqrzmkwzpj .gt_font_italic {
+#ijfrwlhdvv .gt_font_italic {
 font-style: italic;
 }
-#eqrzmkwzpj .gt_super {
+#ijfrwlhdvv .gt_super {
 font-size: 65%;
 }
-#eqrzmkwzpj .gt_footnote_marks {
+#ijfrwlhdvv .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#eqrzmkwzpj .gt_asterisk {
+#ijfrwlhdvv .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#eqrzmkwzpj .gt_indent_1 {
+#ijfrwlhdvv .gt_indent_1 {
 text-indent: 5px;
 }
-#eqrzmkwzpj .gt_indent_2 {
+#ijfrwlhdvv .gt_indent_2 {
 text-indent: 10px;
 }
-#eqrzmkwzpj .gt_indent_3 {
+#ijfrwlhdvv .gt_indent_3 {
 text-indent: 15px;
 }
-#eqrzmkwzpj .gt_indent_4 {
+#ijfrwlhdvv .gt_indent_4 {
 text-indent: 20px;
 }
-#eqrzmkwzpj .gt_indent_5 {
+#ijfrwlhdvv .gt_indent_5 {
 text-indent: 25px;
 }
-#eqrzmkwzpj .katex-display {
+#ijfrwlhdvv .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#eqrzmkwzpj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ijfrwlhdvv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -4970,20 +4973,20 @@ height: 0px !important;
 Table 2: Draft piecewise-linear CMP parameters used for the illustrative HCR figure.
 </figcaption>
 <div aria-describedby="tbl-hcr-candidates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="tgbcpcyizh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#tgbcpcyizh table {
+<div id="husvlkycay" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#husvlkycay table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#tgbcpcyizh thead, #tgbcpcyizh tbody, #tgbcpcyizh tfoot, #tgbcpcyizh tr, #tgbcpcyizh td, #tgbcpcyizh th {
+#husvlkycay thead, #husvlkycay tbody, #husvlkycay tfoot, #husvlkycay tr, #husvlkycay td, #husvlkycay th {
 border-style: none;
 }
-#tgbcpcyizh p {
+#husvlkycay p {
 margin: 0;
 padding: 0;
 }
-#tgbcpcyizh .gt_table {
+#husvlkycay .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -5008,11 +5011,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#tgbcpcyizh .gt_caption {
+#husvlkycay .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#tgbcpcyizh .gt_title {
+#husvlkycay .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -5023,7 +5026,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#tgbcpcyizh .gt_subtitle {
+#husvlkycay .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -5034,7 +5037,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#tgbcpcyizh .gt_heading {
+#husvlkycay .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -5045,12 +5048,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#tgbcpcyizh .gt_bottom_border {
+#husvlkycay .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#tgbcpcyizh .gt_col_headings {
+#husvlkycay .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -5064,7 +5067,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#tgbcpcyizh .gt_col_heading {
+#husvlkycay .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5083,7 +5086,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#tgbcpcyizh .gt_column_spanner_outer {
+#husvlkycay .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5094,13 +5097,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#tgbcpcyizh .gt_column_spanner_outer:first-child {
+#husvlkycay .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#tgbcpcyizh .gt_column_spanner_outer:last-child {
+#husvlkycay .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#tgbcpcyizh .gt_column_spanner {
+#husvlkycay .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -5111,10 +5114,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#tgbcpcyizh .gt_spanner_row {
+#husvlkycay .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#tgbcpcyizh .gt_group_heading {
+#husvlkycay .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -5139,7 +5142,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#tgbcpcyizh .gt_empty_group_heading {
+#husvlkycay .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -5153,13 +5156,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#tgbcpcyizh .gt_from_md > :first-child {
+#husvlkycay .gt_from_md > :first-child {
 margin-top: 0;
 }
-#tgbcpcyizh .gt_from_md > :last-child {
+#husvlkycay .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#tgbcpcyizh .gt_row {
+#husvlkycay .gt_row {
 padding-top: 3px;
 padding-bottom: 3px;
 padding-left: 5px;
@@ -5177,7 +5180,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#tgbcpcyizh .gt_stub {
+#husvlkycay .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5189,7 +5192,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#tgbcpcyizh .gt_stub_row_group {
+#husvlkycay .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5202,13 +5205,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#tgbcpcyizh .gt_row_group_first td {
+#husvlkycay .gt_row_group_first td {
 border-top-width: 2px;
 }
-#tgbcpcyizh .gt_row_group_first th {
+#husvlkycay .gt_row_group_first th {
 border-top-width: 2px;
 }
-#tgbcpcyizh .gt_summary_row {
+#husvlkycay .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -5217,14 +5220,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#tgbcpcyizh .gt_first_summary_row {
+#husvlkycay .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#tgbcpcyizh .gt_first_summary_row.thick {
+#husvlkycay .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#tgbcpcyizh .gt_last_summary_row {
+#husvlkycay .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -5233,7 +5236,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#tgbcpcyizh .gt_grand_summary_row {
+#husvlkycay .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -5242,7 +5245,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#tgbcpcyizh .gt_first_grand_summary_row {
+#husvlkycay .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -5251,7 +5254,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#tgbcpcyizh .gt_last_grand_summary_row_top {
+#husvlkycay .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -5260,10 +5263,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#tgbcpcyizh .gt_striped {
+#husvlkycay .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#tgbcpcyizh .gt_table_body {
+#husvlkycay .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -5271,7 +5274,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#tgbcpcyizh .gt_footnotes {
+#husvlkycay .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -5284,7 +5287,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#tgbcpcyizh .gt_footnote {
+#husvlkycay .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -5292,7 +5295,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#tgbcpcyizh .gt_sourcenotes {
+#husvlkycay .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -5305,64 +5308,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#tgbcpcyizh .gt_sourcenote {
+#husvlkycay .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#tgbcpcyizh .gt_left {
+#husvlkycay .gt_left {
 text-align: left;
 }
-#tgbcpcyizh .gt_center {
+#husvlkycay .gt_center {
 text-align: center;
 }
-#tgbcpcyizh .gt_right {
+#husvlkycay .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#tgbcpcyizh .gt_font_normal {
+#husvlkycay .gt_font_normal {
 font-weight: normal;
 }
-#tgbcpcyizh .gt_font_bold {
+#husvlkycay .gt_font_bold {
 font-weight: bold;
 }
-#tgbcpcyizh .gt_font_italic {
+#husvlkycay .gt_font_italic {
 font-style: italic;
 }
-#tgbcpcyizh .gt_super {
+#husvlkycay .gt_super {
 font-size: 65%;
 }
-#tgbcpcyizh .gt_footnote_marks {
+#husvlkycay .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#tgbcpcyizh .gt_asterisk {
+#husvlkycay .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#tgbcpcyizh .gt_indent_1 {
+#husvlkycay .gt_indent_1 {
 text-indent: 5px;
 }
-#tgbcpcyizh .gt_indent_2 {
+#husvlkycay .gt_indent_2 {
 text-indent: 10px;
 }
-#tgbcpcyizh .gt_indent_3 {
+#husvlkycay .gt_indent_3 {
 text-indent: 15px;
 }
-#tgbcpcyizh .gt_indent_4 {
+#husvlkycay .gt_indent_4 {
 text-indent: 20px;
 }
-#tgbcpcyizh .gt_indent_5 {
+#husvlkycay .gt_indent_5 {
 text-indent: 25px;
 }
-#tgbcpcyizh .katex-display {
+#husvlkycay .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#tgbcpcyizh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#husvlkycay div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -5843,10 +5846,6 @@ Figure 2: Partial screenshot of a preliminary application of the ECP applicatio
 <section id="appendix-c.-scw17-working-documents" class="level1 unnumbered">
 <h1 class="unnumbered">Appendix C. SCW17 Working Documents</h1>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Document</th>
@@ -5855,39 +5854,39 @@ Figure 2: Partial screenshot of a preliminary application of the ECP applicatio
 </thead>
 <tbody>
 <tr class="odd">
-<td>Paper 00</td>
+<td><a href="Wageningen-MSE-workshop-schedule.html">Paper 00</a></td>
 <td>Agenda and schedule</td>
 </tr>
 <tr class="even">
-<td>Paper 01</td>
+<td><a href="SCW17-Paper-01-ModelDevelopments.html">Paper 01</a></td>
 <td>Model developments</td>
 </tr>
 <tr class="odd">
-<td>Paper 01a</td>
+<td><a href="SCW17-Paper-01a-Far-North-Model-Selectivity.html">Paper 01a</a></td>
 <td>Far North model selectivity</td>
 </tr>
 <tr class="even">
-<td>Paper 02</td>
+<td><a href="SCW17-Paper-02-ReferencePoints.html">Paper 02</a></td>
 <td>Consideration of reference points used for SPRFMO jack mackerel management</td>
 </tr>
 <tr class="odd">
-<td>Paper 03</td>
+<td><a href="SCW17-Paper-03-Management-Procedures-Inventory.html">Paper 03</a></td>
 <td>Management-procedures inventory for the jack mackerel MSE</td>
 </tr>
 <tr class="even">
-<td>Paper 04</td>
+<td><a href="SCW17-Paper-04-MSE-Flow.html">Paper 04</a></td>
 <td>MSE flow</td>
 </tr>
 <tr class="odd">
-<td>Paper 05</td>
+<td><a href="SCW17-Paper-05-Chile-HCR-Proposals.html">Paper 05</a></td>
 <td>Chile harvest-control-rule proposals</td>
 </tr>
 <tr class="even">
-<td>Paper 06</td>
+<td><a href="SCW17-Paper-06-Evaluation-of-indices-for-MP-considerations.html">Paper 06</a></td>
 <td>Evaluation of indices for CMP considerations</td>
 </tr>
 <tr class="odd">
-<td>Paper 07</td>
+<td><a href="SCW17-Paper-07-Projection-evaluations.html">Paper 07</a></td>
 <td>Projection evaluations</td>
 </tr>
 </tbody>
