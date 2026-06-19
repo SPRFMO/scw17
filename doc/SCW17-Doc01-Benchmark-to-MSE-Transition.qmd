@@ -1,0 +1,128 @@
+---
+title: "Benchmark outcomes for MSE conditioning"
+pagetitle: "SPRFMO SCW17-Doc01 — Benchmark outcomes for MSE conditioning"
+date: today
+format:
+  html:
+    output-file: "SCW17-Doc01-Benchmark-to-MSE-Transition.html"
+    self-contained: true
+    embed-resources: true
+    lightbox: true
+    html-math-method: katex
+    theme: cosmo
+    toc: true
+    toc-title: "Contents"
+    toc-depth: 2
+    toc-location: left
+    number-sections: true
+    number-depth: 2
+---
+
+```{r}
+date_stamp <- format(Sys.Date(), "%d %B %Y")
+```
+
+{{< include _includes/sprfmo-banner.html >}}
+
+```{=html}
+<div style="font-style: italic; margin-top: 0.5rem;">SCW17/Doc01</div>
+<div class="paper-title">Benchmark outcomes for MSE conditioning</div>
+```
+
+::: {.no-para-number style="text-align: center; margin-top: 0.75rem; margin-bottom: 1rem;"}
+`r date_stamp`
+:::
+
+::: {.callout-note}
+## Purpose and status
+This note is the bridge between the **SCW16 jack mackerel benchmark workshop (Lima, May 2026)** and the **Wageningen MSE workshop (15–19 June 2026)**. It records what the benchmark settled, what it left as diagnostic, and how each settled outcome is carried into operating-model (OM) conditioning. It is the document walked through on Monday morning of the workshop (09:30–10:30) and underpins the TG-05 hand-off decisions.
+
+**Draft for TG-05 review.** Items marked **[confirm]** are inferred from the existing SCW17 materials (Paper-01a, Paper-02, Paper-04, the Wageningen schedule, and the TG-05 briefing pack) and should be checked against the SCW16 benchmark report before circulation.
+:::
+
+# How to read this document
+
+The benchmark and the MSE answer different questions. The benchmark asked *what is the best assessment of stock status and productivity?* The MSE asks *which management procedure performs acceptably across the uncertainty the benchmark identified?* The transition is therefore a translation, not a continuation: each benchmark outcome becomes either a **fixed input** to the OM, an **axis of uncertainty** in the OM grid, or a **diagnostic** that informs but does not constrain the MSE.
+
+Every outcome below is tagged with one of three dispositions:
+
+- **Settled → fixed:** the benchmark closed it; it enters the OM as a single agreed value or structure.
+- **Settled as uncertain → OM axis:** the benchmark concluded that the uncertainty is real and irreducible; it becomes a dimension of the reference or robustness set.
+- **Diagnostic:** retained for interpretation or sensitivity, not as a constraint on the candidate-MP evaluation.
+
+# What the benchmark settled
+
+## Assessment model structure
+
+The benchmark confirmed the Joint Jack Mackerel Model (JJM, compiled ADMB) as the assessment engine carried into the MSE, with the `jjmR` / `FLjjm` stack converting JJM output into FLR/`mse` operating models (see [Paper-04](SCW17-Paper-04-MSE-Flow.html)). The assessment structure, likelihood components, and biological inputs documented in the SC13 technical annex and SCW16 working papers are **not re-opened** for the MSE. *Disposition: settled → fixed.*
+
+## Stock-hypothesis structure (h1 / h2)
+
+The benchmark retained two stock hypotheses: a **single-stock** configuration (`h1`) and a **two-stock** configuration (`h2`, with Stock 2 representing the Peruvian zone). The benchmark did **not** collapse these into one preferred hypothesis — that is precisely the choice escalated to TG-05 (how h1/h2 enter advice: single, both, or weighted). *Disposition: settled as uncertain → OM axis. The advice-weighting decision is a TG-05 close-out item.*
+
+## Productivity grid
+
+The benchmark established an explicit four-cell productivity grid on the `h1_0.16` (and matching `h2_0.16`) control-file family, crossing steepness and stock-recruit fitting period ([Paper-02](SCW17-Paper-02-ReferencePoints.html)):
+
+| Productivity case | Steepness | SR fitting period |
+|---|---|---|
+| `ll` — low steepness, long SR | h = 0.65 | 1970–2022 |
+| `ls` — low steepness, short SR | h = 0.65 | 2001–2015 |
+| `hl` — high steepness, long SR | h = 0.85 | 1970–2022 |
+| `hs` — high steepness, short SR | h = 0.85 | 2001–2015 |
+
+The benchmark concluded that **steepness drives more of the F~MSY~ range than the SR fitting period**, and that this productivity uncertainty is real rather than resolvable from the data. *Disposition: settled as uncertain → OM axis (productivity is a primary axis of the reference set).*
+
+## Reference-point framing
+
+The benchmark and subsequent JMWG discussion established that MSY-based reference points (F~MSY~, B~MSY~) are sensitive to the productivity assumption and move across the grid, whereas SPR-based proxies (F~35%~) and dynamic-B~zero~ depletion are comparatively stable because they do not depend on the stock-recruit relationship ([Paper-02](SCW17-Paper-02-ReferencePoints.html)). The MSE should therefore evaluate status against a productivity-robust convention rather than a single estimated B~MSY~ that changes by case. **[confirm]** the exact reference-point convention adopted for MSE status (e.g. depletion relative to dynamic B~zero~, with F~35%~ as the F proxy) — this is a TG-05 item. *Disposition: settled framing → fixed convention pending TG-05 sign-off.*
+
+## Far-north selectivity
+
+[Paper-01a](SCW17-Paper-01a-Far-North-Model-Selectivity.html) found that adding FarNorth selectivity flexibility changed fitted dynamics mainly through penalty terms rather than improving the direct length-frequency or CPUE fits, and that the Stock 2 SR period is best held common across the four `h2` productivity cases to stabilise estimates. The benchmark therefore did **not** adopt extra far-north selectivity flexibility as a structural change. *Disposition: diagnostic — retained as a sensitivity, not a reference-set axis.* **[confirm]** whether the working group wants this carried as a robustness scenario rather than dropped.
+
+## Fishery and index structure
+
+The benchmark fixed the fishery partition used for catch allocation in projections — N_Chile, SC_Chile_PS, FarNorth, Offshore_Trawl — and the index set available to candidate MPs (Chile_AcousCS, Chile_AcousN, Offshore_CPUE, Chile_CPUE, Peru_CPUE). These carry directly into the observation-error model and the `split.is` implementation. *Disposition: settled → fixed.*
+
+# What remains diagnostic
+
+These benchmark products are carried into the workshop for interpretation but do **not** constrain the candidate-MP evaluation unless TG-05 decides otherwise:
+
+- **Far-north selectivity flexibility** — sensitivity only (see §2.6). **[confirm]**
+- **Terminal-year selectivity and weight-at-age effects on B~MSY~** — the reason the MSE prefers productivity-robust status measures; retained as explanatory diagnostics, not axes.
+- **Individual CPUE index reliability** — informs which indices feed which MPs, but index choice is an MP-design question handled in the MP freeze, not an OM axis.
+- **[confirm]** any benchmark retrospective / hindcast diagnostics the group agreed to carry as acceptance checks rather than scenarios.
+
+# How benchmark outcomes feed OM conditioning
+
+This is the traceability table for the Monday-morning walkthrough — each benchmark outcome mapped to its MSE disposition and the document where it lands.
+
+| Benchmark outcome | Disposition | Enters the MSE as | Lands in |
+|---|---|---|---|
+| JJM assessment structure | Fixed | Assessment engine; conditioning via `conditionJJOM()` → `FLjjm` → OM bundle | Doc02 (OM conditioning) |
+| Stock hypotheses h1 / h2 | OM axis | Single-stock vs. two-stock structure; advice-weighting per TG-05 | Doc01 §2.2, OM grid |
+| Productivity grid (ll/ls/hl/hs) | OM axis (reference) | Four productivity cases crossing steepness × SR period | Doc02 reference set |
+| MSY vs. SPR vs. dynamic-B~zero~ framing | Fixed convention **[confirm]** | Productivity-robust status metric for performance scoring | Doc03 metrics, Paper-02 |
+| Far-north selectivity | Diagnostic / robustness? **[confirm]** | Sensitivity run, not a reference axis | Doc04 robustness |
+| Fishery partition (4 fleets) | Fixed | Catch split via `split.is` (`catch_props(om)$last5`) | Doc02/Doc03 |
+| Index set (5 indices) | Fixed | Observation-error model; MP data streams | Doc02/Doc03 |
+| Recruitment deviation history | Fixed inputs → scenarios | `srdevs` for projection; regime treatment per Tue 16 Jun | Doc02 recruitment |
+
+# Open items handed to TG-05
+
+The benchmark deliberately left the following for the Pre-Wageningen call to close. Each appears as a TG-05 agenda item and as a row in the [carryover tracker](SCW17-TG05-carryover-tracker.html):
+
+1. **Stock-hypothesis treatment for advice** — single h1, two-stock h2, or weighted. (§2.2)
+2. **Reference-point convention for MSE status** — confirm the productivity-robust measure. (§2.4) **[confirm]**
+3. **Whether far-north selectivity enters as a robustness scenario.** (§2.6) **[confirm]**
+4. **Recruitment-regime treatment in projection** — far-north handling, σ~R~, steepness priors. **[confirm]**
+5. **Reference-set vs. robustness-set boundary** — which productivity and structural axes are reference versus robustness.
+
+# One-line summary for the workshop
+
+The benchmark settled the *world* (assessment structure, productivity uncertainty, fishery and index structure) and identified the uncertainty that matters (productivity and stock-structure). The MSE's job is to find management procedures that perform acceptably across that uncertainty — so the transition fixes everything the benchmark closed, turns the irreducible uncertainty into OM axes, and keeps the rest as diagnostics. TG-05 closes the handful of conditioning choices the benchmark left open so Wageningen can run and decide.
+
+---
+
+*Sources within this repository: [Paper-01a — Far-North model selectivity](SCW17-Paper-01a-Far-North-Model-Selectivity.html), [Paper-02 — Reference points](SCW17-Paper-02-ReferencePoints.html), [Paper-03 — MP inventory](SCW17-Paper-03-Management-Procedures-Inventory.html), [Paper-04 — MSE flow](SCW17-Paper-04-MSE-Flow.html), [Wageningen schedule](https://sprfmo.github.io/scw17/Wageningen-MSE-workshop-schedule.html), [TG-05 briefing pack](SCW17_prep_mtg.html). Benchmark-specific claims marked **[confirm]** require the SCW16 report.*

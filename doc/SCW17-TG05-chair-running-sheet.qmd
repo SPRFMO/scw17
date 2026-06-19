@@ -1,0 +1,123 @@
+---
+title: "TG-05 Chair Running Sheet"
+pagetitle: "SPRFMO SCW17 TG-05 — Chair Running Sheet"
+date: today
+format:
+  html:
+    output-file: "SCW17-TG05-chair-running-sheet.html"
+    self-contained: true
+    embed-resources: true
+    lightbox: true
+    html-math-method: katex
+    theme: cosmo
+    toc: true
+    toc-title: "Contents"
+    toc-depth: 2
+    toc-location: left
+    number-sections: false
+execute:
+  warning: false
+  message: false
+  echo: false
+  results: false
+---
+
+```{r}
+date_stamp <- format(Sys.Date(), "%d %B %Y")
+```
+
+{{< include _includes/sprfmo-banner.html >}}
+
+```{=html}
+<div style="font-style: italic; margin-top: 0.5rem;">Scientific Committee Workshop 17 preparation — chair-only working document</div>
+<div class="paper-title">TG-05 Chair Running Sheet</div>
+```
+
+**Call:** TG-05, Pre-Wageningen Preparation Meeting
+**When:** Thursday 11 June 2026, 15:00–16:30 CEST (06:00–07:30 Seattle)
+**Chair:** J. Ianelli (JMWG Chair)
+**Companion docs:** [TG-05 briefing pack](SCW17_prep_mtg.html) · [Benchmark→MSE transition (Doc01)](SCW17-Doc01-Benchmark-to-MSE-Transition.html) · [Carryover tracker](SCW17-TG05-carryover-tracker.html)
+**Updated:** `r date_stamp`
+
+::: {.callout-important}
+## The one job of this call
+Close every open item between the **SCW16 benchmark (Lima)** and the **Wageningen MSE workshop (15–19 June)**. After this call: no new MPs, no new metrics, no new OM axes. Anything not concluded today is replaced by its documented fallback and flagged — it does not spill into Wageningen.
+:::
+
+# The transition in one paragraph (say this at the top)
+
+"Three weeks ago in Lima we finished the benchmark — we settled the assessment model structure, the productivity grid, and the reference-point framing. Today is the hand-off: we convert those benchmark outcomes into fixed MSE inputs. We are not re-opening the assessment. We are locking the operating-model conditioning, the candidate MPs, the performance metrics, and the robustness set so that next week in Wageningen we run and decide, not re-specify. Six decisions, ninety minutes, hard time-boxes."
+
+# How to run each item
+
+Each item below: what you're extracting, who you push, what "done" sounds like, and the fallback you invoke if the slot runs out. Keep the gavel moving.
+
+## 15:00–15:05 — Open
+
+- Confirm attendance and that read-aheads were received. Adopt agenda.
+- **Set the tone:** read the transition paragraph above. State the no-reopening rule once, clearly, so you don't have to relitigate it later.
+
+## 15:05–15:20 — Conclude the stock-hypothesis treatment
+
+- **Extract:** one decision on how h1 (single-stock) and h2 (two-stock, Stock 2 = Peruvian zone) enter advice — single-stock h1, two-stock h2, or a weighted combination.
+- **Push:** Chile (Jose, Ignacio) and Peru (Ana) for their positions first; WMR (Iago) on how the choice enters the projection grid.
+- **Done sounds like:** "Treatment is X; it enters the OM grid as Y; recorded in Doc01."
+- **Fallback if stuck:** carry both h1 and h2 as parallel reference-set axes into Wageningen and defer the weighting decision to the OM sign-off on Tue 16 Jun. Flag as a risk.
+
+## 15:20–15:35 — Finalise performance metrics, horizons, risk tolerance
+
+- **Extract:** the signed-off metric list. Conservation: P(B<B~LIM~), P(B<B~MSY~). Yield and AAV. TAC-stability. Horizons: 5 / 10 / 20 yr. One SPRFMO risk band.
+- **Push:** Niels (EU/PFA) for the Commission-decision view on thresholds and risk tolerance — get any objection on the table now, not at Wageningen.
+- **Done sounds like:** "Metric list final; horizons 5/10/20; risk band = Z%. No new metrics after today."
+- **Fallback:** adopt the metric list and risk tolerance from the March working-papers plan verbatim; revisit only the horizons live.
+
+## 15:35–15:55 — Freeze MP specifications (the hard freeze)
+
+- **Extract:** a frozen MP register — one row per MP: data streams, lag/frequency, tuning target, HCR form, Buffer/K60 setting. **This is the no-new-MPs gate.**
+- **Push:** Iago for the register table; Chile/Peru on whether any model-free / OpenMSE MP enters the *frozen* set versus runs as comparison-only.
+- **Anchor the set** (from Paper-03): tracked families are fixed-catch (`perfect.sa`+`fixedC.hcr`), shortcut-depletion+hockeystick, CPUE+buffer, shortcut+buffer, SPiCT+buffer. Exploratory (z-score, buffer-delta, multi-index meta, TAC-change caps, banking/borrowing) enter only if a lead commits to tracking them today.
+- **Done sounds like:** "Register frozen at N MPs; exploratory variants are comparison-only; Doc03 finalised."
+- **Fallback:** carry the MP set frozen at TG-04; new MPs run side-by-side only, never as SC14 candidates.
+
+## 15:55–16:15 — Agree the robustness scenario matrix
+
+- **Extract:** reference set vs. robustness set, with pass/fail criteria for advancing to SC14. Axes: ENSO / offshore-drop, catchability, index-bias.
+- **Push:** Iago to walk the matrix; Aquiles (INPESCA) on acoustic-modelling sensitivity; Criscely/Gersson on Peru-acoustic and far-north inputs.
+- **Done sounds like:** "Reference set = …; robustness set = …; pass/fail = …; signed off in Doc04."
+- **Fallback:** reference set from TG-04 plus the ENSO offshore-drop scenario as the single robustness axis; remaining scenarios flagged as Wageningen-week work.
+
+## 16:15–16:25 — Cross-platform validation owners
+
+- **Extract:** an owner-and-deadline table for FLR vs. RTMB/OpenMSE — which metrics, on which OM, by whom, by when.
+- **Push:** get names. WMR / Chile / Peru each commit a share.
+- **Done sounds like:** "Validation owners assigned by name; Doc05 initiated."
+- **Fallback:** if no agreement, **you appoint owners by name** and confirm in the minutes. Do not leave this open.
+
+## 16:25–16:30 — Wageningen logistics and close
+
+- **Extract:** trade-off presentation format (Slick / worm / Kobe-style); decision protocol; daily report-out cadence.
+- **Commit:** circulate the Wageningen-week agenda within 48 h.
+- **Close** on the six decisions — read them back (see below).
+
+# Decisions to read back before you close
+
+1. Stock-hypothesis treatment for advice.
+2. Final metrics + horizons + risk tolerance.
+3. Frozen MP register (data, tuning, HCR, Buffer/K60).
+4. Robustness matrix + pass/fail criteria.
+5. Cross-platform validation owners + timeline.
+6. Wageningen format + decision protocol.
+
+# Chairing notes for a 6am call
+
+- **You have 90 min of agenda in a 2-hour block.** Use the spare 30 min as overflow on items 3 and 4 (the freeze and the robustness matrix) — those are where consensus is most likely to slip. Protect items 1, 2, 5 with the gavel.
+- **Decide vs. document.** If an argument is really about SC14 paper content rather than a Wageningen input, name it as such and move it to the carryover tracker. Don't let SC14 drafting debates eat the freeze.
+- **Watch the time zones.** Lima is 08:00, CEST 15:00, you're at 06:00. Energy is unevenly distributed — front-load the decisions that need the Lima/Peru voices while everyone is sharp.
+- **The freeze is the whole point.** If you protect one outcome today, protect the MP-register freeze at 15:35–15:55. Everything downstream at Wageningen assumes it.
+
+::: {.callout-note}
+## Quick links during the call
+[Full briefing pack & email reminders](SCW17_prep_mtg.html) · [Wageningen schedule](https://sprfmo.github.io/scw17/Wageningen-MSE-workshop-schedule.html) · [Reference points (Paper-02)](SCW17-Paper-02-ReferencePoints.html) · [MP inventory (Paper-03)](SCW17-Paper-03-Management-Procedures-Inventory.html) · [MSE flow (Paper-04)](SCW17-Paper-04-MSE-Flow.html)
+:::
+
+*Names, thresholds, and the risk band marked elsewhere as [confirm] are drawn from the existing SCW17 materials and should be checked against your own notes before the call.*

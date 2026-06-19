@@ -4,9 +4,14 @@ project:
   resources:
     - annex/logo.png
     - assets/HCR_Chile_08-06-26.docx
+    - data/jmMSE_retuns.slick
+    - data/jmMSE_retuns_slick_source.md
   render:
     - index.qmd
     - SCW17-schedule.qmd
+    - SCW17-Doc01-Benchmark-to-MSE-Transition.qmd
+    - SCW17-TG05-chair-running-sheet.qmd
+    - SCW17-TG05-carryover-tracker.qmd
     - SCW17-MSE-Workshop-report.qmd
     - SCW17-MSE-training.qmd
     - SCW17-acronym-glossary.qmd
@@ -30,6 +35,8 @@ website:
         text: Home
       - href: https://sprfmo.github.io/scw17/Wageningen-MSE-workshop-schedule.html
         text: SCW17 agenda / schedule
+      - href: SCW17-Doc01-Benchmark-to-MSE-Transition.qmd
+        text: SCW17/Doc01 Benchmark→MSE
       - href: SCW17-MSE-training.qmd
         text: MSE Training
       - href: SCW17-MSE-Workshop-report.qmd

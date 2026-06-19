@@ -1,0 +1,108 @@
+---
+title: "Benchmark → Wageningen carryover tracker"
+pagetitle: "SPRFMO SCW17 TG-05 — Carryover tracker"
+date: today
+format:
+  html:
+    output-file: "SCW17-TG05-carryover-tracker.html"
+    self-contained: true
+    embed-resources: true
+    lightbox: true
+    html-math-method: katex
+    theme: cosmo
+    toc: true
+    toc-title: "Contents"
+    toc-depth: 2
+    toc-location: left
+    number-sections: false
+execute:
+  warning: false
+  message: false
+  echo: false
+  results: false
+---
+
+```{r}
+date_stamp <- format(Sys.Date(), "%d %B %Y")
+```
+
+{{< include _includes/sprfmo-banner.html >}}
+
+```{=html}
+<div style="font-style: italic; margin-top: 0.5rem;">Scientific Committee Workshop 17 preparation</div>
+<div class="paper-title">Benchmark → Wageningen carryover tracker</div>
+```
+
+::: {.callout-note}
+## What this is
+A single register tracing each **SCW16 benchmark (Lima)** outcome through its **TG-05** close-out to its **Wageningen** owner and status. Use it to drive the TG-05 call and then as the live status board during the workshop. Pair it with the [chair running sheet](SCW17-TG05-chair-running-sheet.html) and the [benchmark→MSE transition note (Doc01)](SCW17-Doc01-Benchmark-to-MSE-Transition.html).
+
+**Status legend:** 🔒 closed/fixed · ⚠️ open — close at TG-05 · 🔁 carried to Wageningen · 📋 diagnostic only.
+Items marked **[confirm]** are inferred from existing SCW17 materials and need checking against the SCW16 report.
+**Updated:** `r date_stamp`
+:::
+
+# A. Items the benchmark closed (carry as fixed)
+
+These need no decision at TG-05 — confirm they are correctly reflected in the OM and move on.
+
+| # | Benchmark outcome | Status | Carried into | Owner at Wageningen |
+|---|---|---|---|---|
+| A1 | JJM assessment structure as MSE engine | 🔒 | OM conditioning (`conditionJJOM` → `FLjjm`) | WMR (Iago, Karolina) |
+| A2 | Productivity grid `ll/ls/hl/hs` (steepness × SR period) | 🔒 | Reference-set OM axis | WMR |
+| A3 | Fishery partition (N_Chile, SC_Chile_PS, FarNorth, Offshore_Trawl) | 🔒 | `split.is` catch allocation | WMR |
+| A4 | Index set (Chile_AcousCS/N, Offshore_CPUE, Chile_CPUE, Peru_CPUE) | 🔒 | OEM + MP data streams | WMR |
+| A5 | Reference-point framing: MSY sensitive, SPR / dynamic-B~zero~ stable | 🔒 framing | Status-metric convention (see B2) | Chair |
+
+# B. Items TG-05 must close (the open list)
+
+These are the six TG-05 decisions. Each must end the call either decided or replaced by its documented fallback.
+
+| # | Open item | TG-05 slot | Decision needed | Fallback if not closed | Wageningen owner |
+|---|---|---|---|---|---|
+| B1 | Stock-hypothesis treatment (h1 / h2 / weighted) | 15:05–15:20 | How h1/h2 enter advice | Carry both as parallel axes; weight at Tue OM sign-off | Chair + WMR |
+| B2 | Performance metrics, horizons (5/10/20 yr), risk band | 15:20–15:35 | Final metric list + risk tolerance | Adopt March working-papers list verbatim; revisit horizons only | Chair |
+| B3 | **Freeze MP register** (data, lag, tuning, HCR, Buffer/K60) | 15:35–15:55 | Frozen candidate set; no new MPs after | Carry TG-04 set; new MPs comparison-only | WMR + Chile + Peru |
+| B4 | Robustness scenario matrix + pass/fail criteria | 15:55–16:15 | Reference vs. robustness set; advancement criteria | TG-04 reference set + ENSO offshore-drop only | WMR |
+| B5 | Cross-platform validation owners (FLR vs. RTMB/OpenMSE) | 16:15–16:25 | Named owners + deadlines | Chair appoints owners by name in minutes | WMR / Chile / Peru |
+| B6 | Wageningen format + decision protocol | 16:25–16:30 | Trade-off display + report-out cadence | Chair proposes; circulate within 48 h | Chair |
+
+# C. Conditioning choices folded into the workshop
+
+Left open by the benchmark but resolved during the Wageningen technical days rather than at TG-05.
+
+| # | Item | Status | Resolved when | Owner | Note |
+|---|---|---|---|---|---|
+| C1 | Recruitment-regime treatment, σ~R~, steepness priors, far-north handling | 🔁 | Tue 16 Jun 13:00–14:30 | WMR + Chair | **[confirm]** prior values from SCW16 |
+| C2 | ENSO / offshore-drop scenario parameters (magnitude, duration, recovery) | 🔁 | Tue 16 Jun 14:30–15:30 | WMR + Chile | Tie to 2026 acoustic + CPUE signals |
+| C3 | Reference-point convention for MSE status (depletion vs. dynamic-B~zero~; F~35%~ proxy) | ⚠️→🔁 | Mon 15 Jun 10:45–12:00 walkthrough; confirm at TG-05 if possible | Chair | **[confirm]** |
+| C4 | OM grid sign-off (no OM changes after) | 🔁 | Tue 16 Jun 15:45–17:00 | Chair | Hard gate |
+
+# D. Diagnostics — carried for interpretation, not as constraints
+
+| # | Item | Status | Disposition |
+|---|---|---|---|
+| D1 | Far-north selectivity flexibility | 📋 | Sensitivity only; **[confirm]** whether to elevate to robustness scenario |
+| D2 | Terminal-year selectivity / weight-at-age effects on B~MSY~ | 📋 | Explains preference for productivity-robust status; not an axis |
+| D3 | Individual CPUE index reliability | 📋 | Informs MP data-stream choice (handled in B3), not an OM axis |
+| D4 | Benchmark retrospective / hindcast diagnostics | 📋 | **[confirm]** acceptance checks vs. scenarios |
+
+# E. Post-TG-05 → Wageningen close-out chain
+
+| When | Action | Owner |
+|---|---|---|
+| Within 48 h of TG-05 | Circulate frozen decisions (B1–B6) + Wageningen-week agenda | Chair |
+| Mon 15 Jun AM | Doc01 walkthrough; confirm fixed inputs (Section A) | Chair |
+| Tue 16 Jun | Close C1–C4; OM block sign-off | WMR + Chair |
+| Wed 17 Jun | First integrated CMP results on reference OM | WMR |
+| Thu 18 Jun PM | **CMP shortlist for SC14 decided** | Chair (plenary) |
+| Fri 19 Jun | Shortlist rationale; exceptional-circumstances meta-rules; SC14 drafting assignments | Chair |
+| TT-06 (Thu 9 Jul) | Post-Wageningen review | Chair |
+
+# How to use this during the call
+
+Run top to bottom. Section A is a 60-second confirmation. Section B is the meeting — each row gets its time-box, and you mark it 🔒 (closed) or note the fallback invoked. Sections C and D you only touch if a member tries to re-open something that is already assigned to the workshop or parked as diagnostic — point at the row and move on.
+
+---
+
+*Companion documents: [TG-05 chair running sheet](SCW17-TG05-chair-running-sheet.html) · [Benchmark→MSE transition (Doc01)](SCW17-Doc01-Benchmark-to-MSE-Transition.html) · [TG-05 briefing pack](SCW17_prep_mtg.html) · [Wageningen schedule](https://sprfmo.github.io/scw17/Wageningen-MSE-workshop-schedule.html).*
