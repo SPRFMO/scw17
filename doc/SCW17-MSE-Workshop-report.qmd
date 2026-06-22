@@ -114,7 +114,7 @@ The Working Group expresses its gratitude to Niels Hintzen and the Pelagic Freez
 
 1. This report summarizes the current state of the 2026 Jack Mackerel Working Group Management Strategy Evaluation (MSE) workshop report, held in Wageningen, the Netherlands. The workshop continued the MSE programme advanced at SCW15 and focused on preparing operating models (OMs), candidate management procedures (CMPs), performance metrics, robustness scenarios, and supporting documentation for SC14.
 
-1. The group treated model 0.16 as the primary reference for OM conditioning during the workshop, while retaining model 0.00 and the SC13-era configuration as clearly labelled alternatives or robustness tests. The final OM reference set, OM naming conventions, projection-scenario definitions, and communication of alternative model outcomes remain important items for Scientific Committee review.
+1. The group treated model 0.16 as the primary reference for OM conditioning during the workshop, while retaining model 0.00 and the SC13-era configuration as clearly labelled robustness tests. The final OM reference set, OM naming conventions, projection-scenario definitions, and communication of alternative model outcomes remain important items for Scientific Committee review.
 
 1. The group agreed to use 0.65 steepness as the base case, move 0.8 steepness to robustness testing, and treat regime/ENSO behaviour as a robustness issue rather than an integral component of the core simulations. Future recruitment and index simulation, including autocorrelation and cross-correlation, were identified as key technical issues because recruitment variability strongly affects projections, reference points, and CMP performance.
 
@@ -128,10 +128,10 @@ The Working Group expresses its gratitude to Niels Hintzen and the Pelagic Freez
 
 The following recommendations and conclusions were identified for the summary of events:
 
-- **OM basis:** The group used benchmark model h1_0.16 for all CMP testing. The benchmark h2_0.16 model was used to evaluate CMPs tuned on the h1_0.16 OM, with CMPs expected to perform acceptably under h2_0.16 in terms of Kobe-green probability. Model 1.14 from SC12 was retained as a robustness test. The 0.65 steepness OM and 0.8 steepness OM were weighted equally in the final performance statistics.
+- **OM basis:** The group used benchmark model h1_0.16 for all CMP testing. The benchmark h2_0.16 model was used to evaluate CMPs tuned on the h1_0.16 OM, with CMPs expected to perform acceptably under h2_0.16 in terms of Kobe-green probability. Model 1.14 from SC13 was retained as a robustness test. The 0.65 steepness OM and 0.8 steepness OM were weighted equally in the final performance statistics.
 - **OM conditioning:** The group included autocorrelation in recruitment deviations and cross-correlation between index deviations. A maximum effort of three times current effort levels was considered plausible.
 - **Reference points:** F~MSY~ was defined on the basis of OM constant-F forecasts. Biomass status was defined as biomass relative to dynamic B~0~.
-- **HCR design:** The group recommended focusing on simple HCRs, starting with simple slope or piecewise-linear rules. More elaborate designs could be explored when time allowed. Minimum catch expectations were accounted for through performance statistics on catches below 270 thousand tonnes per year. TAC caps of -15% and +20% were tested, with mirrored scenarios also included. Banking and borrowing was identified as a sensitivity for the final CMP set rather than a feature that should feed back into the HCR itself.
+- **HCR design:** The group recommended focusing on simple HCRs, starting with simple slope or piecewise-linear rules. More elaborate designs could be explored when time allowed. Minimum catch was specified at 270 kt per year for some CMPs but also monitored via performance statistics. TAC caps of -15% and +20% were tested, with mirrored scenarios also included. Banking and borrowing was identified as a sensitivity for the final CMP set rather than a feature that should feed back into the HCR itself.
 - **Inclusion of climate effects:** The current robustness-simulation set includes scenarios with large recruitment impacts and was considered sufficient for addressing ENSO-related impacts on the stock at this stage.
 - **Exceptional circumstances:** Exceptional-circumstances protocols were recognized as an important implementation issue, but the detailed specification was identified as further work once the CMP selection process is more advanced.
 - **Performance statistics:** A broad list of performance statistics was agreed, covering safety, yield, and stability across time periods. The group had not yet selected a smaller set of priority statistics.
@@ -192,7 +192,7 @@ This draft was developed from meeting notes, SCW17 working documents, daily summ
 
 1. Diagnostic outputs included one-step-ahead residuals, length-data residuals, retrospective patterns, and MCMC comparisons of posterior and asymptotic estimates. Overall diagnostics were considered adequate for OM conditioning, while retrospective bias, slow-mixing parameters, and dynamic reference-point volatility remained areas for further review.
 
-1. The group reviewed differences between single-stock and two-stock estimates. Splitting the population into two stocks produced a lower combined biomass estimate than the single-stock model. Participants discussed how optimistic and pessimistic indices are redistributed between components and noted that naive merging of components should be avoided.
+1. The group reviewed differences between single-stock and two-stock estimates. Splitting the population into two stocks produced a lower combined biomass estimate than the single-stock model. Participants discussed how optimistic and pessimistic indices are redistributed between components.
 
 1. The two-stock configurations showed somewhat different MCMC behaviour but remained usable for comparison. The group noted that structurally divergent OMs are harder to tune jointly and require careful communication if they are included in the reference or robustness set.
 
@@ -208,7 +208,7 @@ This draft was developed from meeting notes, SCW17 working documents, daily summ
 
 ## Operating-Model Reference Set
 
-1. The composition of the OM reference set was debated, including the implications of model 0.00 as an optimistic high-biomass, low-exploitation outcome that could affect CMP tuning and communication. The practical approach was to focus immediate tuning work on model 0.16, while retaining model 0.00 and the SC13-era configuration as clearly labelled alternatives or robustness tests. The final reference-set decision was identified for further discussion and Scientific Committee review, alongside related work on future recruitment and index simulation, ENSO and broader climate effects, OM-set composition and naming, reference-point proxies, and projection-scenario definitions.
+1. The composition of the OM reference set was debated, including the implications of model 0.00 as an optimistic high-biomass, low-exploitation outcome that could affect CMP tuning and communication. The practical approach was to focus immediate tuning work on model 0.16, while retaining model 0.00 and the SC13-era configuration as clearly labelled robustness tests. The final reference-set decision was identified for further discussion and Scientific Committee review, alongside related work on future recruitment and index simulation, ENSO and broader climate effects, OM-set composition and naming, reference-point proxies, and projection-scenario definitions.
 
 1. The group discussed using cross-correlation among indices to simulate future recruitment deviations. Participants noted that historical correlations are approximate because the series include changes in catchability and selectivity, whereas the projection settings use the more recent period. Residual autocorrelation should also be represented where possible.
 
@@ -291,15 +291,15 @@ day2_om_set |>
 
 1. Projection evaluations from Paper 07 were used to examine constant-catch and constant-F scenarios, including no fishing, F~MSY~, current F, and reduced-F or reduced-catch cases. These diagnostics were used to understand trade-offs among spawning biomass, fishing mortality, catch, and terminal status. The group noted that F~MSY~ and B~MSY~ calculations, selectivity averaging windows, and recruitment assumptions can materially affect interpretation, so those methods should be checked and documented.
 
-1. CMP and HCR discussions emphasized starting with simple, interpretable rules. The group discussed index-based rules in which catch responds to changes in one or more abundance indices, rather than relying on constant catch. Several design handles were identified for testing: whether the rule passes through the origin, whether it includes a minimum catch or flat low-index segment, upper catch limits, trigger points, smoothing windows, polynomial smoothing, and TAC-change constraints. The group specifically discussed testing constraints such as 20% increases and 15% decreases, and evaluating whether these constraints still allow the CMP to respond quickly enough to low-recruitment events. The group favored piecewise-linear terminology for these rules, while retaining existing code labels where needed.
+1. CMP and HCR discussions emphasized starting with simple, interpretable rules. The group discussed index-based rules in which catch responds to changes in one or more abundance indices, rather than relying on constant catch. Several design handles were identified for testing: whether the rule passes through the origin, whether it includes a minimum catch or flat low-index segment, upper catch limits, trigger points, smoothing windows, polynomial smoothing, and TAC-change constraints. The group specifically discussed testing constraints such as 20% increases and 15% decreases (relative to the symmetric 15% change), and evaluating whether these constraints still allow the CMP to respond quickly enough to low-recruitment events. The group favored piecewise-linear terminology for these rules, while retaining existing code labels where needed.
 
-1. There was also discussion of which indices should feed CMPs. The initial rules used a small set of indices, but participants discussed adding or comparing additional indices, including acoustic and CPUE-related indices. The group noted that combined or weighted indices may simplify implementation, but the choice should reflect the simulated observation process and the relative reliability of each index.
+1. There was also discussion of which indices should feed CMPs. The initial rules used all indices, but participants discussed comparing different subsetsof indices, including acoustic and CPUE-related indices. The group noted that combined or weighted indices may simplify implementation, but the choice should reflect the simulated observation process and the relative reliability of each index.
 
 1. Tuning and performance summaries were discussed as a practical next step. The group planned to run grids of HCR/CMP configurations and summarize results using compact performance tables and diagnostic plots showing biomass, yield, and yield variability. The aim was to identify broad trade-off behavior rather than over-interpret early individual runs. Because many trial CMPs were tuned to the same P(Green) target, P(Green) alone was not considered sufficient for ranking among tuned CMPs; interpretation also required catch, spawning biomass, F/F~MSY~, inter-annual catch variability, low-catch probabilities, and indicators of fishery feasibility.
 
 ![Long-term performance summaries for a set of CMP tuning runs against the reference base model. Panels show catch, P(Green), inter-annual catch variability, spawning biomass, shutdown probability, and F relative to F~MSY~ for runs 15a-15e.](figures/cmp-reference-base-tuning.png){#fig-cmp-reference-base-tuning fig-alt="Six-panel performance plot showing long-term catch, probability green, inter-annual catch variability, spawning biomass, shutdown probability, and F over FMSY for five CMP tuning runs labeled run15a through run15e."}
 
-1. @fig-cmp-reference-base-tuning illustrates that, for the reference base model, tuning to P(kg) was straightforward. The tested runs showed a clear increase in P(Green) across tuning levels, with associated changes in catch, spawning biomass, inter-annual catch variability, shutdown probability, and F/F~MSY~ that could be interpreted directly in the CMP discussion. The figure was therefore useful for learning how the trial rules behaved, but it was not treated as a final comparison of CMP recommendations.
+1. @fig-cmp-reference-base-tuning illustrates that, for the reference base model, tuning to P(Kobe-green) was straightforward. The tested runs showed a clear increase in P(Green) across tuning levels, with associated changes in catch, spawning biomass, inter-annual catch variability, shutdown probability, and F/F~MSY~ that could be interpreted directly in the CMP discussion. The figure was therefore useful for learning how the trial rules behaved, but it was not treated as a final comparison of CMP recommendations.
 
 1. The Thursday morning discussion used results from the initial fourteen-run exploratory CMP set to narrow the next round of tests. The group noted that the TAC-change constraints considered in the initial runs did not appear to be strongly limiting, while a low upper catch cap could make the CMP behave close to a constant-catch rule and reduce its usefulness for exploring trade-offs. Participants also discussed the need to separate effects of the catch level from effects of the HCR slope: a higher target catch can increase short-term catch, but if the slope is too steep it can reduce long-term performance or increase the probability of being outside the green zone. The group therefore focused the second set on a smaller number of interpretable changes, including tuned triggers for target catches of 2.0, 3.5, and 5.0 million tonnes, Chile-requested variants with a 270 thousand tonne minimum catch, an asymmetric TAC-change constraint, and a special Chile-shape variant (@tbl-cmp-second-set). This was intended as a stepwise screening process: remove options that provide little marginal information, retain variants that clarify trade-offs, and identify the smaller set of CMPs to carry into fuller performance and robustness summaries. The narrowed set was selected because it spanned useful trade-offs, not because each row represented a final recommended CMP.
 
@@ -678,23 +678,23 @@ day4_cmp_table |>
 Names and affiliations below are reconstructed from the Day 1 summary and should be confirmed before submission.
 :::
 
-| Name | Affiliation / delegation | Role |
+| Name | Affiliation / delegation | 
 |---|---|---|
-| Jim Ianelli | NOAA Fisheries (USA) | Chair / coordinator |
-| Niels Hintzen | PFA (EU delegation) | Local organizer / rapporteur |
-| Karolina Molla Gazi | European Union delegation | Member |
-| Iago Mosqueira | MSE analyst (FLR / openMSE) | Analyst |
-| Benoit Berges | Wageningen Marine Research | Member |
-| Ignacio Paya | IFOP (Chile) | Member |
-| Jose Zenteno | IFOP (Chile) | Member |
-| Aquiles Sepulveda | INPESCA (Chile) | Member |
-| Nicole Mermoud | Subsecretaria de Pesca y Acuicultura (Chile) | Head of delegation |
-| Criscely Lujan | IMARPE (Peru) | Member |
-| Miriam Geronimo | IMARPE (Peru) | Member |
-| David Miller | ICES Secretariat | External reviewer |
-| Rosana Ourens | CEFAS (UK) | External reviewer |
-| Tom Carruthers | Blue Matter Science | Invited expert |
-| Ash Wilson | Pew Charitable Trusts | Observer |
+| Jim Ianelli | NOAA Fisheries (USA) | 
+| Niels Hintzen | PFA (EU delegation) | 
+| Karolina Molla Gazi | Wageningen Marine Research | 
+| Iago Mosqueira | Wageningen Marine Research | 
+| Benoit Berges | Wageningen Marine Research | 
+| Ignacio Paya | IFOP (Chile) | 
+| Jose Zenteno | IFOP (Chile) | 
+| Aquiles Sepulveda | INPESCA (Chile) | 
+| Nicole Mermoud | Subsecretaria de Pesca y Acuicultura (Chile) | 
+| Criscely Lujan | IMARPE (Peru) | 
+| Miriam Geronimo | IMARPE (Peru) | 
+| David Miller | ICES Secretariat (External reviewer) |
+| Rosana Ourens | CEFAS (UK)  (External reviewer) |
+| Tom Carruthers | Blue Matter Science (Invited expert) |
+| Ash Wilson | Pew Charitable Trusts (Observer) |
 
 # Appendix B. Workshop Schedule and Agenda {.unnumbered}
 
@@ -742,4 +742,22 @@ Empirical index-ratio CMPs were developed that are comparable to those adopted i
 
 In the context of MSE as an ongoing, iterative, scientific approach to adopting and refining robust management advice, the current stage of MSE development sufficiently supports the shortlisting of defensible CMPs for presentation to the Scientific Committee. As in all scientific processes, improvements can be identified. At this stage of jack mackerel MSE development, these are not sufficiently impactful to delay the process of adopting a robust management procedure. After an MP is adopted and in use, improvements can be considered for a later revision to the MSE framework.
 
-*Draft working report - Day 1 of the SCW17 MSE workshop, 15 June 2026. Prepared for review and correction by participants before submission to the SPRFMO Scientific Committee.*
+## David Miller and Rosana Ourens {.unnumbered}
+
+The meeting made solid progress in agreeing on operating models, performance indicators, and exploring management procedures. The process could have benefited from more stages where specific items were locked down to allow discussion to move forward with better focus. For example, upfront agreement on the baseline assessment and reference points in advance of the MSE workshop would have helped focus discussion on MSE development and avoid repeating discussions.
+
+### Operating Models {.unnumbered}
+
+The recent benchmark assessment provides a strong, now agreed-upon basis for conditioning the base-case OM for the MSE. The consensus to tune the management procedures primarily on this single base case, with potential tuning to the two-stock model OM, is a reasonable and practical simplification. The other alternative OMs provide a good range for robustness testing and cover the most important uncertainties around the stock, such as different stock-recruitment steepness, potential changes in fishing selectivity, and possible impacts of ENSO events. An approach for stress-testing MPs for inherent climate robustness was presented that could be considered in future.
+
+### Performance Indicators {.unnumbered}
+
+The performance statistics were refined to ensure clear interpretation of the trade-offs between alternative MPs. Utilizing dynamic reference points is a sensible way to account for highly variable recruitment periods, ensuring that the probability of Kobe green metric remains meaningful during projections. Incorporating input from the stakeholder survey was useful, bridging the current gap between scientific preferences and actual industry objectives. The performance framework will place significant weight on both short- and long-term catch levels, biomass, catch stability, and related metrics. Other indicators, such as the proportion of simulated iterations that experience a stock crash and the number of times TAC-change limits are encountered, allow for a good examination of the behaviour and performance of MPs.
+
+### Management Procedures {.unnumbered}
+
+The design of MPs to be tested could have benefited from stakeholder input. Nevertheless, the working group made a strong effort to test harvest-control rules with different shapes and trade-offs. For this exercise, it was very useful to have exploratory runs to compare outputs. Using a simple, empirical, index-based harvest rule is preferable to more complex assessment model-based approaches. Including SPiCT to combine multiple indices in the loop is probably an unnecessary addition. Because these empirical rules rely so heavily on field data, ensuring that the observation-error model accurately captures the historical cross-correlation among multiple indices is considered an essential technical priority. Exploring different combinations of indices for use in the MP will be useful. In initial testing, the simple constant-harvest-rate approach demonstrated favourable properties, including an ability to recover the stock effectively even under a recruitment-collapse scenario.
+
+### Exceptional Circumstances {.unnumbered}
+
+With current indicators suggesting 2026 will likely be a year of low indices and difficult catches, establishing a formal, pre-agreed framework for exceptional circumstances should be a priority. As presented by Tom Carruthers, exceptional-circumstances triggers could be defined by analyzing MSE failure states and identifying the data bounds that lead to problematic outcomes.
