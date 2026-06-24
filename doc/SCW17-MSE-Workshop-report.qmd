@@ -112,29 +112,29 @@ The Working Group expresses its gratitude to Niels Hintzen and the Pelagic Freez
 
 # Summary {.unnumbered}
 
-1. This report summarizes the current state of the 2026 Jack Mackerel Working Group Management Strategy Evaluation (MSE) workshop report, held in Wageningen, the Netherlands. The workshop continued the MSE programme advanced at SCW15 and focused on preparing operating models (OMs), candidate management procedures (CMPs), performance metrics, robustness scenarios, and supporting documentation for SC14.
+1. This report summarizes the work carried out during the 2026 Jack Mackerel Working Group Management Strategy Evaluation (MSE) workshop, held in Wageningen University, the Netherlands. The workshop continued the MSE programme advanced at SCW15 and focused on preparing a final set of operating models (OMs), a set of candidate management procedures (CMPs), complete performance statistics, as well as robustness scenarios and supporting documentation for SC14.
 
 1. The group treated model 0.16 as the primary reference for OM conditioning during the workshop, while retaining model 0.00 and the SC13-era configuration as clearly labelled robustness tests. The final OM reference set, OM naming conventions, projection-scenario definitions, and communication of alternative model outcomes remain important items for Scientific Committee review.
 
-1. The group agreed to use 0.65 steepness as the base case, move 0.8 steepness to robustness testing, and treat regime/ENSO behaviour as a robustness issue rather than an integral component of the core simulations. Future recruitment and index simulation, including autocorrelation and cross-correlation, were identified as key technical issues because recruitment variability strongly affects projections, reference points, and CMP performance.
+1. The group agreed to use 0.65 steepness as the base case, move 0.8 steepness to robustness testing, and treat regime/ENSO behaviour as a robustness issue rather than an integral component of the core simulations. Future recruitment and index simulation, including autocorrelation and cross-correlation, were identified as key technical issues because recruitment variability strongly affects projections, reference points, and CMP performance, while idnices remain the sole input on stock status for any MP.
 
-1. Reference-point calculation and presentation were a major focus. The group discussed Kobe-plot interpretation, dynamic B~0~, F~35%~ proxies, U/U~MSY~ options, and constant-F yield-curve calculations. A strong recommendation was developed to use within-draw MCMC output to construct dynamic B~MSY~ and use SSB/dynamic B~MSY~ for Kobe-plot and reference-point summaries, so that environmental recruitment variability is better separated from the effects of CMPs on fishing pressure and stock status.
+1. Reference-point calculation and presentation were a major focus. The group discussed Kobe-plot interpretation, dynamic B~0~, F~35%~ proxies, U/U~MSY~ options, and constant-F yield-curve calculations. A strong recommendation was developed to keep using within-draw MCMC output to construct dynamic B~MSY~ and use SSB/dynamic B~MSY~ for Kobe-plot and reference-point summaries, so that environmental recruitment variability is better separated from the effects of CMPs on fishing pressure and stock status.
 
-1. CMP discussions emphasized simple, interpretable index-based rules, including piecewise-linear harvest-control rules, TAC-change constraints, smoothing choices, and alternative index combinations. The CMPs examined during the workshop were trial designs used to learn about behavior, tuning, and trade-offs rather than final recommendations. The report records that Members and participants should nominate CMPs for Scientific Committee consideration, after which redundant or materially overlapping CMPs should be eliminated so that review can focus on a concise set of distinct alternatives.
+1. CMP discussions emphasized simple, interpretable index-based rules, including piecewise-linear harvest-control rules, TAC-change constraints, smoothing choices, and alternative index combinations. The CMPs examined during the workshop were trial designs used to learn about behavior, tuning, and trade-offs rather than final recommendations. Members and participants should nominate CMPs for Scientific Committee consideration, after which redundant or materially overlapping CMPs should be eliminated so that review can focus on a concise set of distinct alternatives.
 
-1. Exceptional circumstances were also discussed as a core implementation issue. The group considered the potential use of the ECP software framework to identify data patterns associated with poor CMP performance, compare type I and type II error rates, and support a transparent process for determining whether observations fall outside the range of conditions represented in the MSE.
+1. Exceptional circumstances were also discussed as a core implementation issue. The group considered the potential use of the ECP software framework (REF) to identify data patterns associated with poor CMP performance, compare type I and type II error rates, and support a transparent process for determining whether observations fall outside the range of conditions represented in the MSE.
 
 ## Recommendations and Conclusions {.unnumbered}
 
-The following recommendations and conclusions were identified for the summary of events:
+The following recommendations and conclusions agreed:
 
-- **OM basis:** The group used benchmark model h1_0.16 for all CMP testing. The benchmark h2_0.16 model was used to evaluate CMPs tuned on the h1_0.16 OM, with CMPs expected to perform acceptably under h2_0.16 in terms of Kobe-green probability. Model 1.14 from SC13 was retained as a robustness test. The 0.65 steepness OM and 0.8 steepness OM were weighted equally in the final performance statistics.
-- **OM conditioning:** The group included autocorrelation in recruitment deviations and cross-correlation between index deviations. A maximum effort of three times current effort levels was considered plausible.
+- **OM basis:** The group used benchmark model h1_0.16 for all CMP testing. The benchmark h2_0.16 model was used to evaluate CMPs tuned on the h1_0.16 OM, with CMPs expected to perform acceptably under h2_0.16 in terms of Kobe-green probability. Model 1.14 from SC13 was retained as a robustness test.
+- **OM conditioning:** The group agreed to include not only autocorrelation in recruitment deviations but also cross-correlation between index deviations. A limit on   maximum effort of three times current effort levels was considered plausible.
 - **Reference points:** F~MSY~ was defined on the basis of OM constant-F forecasts. Biomass status was defined as biomass relative to dynamic B~0~.
-- **HCR design:** The group recommended focusing on simple HCRs, starting with simple slope or piecewise-linear rules. More elaborate designs could be explored when time allowed. Minimum catch was specified at 270 kt per year for some CMPs but also monitored via performance statistics. TAC caps of -15% and +20% were tested, with mirrored scenarios also included. Banking and borrowing was identified as a sensitivity for the final CMP set rather than a feature that should feed back into the HCR itself.
-- **Inclusion of climate effects:** The current robustness-simulation set includes scenarios with large recruitment impacts and was considered sufficient for addressing ENSO-related impacts on the stock at this stage.
-- **Exceptional circumstances:** Exceptional-circumstances protocols were recognized as an important implementation issue, but the detailed specification was identified as further work once the CMP selection process is more advanced.
-- **Performance statistics:** A broad list of performance statistics was agreed, covering safety, yield, and stability across time periods. The group had not yet selected a smaller set of priority statistics.
+- **HCR design:** The group recommended focusing on simple HCRs, starting with simple slope or piecewise-linear rules. More elaborate designs could be explored when time allowed. Minimum catch was specified at 270 kt per year for some CMPs but also monitored via performance statistics. TAC caps of -15% and +20% were tested, with both symmetric and asymmetric options. Banking and borrowing was identified as a sensitivity for the final CMP set rather than a feature that should feed back into the HCR itself.
+- **Inclusion of climate effects:** The current robustness-simulation set includes scenarios with large and cyclical recruitment impacts, and was considered sufficient for addressing ENSO-related impacts on the stock at this stage. Changes in recruitment level and variability have already been constructed and could be applied if needed.
+- **Exceptional circumstances:** Exceptional-circumstances protocols were recognized as an important implementation issue, but the detailed specification was identified as to be carried out once the CMP selection process is more advanced.
+- **Performance statistics:** A broad list of performance statistics was agreed, covering safety, yield, and stability across time periods. The group has selected a smaller set of priority statistics.
 
 ::: {.callout-note}
 This draft was developed from meeting notes, SCW17 working documents, daily summary material, presentation material, and some transcript summaries. Artificial-intelligence tools were used to help convert notes into report text; all content was reviewed by meeting participants before finalization.
@@ -210,7 +210,7 @@ This draft was developed from meeting notes, SCW17 working documents, daily summ
 
 1. The composition of the OM reference set was debated, including the implications of model 0.00 as an optimistic high-biomass, low-exploitation outcome that could affect CMP tuning and communication. The practical approach was to focus immediate tuning work on model 0.16, while retaining model 0.00 and the SC13-era configuration as clearly labelled robustness tests. The final reference-set decision was identified for further discussion and Scientific Committee review, alongside related work on future recruitment and index simulation, ENSO and broader climate effects, OM-set composition and naming, reference-point proxies, and projection-scenario definitions.
 
-1. The group discussed using cross-correlation among indices to simulate future recruitment deviations. Participants noted that historical correlations are approximate because the series include changes in catchability and selectivity, whereas the projection settings use the more recent period. Residual autocorrelation should also be represented where possible.
+1. The group discussed using cross-correlation among indices to simulate future recruitment deviations. Participants noted that historical correlations are approximate because the series include changes in catchability and selectivity, whereas the projection settings use the more recent period. Residual autocorrelation has now been incorporated into the OM sets.
 
 1. The group agreed to implement an approximate treatment rather than attempting a fully specified multivariate autocorrelated time-series model. The practical check is whether simulated deviations are consistent with the historical period and suitable for testing CMPs.
 
@@ -232,7 +232,7 @@ This draft was developed from meeting notes, SCW17 working documents, daily summ
 
 1. Movement smoothing, selectivity-window changes, and recruitment-deviation variants were treated as trial contrasts rather than final conclusions. Movement would be smoothed from 2026 toward the average of the last ten years to avoid an abrupt discontinuity. The selectivity-change contrast compares a 2005-2015 average with the 2015-2025 recent pattern. Autocorrelation in recruitment deviations provides the current representation of ENSO-related recruitment persistence.
 
-```{r}
+```{}
 #| label: tbl-day2-om-set
 #| tbl-cap: "Trial operating-model and projection set used to explore behaviour and characteristics."
 #| echo: false
@@ -682,9 +682,9 @@ Names and affiliations below are reconstructed from the Day 1 summary and should
 |---|---|---|
 | Jim Ianelli | NOAA Fisheries (USA) | 
 | Niels Hintzen | PFA (EU delegation) | 
-| Karolina Molla Gazi | Wageningen Marine Research | 
-| Iago Mosqueira | Wageningen Marine Research | 
-| Benoit Berges | Wageningen Marine Research | 
+| Karolina Molla Gazi | Wageningen Marine Research  (EU delegation)| 
+| Iago Mosqueira | Wageningen Marine Research (Consultant)| 
+| Benoit Berges | Wageningen Marine Research (Consultant)| 
 | Ignacio Paya | IFOP (Chile) | 
 | Jose Zenteno | IFOP (Chile) | 
 | Aquiles Sepulveda | INPESCA (Chile) | 
