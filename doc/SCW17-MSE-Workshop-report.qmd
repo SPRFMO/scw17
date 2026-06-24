@@ -116,7 +116,7 @@ The Working Group expresses its gratitude to Niels Hintzen and the Pelagic Freez
 
 1. The group treated model 0.16 as the primary reference for OM conditioning during the workshop, while retaining model 0.00 and the SC13-era configuration as clearly labelled robustness tests. The final OM reference set, OM naming conventions, projection-scenario definitions, and communication of alternative model outcomes remain important items for Scientific Committee review.
 
-1. The group agreed to use 0.65 steepness as the base case, move 0.8 steepness to robustness testing, and treat regime/ENSO behaviour as a robustness issue rather than an integral component of the core simulations. Future recruitment and index simulation, including autocorrelation and cross-correlation, were identified as key technical issues because recruitment variability strongly affects projections, reference points, and CMP performance, while idnices remain the sole input on stock status for any MP.
+1. The group agreed to use 0.65 steepness as the base case, move 0.8 steepness to robustness testing, and treat regime/ENSO behaviour as a robustness issue rather than an integral component of the core simulations. Future recruitment and index simulation, including autocorrelation and cross-correlation, were identified as key technical issues because recruitment variability strongly affects projections, reference points, and CMP performance, while indices remain the sole input on stock status for any MP.
 
 1. Reference-point calculation and presentation were a major focus. The group discussed Kobe-plot interpretation, dynamic B~0~, F~35%~ proxies, U/U~MSY~ options, and constant-F yield-curve calculations. A strong recommendation was developed to keep using within-draw MCMC output to construct dynamic B~MSY~ and use SSB/dynamic B~MSY~ for Kobe-plot and reference-point summaries, so that environmental recruitment variability is better separated from the effects of CMPs on fishing pressure and stock status.
 
@@ -126,10 +126,10 @@ The Working Group expresses its gratitude to Niels Hintzen and the Pelagic Freez
 
 ## Recommendations and Conclusions {.unnumbered}
 
-The following recommendations and conclusions agreed:
+The following recommendations and conclusions were agreed:
 
 - **OM basis:** The group used benchmark model h1_0.16 for all CMP testing. The benchmark h2_0.16 model was used to evaluate CMPs tuned on the h1_0.16 OM, with CMPs expected to perform acceptably under h2_0.16 in terms of Kobe-green probability. Model 1.14 from SC13 was retained as a robustness test.
-- **OM conditioning:** The group agreed to include not only autocorrelation in recruitment deviations but also cross-correlation between index deviations. A limit on   maximum effort of three times current effort levels was considered plausible.
+- **OM conditioning:** The group agreed to include not only autocorrelation in recruitment deviations but also cross-correlation between index deviations. A limit on maximum effort of three times current effort levels was considered plausible.
 - **Reference points:** F~MSY~ was defined on the basis of OM constant-F forecasts. Biomass status was defined as biomass relative to dynamic B~0~.
 - **HCR design:** The group recommended focusing on simple HCRs, starting with simple slope or piecewise-linear rules. More elaborate designs could be explored when time allowed. Minimum catch was specified at 270 kt per year for some CMPs but also monitored via performance statistics. TAC caps of -15% and +20% were tested, with both symmetric and asymmetric options. Banking and borrowing was identified as a sensitivity for the final CMP set rather than a feature that should feed back into the HCR itself.
 - **Inclusion of climate effects:** The current robustness-simulation set includes scenarios with large and cyclical recruitment impacts, and was considered sufficient for addressing ENSO-related impacts on the stock at this stage. Changes in recruitment level and variability have already been constructed and could be applied if needed.
