@@ -4323,7 +4323,7 @@ list-style: disc;
 <strong>Working group:</strong> Jack Mackerel Working Group<br>
 <strong>Host:</strong> EU / PFA<br>
 <strong>Chair:</strong> Jim Ianelli<br>
-<strong>Updated:</strong> 24 June 2026 01:35 PDT</p>
+<strong>Updated:</strong> 24 June 2026 13:05 PDT</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -4348,7 +4348,7 @@ list-style: disc;
 <li><p>The group agreed to use 0.65 steepness as the base case, move 0.8 steepness to robustness testing, and treat regime/ENSO behaviour as a robustness issue rather than an integral component of the core simulations. Future recruitment and index simulation, including autocorrelation and cross-correlation, were identified as key technical issues because recruitment variability strongly affects projections, reference points, and CMP performance, while indices remain the sole input on stock status for any MP.</p></li>
 <li><p>Reference-point calculation and presentation were a major focus. The group discussed Kobe-plot interpretation, dynamic B<sub>0</sub>, F<sub>35%</sub> proxies, U/U<sub>MSY</sub> options, and constant-F yield-curve calculations. A strong recommendation was developed to keep using within-draw MCMC output to construct dynamic B<sub>MSY</sub> and use SSB/dynamic B<sub>MSY</sub> for Kobe-plot and reference-point summaries, so that environmental recruitment variability is better separated from the effects of CMPs on fishing pressure and stock status.</p></li>
 <li><p>CMP discussions emphasized simple, interpretable index-based rules, including piecewise-linear harvest-control rules, TAC-change constraints, smoothing choices, and alternative index combinations. The CMPs examined during the workshop were trial designs used to learn about behavior, tuning, and trade-offs rather than final recommendations. Members and participants should nominate CMPs for Scientific Committee consideration, after which redundant or materially overlapping CMPs should be eliminated so that review can focus on a concise set of distinct alternatives.</p></li>
-<li><p>Exceptional circumstances were also discussed as a core implementation issue. The group considered the potential use of the ECP software framework (REF) to identify data patterns associated with poor CMP performance, compare type I and type II error rates, and support a transparent process for determining whether observations fall outside the range of conditions represented in the MSE.</p></li>
+<li><p>Exceptional circumstances were also discussed as a core implementation issue. The group considered the potential use of the ECP software framework [Blue Matter Science 2026c] to identify data patterns associated with poor CMP performance, compare type I and type II error rates, and support a transparent process for determining whether observations fall outside the range of conditions represented in the MSE.</p></li>
 </ol>
 <section id="recommendations-and-conclusions" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="recommendations-and-conclusions">Recommendations and Conclusions</h2>
@@ -4356,11 +4356,11 @@ list-style: disc;
 <ul>
 <li><strong>OM basis:</strong> The group used benchmark model h1_0.16 for all CMP testing. The benchmark h2_0.16 model was used to evaluate CMPs tuned on the h1_0.16 OM, with CMPs expected to perform acceptably under h2_0.16 in terms of Kobe-green probability. Model 1.14 from SC13 was retained as a robustness test.</li>
 <li><strong>OM conditioning:</strong> The group agreed to include not only autocorrelation in recruitment deviations but also cross-correlation between index deviations. A limit on maximum effort of three times current effort levels was considered plausible.</li>
-<li><strong>Reference points:</strong> F<sub>MSY</sub> was defined on the basis of OM constant-F forecasts. Biomass status was defined as biomass relative to dynamic B<sub>0</sub>.</li>
+<li><strong>Reference points:</strong> F<sub>MSY</sub> was defined on the basis of OM constant-F forecasts. Biomass status was defined as biomass relative to dynamic B<sub>0</sub>. The group discussed whether the new SSB<sub>MSY</sub> level should be set differently across OMs due to differences in steepness, and noted that the resulting SSB<sub>MSY</sub> ratio will be applied directly to both OM tuning and the calculation of performance ratios.</li>
 <li><strong>HCR design:</strong> The group recommended focusing on simple HCRs, starting with simple slope or piecewise-linear rules. More elaborate designs could be explored when time allowed. Minimum catch was specified at 270 kt per year for some CMPs but also monitored via performance statistics. TAC caps of -15% and +20% were tested, with both symmetric and asymmetric options. Banking and borrowing was identified as a sensitivity for the final CMP set rather than a feature that should feed back into the HCR itself.</li>
 <li><strong>Inclusion of climate effects:</strong> The current robustness-simulation set includes scenarios with large and cyclical recruitment impacts, and was considered sufficient for addressing ENSO-related impacts on the stock at this stage. Changes in recruitment level and variability have already been constructed and could be applied if needed.</li>
 <li><strong>Exceptional circumstances:</strong> Exceptional-circumstances protocols were recognized as an important implementation issue, but the detailed specification was identified as to be carried out once the CMP selection process is more advanced.</li>
-<li><strong>Performance statistics:</strong> A broad list of performance statistics was agreed, covering safety, yield, and stability across time periods. The group has selected a smaller set of priority statistics.</li>
+<li><strong>Performance statistics:</strong> A broad list of performance statistics was agreed, covering safety, yield, and stability across time periods. While all statistics will be computed, the group narrowed the table of performance indicators to prioritize a selection of six key metrics.</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -4432,22 +4432,22 @@ Note
 <ol type="1">
 <li><p>The group discussed how to simulate future observations for indices that may track stock biomass differently through time. This is central to the availability and El Nino robustness issues raised at SCW15.</p></li>
 <li><p>Participants agreed that a practical forward-projection representation of standardized indices should use a simpler structure, such as autocorrelation plus observation error, rather than attempting to reproduce the full GLM, GAMM, or spatio-temporal standardization procedures. Routine checks should compare simulated index behaviour with historical variability and observed index-stock correlations.</p></li>
-<li><p>On combining multiple indices in empirical rules, the group agreed that weighting by representativity was more appropriate than weighting by catch.</p></li>
+<li><p>The group discussed using cross-correlation among indices to simulate future index deviations. Participants noted that historical correlations are approximate because the series include changes in catchability and selectivity, whereas the projection settings use the more recent period. Autocorrelation in model index-fit residuals was identified as an appropriate approach for simulating future index deviations. Consequently, the generation of indices in projections was further developed to include autocorrelation, cross-correlation across indices, and added observation error. The group agreed on this approach. The practical check was to ensure that simulated deviations are consistent with the historical period and suitable for testing CMPs. Scrutiny of the deviations indicated that the generated deviations are appropriate for testing CMPs.</p></li>
+<li><p>On combining multiple indices in empirical rules, each index is standardized and all indices are combined through equal-weighted averaging. A weighted average based on index variance is available as an option and was discussed but not agreed. Smoothing of the indices was explored, but was not found to improve CMP performance.</p></li>
 </ol>
 </section>
 <section id="operating-model-reference-set" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="operating-model-reference-set"><span class="header-section-number">2.2</span> Operating-Model Reference Set</h2>
 <ol type="1">
 <li><p>The composition of the OM reference set was debated, including the implications of model 0.00 as an optimistic high-biomass, low-exploitation outcome that could affect CMP tuning and communication. The practical approach was to focus immediate tuning work on model 0.16, while retaining model 0.00 and the SC13-era configuration as clearly labelled robustness tests. The final reference-set decision was identified for further discussion and Scientific Committee review, alongside related work on future recruitment and index simulation, ENSO and broader climate effects, OM-set composition and naming, reference-point proxies, and projection-scenario definitions.</p></li>
-<li><p>The group discussed using cross-correlation among indices to simulate future recruitment deviations. Participants noted that historical correlations are approximate because the series include changes in catchability and selectivity, whereas the projection settings use the more recent period. Residual autocorrelation has now been incorporated into the OM sets.</p></li>
-<li><p>The group agreed to implement an approximate treatment rather than attempting a fully specified multivariate autocorrelated time-series model. The practical check is whether simulated deviations are consistent with the historical period and suitable for testing CMPs.</p></li>
+<li><p>The group agreed to implement an approximate treatment rather than attempting a fully specified multivariate autocorrelated time-series model.</p></li>
 </ol>
 </section>
 <section id="enso-regimes-and-climate-effects" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="enso-regimes-and-climate-effects"><span class="header-section-number">2.3</span> ENSO, Regimes, and Climate Effects</h2>
 <ol type="1">
 <li><p>The Chair reviewed earlier El Nino work, including catchability drift and the possibility of changing the offshore versus inshore catch distribution in projections. Participants noted that the main practical handle for representing availability effects in the current setup is through recruitment or productivity.</p></li>
-<li><p>The group discussed whether ENSO or regime behaviour should be represented in the core simulations. Earlier ENSO checks provided limited recruitment signal, and each El Nino event may differ in spatial and biological effect. The group agreed to treat regime/ENSO behaviour as a robustness issue, potentially through resampling high- and low-productivity historical periods, rather than as an integral component of the reference simulations.</p></li>
+<li><p>The group discussed whether ENSO or regime behaviour should be represented in the core simulations. Earlier ENSO checks provided limited recruitment signal, and each El Nino event may differ in spatial and biological effect. The group agreed to treat regime/ENSO behaviour as a robustness issue through two scenarios: a seven-year cyclical decrease in recruitment and a one-year recruitment-collapse scenario.</p></li>
 <li><p>Dr. Tom Carruthers presented options for treating climate effects within MSE, drawing on recent ICCAT climate-test work on robustness trials and climate-robustness performance metrics [Carruthers 2024a, 2024b]. His presentation emphasized that climate effects on single-species dynamics can be reduced to a limited set of impact types: increased natural mortality, reduced somatic growth, reduced condition factor, reduced recruitment strength, spatial redistribution or range contraction, and reduced carrying capacity.</p></li>
 <li><p>The presentation argued that uncertain climate forecasts still allow progress on robust fishery management. Rather than constructing many climate-specific operating models with uncertain credibility, climate robustness can be reported as an attribute of each CMP. Under this framing, CMPs are tested against directional stressors and assigned robustness metrics according to the level of impact they can absorb before breaching a defined threshold. This is consistent with the ICCAT proof-of-concept approach, which shifted the emphasis from defensible forecasts of exact future climate impacts to comparable performance metrics for CMPs.</p></li>
 <li><p>The demonstration used empirical CMPs and climate stress tests for natural mortality, recruitment, growth, and condition factor. It showed how different CMP archetypes can differ in climate robustness, and how the result can be expressed in practical terms for tactical advice. The Working Group expressed its gratitude to Dr. Carruthers for contributing this presentation and for helping frame climate robustness in a form that can support Scientific Committee and Commission discussion.</p></li>
@@ -4459,64 +4459,540 @@ Note
 <li><p>The group worked through the OM list and naming conventions as a trial set for learning about model behaviour and the characteristics of alternative projection assumptions. The trial set included one-stock versus two-stock configurations, model 0.16 versus model 1.14, movement variants, and a selectivity-change variant. The purpose was to understand how these dimensions affected CMP tuning, robustness, and interpretation before finalizing the operating-model set for Scientific Committee review.</p></li>
 <li><p>Movement smoothing, selectivity-window changes, and recruitment-deviation variants were treated as trial contrasts rather than final conclusions. Movement would be smoothed from 2026 toward the average of the last ten years to avoid an abrupt discontinuity. The selectivity-change contrast compares a 2005-2015 average with the 2015-2025 recent pattern. Autocorrelation in recruitment deviations provides the current representation of ENSO-related recruitment persistence.</p></li>
 </ol>
-<pre><code>#| label: tbl-day2-om-set
-#| tbl-cap: &quot;Trial operating-model and projection set used to explore behaviour and characteristics.&quot;
-#| echo: false
-#| warning: false
-#| message: false
-#| results: asis
+<div id="tbl-day2-om-set" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-day2-om-set-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table 1: Trial operating-model and projection set used to explore behaviour and characteristics.
+</figcaption>
+<div aria-describedby="tbl-day2-om-set-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="ujutwvquut" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ujutwvquut table {
+font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+#ujutwvquut thead, #ujutwvquut tbody, #ujutwvquut tfoot, #ujutwvquut tr, #ujutwvquut td, #ujutwvquut th {
+border-style: none;
+}
+#ujutwvquut p {
+margin: 0;
+padding: 0;
+}
+#ujutwvquut .gt_table {
+display: table;
+border-collapse: collapse;
+line-height: normal;
+margin-left: auto;
+margin-right: auto;
+color: #333333;
+font-size: 13px;
+font-weight: normal;
+font-style: normal;
+background-color: #FFFFFF;
+width: 100%;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #A8A8A8;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #A8A8A8;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+}
+#ujutwvquut .gt_caption {
+padding-top: 4px;
+padding-bottom: 4px;
+}
+#ujutwvquut .gt_title {
+color: #333333;
+font-size: 125%;
+font-weight: initial;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-color: #FFFFFF;
+border-bottom-width: 0;
+}
+#ujutwvquut .gt_subtitle {
+color: #333333;
+font-size: 85%;
+font-weight: initial;
+padding-top: 3px;
+padding-bottom: 5px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-color: #FFFFFF;
+border-top-width: 0;
+}
+#ujutwvquut .gt_heading {
+background-color: #FFFFFF;
+text-align: center;
+border-bottom-color: #FFFFFF;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#ujutwvquut .gt_bottom_border {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#ujutwvquut .gt_col_headings {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#ujutwvquut .gt_col_heading {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 4px;
+padding-bottom: 5px;
+padding-left: 5px;
+padding-right: 5px;
+overflow-x: hidden;
+}
+#ujutwvquut .gt_column_spanner_outer {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+padding-top: 0;
+padding-bottom: 0;
+padding-left: 4px;
+padding-right: 4px;
+}
+#ujutwvquut .gt_column_spanner_outer:first-child {
+padding-left: 0;
+}
+#ujutwvquut .gt_column_spanner_outer:last-child {
+padding-right: 0;
+}
+#ujutwvquut .gt_column_spanner {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 4px;
+padding-bottom: 4px;
+overflow-x: hidden;
+display: inline-block;
+width: 100%;
+}
+#ujutwvquut .gt_spanner_row {
+border-bottom-style: hidden;
+}
+#ujutwvquut .gt_group_heading {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+text-align: left;
+}
+#ujutwvquut .gt_empty_group_heading {
+padding: 0.5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: middle;
+}
+#ujutwvquut .gt_from_md > :first-child {
+margin-top: 0;
+}
+#ujutwvquut .gt_from_md > :last-child {
+margin-bottom: 0;
+}
+#ujutwvquut .gt_row {
+padding-top: 3px;
+padding-bottom: 3px;
+padding-left: 5px;
+padding-right: 5px;
+margin: 10px;
+border-top-style: solid;
+border-top-width: 1px;
+border-top-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+overflow-x: hidden;
+}
+#ujutwvquut .gt_stub {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+}
+#ujutwvquut .gt_stub_row_group {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+vertical-align: top;
+}
+#ujutwvquut .gt_row_group_first td {
+border-top-width: 2px;
+}
+#ujutwvquut .gt_row_group_first th {
+border-top-width: 2px;
+}
+#ujutwvquut .gt_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#ujutwvquut .gt_first_summary_row {
+border-top-style: solid;
+border-top-color: #D3D3D3;
+}
+#ujutwvquut .gt_first_summary_row.thick {
+border-top-width: 2px;
+}
+#ujutwvquut .gt_last_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#ujutwvquut .gt_grand_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#ujutwvquut .gt_first_grand_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-style: double;
+border-top-width: 6px;
+border-top-color: #D3D3D3;
+}
+#ujutwvquut .gt_last_grand_summary_row_top {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: double;
+border-bottom-width: 6px;
+border-bottom-color: #D3D3D3;
+}
+#ujutwvquut .gt_striped {
+background-color: rgba(128, 128, 128, 0.05);
+}
+#ujutwvquut .gt_table_body {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#ujutwvquut .gt_footnotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#ujutwvquut .gt_footnote {
+margin: 0px;
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#ujutwvquut .gt_sourcenotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#ujutwvquut .gt_sourcenote {
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#ujutwvquut .gt_left {
+text-align: left;
+}
+#ujutwvquut .gt_center {
+text-align: center;
+}
+#ujutwvquut .gt_right {
+text-align: right;
+font-variant-numeric: tabular-nums;
+}
+#ujutwvquut .gt_font_normal {
+font-weight: normal;
+}
+#ujutwvquut .gt_font_bold {
+font-weight: bold;
+}
+#ujutwvquut .gt_font_italic {
+font-style: italic;
+}
+#ujutwvquut .gt_super {
+font-size: 65%;
+}
+#ujutwvquut .gt_footnote_marks {
+font-size: 75%;
+vertical-align: 0.4em;
+position: initial;
+}
+#ujutwvquut .gt_asterisk {
+font-size: 100%;
+vertical-align: 0;
+}
+#ujutwvquut .gt_indent_1 {
+text-indent: 5px;
+}
+#ujutwvquut .gt_indent_2 {
+text-indent: 10px;
+}
+#ujutwvquut .gt_indent_3 {
+text-indent: 15px;
+}
+#ujutwvquut .gt_indent_4 {
+text-indent: 20px;
+}
+#ujutwvquut .gt_indent_5 {
+text-indent: 25px;
+}
+#ujutwvquut .katex-display {
+display: inline-flex !important;
+margin-bottom: 0.75em !important;
+}
+#ujutwvquut div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+height: 0px !important;
+}
+</style>
 
-library(gt)
+<table class="gt_table cell caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="om_case" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">om</th>
+<th id="proj" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">proj</th>
+<th id="om" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">om</th>
+<th id="model" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">model</th>
+<th id="SR" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">SR</th>
+<th id="mvt" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">mvt</th>
+<th id="selex" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">selex</th>
+<th id="set" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">set</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="om_case">om11</td>
+<td class="gt_row gt_left" headers="proj">proj11</td>
+<td class="gt_row gt_left" headers="om">om11</td>
+<td class="gt_row gt_left" headers="model">h1_0.16</td>
+<td class="gt_row gt_left" headers="SR">0.65</td>
+<td class="gt_row gt_left" headers="mvt">NA</td>
+<td class="gt_row gt_right" headers="selex">2015-2025</td>
+<td class="gt_row gt_left" headers="set">ref</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="om_case">om21</td>
+<td class="gt_row gt_left" headers="proj">proj21</td>
+<td class="gt_row gt_left" headers="om">om21</td>
+<td class="gt_row gt_left" headers="model">h2_0.16</td>
+<td class="gt_row gt_left" headers="SR">0.65</td>
+<td class="gt_row gt_left" headers="mvt">0</td>
+<td class="gt_row gt_right" headers="selex">2015-2025</td>
+<td class="gt_row gt_left" headers="set">rob tuning</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="om_case">om13</td>
+<td class="gt_row gt_left" headers="proj">proj18</td>
+<td class="gt_row gt_left" headers="om">om18</td>
+<td class="gt_row gt_left" headers="model">h1_1.14</td>
+<td class="gt_row gt_left" headers="SR">0.8</td>
+<td class="gt_row gt_left" headers="mvt">NA</td>
+<td class="gt_row gt_right" headers="selex">2015-2025</td>
+<td class="gt_row gt_left" headers="set">rob</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="om_case">om12</td>
+<td class="gt_row gt_left" headers="proj">proj12</td>
+<td class="gt_row gt_left" headers="om">om12</td>
+<td class="gt_row gt_left" headers="model">h1_0.16</td>
+<td class="gt_row gt_left" headers="SR">0.8</td>
+<td class="gt_row gt_left" headers="mvt">NA</td>
+<td class="gt_row gt_right" headers="selex">2015-2025</td>
+<td class="gt_row gt_left" headers="set">rob</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="om_case">om22</td>
+<td class="gt_row gt_left" headers="proj">proj22</td>
+<td class="gt_row gt_left" headers="om">om22</td>
+<td class="gt_row gt_left" headers="model">h2_0.16</td>
+<td class="gt_row gt_left" headers="SR">0.8</td>
+<td class="gt_row gt_left" headers="mvt">0</td>
+<td class="gt_row gt_right" headers="selex">2015-2025</td>
+<td class="gt_row gt_left" headers="set">rob</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="om_case">om23</td>
+<td class="gt_row gt_left" headers="proj">proj28</td>
+<td class="gt_row gt_left" headers="om">om28</td>
+<td class="gt_row gt_left" headers="model">h2_1.14</td>
+<td class="gt_row gt_left" headers="SR">0.65</td>
+<td class="gt_row gt_left" headers="mvt">0</td>
+<td class="gt_row gt_right" headers="selex">2015-2025</td>
+<td class="gt_row gt_left" headers="set">rob</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="om_case">om21_1</td>
+<td class="gt_row gt_left" headers="proj">proj31</td>
+<td class="gt_row gt_left" headers="om">om21</td>
+<td class="gt_row gt_left" headers="model">h2_0.16</td>
+<td class="gt_row gt_left" headers="SR">0.65</td>
+<td class="gt_row gt_left" headers="mvt">1</td>
+<td class="gt_row gt_right" headers="selex">2015-2025</td>
+<td class="gt_row gt_left" headers="set">rob</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="om_case">om11_1</td>
+<td class="gt_row gt_left" headers="proj">proj11.selex</td>
+<td class="gt_row gt_left" headers="om">om11</td>
+<td class="gt_row gt_left" headers="model">h1_0.16</td>
+<td class="gt_row gt_left" headers="SR">0.65</td>
+<td class="gt_row gt_left" headers="mvt">NA</td>
+<td class="gt_row gt_right" headers="selex">2005-2015</td>
+<td class="gt_row gt_left" headers="set">rob</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="om_case">om11_2</td>
+<td class="gt_row gt_left" headers="proj">proj11.ENSO1</td>
+<td class="gt_row gt_left" headers="om">om11</td>
+<td class="gt_row gt_left" headers="model">h1_0.16</td>
+<td class="gt_row gt_left" headers="SR">0.65, residual failure</td>
+<td class="gt_row gt_left" headers="mvt">NA</td>
+<td class="gt_row gt_right" headers="selex">2015-2025</td>
+<td class="gt_row gt_left" headers="set">rob</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="om_case">om11_3</td>
+<td class="gt_row gt_left" headers="proj">proj11.ENSO2</td>
+<td class="gt_row gt_left" headers="om">om11</td>
+<td class="gt_row gt_left" headers="model">h1_0.16</td>
+<td class="gt_row gt_left" headers="SR">0.65, residual 7-year El Nino cycle</td>
+<td class="gt_row gt_left" headers="mvt">NA</td>
+<td class="gt_row gt_right" headers="selex">2015-2025</td>
+<td class="gt_row gt_left" headers="set">rob</td>
+</tr>
+</tbody>
+</table>
 
-day2_om_set &lt;- data.frame(
-  om_case = c(&quot;om11&quot;, &quot;om21&quot;, &quot;om13&quot;, &quot;om12&quot;, &quot;om22&quot;, &quot;om23&quot;, &quot;om21_1&quot;, &quot;om11_1&quot;, &quot;om11_2&quot;, &quot;om11_3&quot;),
-  proj = c(&quot;proj11&quot;, &quot;proj21&quot;, &quot;proj18&quot;, &quot;proj12&quot;, &quot;proj22&quot;, &quot;proj28&quot;, &quot;proj31&quot;, &quot;proj11.selex&quot;, &quot;proj11.ENSO1&quot;, &quot;proj11.ENSO2&quot;),
-  om = c(&quot;om11&quot;, &quot;om21&quot;, &quot;om18&quot;, &quot;om12&quot;, &quot;om22&quot;, &quot;om28&quot;, &quot;om21&quot;, &quot;om11&quot;, &quot;om11&quot;, &quot;om11&quot;),
-  model = c(&quot;h1_0.16&quot;, &quot;h2_0.16&quot;, &quot;h1_1.14&quot;, &quot;h1_0.16&quot;, &quot;h2_0.16&quot;, &quot;h2_1.14&quot;, &quot;h2_0.16&quot;, &quot;h1_0.16&quot;, &quot;h1_0.16&quot;, &quot;h1_0.16&quot;),
-  SR = c(&quot;0.65&quot;, &quot;0.65&quot;, &quot;0.8&quot;, &quot;0.8&quot;, &quot;0.8&quot;, &quot;0.65&quot;, &quot;0.65&quot;, &quot;0.65&quot;, &quot;0.65, residual failure&quot;, &quot;0.65, residual 7-year El Nino cycle&quot;),
-  mvt = c(&quot;NA&quot;, &quot;0&quot;, &quot;NA&quot;, &quot;NA&quot;, &quot;0&quot;, &quot;0&quot;, &quot;1&quot;, &quot;NA&quot;, &quot;NA&quot;, &quot;NA&quot;),
-  selex = c(&quot;2015-2025&quot;, &quot;2015-2025&quot;, &quot;2015-2025&quot;, &quot;2015-2025&quot;, &quot;2015-2025&quot;, &quot;2015-2025&quot;, &quot;2015-2025&quot;, &quot;2005-2015&quot;, &quot;2015-2025&quot;, &quot;2015-2025&quot;),
-  set = c(&quot;ref&quot;, &quot;rob tuning&quot;, &quot;rob&quot;, &quot;rob&quot;, &quot;rob&quot;, &quot;rob&quot;, &quot;rob&quot;, &quot;rob&quot;, &quot;rob&quot;, &quot;rob&quot;)
-)
-
-day2_om_set |&gt;
-  gt() |&gt;
-  cols_label(
-    om_case = &quot;om&quot;,
-    proj = &quot;proj&quot;,
-    om = &quot;om&quot;,
-    model = &quot;model&quot;,
-    SR = &quot;SR&quot;,
-    mvt = &quot;mvt&quot;,
-    selex = &quot;selex&quot;,
-    set = &quot;set&quot;
-  ) |&gt;
-  cols_width(
-    om_case ~ px(78),
-    proj ~ px(118),
-    om ~ px(78),
-    model ~ px(92),
-    SR ~ px(210),
-    mvt ~ px(60),
-    selex ~ px(96),
-    set ~ px(92)
-  ) |&gt;
-  tab_options(
-    table.font.size = px(13),
-    table.width = pct(100),
-    data_row.padding = px(3),
-    column_labels.padding = px(4)
-  )</code></pre>
+</div>
+</div>
+</figure>
+</div>
 </section>
 </section>
 <section id="management-procedures" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Management Procedures</h1>
 <ol type="1">
 <li><p>Management procedures require careful consideration because their design choices determine how scientific indicators are translated into catch advice and how expected outcomes are communicated. The group therefore considered both the form of CMPs and the practical implications of their performance, including responsiveness to changing stock indicators, robustness to operating-model uncertainty, stability of catch advice, and interpretability for Scientific Committee and Commission review. The CMPs examined during the workshop were treated as trial designs to learn about behavior, tuning, and trade-offs; they were not intended to represent a final design grid.</p></li>
-<li><p>Recruitment-deviation scenarios were discussed in detail. The group considered low-recruitment, recruitment-failure, and cyclical recruitment patterns, including whether recovery should be abrupt or gradual. There was concern that some future recruitment simulations may generate biomass variability that is broader than expected from the historical record, even under F = 0 projections. The group noted the need to compare historical and projected recruitment and biomass patterns to ensure the projection behavior is realistic and not overly precautionary because of excessive simulated environmental variability.</p></li>
+<li><p>Recruitment-deviation scenarios were discussed in detail. The group considered low-recruitment, recruitment-failure, and cyclical recruitment patterns, including whether recovery should be abrupt or gradual. There was concern that some future recruitment simulations may generate biomass variability that is broader than expected from the historical record, even under F = 0 projections. The group noted the need to compare historical and projected recruitment and biomass patterns to ensure the projection behavior is realistic and not overly precautionary because of excessive simulated environmental variability. The group also reviewed consistency in recruitment projections, specifically the uncertainty levels arising from no-fishing scenarios, and agreed that the current configuration is adequate.</p></li>
 <li><p>Projection evaluations from Paper 07 were used to examine constant-catch and constant-F scenarios, including no fishing, F<sub>MSY</sub>, current F, and reduced-F or reduced-catch cases. These diagnostics were used to understand trade-offs among spawning biomass, fishing mortality, catch, and terminal status. The group noted that F<sub>MSY</sub> and B<sub>MSY</sub> calculations, selectivity averaging windows, and recruitment assumptions can materially affect interpretation, so those methods should be checked and documented.</p></li>
 <li><p>CMP and HCR discussions emphasized starting with simple, interpretable rules. The group discussed index-based rules in which catch responds to changes in one or more abundance indices, rather than relying on constant catch. Several design handles were identified for testing: whether the rule passes through the origin, whether it includes a minimum catch or flat low-index segment, upper catch limits, trigger points, smoothing windows, polynomial smoothing, and TAC-change constraints. The group specifically discussed testing constraints such as 20% increases and 15% decreases (relative to the symmetric 15% change), and evaluating whether these constraints still allow the CMP to respond quickly enough to low-recruitment events. The group favored piecewise-linear terminology for these rules, while retaining existing code labels where needed.</p></li>
-<li><p>There was also discussion of which indices should feed CMPs. The initial rules used all indices, but participants discussed comparing different subsetsof indices, including acoustic and CPUE-related indices. The group noted that combined or weighted indices may simplify implementation, but the choice should reflect the simulated observation process and the relative reliability of each index.</p></li>
+<li><p>There was also discussion of which indices should feed CMPs. The initial rules used all indices, but participants discussed comparing different subsets of indices, including North-Chile acoustic and Peruvian artisanal CPUE, and CPUE-related indices. The group noted that combined or weighted indices may simplify implementation, but the choice should reflect the simulated observation process and the relative reliability of each index.</p></li>
 <li><p>Tuning and performance summaries were discussed as a practical next step. The group planned to run grids of HCR/CMP configurations and summarize results using compact performance tables and diagnostic plots showing biomass, yield, and yield variability. The aim was to identify broad trade-off behavior rather than over-interpret early individual runs. Because many trial CMPs were tuned to the same P(Green) target, P(Green) alone was not considered sufficient for ranking among tuned CMPs; interpretation also required catch, spawning biomass, F/F<sub>MSY</sub>, inter-annual catch variability, low-catch probabilities, and indicators of fishery feasibility.</p></li>
 </ol>
 <div id="fig-cmp-reference-base-tuning" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Six-panel performance plot showing long-term catch, probability green, inter-annual catch variability, spawning biomass, shutdown probability, and F over FMSY for five CMP tuning runs labeled run15a through run15e.">
@@ -4531,31 +5007,31 @@ Figure 1: Long-term performance summaries for a set of CMP tuning runs against 
 </div>
 <ol type="1">
 <li><p><a href="#fig-cmp-reference-base-tuning" class="quarto-xref">Figure 1</a> illustrates that, for the reference base model, tuning to P(Kobe-green) was straightforward. The tested runs showed a clear increase in P(Green) across tuning levels, with associated changes in catch, spawning biomass, inter-annual catch variability, shutdown probability, and F/F<sub>MSY</sub> that could be interpreted directly in the CMP discussion. The figure was therefore useful for learning how the trial rules behaved, but it was not treated as a final comparison of CMP recommendations.</p></li>
-<li><p>The Thursday morning discussion used results from the initial fourteen-run exploratory CMP set to narrow the next round of tests. The group noted that the TAC-change constraints considered in the initial runs did not appear to be strongly limiting, while a low upper catch cap could make the CMP behave close to a constant-catch rule and reduce its usefulness for exploring trade-offs. Participants also discussed the need to separate effects of the catch level from effects of the HCR slope: a higher target catch can increase short-term catch, but if the slope is too steep it can reduce long-term performance or increase the probability of being outside the green zone. The group therefore focused the second set on a smaller number of interpretable changes, including tuned triggers for target catches of 2.0, 3.5, and 5.0 million tonnes, Chile-requested variants with a 270 thousand tonne minimum catch, an asymmetric TAC-change constraint, and a special Chile-shape variant (<a href="#tbl-cmp-second-set" class="quarto-xref">Table 2</a>). This was intended as a stepwise screening process: remove options that provide little marginal information, retain variants that clarify trade-offs, and identify the smaller set of CMPs to carry into fuller performance and robustness summaries. The narrowed set was selected because it spanned useful trade-offs, not because each row represented a final recommended CMP.</p></li>
+<li><p>The Thursday morning discussion used results from the initial fourteen-run exploratory CMP set to narrow the next round of tests. The group noted that the TAC-change constraints considered in the initial runs did not appear to be strongly limiting, while a low upper catch cap could make the CMP behave close to a constant-catch rule and reduce its usefulness for exploring trade-offs. Participants also discussed the need to separate effects of the catch level from effects of the HCR slope: a higher target catch can increase short-term catch, but if the slope is too steep it can reduce long-term performance or increase the probability of being outside the green zone. The group therefore focused the second set on a smaller number of interpretable changes, including tuned triggers for target catches of 2.0, 3.5, and 5.0 million tonnes, variants with a 270 thousand tonne minimum catch, an asymmetric TAC-change constraint, and a special shape variant (<a href="#tbl-cmp-second-set" class="quarto-xref">Table 3</a>). These last three MP features were requested by Chile, as they were tested and selected as part of a national jack mackerel MSE project completed this year. This iterative testing was intended as a stepwise screening process: remove options that provide little marginal information, retain variants that clarify trade-offs, and identify the smaller set of CMPs to carry into fuller performance and robustness summaries. The narrowed set was selected because it spanned useful trade-offs, not because each row represented a final recommended CMP.</p></li>
 <li><p>A substantial part of the discussion addressed exceptional circumstances protocols. Tom Carruthers demonstrated the ECP approach, emphasizing that exceptional circumstances should not be based only on whether an observation falls outside a projected range. Instead, robustness simulations can be used to identify data patterns associated with poor CMP performance, and then evaluate type I and type II error rates for detecting those problematic states. The group discussed applying this framework to jack mackerel MSE outputs, including recent concerns about fishing conditions, recruitment, stock indicators, and the possibility that current observations may imply conditions outside the reference simulations.</p></li>
 <li><p>A further point was that fishery behavior and effort constraints may matter. Participants noted that a TAC may be theoretically catchable in the model but not economically or operationally achievable if vessels cannot find fish or if fishing conditions deteriorate. There was interest in whether effort or fleet-behavior constraints could be represented in future scenarios or diagnostics, while recognizing that doing so would require additional assumptions and data. Catch outcomes below 270 thousand tonnes, catch-rate proxies, and effort limits such as a multiple of current effort were identified as useful supplementary diagnostics for interpreting fishery feasibility.</p></li>
-<li><p>CMPs based on piecewise-linear harvest-control rules can be summarized by the threshold metric at which the rule begins to increase catch, the target catch reached above the trigger, and any inter-annual TAC-change constraints. Part of the SCW17 process is for Members and participants to nominate CMPs for Scientific Committee consideration, after which redundant or materially overlapping CMPs should be eliminated so that the Scientific Committee can focus on a concise set of distinct alternatives. <a href="#tbl-hcr-candidates" class="quarto-xref">Table 1</a> records the parameters used for the illustrative CMP set. <a href="#fig-hcr-faceted" class="quarto-xref">Figure 2</a> shows the static HCR shape for each row; smoothing choices and index selection affect the metric passed into the HCR and are omitted from the curve. The quadrant colors in <a href="#fig-hcr-faceted" class="quarto-xref">Figure 2</a> are included only to enhance visualization of differences among HCR shapes and do not indicate stock-status concerns.</p></li>
+<li><p>CMPs based on piecewise-linear harvest-control rules can be summarized by the threshold metric at which the rule begins to increase catch, the target catch reached above the trigger, and any inter-annual TAC-change constraints. Part of the SCW17 process is for Members and participants to nominate CMPs for Scientific Committee consideration, after which redundant or materially overlapping CMPs should be eliminated so that the Scientific Committee can focus on a concise set of distinct alternatives. <a href="#tbl-hcr-candidates" class="quarto-xref">Table 2</a> records the parameters used for the illustrative CMP set. <a href="#fig-hcr-faceted" class="quarto-xref">Figure 2</a> shows the static HCR shape for each row; smoothing choices and index selection affect the metric passed into the HCR and are omitted from the curve. The quadrant colors in <a href="#fig-hcr-faceted" class="quarto-xref">Figure 2</a> are included only to enhance visualization of differences among HCR shapes and do not indicate stock-status concerns.</p></li>
 </ol>
 <div id="tbl-hcr-candidates" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hcr-candidates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 1: Draft piecewise-linear CMP parameters used for the illustrative HCR figure.
+Table 2: Draft piecewise-linear CMP parameters used for the illustrative HCR figure.
 </figcaption>
 <div aria-describedby="tbl-hcr-candidates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="qjgrqmqmdh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qjgrqmqmdh table {
+<div id="gbvptubltx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gbvptubltx table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#qjgrqmqmdh thead, #qjgrqmqmdh tbody, #qjgrqmqmdh tfoot, #qjgrqmqmdh tr, #qjgrqmqmdh td, #qjgrqmqmdh th {
+#gbvptubltx thead, #gbvptubltx tbody, #gbvptubltx tfoot, #gbvptubltx tr, #gbvptubltx td, #gbvptubltx th {
 border-style: none;
 }
-#qjgrqmqmdh p {
+#gbvptubltx p {
 margin: 0;
 padding: 0;
 }
-#qjgrqmqmdh .gt_table {
+#gbvptubltx .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -4580,11 +5056,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#qjgrqmqmdh .gt_caption {
+#gbvptubltx .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#qjgrqmqmdh .gt_title {
+#gbvptubltx .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -4595,7 +5071,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#qjgrqmqmdh .gt_subtitle {
+#gbvptubltx .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -4606,7 +5082,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#qjgrqmqmdh .gt_heading {
+#gbvptubltx .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -4617,12 +5093,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#qjgrqmqmdh .gt_bottom_border {
+#gbvptubltx .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#qjgrqmqmdh .gt_col_headings {
+#gbvptubltx .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -4636,7 +5112,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#qjgrqmqmdh .gt_col_heading {
+#gbvptubltx .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4655,7 +5131,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#qjgrqmqmdh .gt_column_spanner_outer {
+#gbvptubltx .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4666,13 +5142,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#qjgrqmqmdh .gt_column_spanner_outer:first-child {
+#gbvptubltx .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#qjgrqmqmdh .gt_column_spanner_outer:last-child {
+#gbvptubltx .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#qjgrqmqmdh .gt_column_spanner {
+#gbvptubltx .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -4683,10 +5159,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#qjgrqmqmdh .gt_spanner_row {
+#gbvptubltx .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#qjgrqmqmdh .gt_group_heading {
+#gbvptubltx .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4711,7 +5187,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#qjgrqmqmdh .gt_empty_group_heading {
+#gbvptubltx .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -4725,13 +5201,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#qjgrqmqmdh .gt_from_md > :first-child {
+#gbvptubltx .gt_from_md > :first-child {
 margin-top: 0;
 }
-#qjgrqmqmdh .gt_from_md > :last-child {
+#gbvptubltx .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#qjgrqmqmdh .gt_row {
+#gbvptubltx .gt_row {
 padding-top: 3px;
 padding-bottom: 3px;
 padding-left: 5px;
@@ -4749,7 +5225,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#qjgrqmqmdh .gt_stub {
+#gbvptubltx .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4761,7 +5237,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#qjgrqmqmdh .gt_stub_row_group {
+#gbvptubltx .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -4774,13 +5250,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#qjgrqmqmdh .gt_row_group_first td {
+#gbvptubltx .gt_row_group_first td {
 border-top-width: 2px;
 }
-#qjgrqmqmdh .gt_row_group_first th {
+#gbvptubltx .gt_row_group_first th {
 border-top-width: 2px;
 }
-#qjgrqmqmdh .gt_summary_row {
+#gbvptubltx .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -4789,14 +5265,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#qjgrqmqmdh .gt_first_summary_row {
+#gbvptubltx .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#qjgrqmqmdh .gt_first_summary_row.thick {
+#gbvptubltx .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#qjgrqmqmdh .gt_last_summary_row {
+#gbvptubltx .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4805,7 +5281,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#qjgrqmqmdh .gt_grand_summary_row {
+#gbvptubltx .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -4814,7 +5290,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#qjgrqmqmdh .gt_first_grand_summary_row {
+#gbvptubltx .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4823,7 +5299,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#qjgrqmqmdh .gt_last_grand_summary_row_top {
+#gbvptubltx .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -4832,10 +5308,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#qjgrqmqmdh .gt_striped {
+#gbvptubltx .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#qjgrqmqmdh .gt_table_body {
+#gbvptubltx .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -4843,7 +5319,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#qjgrqmqmdh .gt_footnotes {
+#gbvptubltx .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -4856,7 +5332,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#qjgrqmqmdh .gt_footnote {
+#gbvptubltx .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -4864,7 +5340,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#qjgrqmqmdh .gt_sourcenotes {
+#gbvptubltx .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -4877,64 +5353,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#qjgrqmqmdh .gt_sourcenote {
+#gbvptubltx .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#qjgrqmqmdh .gt_left {
+#gbvptubltx .gt_left {
 text-align: left;
 }
-#qjgrqmqmdh .gt_center {
+#gbvptubltx .gt_center {
 text-align: center;
 }
-#qjgrqmqmdh .gt_right {
+#gbvptubltx .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#qjgrqmqmdh .gt_font_normal {
+#gbvptubltx .gt_font_normal {
 font-weight: normal;
 }
-#qjgrqmqmdh .gt_font_bold {
+#gbvptubltx .gt_font_bold {
 font-weight: bold;
 }
-#qjgrqmqmdh .gt_font_italic {
+#gbvptubltx .gt_font_italic {
 font-style: italic;
 }
-#qjgrqmqmdh .gt_super {
+#gbvptubltx .gt_super {
 font-size: 65%;
 }
-#qjgrqmqmdh .gt_footnote_marks {
+#gbvptubltx .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#qjgrqmqmdh .gt_asterisk {
+#gbvptubltx .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#qjgrqmqmdh .gt_indent_1 {
+#gbvptubltx .gt_indent_1 {
 text-indent: 5px;
 }
-#qjgrqmqmdh .gt_indent_2 {
+#gbvptubltx .gt_indent_2 {
 text-indent: 10px;
 }
-#qjgrqmqmdh .gt_indent_3 {
+#gbvptubltx .gt_indent_3 {
 text-indent: 15px;
 }
-#qjgrqmqmdh .gt_indent_4 {
+#gbvptubltx .gt_indent_4 {
 text-indent: 20px;
 }
-#qjgrqmqmdh .gt_indent_5 {
+#gbvptubltx .gt_indent_5 {
 text-indent: 25px;
 }
-#qjgrqmqmdh .katex-display {
+#gbvptubltx .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#qjgrqmqmdh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#gbvptubltx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -5145,23 +5621,23 @@ height: 0px !important;
 <div id="tbl-cmp-second-set" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cmp-second-set-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 2: Second trial CMP set developed from the Thursday morning narrowing of the initial fourteen-run exploratory set to learn about tuning, target catch, minimum catch treatment, and TAC-change constraints.
+Table 3: Second trial CMP set developed from the Thursday morning narrowing of the initial fourteen-run exploratory set to learn about tuning, target catch, minimum catch treatment, and TAC-change constraints.
 </figcaption>
 <div aria-describedby="tbl-cmp-second-set-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="yybndgwcfh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#yybndgwcfh table {
+<div id="fogaqyoons" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fogaqyoons table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#yybndgwcfh thead, #yybndgwcfh tbody, #yybndgwcfh tfoot, #yybndgwcfh tr, #yybndgwcfh td, #yybndgwcfh th {
+#fogaqyoons thead, #fogaqyoons tbody, #fogaqyoons tfoot, #fogaqyoons tr, #fogaqyoons td, #fogaqyoons th {
 border-style: none;
 }
-#yybndgwcfh p {
+#fogaqyoons p {
 margin: 0;
 padding: 0;
 }
-#yybndgwcfh .gt_table {
+#fogaqyoons .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -5186,11 +5662,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#yybndgwcfh .gt_caption {
+#fogaqyoons .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#yybndgwcfh .gt_title {
+#fogaqyoons .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -5201,7 +5677,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#yybndgwcfh .gt_subtitle {
+#fogaqyoons .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -5212,7 +5688,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#yybndgwcfh .gt_heading {
+#fogaqyoons .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -5223,12 +5699,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#yybndgwcfh .gt_bottom_border {
+#fogaqyoons .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#yybndgwcfh .gt_col_headings {
+#fogaqyoons .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -5242,7 +5718,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#yybndgwcfh .gt_col_heading {
+#fogaqyoons .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5261,7 +5737,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#yybndgwcfh .gt_column_spanner_outer {
+#fogaqyoons .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5272,13 +5748,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#yybndgwcfh .gt_column_spanner_outer:first-child {
+#fogaqyoons .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#yybndgwcfh .gt_column_spanner_outer:last-child {
+#fogaqyoons .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#yybndgwcfh .gt_column_spanner {
+#fogaqyoons .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -5289,10 +5765,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#yybndgwcfh .gt_spanner_row {
+#fogaqyoons .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#yybndgwcfh .gt_group_heading {
+#fogaqyoons .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -5317,7 +5793,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#yybndgwcfh .gt_empty_group_heading {
+#fogaqyoons .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -5331,13 +5807,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#yybndgwcfh .gt_from_md > :first-child {
+#fogaqyoons .gt_from_md > :first-child {
 margin-top: 0;
 }
-#yybndgwcfh .gt_from_md > :last-child {
+#fogaqyoons .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#yybndgwcfh .gt_row {
+#fogaqyoons .gt_row {
 padding-top: 3px;
 padding-bottom: 3px;
 padding-left: 5px;
@@ -5355,7 +5831,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#yybndgwcfh .gt_stub {
+#fogaqyoons .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5367,7 +5843,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#yybndgwcfh .gt_stub_row_group {
+#fogaqyoons .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5380,13 +5856,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#yybndgwcfh .gt_row_group_first td {
+#fogaqyoons .gt_row_group_first td {
 border-top-width: 2px;
 }
-#yybndgwcfh .gt_row_group_first th {
+#fogaqyoons .gt_row_group_first th {
 border-top-width: 2px;
 }
-#yybndgwcfh .gt_summary_row {
+#fogaqyoons .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -5395,14 +5871,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#yybndgwcfh .gt_first_summary_row {
+#fogaqyoons .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#yybndgwcfh .gt_first_summary_row.thick {
+#fogaqyoons .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#yybndgwcfh .gt_last_summary_row {
+#fogaqyoons .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -5411,7 +5887,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#yybndgwcfh .gt_grand_summary_row {
+#fogaqyoons .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -5420,7 +5896,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#yybndgwcfh .gt_first_grand_summary_row {
+#fogaqyoons .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -5429,7 +5905,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#yybndgwcfh .gt_last_grand_summary_row_top {
+#fogaqyoons .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -5438,10 +5914,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#yybndgwcfh .gt_striped {
+#fogaqyoons .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#yybndgwcfh .gt_table_body {
+#fogaqyoons .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -5449,7 +5925,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#yybndgwcfh .gt_footnotes {
+#fogaqyoons .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -5462,7 +5938,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#yybndgwcfh .gt_footnote {
+#fogaqyoons .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -5470,7 +5946,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#yybndgwcfh .gt_sourcenotes {
+#fogaqyoons .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -5483,64 +5959,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#yybndgwcfh .gt_sourcenote {
+#fogaqyoons .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#yybndgwcfh .gt_left {
+#fogaqyoons .gt_left {
 text-align: left;
 }
-#yybndgwcfh .gt_center {
+#fogaqyoons .gt_center {
 text-align: center;
 }
-#yybndgwcfh .gt_right {
+#fogaqyoons .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#yybndgwcfh .gt_font_normal {
+#fogaqyoons .gt_font_normal {
 font-weight: normal;
 }
-#yybndgwcfh .gt_font_bold {
+#fogaqyoons .gt_font_bold {
 font-weight: bold;
 }
-#yybndgwcfh .gt_font_italic {
+#fogaqyoons .gt_font_italic {
 font-style: italic;
 }
-#yybndgwcfh .gt_super {
+#fogaqyoons .gt_super {
 font-size: 65%;
 }
-#yybndgwcfh .gt_footnote_marks {
+#fogaqyoons .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#yybndgwcfh .gt_asterisk {
+#fogaqyoons .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#yybndgwcfh .gt_indent_1 {
+#fogaqyoons .gt_indent_1 {
 text-indent: 5px;
 }
-#yybndgwcfh .gt_indent_2 {
+#fogaqyoons .gt_indent_2 {
 text-indent: 10px;
 }
-#yybndgwcfh .gt_indent_3 {
+#fogaqyoons .gt_indent_3 {
 text-indent: 15px;
 }
-#yybndgwcfh .gt_indent_4 {
+#fogaqyoons .gt_indent_4 {
 text-indent: 20px;
 }
-#yybndgwcfh .gt_indent_5 {
+#fogaqyoons .gt_indent_5 {
 text-indent: 25px;
 }
-#yybndgwcfh .katex-display {
+#fogaqyoons .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#yybndgwcfh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#fogaqyoons div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -5734,28 +6210,28 @@ Figure 3: Partial screenshot of a preliminary application of the ECP applicatio
 <h1 data-number="5"><span class="header-section-number">5</span> Planning for SC14 and Next Steps</h1>
 <ol type="1">
 <li><p>The discussions produced several practical directions for the next round of work. Future recruitment deviations should be simulated with an approximate cross-correlation and autocorrelation treatment, followed by comparison with the historical period. ENSO and regime behaviour should be treated as robustness tests rather than integral core-simulation components, although the timing of that work remains to be confirmed. Climate treatment should be framed through robustness or stress testing and presented clearly to the Scientific Committee. The OM set should retain the one- versus two-stock contrast, model 0.16 versus 1.14, movement variants, and a selectivity-change variant, with the 2026 movement transition smoothed to the 10-year average. Reference-point work should continue to focus on proxies for poorly defined F<sub>MSY</sub>, including 35% dynamic B<sub>0</sub> with F<sub>35%</sub>, U/U<sub>MSY</sub>, and/or constant-F yield-curve calculations.</p></li>
-<li><p>The group completed the principal tasks identified for the workshop and developed a more focused set of CMPs for subsequent robustness testing and reporting to SC14. The narrowed set was developed from the Day 4 trial CMPs in <a href="#tbl-day4-cmp-robustness" class="quarto-xref">Table 3</a>. The group examined the behavior of the full set and identified <code>run18</code>, <code>run20</code>, and <code>run22</code> as the subset to carry forward for robustness testing. These CMPs were selected to span the main trade-offs considered during the workshop, including higher target catch behavior, minimum catch treatment, and the Chile special-shape variant.</p></li>
+<li><p>The group completed the principal tasks identified for the workshop and developed a more focused set of CMPs for subsequent robustness testing and reporting to SC14. The narrowed set was developed from the Day 4 trial CMPs in <a href="#tbl-day4-cmp-robustness" class="quarto-xref">Table 4</a>. The group examined the behavior of the full set and identified <code>run18</code>, <code>run20</code>, and <code>run22</code> as the subset to carry forward for robustness testing. These CMPs were selected to span the main trade-offs considered during the workshop, including higher target catch behavior, minimum catch treatment, and the Chile special-shape variant.</p></li>
 </ol>
 <div id="tbl-day4-cmp-robustness" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-day4-cmp-robustness-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 3: Day 4 trial CMPs examined by the group; runs selected for robustness testing are indicated.
+Table 4: Day 4 trial CMPs examined by the group; runs selected for robustness testing are indicated.
 </figcaption>
 <div aria-describedby="tbl-day4-cmp-robustness-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div id="wtawkkgteb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wtawkkgteb table {
+<div id="ynoxpsvkna" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ynoxpsvkna table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#wtawkkgteb thead, #wtawkkgteb tbody, #wtawkkgteb tfoot, #wtawkkgteb tr, #wtawkkgteb td, #wtawkkgteb th {
+#ynoxpsvkna thead, #ynoxpsvkna tbody, #ynoxpsvkna tfoot, #ynoxpsvkna tr, #ynoxpsvkna td, #ynoxpsvkna th {
 border-style: none;
 }
-#wtawkkgteb p {
+#ynoxpsvkna p {
 margin: 0;
 padding: 0;
 }
-#wtawkkgteb .gt_table {
+#ynoxpsvkna .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -5780,11 +6256,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#wtawkkgteb .gt_caption {
+#ynoxpsvkna .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#wtawkkgteb .gt_title {
+#ynoxpsvkna .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -5795,7 +6271,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#wtawkkgteb .gt_subtitle {
+#ynoxpsvkna .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -5806,7 +6282,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#wtawkkgteb .gt_heading {
+#ynoxpsvkna .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -5817,12 +6293,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#wtawkkgteb .gt_bottom_border {
+#ynoxpsvkna .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#wtawkkgteb .gt_col_headings {
+#ynoxpsvkna .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -5836,7 +6312,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#wtawkkgteb .gt_col_heading {
+#ynoxpsvkna .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5855,7 +6331,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#wtawkkgteb .gt_column_spanner_outer {
+#ynoxpsvkna .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5866,13 +6342,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#wtawkkgteb .gt_column_spanner_outer:first-child {
+#ynoxpsvkna .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#wtawkkgteb .gt_column_spanner_outer:last-child {
+#ynoxpsvkna .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#wtawkkgteb .gt_column_spanner {
+#ynoxpsvkna .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -5883,10 +6359,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#wtawkkgteb .gt_spanner_row {
+#ynoxpsvkna .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#wtawkkgteb .gt_group_heading {
+#ynoxpsvkna .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -5911,7 +6387,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#wtawkkgteb .gt_empty_group_heading {
+#ynoxpsvkna .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -5925,13 +6401,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#wtawkkgteb .gt_from_md > :first-child {
+#ynoxpsvkna .gt_from_md > :first-child {
 margin-top: 0;
 }
-#wtawkkgteb .gt_from_md > :last-child {
+#ynoxpsvkna .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#wtawkkgteb .gt_row {
+#ynoxpsvkna .gt_row {
 padding-top: 3px;
 padding-bottom: 3px;
 padding-left: 5px;
@@ -5949,7 +6425,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#wtawkkgteb .gt_stub {
+#ynoxpsvkna .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5961,7 +6437,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#wtawkkgteb .gt_stub_row_group {
+#ynoxpsvkna .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -5974,13 +6450,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#wtawkkgteb .gt_row_group_first td {
+#ynoxpsvkna .gt_row_group_first td {
 border-top-width: 2px;
 }
-#wtawkkgteb .gt_row_group_first th {
+#ynoxpsvkna .gt_row_group_first th {
 border-top-width: 2px;
 }
-#wtawkkgteb .gt_summary_row {
+#ynoxpsvkna .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -5989,14 +6465,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#wtawkkgteb .gt_first_summary_row {
+#ynoxpsvkna .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#wtawkkgteb .gt_first_summary_row.thick {
+#ynoxpsvkna .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#wtawkkgteb .gt_last_summary_row {
+#ynoxpsvkna .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -6005,7 +6481,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#wtawkkgteb .gt_grand_summary_row {
+#ynoxpsvkna .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -6014,7 +6490,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#wtawkkgteb .gt_first_grand_summary_row {
+#ynoxpsvkna .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -6023,7 +6499,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#wtawkkgteb .gt_last_grand_summary_row_top {
+#ynoxpsvkna .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -6032,10 +6508,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#wtawkkgteb .gt_striped {
+#ynoxpsvkna .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#wtawkkgteb .gt_table_body {
+#ynoxpsvkna .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -6043,7 +6519,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#wtawkkgteb .gt_footnotes {
+#ynoxpsvkna .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -6056,7 +6532,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#wtawkkgteb .gt_footnote {
+#ynoxpsvkna .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -6064,7 +6540,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#wtawkkgteb .gt_sourcenotes {
+#ynoxpsvkna .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -6077,64 +6553,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#wtawkkgteb .gt_sourcenote {
+#ynoxpsvkna .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#wtawkkgteb .gt_left {
+#ynoxpsvkna .gt_left {
 text-align: left;
 }
-#wtawkkgteb .gt_center {
+#ynoxpsvkna .gt_center {
 text-align: center;
 }
-#wtawkkgteb .gt_right {
+#ynoxpsvkna .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#wtawkkgteb .gt_font_normal {
+#ynoxpsvkna .gt_font_normal {
 font-weight: normal;
 }
-#wtawkkgteb .gt_font_bold {
+#ynoxpsvkna .gt_font_bold {
 font-weight: bold;
 }
-#wtawkkgteb .gt_font_italic {
+#ynoxpsvkna .gt_font_italic {
 font-style: italic;
 }
-#wtawkkgteb .gt_super {
+#ynoxpsvkna .gt_super {
 font-size: 65%;
 }
-#wtawkkgteb .gt_footnote_marks {
+#ynoxpsvkna .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#wtawkkgteb .gt_asterisk {
+#ynoxpsvkna .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#wtawkkgteb .gt_indent_1 {
+#ynoxpsvkna .gt_indent_1 {
 text-indent: 5px;
 }
-#wtawkkgteb .gt_indent_2 {
+#ynoxpsvkna .gt_indent_2 {
 text-indent: 10px;
 }
-#wtawkkgteb .gt_indent_3 {
+#ynoxpsvkna .gt_indent_3 {
 text-indent: 15px;
 }
-#wtawkkgteb .gt_indent_4 {
+#ynoxpsvkna .gt_indent_4 {
 text-indent: 20px;
 }
-#wtawkkgteb .gt_indent_5 {
+#ynoxpsvkna .gt_indent_5 {
 text-indent: 25px;
 }
-#wtawkkgteb .katex-display {
+#ynoxpsvkna .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#wtawkkgteb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ynoxpsvkna div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -6268,7 +6744,7 @@ height: 0px !important;
 </figure>
 </div>
 <ol type="1">
-<li><p>The group recommended that a technical meeting take place before SC14, with 24 July 2026 identified as a preliminary proposed date. The meeting should review the added tasks specified for the full MSE report to SC14, including updated CMP performance summaries, robustness-test results for the subset in <a href="#tbl-day4-cmp-robustness" class="quarto-xref">Table 3</a>, and any remaining implementation issues. The meeting should be a technical review of the narrowed CMP set, diagnostics, and suitability of the results rather than a reopening of the CMP design process.</p></li>
+<li><p>The group recommended that a technical meeting take place before SC14, with 24 July 2026 identified as a preliminary proposed date. The meeting should review the added tasks specified for the full MSE report to SC14, including updated CMP performance summaries, robustness-test results for the subset in <a href="#tbl-day4-cmp-robustness" class="quarto-xref">Table 4</a>, and any remaining implementation issues. The meeting should be a technical review of the narrowed CMP set, diagnostics, and suitability of the results rather than a reopening of the CMP design process.</p></li>
 <li><p>The full MSE report to SC14 is anticipated to contain the contractors’ report as an annex and a brief synthesis of the work completed at SCW17 and intersessionally. The synthesis should document how the workshop tasks were completed, how the CMP subset was selected, and how remaining analyses support Scientific Committee consideration of CMPs.</p></li>
 <li><p>Specific tasks identified for the full MSE report to SC14 included:</p></li>
 </ol>
@@ -6293,6 +6769,7 @@ height: 0px !important;
 <li>Carruthers, T. 2026. Developing the Climate Test: Climate Robustness as an Attribute of Management Procedures. Presentation to the SPRFMO Jack Mackerel MSE Workshop, 15 June 2026.</li>
 <li>Blue Matter Science. 2026a. ECP: Exceptional Circumstances Protocols for Adopted Management Procedures. R Shiny application. <a href="https://shiny.bluematterscience.com/" class="uri">https://shiny.bluematterscience.com/</a></li>
 <li>Blue Matter Science. 2026b. Slick: Interactive Visualization of MSE Results. R package and Shiny application. <a href="https://slick.bluematterscience.com/" class="uri">https://slick.bluematterscience.com/</a></li>
+<li>Blue Matter Science. 2026c. ECP: Exceptional Circumstances Protocols for Adopted Management Procedures. Source code repository. <a href="https://github.com/Blue-Matter/ECP.git" class="uri">https://github.com/Blue-Matter/ECP.git</a></li>
 <li>Annex K. Original jack mackerel management procedure.</li>
 </ul>
 </section>
