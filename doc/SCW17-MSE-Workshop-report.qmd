@@ -664,16 +664,25 @@ day4_cmp_table |>
 
 # References {.unnumbered}
 
-- SPRFMO. 2025. Report of the Management Strategy Evaluation Workshop (SCW15), 14-18 July 2025. <https://sprfmo.github.io/SCW15_report/>
-- SPRFMO. 2026. JMWG Benchmark Meeting Report 2026, 18-22 May 2026, Lima. <https://sprfmo.github.io/JM_SCW_prep/JMWG-Benchmark-Meeting-report-2026.html>
-- SPRFMO. 2026. SCW17 working documents. <https://sprfmo.github.io/scw17/>
-- Carruthers, T. R. 2024a. Developing the Climate Test: Robustness Trials for Climate-Ready Management Procedures. SCRS/2024/104. Collect. Vol. Sci. Pap. ICCAT, 81(6): 1-26. <https://www.iccat.int/Documents/CVSP/CV081_2024/n_6/CV08106104.pdf>
-- Carruthers, T. R. 2024b. Developing the Climate Test: Performance Metrics of Climate Robustness. SCRS/2024/148. Collect. Vol. Sci. Pap. ICCAT, 81(2): 1-7. <https://www.iccat.int/Documents/CVSP/CV081_2024/n_2/CV08102148.pdf>
-- Carruthers, T. 2026. Developing the Climate Test: Climate Robustness as an Attribute of Management Procedures. Presentation to the SPRFMO Jack Mackerel MSE Workshop, 15 June 2026.
-- Blue Matter Science. 2026a. ECP: Exceptional Circumstances Protocols for Adopted Management Procedures. R Shiny application. <https://shiny.bluematterscience.com/>
-- Blue Matter Science. 2026b. Slick: Interactive Visualization of MSE Results. R package and Shiny application. <https://slick.bluematterscience.com/>
-- Blue Matter Science. 2026c. ECP: Exceptional Circumstances Protocols for Adopted Management Procedures. Source code repository. <https://github.com/Blue-Matter/ECP.git>
-- Annex K. Original jack mackerel management procedure.
+SPRFMO. 2025. Report of the Management Strategy Evaluation Workshop (SCW15), 14-18 July 2025. <https://sprfmo.github.io/SCW15_report/>
+
+SPRFMO. 2026. JMWG Benchmark Meeting Report 2026, 18-22 May 2026, Lima. <https://sprfmo.github.io/JM_SCW_prep/JMWG-Benchmark-Meeting-report-2026.html>
+
+SPRFMO. 2026. SCW17 working documents. <https://sprfmo.github.io/scw17/>
+
+Carruthers, T. R. 2024a. Developing the Climate Test: Robustness Trials for Climate-Ready Management Procedures. SCRS/2024/104. Collect. Vol. Sci. Pap. ICCAT, 81(6): 1-26. <https://www.iccat.int/Documents/CVSP/CV081_2024/n_6/CV08106104.pdf>
+
+Carruthers, T. R. 2024b. Developing the Climate Test: Performance Metrics of Climate Robustness. SCRS/2024/148. Collect. Vol. Sci. Pap. ICCAT, 81(2): 1-7. <https://www.iccat.int/Documents/CVSP/CV081_2024/n_2/CV08102148.pdf>
+
+Carruthers, T. 2026. Developing the Climate Test: Climate Robustness as an Attribute of Management Procedures. Presentation to the SPRFMO Jack Mackerel MSE Workshop, 15 June 2026.
+
+Blue Matter Science. 2026a. ECP: Exceptional Circumstances Protocols for Adopted Management Procedures. R Shiny application. <https://shiny.bluematterscience.com/>
+
+Blue Matter Science. 2026b. Slick: Interactive Visualization of MSE Results. R package and Shiny application. <https://slick.bluematterscience.com/>
+
+Blue Matter Science. 2026c. ECP: Exceptional Circumstances Protocols for Adopted Management Procedures. Source code repository. <https://github.com/Blue-Matter/ECP.git>
+
+Annex K. Original jack mackerel management procedure. <https://www.sprfmo.int/assets/Meetings/Meetings-2013-plus/Commission-Meetings/2nd-Commission-Meeting-2014-Manta-Ecuador/Annex-K-Proposed-Jack-Mackerel-Rebuilding-Plan.pdf>
 
 # Appendix A. Participants {.unnumbered}
 
