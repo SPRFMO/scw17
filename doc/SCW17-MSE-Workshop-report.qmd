@@ -243,6 +243,28 @@ This draft was developed from meeting notes, SCW17 working documents, daily summ
 #| results: asis
 
 library(gt)
+library(knitr)
+library(kableExtra)
+
+render_report_table <- function(data, caption, latex_font_size = 7) {
+  if (knitr::is_latex_output()) {
+    data |>
+      kable(
+        format = "latex",
+        booktabs = TRUE,
+        longtable = FALSE,
+        escape = TRUE,
+        linesep = ""
+      ) |>
+      kable_styling(
+        latex_options = c("hold_position", "scale_down"),
+        font_size = latex_font_size,
+        full_width = FALSE
+      )
+  } else {
+    NULL
+  }
+}
 
 day2_om_set <- data.frame(
   om_case = c("om11", "om21", "om13", "om12", "om22", "om23", "om21_1", "om11_1", "om11_2", "om11_3"),
@@ -255,34 +277,45 @@ day2_om_set <- data.frame(
   set = c("ref", "rob tuning", "rob", "rob", "rob", "rob", "rob", "rob", "rob", "rob")
 )
 
-day2_om_set |>
-  gt() |>
-  cols_label(
-    om_case = "om",
-    proj = "proj",
-    om = "om",
-    model = "model",
-    SR = "SR",
-    mvt = "mvt",
-    selex = "selex",
-    set = "set"
-  ) |>
-  cols_width(
-    om_case ~ px(78),
-    proj ~ px(118),
-    om ~ px(78),
-    model ~ px(92),
-    SR ~ px(210),
-    mvt ~ px(60),
-    selex ~ px(96),
-    set ~ px(92)
-  ) |>
-  tab_options(
-    table.font.size = px(13),
-    table.width = pct(100),
-    data_row.padding = px(3),
-    column_labels.padding = px(4)
+day2_om_display <- day2_om_set
+names(day2_om_display)[1] <- "om"
+
+if (knitr::is_latex_output()) {
+  render_report_table(
+    day2_om_display,
+    "Trial operating-model and projection set used to explore behaviour and characteristics.",
+    latex_font_size = 7
   )
+} else {
+  day2_om_set |>
+    gt() |>
+    cols_label(
+      om_case = "om",
+      proj = "proj",
+      om = "om",
+      model = "model",
+      SR = "SR",
+      mvt = "mvt",
+      selex = "selex",
+      set = "set"
+    ) |>
+    cols_width(
+      om_case ~ px(78),
+      proj ~ px(118),
+      om ~ px(78),
+      model ~ px(92),
+      SR ~ px(210),
+      mvt ~ px(60),
+      selex ~ px(96),
+      set ~ px(92)
+    ) |>
+    tab_options(
+      table.font.size = px(13),
+      table.width = pct(100),
+      data_row.padding = px(3),
+      column_labels.padding = px(4)
+    )
+}
 ```
 
 # Management Procedures
@@ -370,43 +403,42 @@ second_cmp_table <- tribble(
 #| warning: false
 #| results: asis
 
-mp_table |>
+hcr_candidates_display <- mp_table |>
   select(mp_name, min, lim, trigger, target, dlow, dupp, smooth, indices, output) |>
   mutate(
     dlow = if_else(is.infinite(dlow), "unconstrained", as.character(dlow)),
     dupp = if_else(is.infinite(dupp), "unconstrained", as.character(dupp))
-  ) |>
-  gt() |>
-  cols_label(
-    mp_name = "CMP name",
-    min = "min",
-    lim = "lim",
-    trigger = "trigger",
-    target = "target",
-    dlow = "dlow",
-    dupp = "dupp",
-    smooth = "smooth",
-    indices = "indices",
-    output = "output"
-  ) |>
-  cols_width(
-    mp_name ~ px(145),
-    min ~ px(56),
-    lim ~ px(56),
-    trigger ~ px(70),
-    target ~ px(76),
-    dlow ~ px(104),
-    dupp ~ px(104),
-    smooth ~ px(110),
-    indices ~ px(220),
-    output ~ px(70)
-  ) |>
-  tab_options(
-    table.font.size = px(12),
-    table.width = pct(100),
-    data_row.padding = px(3),
-    column_labels.padding = px(4)
   )
+names(hcr_candidates_display) <- c("CMP name", "min", "lim", "trigger", "target", "dlow", "dupp", "smooth", "indices", "output")
+
+if (knitr::is_latex_output()) {
+  render_report_table(
+    hcr_candidates_display,
+    "Draft piecewise-linear CMP parameters used for the illustrative HCR figure.",
+    latex_font_size = 6
+  )
+} else {
+  hcr_candidates_display |>
+    gt() |>
+    cols_width(
+      `CMP name` ~ px(145),
+      min ~ px(56),
+      lim ~ px(56),
+      trigger ~ px(70),
+      target ~ px(76),
+      dlow ~ px(104),
+      dupp ~ px(104),
+      smooth ~ px(110),
+      indices ~ px(220),
+      output ~ px(70)
+    ) |>
+    tab_options(
+      table.font.size = px(12),
+      table.width = pct(100),
+      data_row.padding = px(3),
+      column_labels.padding = px(4)
+    )
+}
 ```
 
 ```{r}
@@ -417,43 +449,54 @@ mp_table |>
 #| warning: false
 #| results: asis
 
-second_cmp_table |>
-  gt() |>
-  cols_label(
-    run = "run",
-    cmp_name = "CMP name",
-    min = "min",
-    lim = "lim",
-    trigger = "trigger",
-    target = "target",
-    dlow = "dlow",
-    dupp = "dupp",
-    smooth = "smooth",
-    indices = "indices"
-  ) |>
-  fmt_number(
-    columns = c(min, lim, target, dlow, dupp),
-    decimals = 2,
-    drop_trailing_zeros = TRUE
-  ) |>
-  cols_width(
-    run ~ px(62),
-    cmp_name ~ px(160),
-    min ~ px(55),
-    lim ~ px(55),
-    trigger ~ px(78),
-    target ~ px(70),
-    dlow ~ px(58),
-    dupp ~ px(58),
-    smooth ~ px(82),
-    indices ~ px(70)
-  ) |>
-  tab_options(
-    table.font.size = px(12),
-    table.width = pct(100),
-    data_row.padding = px(3),
-    column_labels.padding = px(4)
+second_cmp_display <- second_cmp_table
+names(second_cmp_display) <- c("run", "CMP name", "min", "lim", "trigger", "target", "dlow", "dupp", "smooth", "indices")
+
+if (knitr::is_latex_output()) {
+  render_report_table(
+    second_cmp_display,
+    "Second trial CMP set developed from the Thursday morning narrowing of the initial fourteen-run exploratory set to learn about tuning, target catch, minimum catch treatment, and TAC-change constraints.",
+    latex_font_size = 6
   )
+} else {
+  second_cmp_table |>
+    gt() |>
+    cols_label(
+      run = "run",
+      cmp_name = "CMP name",
+      min = "min",
+      lim = "lim",
+      trigger = "trigger",
+      target = "target",
+      dlow = "dlow",
+      dupp = "dupp",
+      smooth = "smooth",
+      indices = "indices"
+    ) |>
+    fmt_number(
+      columns = c(min, lim, target, dlow, dupp),
+      decimals = 2,
+      drop_trailing_zeros = TRUE
+    ) |>
+    cols_width(
+      run ~ px(62),
+      cmp_name ~ px(160),
+      min ~ px(55),
+      lim ~ px(55),
+      trigger ~ px(78),
+      target ~ px(70),
+      dlow ~ px(58),
+      dupp ~ px(58),
+      smooth ~ px(82),
+      indices ~ px(70)
+    ) |>
+    tab_options(
+      table.font.size = px(12),
+      table.width = pct(100),
+      data_row.padding = px(3),
+      column_labels.padding = px(4)
+    )
+}
 ```
 
 ```{r}
@@ -603,49 +646,60 @@ day4_cmp_table <- tribble(
   "run22", "ChileSpecialShape",270,   0.2, "Tuned",  1500, 0.85, 1.20, "3 yrs", "All", "Yes"
 )
 
-day4_cmp_table |>
-  gt() |>
-  cols_label(
-    run = "Day 4",
-    cmp_name = "CMP name",
-    min = "min",
-    lim = "lim",
-    trigger = "trigger",
-    target = "target",
-    dlow = "dlow",
-    dupp = "dupp",
-    smooth = "smooth",
-    indices = "indices",
-    robustness_subset = "robustness subset"
-  ) |>
-  fmt_number(
-    columns = c(min, lim, target, dlow, dupp),
-    decimals = 2,
-    drop_trailing_zeros = TRUE
-  ) |>
-  tab_style(
-    style = list(cell_fill(color = "#f2f7ec"), cell_text(weight = "bold")),
-    locations = cells_body(rows = robustness_subset == "Yes")
-  ) |>
-  cols_width(
-    run ~ px(62),
-    cmp_name ~ px(155),
-    min ~ px(55),
-    lim ~ px(55),
-    trigger ~ px(78),
-    target ~ px(70),
-    dlow ~ px(58),
-    dupp ~ px(58),
-    smooth ~ px(76),
-    indices ~ px(62),
-    robustness_subset ~ px(118)
-  ) |>
-  tab_options(
-    table.font.size = px(12),
-    table.width = pct(100),
-    data_row.padding = px(3),
-    column_labels.padding = px(4)
+day4_cmp_display <- day4_cmp_table
+names(day4_cmp_display) <- c("Day 4", "CMP name", "min", "lim", "trigger", "target", "dlow", "dupp", "smooth", "indices", "robustness subset")
+
+if (knitr::is_latex_output()) {
+  render_report_table(
+    day4_cmp_display,
+    "Day 4 trial CMPs examined by the group; runs selected for robustness testing are indicated.",
+    latex_font_size = 6
   )
+} else {
+  day4_cmp_table |>
+    gt() |>
+    cols_label(
+      run = "Day 4",
+      cmp_name = "CMP name",
+      min = "min",
+      lim = "lim",
+      trigger = "trigger",
+      target = "target",
+      dlow = "dlow",
+      dupp = "dupp",
+      smooth = "smooth",
+      indices = "indices",
+      robustness_subset = "robustness subset"
+    ) |>
+    fmt_number(
+      columns = c(min, lim, target, dlow, dupp),
+      decimals = 2,
+      drop_trailing_zeros = TRUE
+    ) |>
+    tab_style(
+      style = list(cell_fill(color = "#f2f7ec"), cell_text(weight = "bold")),
+      locations = cells_body(rows = robustness_subset == "Yes")
+    ) |>
+    cols_width(
+      run ~ px(62),
+      cmp_name ~ px(155),
+      min ~ px(55),
+      lim ~ px(55),
+      trigger ~ px(78),
+      target ~ px(70),
+      dlow ~ px(58),
+      dupp ~ px(58),
+      smooth ~ px(76),
+      indices ~ px(62),
+      robustness_subset ~ px(118)
+    ) |>
+    tab_options(
+      table.font.size = px(12),
+      table.width = pct(100),
+      data_row.padding = px(3),
+      column_labels.padding = px(4)
+    )
+}
 ```
 
 1. The group recommended that a technical meeting take place before SC14, with 24 July 2026 identified as a preliminary proposed date. The meeting should review the added tasks specified for the full MSE report to SC14, including updated CMP performance summaries, robustness-test results for the subset in @tbl-day4-cmp-robustness, and any remaining implementation issues. The meeting should be a technical review of the narrowed CMP set, diagnostics, and suitability of the results rather than a reopening of the CMP design process.
