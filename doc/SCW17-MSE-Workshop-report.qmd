@@ -14,6 +14,8 @@ format:
     toc-depth: 2
     toc-location: left
     number-sections: true
+filters:
+  - filters/continuous-ordered-lists.lua
 execute:
   warning: false
   message: false
@@ -675,12 +677,6 @@ day4_cmp_table |>
 
 # Appendix A. Participants {.unnumbered}
 
-::: {.callout-warning}
-## Verification needed
-
-Names and affiliations below are reconstructed from the Day 1 summary and should be confirmed before submission.
-:::
-
 | Name | Affiliation / delegation | 
 |---|---|---|
 | Jim Ianelli | NOAA Fisheries (USA) | 
@@ -704,11 +700,11 @@ Names and affiliations below are reconstructed from the Day 1 summary and should
 The workshop agenda was organized around the main report sections:
 
 ::: {.agenda-list}
-1. Developments since the benchmark.
-2. Operating-model specifications.
-3. Candidate management procedures.
-4. Trade-offs, robustness, and performance metrics.
-5. Planning for SC14 and next steps.
+1\. Developments since the benchmark.  
+2\. Operating-model specifications.  
+3\. Candidate management procedures.  
+4\. Trade-offs, robustness, and performance metrics.  
+5\. Planning for SC14 and next steps.
 :::
 
 | Day | Theme | Hours |
