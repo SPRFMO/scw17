@@ -5,6 +5,20 @@ format:
     number-sections: false
 ---
 
+```{=html}
+<style>
+.navbar {
+  background-color: #537c9f !important;
+}
+
+.navbar .navbar-brand,
+.navbar .navbar-nav .nav-link,
+.navbar #quarto-search.type-overlay .aa-Autocomplete svg {
+  color: #ffffff !important;
+}
+</style>
+```
+
 {{< include _includes/sprfmo-banner.html >}}
 
 Visitor Information posted: [SPRFMO Jack Mackerel MSE Workshop Visitor Information](https://sprfmo.github.io/JM_SCW_prep/SPRFMO-MSE-Workshop-Visitor-Information.html)
