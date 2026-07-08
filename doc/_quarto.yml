@@ -4,6 +4,7 @@ project:
   resources:
     - annex/logo.png
     - assets/HCR_Chile_08-06-26.docx
+    - assets/scw17-workshop-group-photo.jpeg
     - data/jmMSE_retuns.slick
     - data/jmMSE_retuns_slick_source.md
   render:

@@ -86,6 +86,11 @@ table:not(.gt_table) td:first-child {
   list-style: disc;
 }
 
+.workshop-main-photo {
+  border-radius: 14px;
+  width: 77%;
+}
+
 </style>
 ```
 
@@ -104,11 +109,7 @@ table:not(.gt_table) td:first-child {
 The Working Group expresses its gratitude to Niels Hintzen and the Pelagic Freezer Trawler Association (PFA) for sponsoring and supporting the Wageningen workshop.
 :::
 
-```{=html}
-<p>
-  <img src="assets/JM_mood_loop_light.gif" alt="Animated jack mackerel mood graphic" style="width: 77%; border-radius: 14px;">
-</p>
-```
+![SCW17 workshop participants outside the Wageningen venue.](assets/scw17-workshop-group-photo.jpeg){.workshop-main-photo fig-alt="SCW17 workshop participants standing outside the Wageningen venue." width="77%"}
 
 # Summary {.unnumbered}
 
